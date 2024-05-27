@@ -1,17 +1,20 @@
 function Home() {
   return (
     <>
-      <h1>Welcome to Totart page!</h1>
+      <h1 className="bg-slate-400 text-xl font-bold text-red-600">
+        Welcome to Totart page!
+      </h1>
       <p>
         Have you seen something interesting around the city and want to share it
         with others?
       </p>
       <p>
-        If so you've came to the right place. You can watch other people content
+        If so you&apos;ve came to the right place. You can watch other people
+        content
       </p>
       <p>
         Or you can create your own. To enjoy all of the benefits provided create
-        your <a href={"account"}>account!</a>
+        your <a href={'account'}>account!</a>
       </p>
     </>
   );
