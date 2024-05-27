@@ -1,4 +1,4 @@
-import MyNav from '../_components/ui/MyNav';
+import MyNav from '../_components/ui/Navbar';
 import { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" className={montserrat.className}>
       <body>
         <MyNav />
-        <main>{children}</main>
+        <main className="mt-[51px]">{children}</main>
       </body>
     </html>
   );
