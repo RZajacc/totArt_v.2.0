@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 
 function Navbar() {
   const pathname = usePathname();
+  const handleMobileNavButtonClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    console.log(e);
+  };
   return (
     <nav className="fixed left-0 top-0  w-full">
       {/* DESKTOP NAVBAR */}
@@ -56,7 +59,9 @@ function Navbar() {
       {/* MOBILE NAVBAR */}
       <div id="mobile" className="flex items-center justify-between md:hidden">
         <section>
-          <Image src={logoNormal} alt="logo" width={30} className="mx-5" />
+          <Link href={'/'}>
+            <Image src={logoNormal} alt="logo" width={30} className="mx-5" />
+          </Link>
         </section>
 
         <section>
@@ -69,6 +74,7 @@ function Navbar() {
             strokeLinejoin="round"
             strokeLinecap="round"
             className="mx-5 cursor-pointer"
+            onClick={handleMobileNavButtonClick}
           >
             <line x1="2" y1="4.2" x2="22" y2="4.2" />
             <line x1="8" y1="9.4" x2="22" y2="9.4" />
