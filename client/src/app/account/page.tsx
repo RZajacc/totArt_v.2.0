@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import Login from "../components/UserLogin";
-import Register from "../components/UserRegister";
+// import { useState } from "react";
 
-import "../styles/accountPage.css";
+// import "../styles/accountPage.css";
 
 function Account() {
-  const [LogReg, setLogReg] = useState("register");
+  // const [LogReg, setLogReg] = useState("register");
 
   return (
     <>
-      <Container className="userAuthContainer">
+      <h1>Accountpage</h1>
+      {/* <Container className="userAuthContainer">
         <Row className="justify-content-center">
           <Col xs={8} className="login-register">
             {LogReg === "register" ? (
@@ -20,7 +18,7 @@ function Account() {
             )}
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </>
   );
 }

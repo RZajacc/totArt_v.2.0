@@ -1,19 +1,19 @@
-import { Card, Col, Container, Row } from "react-bootstrap";
-import { Link, useLoaderData } from "react-router-dom";
-import { contentData } from "../types/types";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import AddContentModal from "../components/AddContentModal";
-import "../styles/contentPage.css";
+// import { Card, Col, Container, Row } from "react-bootstrap";
+// import { Link, useLoaderData } from "react-router-dom";
+// import { contentData } from "../../types/types";
+// import { useContext } from "react";
+// import { AuthContext } from "../../context/AuthContext";
+// import "../styles/contentPage.css";
 
 function Content() {
-  const { posts } = useLoaderData() as contentData;
-  const { user } = useContext(AuthContext);
+  // const { posts } = useLoaderData() as contentData;
+  // const { user } = useContext(AuthContext);
 
   return (
     <>
-      {user ? <AddContentModal /> : ""}
-      <Container className="content-container">
+      <h1>ContentPage</h1>
+      {/* {user ? <AddContentModal /> : ""} */}
+      {/* <Container className="content-container">
         <Row xs={1} sm={2} md={3} lg={4} className="g-4">
           {posts &&
             posts.map((post, index) => {
@@ -43,7 +43,7 @@ function Content() {
               );
             })}
         </Row>
-      </Container>
+      </Container> */}
     </>
   );
 }
