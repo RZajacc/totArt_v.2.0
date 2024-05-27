@@ -1,0 +1,43 @@
+.userAuthContainer {
+    margin-top: 50px;
+}
+
+.account-container {
+    padding: 3% 15% 3% 10%;
+    border-radius: 3%;
+    box-shadow: 5px 15px 15px #888888;
+    background-color: #82d04c;
+}
+
+.welcome-div {
+    text-align: center;
+}
+
+.statusHandler {
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.statusHandler:hover {
+    font-size: 1.05rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.password-req {
+    text-align: left;
+}
+
+.password-req>* {
+    margin: 5px;
+    font-size: smaller;
+    font-style: italic;
+}
+
+.reg-errors {
+    color: red;
+    text-align: left;
+    font-size: smaller;
+    font-weight: bold;
+}

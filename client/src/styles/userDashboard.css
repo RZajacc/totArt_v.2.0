@@ -1,0 +1,84 @@
+.dashboard-container {
+    margin-top: 3%;
+}
+
+.dashboard-nav-column {
+    border-right: none;
+    border-top-left-radius:3%;
+    border-bottom-left-radius: 3%;
+    padding: 3%;
+    background-color: #82d04c;
+    box-shadow: -7px 5px 15px 2px #888888;
+}
+
+.dashboard-data-column {
+    border-left: none;
+    border-top-right-radius: 3%;
+    border-bottom-right-radius: 3%;
+    padding: 3%;
+    background-color: #82d04c;
+    box-shadow: 7px 5px 15px 2px #888888;
+    text-align: left;
+}
+
+.dashboard-nav-link {
+    font-style: italic;
+    font-size: 1.1rem;
+    padding: 3%;
+}
+
+.dashboard-nav-link:hover {
+    background-color: white;
+    border-radius: 7%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.dashboard-nav-link:active {
+    font-size: bold;
+}
+
+.user-image {
+    margin-left: 27%;
+    width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    border: 3px solid lightgray;
+    
+}
+
+.user-data {
+    margin-top: 2rem;
+}
+
+.user-data-label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.user-data-content {
+    font-weight: normal;
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+
+.user-edit-container {
+    margin-top: 2rem;
+}
+
+.user-edit-container > * {
+    margin-top: 1.5rem;
+}
+
+.input-group-text {
+    width: 7rem;
+}
+
+.link-to-own-post {
+text-decoration: none;
+    cursor: pointer;
+}
+
+.link-to-own-post:hover {
+    font-weight: bold;
+}

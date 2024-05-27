@@ -1,0 +1,19 @@
+
+.picStyle {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    margin-left: 12%;
+
+}
+
+.rowStyle {
+    margin: 3px;
+    border-radius: 5%;
+    background-color: #eff5f3;
+    align-items: center;
+}
+
+.delete-button {
+    margin-left: 30%;
+}
