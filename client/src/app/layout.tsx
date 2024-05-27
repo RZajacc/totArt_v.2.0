@@ -1,6 +1,12 @@
-import { Metadata } from 'next';
 import MyNav from '../_components/ui/MyNav';
+import { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
 import './globals.css';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Totart',
@@ -13,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={montserrat.className}>
       <body>
         <MyNav />
         <main>{children}</main>
