@@ -19,25 +19,25 @@ function Nav_Desktop({}: Props) {
       <section className="space-x-5">
         <Link
           href={'/'}
-          className={`link ${pathname === '/' ? 'font-bold' : ''}`}
+          className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
         >
           Home
         </Link>
         <Link
           href={'locations'}
-          className={`link ${pathname === '/locations' ? 'font-bold' : ''}`}
+          className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
         >
           Locations
         </Link>
         <Link
           href={'contact'}
-          className={`link ${pathname === '/contact' ? 'font-bold' : ''}`}
+          className={`link ${pathname === '/contact' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
         >
           Contact
         </Link>
         <Link
           href={'account'}
-          className={`link ${pathname === '/account' ? 'font-bold' : ''}`}
+          className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
         >
           Account
         </Link>
