@@ -1,9 +1,7 @@
 function Home() {
   return (
     <>
-      <h1 className="bg-slate-400 text-xl font-bold text-red-600">
-        Welcome to Totart page!
-      </h1>
+      <h1>Welcome to Totart page!</h1>
       <p>
         Have you seen something interesting around the city and want to share it
         with others?

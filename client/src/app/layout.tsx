@@ -20,9 +20,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={montserrat.className}>
-      <body>
+      <body className="h-lvh">
         <MyNav />
-        <main className="mt-[51px]">{children}</main>
+        <main className="mt-[51px] h-lvh bg-gradient-to-t from-zinc-300 to-amber-100">
+          {children}
+        </main>
       </body>
     </html>
   );
