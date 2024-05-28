@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 type Props = {};
 
 function NavModal({}: Props) {
+  const pathname = usePathname();
   const handleSideNavVisibility = () => {
     const backdrop = document.querySelector('#backdrop');
     const sideNav = document.querySelector('#sidenav');
@@ -21,7 +23,7 @@ function NavModal({}: Props) {
         className="animate-slidein fixed -right-1/2 top-0 z-20 hidden h-lvh w-1/2 bg-white"
       >
         {/* Logo and contact section */}
-        <section className="mt-4">
+        <section className="mt-5">
           <h1 className="text-center text-2xl font-bold italic">Totart</h1>
           <Link href={'/'} onClick={handleSideNavVisibility}>
             <Image src={logo} alt="logo" width={42} className="mx-auto" />
@@ -53,27 +55,43 @@ function NavModal({}: Props) {
               />
             </a>
           </div>
-          <hr className="mx-auto mt-5 w-32 border-slate-300" />
+          {/* <hr className="mx-auto mt-5 w-40 border-slate-300" /> */}
         </section>
         {/* Navigation section */}
-        <ul className="mt-1">
-          <li>
-            <Link href={'/'} onClick={handleSideNavVisibility}>
+        <ul className="mt-10 space-y-2 px-7 text-center">
+          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+            <Link
+              href={'/'}
+              onClick={handleSideNavVisibility}
+              className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+            >
               Home
             </Link>
           </li>
-          <li>
-            <Link href={'/locations'} onClick={handleSideNavVisibility}>
+          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+            <Link
+              href={'/locations'}
+              onClick={handleSideNavVisibility}
+              className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+            >
               locations
             </Link>
           </li>
-          <li>
-            <Link href={'/contact'} onClick={handleSideNavVisibility}>
+          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+            <Link
+              href={'/contact'}
+              onClick={handleSideNavVisibility}
+              className={`link ${pathname === '/contact' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+            >
               Contact
             </Link>
           </li>
-          <li>
-            <Link href={'/account'} onClick={handleSideNavVisibility}>
+          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+            <Link
+              href={'/account'}
+              onClick={handleSideNavVisibility}
+              className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+            >
               Account
             </Link>
           </li>
