@@ -25,7 +25,11 @@ function NavModal({}: Props) {
         {/* Logo and contact section */}
         <section className="mt-5">
           <h1 className="text-center text-2xl font-bold italic">Totart</h1>
-          <Link href={'/'} onClick={handleSideNavVisibility}>
+          <Link
+            href={'/'}
+            onClick={handleSideNavVisibility}
+            className="hover:animate-pulse"
+          >
             <Image src={logo} alt="logo" width={42} className="mx-auto" />
           </Link>
           <div className="mt-5 flex justify-center space-x-5">
@@ -33,7 +37,7 @@ function NavModal({}: Props) {
               href="https://github.com/RZajacc"
               target="_blank"
               onClick={handleSideNavVisibility}
-              className="hover:scale-x-50"
+              className="hover:animate-pulse"
             >
               <FontAwesomeIcon icon={faGithub} size="2xl" />
             </a>
@@ -41,12 +45,14 @@ function NavModal({}: Props) {
               href="https://www.linkedin.com/in/rafalzajac88/"
               target="_blank"
               onClick={handleSideNavVisibility}
+              className="hover:animate-pulse"
             >
               <FontAwesomeIcon icon={faLinkedinIn} size="2xl" color="#0a66c2" />
             </a>
             <a
               href="mailto:rf.zajac@tutamail.com"
               onClick={handleSideNavVisibility}
+              className="hover:animate-pulse"
             >
               <FontAwesomeIcon
                 icon={faEnvelopeOpen}
@@ -55,42 +61,42 @@ function NavModal({}: Props) {
               />
             </a>
           </div>
-          {/* <hr className="mx-auto mt-5 w-40 border-slate-300" /> */}
         </section>
+
         {/* Navigation section */}
         <ul className="mt-10 space-y-2 px-7 text-center">
-          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+          <li className="border-b-2 ">
             <Link
               href={'/'}
               onClick={handleSideNavVisibility}
-              className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+              className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse'}`}
             >
               Home
             </Link>
           </li>
-          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+          <li className="border-b-2">
             <Link
               href={'/locations'}
               onClick={handleSideNavVisibility}
-              className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+              className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               locations
             </Link>
           </li>
-          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+          <li className="border-b-2">
             <Link
               href={'/contact'}
               onClick={handleSideNavVisibility}
-              className={`link ${pathname === '/contact' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+              className={`link ${pathname === '/contact' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               Contact
             </Link>
           </li>
-          <li className="border-b-2 hover:animate-pulse hover:font-bold hover:text-green-500">
+          <li className="border-b-2  ">
             <Link
               href={'/account'}
               onClick={handleSideNavVisibility}
-              className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
+              className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               Account
             </Link>
