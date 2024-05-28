@@ -6,9 +6,13 @@ import logoNormal from '../../../public/logo_normal.png';
 type Props = {};
 
 function Nav_Mobile({}: Props) {
-  const handleMobileNavButtonClick = (e: React.MouseEvent<SVGSVGElement>) => {
-    console.log(e);
+  const handleMobileNavButtonClick = () => {
+    const backdrop = document.querySelector('#backdrop') as HTMLDivElement;
+    const sidenav = document.querySelector('#sidenav') as HTMLDivElement;
+    backdrop.classList.toggle('hidden');
+    sidenav.classList.toggle('hidden');
   };
+
   return (
     <div className="flex items-center justify-between md:hidden">
       <section>

@@ -35,18 +35,16 @@ function Nav_Desktop({}: Props) {
         >
           Contact
         </Link>
+      </section>
+
+      {/* TEMP */}
+      <section className="mx-5 flex space-x-5">
         <Link
           href={'account'}
           className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse'}`}
         >
           Account
         </Link>
-      </section>
-
-      {/* TEMP */}
-      <section className="mx-5 flex space-x-5">
-        <p>Account</p>
-        <p>Logout</p>
       </section>
     </div>
   );
