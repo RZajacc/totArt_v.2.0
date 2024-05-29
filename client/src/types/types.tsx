@@ -41,11 +41,6 @@ export interface User extends UserImage {
   favs: [postId: string];
 }
 
-export type LoginCredentials = {
-  email: string;
-  password: string;
-};
-
 export type LoggingResponse = {
   msg: string;
   user: User;
