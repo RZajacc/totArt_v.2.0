@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  display: grid;
+  grid-template-rows: 51px auto 60px;
+  grid-template-areas:
+    'navigation'
+    'main'
+    'footer';
+}
+
+main {
+  grid-area: main;
+}
+
+#footer {
+  grid-area: footer;
+}

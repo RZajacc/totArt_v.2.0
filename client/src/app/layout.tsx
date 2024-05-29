@@ -4,6 +4,7 @@ import './globals.css';
 import NavSideBar from '../_components/ui/NavSideBar';
 import NavBackdrop from '../_components/ui/NavBackrop';
 import { Metadata } from 'next';
+import Footer from '../_components/ui/Footer';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -22,14 +23,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={montserrat.className}>
-      <body className="h-screen">
-        <main className="mt-[51px] h-screen bg-gradient-to-t from-amber-200 to-amber-50">
-          <Navbar />
-          <NavBackdrop />
-          <NavSideBar />
+    <html lang="en" className={(montserrat.className, 'h-full')}>
+      <body className="h-full">
+        <Navbar />
+        <NavBackdrop />
+        <NavSideBar />
+        <main className=" h-full bg-gradient-to-t from-amber-200 to-amber-50">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
