@@ -40,10 +40,10 @@ function NavDesktop({}: Props) {
       {/* User section */}
       <section className="mx-5 flex space-x-5">
         <Link
-          href={'account'}
-          className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+          href={'login'}
+          className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
         >
-          Account
+          Login
         </Link>
       </section>
     </div>
