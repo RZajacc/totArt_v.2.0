@@ -23,8 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={montserrat.className}>
-      <body className="h-lvh">
-        <main className="mt-[51px] h-lvh bg-gradient-to-t from-amber-200 to-amber-50">
+      <body className="h-screen">
+        <main className="mt-[51px] h-screen bg-gradient-to-t from-amber-200 to-amber-50">
           <Navbar />
           <NavBackdrop />
           <NavSideBar />

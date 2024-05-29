@@ -37,7 +37,7 @@ function NavDesktop({}: Props) {
         </Link>
       </section>
 
-      {/* TEMP */}
+      {/* User section */}
       <section className="mx-5 flex space-x-5">
         <Link
           href={'account'}

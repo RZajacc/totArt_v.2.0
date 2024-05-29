@@ -6,21 +6,25 @@ import logoNormal from '../../../public/logo_normal.png';
 type Props = {};
 
 function NavMobile({}: Props) {
+  // Expand mobile side nav
   const handleMobileNavButtonClick = () => {
     const backdrop = document.querySelector('#backdrop') as HTMLDivElement;
     const sidenav = document.querySelector('#sidenav') as HTMLDivElement;
+    // On click toggle hidden class on thos elements
     backdrop.classList.toggle('hidden');
     sidenav.classList.toggle('hidden');
   };
 
   return (
     <div className="flex items-center justify-between md:hidden">
+      {/* Logo section */}
       <section>
         <Link href={'/'}>
           <Image src={logoNormal} alt="logo" width={30} className="mx-5" />
         </Link>
       </section>
 
+      {/* SVG expanding sidebar */}
       <section>
         <svg
           viewBox="0 0 24 24"

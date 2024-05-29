@@ -4,6 +4,7 @@ import React from 'react';
 type Props = {};
 
 function NavBackrop({}: Props) {
+  // Handle closing sidenav and backdrop
   const handleBackroInteraction = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
