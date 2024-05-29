@@ -1,29 +1,29 @@
-import { useContext, ChangeEvent, FormEvent, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import "../styles/userDashboard.css";
-import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import { useContext, ChangeEvent, FormEvent, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import '../styles/userDashboard.css';
+import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import {
   deleteUserImage,
   destructureUrlToImageID,
   updateUserData,
-} from "../utils/UserEditTools";
-import { UserImage, editFieldStatus } from "../types/types";
-import DeleteUserModal from "./DeleteUserModal";
+} from '../utils/UserEditTools';
+import { UserImage, editFieldStatus } from '../types/types';
+import DeleteUserModal from './DeleteUserModal';
 
 function UserUpdate() {
   const { user, setUser } = useContext(AuthContext);
 
   //* ---------UPDATE DATA MESSAGES---------------------------------
-  const [selectedFile, setSelectedFile] = useState<File | string>("");
-  const [imageUploadMessage, setImageUploadMessage] = useState("");
-  const [userNameEditMessage, setUserNameEditMessage] = useState("");
-  const [emailEditMessage, setEmailEditMessage] = useState("");
-  const [websiteEditMessage, setWebsiteEditMessage] = useState("");
-  const [bioEditMessage, setBioEditMessage] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | string>('');
+  const [imageUploadMessage, setImageUploadMessage] = useState('');
+  const [userNameEditMessage, setUserNameEditMessage] = useState('');
+  const [emailEditMessage, setEmailEditMessage] = useState('');
+  const [websiteEditMessage, setWebsiteEditMessage] = useState('');
+  const [bioEditMessage, setBioEditMessage] = useState('');
 
   // *-----------HANDLE INCOMING DATA---------------------------
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(e.target.files ? e.target.files[0] : "");
+    setSelectedFile(e.target.files ? e.target.files[0] : '');
   };
 
   // *-----------SUBMITTING A FILE-----------------------------
@@ -31,38 +31,39 @@ function UserUpdate() {
     e.preventDefault();
 
     const formdata = new FormData();
-    formdata.append("userImage", selectedFile);
-    formdata.append("folder", "userImages");
+    formdata.append('userImage', selectedFile);
+    formdata.append('folder', 'userImages');
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       body: formdata,
     };
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/imageUpload",
-        requestOptions
+        'http://localhost:5000/api/users/imageUpload',
+        requestOptions,
       );
       const result = (await response.json()) as UserImage;
-      setImageUploadMessage("Image was successfully uploaded");
+      setImageUploadMessage('Image was successfully uploaded');
 
       // * If user has a default picture don't delete it, but if its custom replace it and delete previous
       const defImageUrl =
-        "https://res.cloudinary.com/dqdofxwft/image/upload/v1698072044/other/nil6d9iaml3c6hqfdhly.png";
+        'https://res.cloudinary.com/dqdofxwft/image/upload/v1698072044/other/nil6d9iaml3c6hqfdhly.png';
       if (user!.userImage === defImageUrl) {
         setUser({ ...user!, userImage: result.userImage });
-        updateUserData(user!.email, "userImage", result.userImage);
+        updateUserData(user!.email, 'userImage', result.userImage);
       } else {
+        // ! ID is stored in the response
         const publicId = destructureUrlToImageID(user!.userImage);
         setUser({ ...user!, userImage: result.userImage });
         deleteUserImage(publicId);
-        updateUserData(user!.email, "userImage", result.userImage);
+        updateUserData(user!.email, 'userImage', result.userImage);
       }
       console.log(result);
     } catch (error) {
       console.log(error);
-      setImageUploadMessage("");
+      setImageUploadMessage('');
     }
   };
 
@@ -77,43 +78,43 @@ function UserUpdate() {
 
   // * HELPER FUNCTION TO DEFINE WHICH FIELD IS ACTIVE
   const setFieldStatus = (fieldName: string, status: editFieldStatus) => {
-    if (fieldName === "userName") {
+    if (fieldName === 'userName') {
       setUserFieldStatus(status);
     }
-    if (fieldName === "email") {
+    if (fieldName === 'email') {
       setEmailFieldStatus(status);
     }
-    if (fieldName === "userWebsite") {
+    if (fieldName === 'userWebsite') {
       setWebsiteFieldStatus(status);
     }
-    if (fieldName === "userBio") {
+    if (fieldName === 'userBio') {
       setBioFieldStatus(status);
     }
   };
 
   // * CHANGING THE STATUS AFTER CLICKING EDIT BUTTON
   const handleEditField = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     const buttonEvent = e.target as HTMLButtonElement;
-    if (buttonEvent.innerText === "Edit") {
-      buttonEvent.innerText = "Cancel";
-      buttonEvent.className = "btn btn-danger";
+    if (buttonEvent.innerText === 'Edit') {
+      buttonEvent.innerText = 'Cancel';
+      buttonEvent.className = 'btn btn-danger';
       setFieldStatus(buttonEvent.name, active);
     } else {
-      buttonEvent.innerText = "Edit";
-      buttonEvent.className = "btn btn-info";
+      buttonEvent.innerText = 'Edit';
+      buttonEvent.className = 'btn btn-info';
       setFieldStatus(buttonEvent.name, idle);
     }
   };
 
   // * CHANGING THE STATUS DEPENDING ON INPUT FIELD
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "userWebsite" || e.target.name === "userBio") {
+    if (e.target.name === 'userWebsite' || e.target.name === 'userBio') {
       setFieldStatus(e.target.name, active);
       setUser({ ...user!, [`${e.target.name}`]: e.target.value });
     } else {
-      if (e.target.value === "") {
+      if (e.target.value === '') {
         setFieldStatus(e.target.name, empty);
       } else {
         setFieldStatus(e.target.name, active);
@@ -123,44 +124,44 @@ function UserUpdate() {
   };
 
   const handleUsernameSubmit = (e) => {
-    e.target[1].className = "btn btn-info";
-    e.target[1].innerText = "Edit";
+    e.target[1].className = 'btn btn-info';
+    e.target[1].innerText = 'Edit';
     e.preventDefault();
-    updateUserData(user!.email, "userName", user!.userName);
-    setFieldStatus("userName", idle);
-    setUserNameEditMessage("Username updated properly!");
+    updateUserData(user!.email, 'userName', user!.userName);
+    setFieldStatus('userName', idle);
+    setUserNameEditMessage('Username updated properly!');
   };
 
   const handleEmailSubmit = (e) => {
-    e.target[1].className = "btn btn-info";
-    e.target[1].innerText = "Edit";
+    e.target[1].className = 'btn btn-info';
+    e.target[1].innerText = 'Edit';
     e.preventDefault();
-    updateUserData(user!.email, "email", user!.email);
-    setFieldStatus("email", idle);
-    setEmailEditMessage("Email updated properly!");
+    updateUserData(user!.email, 'email', user!.email);
+    setFieldStatus('email', idle);
+    setEmailEditMessage('Email updated properly!');
   };
 
   const handleWebsiteSubmit = (e) => {
-    e.target[1].className = "btn btn-info";
-    e.target[1].innerText = "Edit";
+    e.target[1].className = 'btn btn-info';
+    e.target[1].innerText = 'Edit';
     e.preventDefault();
-    updateUserData(user!.email, "userWebsite", user!.userWebsite);
-    setFieldStatus("website", idle);
-    setWebsiteEditMessage("Website url updated properly!");
+    updateUserData(user!.email, 'userWebsite', user!.userWebsite);
+    setFieldStatus('website', idle);
+    setWebsiteEditMessage('Website url updated properly!');
   };
   const handleBioSubmit = (e) => {
-    e.target[1].className = "btn btn-info";
-    e.target[1].innerText = "Edit";
+    e.target[1].className = 'btn btn-info';
+    e.target[1].innerText = 'Edit';
     e.preventDefault();
-    updateUserData(user!.email, "userBio", user!.userBio);
-    setFieldStatus("bio", idle);
-    setBioEditMessage("Your bio updated properly!");
+    updateUserData(user!.email, 'userBio', user!.userBio);
+    setFieldStatus('bio', idle);
+    setBioEditMessage('Your bio updated properly!');
   };
 
   return (
     <>
-      <img src={user!.userImage} alt="userImage" className={"user-image"} />
-      <Container className={"user-edit-container"}>
+      <img src={user!.userImage} alt="userImage" className={'user-image'} />
+      <Container className={'user-edit-container'}>
         {/* USER IMAGE EDIT */}
         <Form onSubmit={handleFileSubmit}>
           <InputGroup>
@@ -172,7 +173,7 @@ function UserUpdate() {
           {imageUploadMessage ? (
             <p className="text-center">{imageUploadMessage}</p>
           ) : (
-            ""
+            ''
           )}
         </Form>
 
@@ -206,7 +207,7 @@ function UserUpdate() {
           {userNameEditMessage ? (
             <p className="text-center">{userNameEditMessage}</p>
           ) : (
-            ""
+            ''
           )}
         </Form>
 
@@ -241,7 +242,7 @@ function UserUpdate() {
           {emailEditMessage ? (
             <p className="text-center">{emailEditMessage}</p>
           ) : (
-            ""
+            ''
           )}
         </Form>
 
@@ -275,7 +276,7 @@ function UserUpdate() {
           {websiteEditMessage ? (
             <p className="text-center">{websiteEditMessage}</p>
           ) : (
-            ""
+            ''
           )}
         </Form>
 
@@ -285,7 +286,7 @@ function UserUpdate() {
             <InputGroup.Text>Bio</InputGroup.Text>
             <Form.Control
               aria-label="Bio"
-              as={"textarea"}
+              as={'textarea'}
               rows={3}
               defaultValue={user?.userBio}
               name="userBio"
@@ -311,7 +312,7 @@ function UserUpdate() {
           {bioEditMessage ? (
             <p className="text-center">{bioEditMessage}</p>
           ) : (
-            ""
+            ''
           )}
         </Form>
         <DeleteUserModal />

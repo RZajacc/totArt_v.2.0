@@ -11,7 +11,7 @@ export type comment = {
   relatedPost: string;
 };
 
-export interface post {
+export type post = {
   _id: string;
   title: string;
   description: string;
@@ -19,12 +19,12 @@ export interface post {
   imageUrl: string;
   author: authorType;
   comments: [comment];
-}
+};
 
-export interface contentData {
+export type contentData = {
   number: number;
   posts: post[];
-}
+};
 
 export type UserImage = {
   userImage: string;

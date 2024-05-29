@@ -1,49 +1,68 @@
-// import { Card, Col, Container, Row } from "react-bootstrap";
-// import { Link, useLoaderData } from "react-router-dom";
-// import { contentData } from "../../types/types";
+import Image from 'next/image';
+import { contentData } from '../../types/types';
+import Link from 'next/link';
 // import { useContext } from "react";
 // import { AuthContext } from "../../context/AuthContext";
-// import "../styles/contentPage.css";
 
-function Content() {
-  // const { posts } = useLoaderData() as contentData;
-  // const { user } = useContext(AuthContext);
+async function getData(): Promise<contentData> {
+  const res = await fetch('http://localhost:5000/api/posts/all', {
+    method: 'GET',
+    redirect: 'follow',
+    next: { tags: ['locations'] },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const data: contentData = await res.json();
+
+  return data;
+}
+
+async function Content() {
+  const posts = await getData();
+  /* {user ? <AddContentModal /> : ""} */
 
   return (
     <>
-      <h1>ContentPage</h1>
-      {/* {user ? <AddContentModal /> : ""} */}
-      {/* <Container className="content-container">
-        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-          {posts &&
-            posts.map((post, index) => {
-              return (
-                <>
-                  <Col key={index}>
-                    <Card className="content-card">
-                      <Card.Img
-                        variant="top"
-                        src={post.imageUrl}
-                        className="content-image"
-                      />
-                      <Card.Body className="text-center">
-                        <Card.Title>{post.title}</Card.Title>
-                        <Card.Link className={"go-to-details-button"}>
-                          <Link
-                            to={post._id}
-                            className={"go-to-details-button"}
-                          >
-                            See more
-                          </Link>
-                        </Card.Link>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                </>
-              );
-            })}
-        </Row>
-      </Container> */}
+      <h1 className="text-center text-xl font-bold">
+        Number of locations found:{' '}
+        <span className="text-green-500">{posts.number}</span>
+      </h1>
+      <div className="mx-auto mt-3 grid max-w-3xl gap-3 sm:grid-cols-2 md:grid-cols-3">
+        {posts &&
+          posts.posts.map((post) => {
+            return (
+              <div
+                key={post._id}
+                className="rounded-lg border-2 border-black shadow-md shadow-black"
+              >
+                <section>
+                  {/* For now Im using some arbitrary values untill I update image info in DB */}
+                  <Image
+                    src={post.imageUrl}
+                    alt={post.title}
+                    width={600}
+                    height={600}
+                    layout="responsive"
+                    className="rounded-lg"
+                  />
+                </section>
+                <section className="mb-4 mt-1 text-center">
+                  <h3 className="mb-3 text-xl font-bold">{post.title}</h3>
+                  {/* Temporary location until connecting view is ready*/}
+                  <Link
+                    href={'/'}
+                    className="rounded-md bg-black px-3 py-2 text-white"
+                  >
+                    See more
+                  </Link>
+                </section>
+              </div>
+            );
+          })}
+      </div>
     </>
   );
 }
