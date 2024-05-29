@@ -5,7 +5,7 @@ import logoNormal from '../../../public/logo_normal.png';
 
 type Props = {};
 
-function Nav_Mobile({}: Props) {
+function NavMobile({}: Props) {
   const handleMobileNavButtonClick = () => {
     const backdrop = document.querySelector('#backdrop') as HTMLDivElement;
     const sidenav = document.querySelector('#sidenav') as HTMLDivElement;
@@ -43,4 +43,4 @@ function Nav_Mobile({}: Props) {
   );
 }
 
-export default Nav_Mobile;
+export default NavMobile;

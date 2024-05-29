@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import logo from '../../../public/logo_normal.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +9,7 @@ import { usePathname } from 'next/navigation';
 
 type Props = {};
 
-function NavModal({}: Props) {
+function NavSideBar({}: Props) {
   const pathname = usePathname();
   const handleSideNavVisibility = () => {
     const backdrop = document.querySelector('#backdrop');
@@ -20,7 +21,7 @@ function NavModal({}: Props) {
     <>
       <div
         id="sidenav"
-        className="animate-slidein fixed -right-1/2 top-0 z-20 hidden h-lvh w-1/2 bg-white"
+        className="fixed -right-1/2 top-0 z-20 hidden h-lvh w-1/2 animate-slidein bg-white"
       >
         {/* Logo and contact section */}
         <section className="mt-5">
@@ -69,7 +70,7 @@ function NavModal({}: Props) {
             <Link
               href={'/'}
               onClick={handleSideNavVisibility}
-              className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse'}`}
+              className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               Home
             </Link>
@@ -80,7 +81,7 @@ function NavModal({}: Props) {
               onClick={handleSideNavVisibility}
               className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
             >
-              locations
+              Locations
             </Link>
           </li>
           <li className="border-b-2">
@@ -107,4 +108,4 @@ function NavModal({}: Props) {
   );
 }
 
-export default NavModal;
+export default NavSideBar;

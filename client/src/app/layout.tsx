@@ -1,38 +1,33 @@
-'use client';
-import MyNav from '../_components/ui/Navbar';
+import Navbar from '../_components/ui/Navbar';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
-import NavModal from '../_components/ui/NavModal';
+import NavSideBar from '../_components/ui/NavSideBar';
+import NavBackdrop from '../_components/ui/NavBackrop';
+import { Metadata } from 'next';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
 });
 
+export const metadata: Metadata = {
+  title: 'Totart',
+  description: 'Share some cool locations with the otheres',
+  creator: 'Rafał Zając',
+};
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const handleBackroInteraction = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
-    e.currentTarget.classList.toggle('hidden');
-    const sidenav = document.querySelector('#sidenav') as HTMLDivElement;
-    sidenav.classList.toggle('hidden');
-  };
   return (
     <html lang="en" className={montserrat.className}>
       <body className="h-lvh">
-        <MyNav />
         <main className="mt-[51px] h-lvh bg-gradient-to-t from-amber-200 to-amber-50">
-          <div
-            id="backdrop"
-            className="animate-fadein fixed left-0 top-0 z-10 hidden h-lvh w-lvw bg-slate-800"
-            onClick={handleBackroInteraction}
-            onScroll={handleBackroInteraction}
-          ></div>
-          <NavModal />
+          <Navbar />
+          <NavBackdrop />
+          <NavSideBar />
           {children}
         </main>
       </body>

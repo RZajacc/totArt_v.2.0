@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 type Props = {};
 
-function Nav_Desktop({}: Props) {
+function NavDesktop({}: Props) {
   const pathname = usePathname();
   return (
     <div className="hidden items-center justify-between md:flex">
@@ -50,4 +50,4 @@ function Nav_Desktop({}: Props) {
   );
 }
 
-export default Nav_Desktop;
+export default NavDesktop;
