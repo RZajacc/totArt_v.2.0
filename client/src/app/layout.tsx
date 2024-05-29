@@ -28,7 +28,7 @@ export default function RootLayout({
         <Navbar />
         <NavBackdrop />
         <NavSideBar />
-        <main className=" h-full bg-gradient-to-t from-amber-200 to-amber-50">
+        <main className=" h-full bg-gradient-to-t from-amber-200 to-amber-50 p-3">
           {children}
         </main>
         <Footer />
