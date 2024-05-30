@@ -8,7 +8,6 @@ type Props = {};
 function Login({}: Props) {
   // * USE CONTEXT DATA
   const { setUser } = useContext(AuthContext);
-
   // *3_Login a user
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,27 +50,36 @@ function Login({}: Props) {
 
   return (
     <>
-      <div className="welcome-div">
-        <h4>Welcome to TotArt</h4>
-        <p>To use all of our functionalities please login to your account</p>
+      <div className="welcome-div mx-auto mt-5 max-w-sm">
+        <h4 className="mb-3 text-center text-xl font-bold">
+          Welcome to TotArt
+        </h4>
+        <p className="mb-3 text-center">
+          To use all of our functionalities please login to your account:
+        </p>
+        <form onSubmit={handleLogin} className="grid gap-3">
+          <label htmlFor="email">Email address:</label>
+          <input type="email" name="email" placeholder="Enter email" required />
+
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="user-password"
+            required
+          />
+
+          {/* <div className="text-center"> */}
+          <button
+            type="submit"
+            className="mx-auto my-1 w-28 rounded-md bg-black py-1 text-white"
+          >
+            Login
+          </button>
+          {/* </div> */}
+        </form>
       </div>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="email">Email address</label>
-        <input type="email" name="email" placeholder="Enter email" required />
-
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          autoComplete="user-password"
-          required
-        />
-
-        <div className="text-center">
-          <button type="submit">Login</button>
-        </div>
-      </form>
     </>
   );
 }
