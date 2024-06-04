@@ -74,6 +74,7 @@ const register = async (req, res) => {
           res.status(201).json({
             msg: "New user registered",
             user: {
+              id: savedUser.id,
               userName: savedUser.userName,
               email: savedUser.email,
               userImage: savedUser.userImage,
@@ -98,8 +99,7 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  // console.log(req.body);
-  // * Check if the user exists in the database
+  // Check if the user exists in the database
   try {
     const existingUser = await userModel.findOne({ email: req.body.email });
     if (!existingUser) {
@@ -107,7 +107,7 @@ const login = async (req, res) => {
         msg: "No user found with provided email!",
       });
     } else {
-      // *Check password
+      // Check password
       const checkPassword = await bcrypt_verifyPassword(
         req.body.password,
         existingUser.password
@@ -120,16 +120,11 @@ const login = async (req, res) => {
       }
 
       if (checkPassword) {
-        // * GENERATE TOKEN
+        // GENERATE TOKEN
         const token = generateToken(existingUser.id);
         if (token) {
           res.status(200).json({
-            msg: "Successfull login",
-            user: {
-              userName: existingUser.userName,
-              email: existingUser.email,
-              userImage: existingUser.userImage,
-            },
+            msg: "Login sucessfull",
             token,
           });
         } else {

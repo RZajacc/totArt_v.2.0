@@ -8,6 +8,7 @@ type Props = {};
 function Login({}: Props) {
   // * USE CONTEXT DATA
   const { setUser } = useContext(AuthContext);
+
   // *3_Login a user
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,9 +17,10 @@ function Login({}: Props) {
     const email = formdata.get('email') as string;
     const password = formdata.get('password') as string;
 
-    // Prepare fetch function
+    // Prepare headers
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+    // Prepare request body
     const urlencoded = new URLSearchParams();
     urlencoded.append('email', email);
     urlencoded.append('password', password);
@@ -32,12 +34,10 @@ function Login({}: Props) {
 
     if (response.ok) {
       const result: LoggingResponse = await response.json();
-      const token = result.token;
       console.log('RESULT', result);
-      if (token) {
-        localStorage.setItem('token', token);
-        const user = result.user;
-        setUser(user);
+      if (result.token) {
+        // cookies().set('auth', result.token);
+        // localStorage.setItem('token', token);
         // setIsLoggedIn(true);
       }
       return result.msg;

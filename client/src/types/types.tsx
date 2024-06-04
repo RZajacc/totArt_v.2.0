@@ -43,7 +43,6 @@ export interface User extends UserImage {
 
 export type LoggingResponse = {
   msg: string;
-  user: User;
   token: string;
 };
 
