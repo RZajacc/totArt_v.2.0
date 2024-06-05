@@ -6,12 +6,14 @@ import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {};
 
 function NavSideBar({}: Props) {
   const pathname = usePathname();
-
+  const { isLoggedIn, logout } = useContext(AuthContext);
   // Handle closing mobile nav after clicking a link
   const handleSideNavVisibility = () => {
     const backdrop = document.querySelector('#backdrop') as HTMLDivElement;
@@ -91,15 +93,42 @@ function NavSideBar({}: Props) {
             Contact
           </Link>
         </li>
-        <li className="border-b-2  ">
-          <Link
-            href={'/login'}
-            onClick={handleSideNavVisibility}
-            className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
-          >
-            Login
-          </Link>
-        </li>
+        {isLoggedIn ? (
+          <>
+            <li className="border-b-2  ">
+              <Link
+                href={'/account'}
+                onClick={handleSideNavVisibility}
+                className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
+              >
+                Account
+              </Link>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  handleSideNavVisibility();
+                  logout();
+                }}
+                className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600"
+              >
+                Logout
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="border-b-2  ">
+              <Link
+                href={'/login'}
+                onClick={handleSideNavVisibility}
+                className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
+              >
+                Login
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </div>
   );

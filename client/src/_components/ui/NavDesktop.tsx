@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import logoNormal from '../../../public/logo_normal.png';
 import { usePathname } from 'next/navigation';
+import { AuthContext } from '../../context/AuthContext';
 
-type Props = {
-  isLoggedIn: boolean;
-};
+type Props = {};
 
-function NavDesktop({ isLoggedIn }: Props) {
+function NavDesktop({}: Props) {
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const pathname = usePathname();
   return (
     <div className="hidden items-center justify-between md:flex">
@@ -49,7 +49,10 @@ function NavDesktop({ isLoggedIn }: Props) {
             >
               Account
             </Link>
-            <button className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600">
+            <button
+              onClick={logout}
+              className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600"
+            >
               Logout
             </button>
           </>

@@ -1,7 +1,8 @@
 'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { User } from '../types/types';
-import { getCookie } from 'cookies-next';
+import { getCookie, deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   registerWithEmail: (newUser: User) => void;
@@ -34,6 +35,7 @@ export const AuthContext = createContext<AuthContextType>(AuthInitContext);
 export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   // *1_REGISTER A NEW USER
   const registerWithEmail = async (newUser: User) => {
@@ -114,9 +116,10 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
 
   // *LOGOUT
   const logout = () => {
-    localStorage.removeItem('token');
+    deleteCookie('auth_token');
     setUser(null);
     setIsLoggedIn(false);
+    router.push('/login');
   };
   return (
     <AuthContext.Provider
