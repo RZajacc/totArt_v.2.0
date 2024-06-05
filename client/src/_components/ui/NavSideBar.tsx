@@ -120,6 +120,15 @@ function NavSideBar({}: Props) {
           <>
             <li className="border-b-2  ">
               <Link
+                href={'/register'}
+                onClick={handleSideNavVisibility}
+                className={`link ${pathname === '/register' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
+              >
+                Register
+              </Link>
+            </li>
+            <li className="border-b-2  ">
+              <Link
                 href={'/login'}
                 onClick={handleSideNavVisibility}
                 className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}

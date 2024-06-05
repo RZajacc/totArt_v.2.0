@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useState, useContext } from 'react';
+'use client';
+import { FormEvent, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 type Props = {};
@@ -8,7 +9,7 @@ function Register({}: Props) {
   const {} = useContext(AuthContext);
 
   // *4 Register a new user
-  const handleRegisterSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //   ! Walidacja do osobnego pliku i tylko wynik tutaj, form data
     //   ! Rejstracja z contextu, na backendzie zmniejsz nowego użytkownika do trzech pól które ma
@@ -60,7 +61,7 @@ function Register({}: Props) {
           If you already have an one then simply{' '}
         </p>
       </div>
-      <form action="">
+      <form onSubmit={handleRegister} className="my-4 grid gap-2">
         <label htmlFor="username">Username:</label>
         <input type="text" required name="username" placeholder="username" />
         <label htmlFor="email">Email:</label>
@@ -79,15 +80,22 @@ function Register({}: Props) {
           name="confirm-password"
           placeholder="password"
         />
-        <button type="submit">Register</button>
+        <div className="text-centers text-sm italic text-slate-500">
+          <p>Password needs to have at least:</p>
+          <ul className="list-disc">
+            <li>8 characters</li>
+            <li>1 uppercase character</li>
+            <li>1 number</li>
+            <li>1 special character</li>
+          </ul>
+        </div>
+        <button
+          type="submit"
+          className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
+        >
+          Register
+        </button>
       </form>
-
-      <div className="password-req">
-        <p>*Password needs to have at least 8 characters</p>
-        <p>*Password needs to contain at least 1 uppercase character</p>
-        <p>*Password needs to contain at least 1 number</p>
-        <p>*Password needs to contain at least 1 special character</p>
-      </div>
     </>
   );
 }
