@@ -143,8 +143,6 @@ const login = async (req, res) => {
 };
 
 const getProfle = async (req, res) => {
-  console.log("get profile");
-  console.log("req.user---->", req.user);
   if (req.user) {
     res.status(200).json({
       user: {
