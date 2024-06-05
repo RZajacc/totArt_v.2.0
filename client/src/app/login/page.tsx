@@ -1,15 +1,18 @@
 'use client';
-import { FormEvent } from 'react';
-// import { AuthContext } from '../../context/AuthContext';
+import { FormEvent, useContext } from 'react';
 import { LoggingResponse } from '../../types/types';
+import { setCookie, getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {};
 
 function Login({}: Props) {
   // * USE CONTEXT DATA
-  // const { setUser } = useContext(AuthContext);
+  const { setIsLoggedIn } = useContext(AuthContext);
+  const router = useRouter(); // Initialize the router hook
 
-  // *3_Login a user
+  // 3_Login a user
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Collect login data
@@ -34,23 +37,18 @@ function Login({}: Props) {
 
     if (response.ok) {
       const result: LoggingResponse = await response.json();
-      console.log('RESULT', result);
-      if (result.token) {
-        // cookies().set('auth', result.token);
-        // localStorage.setItem('token', token);
-        // setIsLoggedIn(true);
-      }
-      return result.msg;
+      setCookie('auth_token', result.token);
+      setIsLoggedIn(true);
+      router.push('/account');
     } else {
       const result = await response.json();
-      console.log('RESULT', result);
-      return result.msg;
+      console.log(result);
     }
   };
 
   return (
     <>
-      <div className="welcome-div mx-auto mt-5 max-w-sm">
+      <div className="welcome-div mx-auto mt-5 max-w-sm rounded-md bg-slate-200 p-4">
         <h4 className="mb-3 text-center text-xl font-bold">
           Welcome to TotArt
         </h4>
@@ -70,14 +68,12 @@ function Login({}: Props) {
             required
           />
 
-          {/* <div className="text-center"> */}
           <button
             type="submit"
-            className="mx-auto my-1 w-28 rounded-md bg-black py-1 text-white"
+            className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
           >
             Login
           </button>
-          {/* </div> */}
         </form>
       </div>
     </>

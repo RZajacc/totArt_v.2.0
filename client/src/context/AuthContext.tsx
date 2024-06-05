@@ -1,24 +1,26 @@
+'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { LoggingResponse, User } from '../types/types';
+import { User } from '../types/types';
+import { getCookie } from 'cookies-next';
 
 interface AuthContextType {
   registerWithEmail: (newUser: User) => void;
-  login: (email: string, password: string) => void;
   user: User | null | undefined;
   setUser: (newUser: User) => void;
   logout: () => void;
   getUser: (token: string) => void;
   isUserLoggedIn: () => void;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 const AuthInitContext = {
   registerWithEmail: () => console.log('No user registered yet'),
-  login: () => console.log('User not logged in yet'),
   user: null,
   setUser: () => console.log('Setting a new user'),
   logout: () => console.log('User is logged out'),
   getUser: () => console.log('Get user'),
   isUserLoggedIn: () => console.log('Checking if logged in'),
+  setIsLoggedIn: () => console.log('Check if user is logged in'),
 };
 
 type AuthContexProviderProps = {
@@ -89,50 +91,9 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     }
   };
 
-  // *3_LOGIN
-  const login = async (email: string, password: string) => {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append('email', email);
-    urlencoded.append('password', password);
-
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-    };
-
-    try {
-      const response = await fetch(
-        'http://localhost:5000/api/users/login',
-        requestOptions,
-      );
-
-      if (response.ok) {
-        const result: LoggingResponse = await response.json();
-        const token = result.token;
-        if (token) {
-          localStorage.setItem('token', token);
-          const user = result.user;
-          setUser(user);
-          setIsLoggedIn(true);
-        }
-        return result.msg;
-      } else {
-        const result = await response.json();
-        return result.msg;
-      }
-    } catch (err) {
-      const error = err as Error;
-      console.log('Error :>>', error.message);
-    }
-  };
-
   // *3_CHECK IF USER IS LOGGED IN
   const isUserLoggedIn = async () => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('auth_token');
     if (token) {
       const user: User | undefined = await getUser(token);
       if (user) {
@@ -159,12 +120,12 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     <AuthContext.Provider
       value={{
         registerWithEmail,
-        login,
         user,
         setUser,
         logout,
         getUser,
         isUserLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {children}

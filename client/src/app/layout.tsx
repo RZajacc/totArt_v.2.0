@@ -5,6 +5,7 @@ import NavSideBar from '../_components/ui/NavSideBar';
 import NavBackdrop from '../_components/ui/NavBackrop';
 import { Metadata } from 'next';
 import Footer from '../_components/ui/Footer';
+import { AuthContextProvider } from '../context/AuthContext';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -25,13 +26,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={(montserrat.className, 'h-full')}>
       <body className="h-full">
-        <Navbar />
-        <NavBackdrop />
-        <NavSideBar />
-        <main className=" h-full bg-gradient-to-t from-amber-200 to-amber-50 p-3">
-          {children}
-        </main>
-        <Footer />
+        <AuthContextProvider>
+          <Navbar />
+          <NavBackdrop />
+          <NavSideBar />
+          <main className=" h-full bg-gradient-to-t from-amber-200 to-amber-50 p-3">
+            {children}
+          </main>
+          <Footer />
+        </AuthContextProvider>
       </body>
     </html>
   );
