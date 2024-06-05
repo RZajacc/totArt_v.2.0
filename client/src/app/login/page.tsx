@@ -1,13 +1,13 @@
 'use client';
-import { FormEvent, useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { FormEvent } from 'react';
+// import { AuthContext } from '../../context/AuthContext';
 import { LoggingResponse } from '../../types/types';
 
 type Props = {};
 
 function Login({}: Props) {
   // * USE CONTEXT DATA
-  const { setUser } = useContext(AuthContext);
+  // const { setUser } = useContext(AuthContext);
 
   // *3_Login a user
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
