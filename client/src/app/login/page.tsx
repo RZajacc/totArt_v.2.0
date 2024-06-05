@@ -1,18 +1,30 @@
 'use client';
-import { FormEvent, useContext } from 'react';
-import { LoggingResponse } from '../../types/types';
+import { FormEvent, useContext, useRef, useState } from 'react';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
 
+export type loginSucc = {
+  msg: string;
+  token: string;
+};
+
+type loginErr = {
+  msg: string;
+};
+
 type Props = {};
 
 function Login({}: Props) {
-  // * USE CONTEXT DATA
+  // Context data
   const { setIsLoggedIn } = useContext(AuthContext);
-  const router = useRouter(); // Initialize the router hook
+  // Login error message
+  const [logErrMsg, setLogErrMsg] = useState('');
+  // Ref to paragraph displaying error message
+  const errorParagraph = useRef<HTMLParagraphElement | null>(null);
+  // Router for redirection after login
+  const router = useRouter();
 
-  // 3_Login a user
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Collect login data
@@ -23,6 +35,7 @@ function Login({}: Props) {
     // Prepare headers
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
     // Prepare request body
     const urlencoded = new URLSearchParams();
     urlencoded.append('email', email);
@@ -36,13 +49,16 @@ function Login({}: Props) {
     });
 
     if (response.ok) {
-      const result: LoggingResponse = await response.json();
+      const result: loginSucc = await response.json();
+      // Set cookie and change user status
       setCookie('auth_token', result.token);
       setIsLoggedIn(true);
+      // Go to account
       router.push('/account');
     } else {
-      const result = await response.json();
-      console.log(result);
+      const result: loginErr = await response.json();
+      setLogErrMsg(result.msg);
+      errorParagraph.current?.classList.remove('hidden');
     }
   };
 
@@ -57,17 +73,35 @@ function Login({}: Props) {
         </p>
         <form onSubmit={handleLogin} className="grid gap-3">
           <label htmlFor="email">Email address:</label>
-          <input type="email" name="email" placeholder="Enter email" required />
+          <input
+            onChange={() => {
+              setLogErrMsg('');
+              errorParagraph.current?.classList.add('hidden');
+            }}
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
 
           <label htmlFor="password">Password:</label>
           <input
+            onChange={() => {
+              setLogErrMsg('');
+              errorParagraph.current?.classList.add('hidden');
+            }}
             type="password"
             name="password"
             placeholder="Password"
             autoComplete="user-password"
             required
           />
-
+          <p
+            ref={errorParagraph}
+            className="hidden rounded-xl bg-red-500 py-1 text-center text-white"
+          >
+            {logErrMsg}
+          </p>
           <button
             type="submit"
             className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"

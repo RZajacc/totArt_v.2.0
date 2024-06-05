@@ -41,11 +41,6 @@ export interface User extends UserImage {
   favs: [postId: string];
 }
 
-export type LoggingResponse = {
-  msg: string;
-  token: string;
-};
-
 export type ImageUrlUpdateResponse = {
   msg: string;
 };
