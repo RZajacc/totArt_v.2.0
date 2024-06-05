@@ -4,9 +4,11 @@ import React from 'react';
 import logoNormal from '../../../public/logo_normal.png';
 import { usePathname } from 'next/navigation';
 
-type Props = {};
+type Props = {
+  isLoggedIn: boolean;
+};
 
-function NavDesktop({}: Props) {
+function NavDesktop({ isLoggedIn }: Props) {
   const pathname = usePathname();
   return (
     <div className="hidden items-center justify-between md:flex">
@@ -38,13 +40,27 @@ function NavDesktop({}: Props) {
       </section>
 
       {/* User section */}
-      <section className="mx-5 flex space-x-5">
-        <Link
-          href={'login'}
-          className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
-        >
-          Login
-        </Link>
+      <section className="mx-5 flex items-center space-x-5">
+        {isLoggedIn ? (
+          <>
+            <Link
+              href={'account'}
+              className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+            >
+              Account
+            </Link>
+            <button className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600">
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link
+            href={'login'}
+            className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+          >
+            Login
+          </Link>
+        )}
       </section>
     </div>
   );

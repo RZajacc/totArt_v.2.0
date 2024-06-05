@@ -5,12 +5,11 @@ import NavMobile from './NavMobile';
 import { AuthContext } from '../../context/AuthContext';
 
 function Navbar() {
-  const { user } = useContext(AuthContext);
-  console.log(user);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <nav className="fixed left-0 top-0 w-full bg-gradient-to-t from-amber-50 to-white">
       {/* DESKTOP NAVBAR */}
-      <NavDesktop />
+      <NavDesktop isLoggedIn={isLoggedIn} />
 
       {/* MOBILE NAVBAR */}
       <NavMobile />

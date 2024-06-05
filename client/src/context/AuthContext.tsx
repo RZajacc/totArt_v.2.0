@@ -11,6 +11,7 @@ interface AuthContextType {
   getUser: (token: string) => void;
   isUserLoggedIn: () => void;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
+  isLoggedIn: boolean;
 }
 
 const AuthInitContext = {
@@ -21,6 +22,7 @@ const AuthInitContext = {
   getUser: () => console.log('Get user'),
   isUserLoggedIn: () => console.log('Checking if logged in'),
   setIsLoggedIn: () => console.log('Check if user is logged in'),
+  isLoggedIn: false,
 };
 
 type AuthContexProviderProps = {
@@ -126,6 +128,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
         getUser,
         isUserLoggedIn,
         setIsLoggedIn,
+        isLoggedIn,
       }}
     >
       {children}

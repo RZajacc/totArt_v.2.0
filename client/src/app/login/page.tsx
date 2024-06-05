@@ -1,7 +1,7 @@
 'use client';
 import { FormEvent, useContext } from 'react';
 import { LoggingResponse } from '../../types/types';
-import { setCookie, getCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
 

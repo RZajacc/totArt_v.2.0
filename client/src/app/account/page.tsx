@@ -1,15 +1,8 @@
-'use client';
 // import { useState } from "react";
-
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-
 // import "../styles/accountPage.css";
 
 function Account() {
   // const [LogReg, setLogReg] = useState("register");
-  const { user } = useContext(AuthContext);
-  console.log(user);
   return (
     <>
       <h1>Accountpage</h1>
