@@ -1,14 +1,18 @@
-export type authorType = {
+export interface User {
   _id: string;
   userName: string;
+  email: string;
+  password: string;
+  userWebsite: string;
+  userBio: string;
   userImage: string;
-};
+  posts: [postId: string];
+  favs: [postId: string];
+}
 
-export type comment = {
-  _id: string;
-  comment: string;
-  author: authorType;
-  relatedPost: string;
+export type contentData = {
+  number: number;
+  posts: post[];
 };
 
 export type post = {
@@ -21,25 +25,18 @@ export type post = {
   comments: [comment];
 };
 
-export type contentData = {
-  number: number;
-  posts: post[];
+export type comment = {
+  _id: string;
+  comment: string;
+  author: authorType;
+  relatedPost: string;
 };
 
-export type UserImage = {
-  userImage: string;
-  userWebsite: string;
-  userBio: string;
-};
-
-export interface User extends UserImage {
+export type authorType = {
   _id: string;
   userName: string;
-  email: string;
-  password: string;
-  posts: [postId: string];
-  favs: [postId: string];
-}
+  userImage: string;
+};
 
 export type ImageUrlUpdateResponse = {
   msg: string;

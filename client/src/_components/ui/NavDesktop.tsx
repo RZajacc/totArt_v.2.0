@@ -10,6 +10,7 @@ type Props = {};
 function NavDesktop({}: Props) {
   const { isLoggedIn, logout } = useContext(AuthContext);
   const pathname = usePathname();
+
   return (
     <div className="hidden items-center justify-between md:flex">
       <section>
