@@ -5,25 +5,17 @@ import { getCookie, deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
-  registerWithEmail: (newUser: User) => void;
   user: User | null | undefined;
-  setUser: (newUser: User) => void;
-  logout: () => void;
-  getUser: (token: string) => void;
-  isUserLoggedIn: () => void;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
   isLoggedIn: boolean;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+  logout: () => void;
 }
 
 const AuthInitContext = {
-  registerWithEmail: () => console.log('No user registered yet'),
   user: null,
-  setUser: () => console.log('Setting a new user'),
-  logout: () => console.log('User is logged out'),
-  getUser: () => console.log('Get user'),
-  isUserLoggedIn: () => console.log('Checking if logged in'),
-  setIsLoggedIn: () => console.log('Check if user is logged in'),
   isLoggedIn: false,
+  setIsLoggedIn: () => console.log('Change user status'),
+  logout: () => console.log('Log user out'),
 };
 
 type AuthContexProviderProps = {
@@ -124,14 +116,10 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
-        registerWithEmail,
         user,
-        setUser,
-        logout,
-        getUser,
-        isUserLoggedIn,
-        setIsLoggedIn,
         isLoggedIn,
+        setIsLoggedIn,
+        logout,
       }}
     >
       {children}
