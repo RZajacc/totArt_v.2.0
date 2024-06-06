@@ -6,21 +6,26 @@ import { validatePassword } from '../../utils/ValidatePassword';
 
 type Props = {};
 
+type registerResult = {
+  msg: string;
+};
+
 function Register({}: Props) {
   const {} = useContext(AuthContext);
   const [pswFeedback, setPswFeedback] = useState<string[]>();
   const pswErrorDiv = useRef<HTMLDivElement>(null);
+  const [registerSucc, setRegisterSucc] = useState('');
+  const [registerErr, setRegisterErr] = useState('');
 
-  const handleRegister = (e: FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     // User credentials
     const userName = formData.get('username') as string;
+    const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     const confirmPassword = formData.get('confirm-password') as string;
-
-    //   ! Rejstracja z contextu, na backendzie zmniejsz nowego użytkownika do trzech pól które ma
 
     const pswValidation = validatePassword(password, confirmPassword);
     setPswFeedback(pswValidation);
@@ -30,10 +35,40 @@ function Register({}: Props) {
       pswErrorDiv.current?.classList.remove('hidden');
     }
 
-    // if (passwordErr?.length === 0) {
-    //   registerWithEmail(newUser);
-    //   setLogReg('login');
-    // }
+    // If password passed validation create a new user
+    if (pswValidation?.length === 0) {
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      const urlencoded = new URLSearchParams();
+      urlencoded.append('userName', userName);
+      urlencoded.append('email', email);
+      urlencoded.append('password', password);
+
+      try {
+        const response = await fetch(
+          'http://localhost:5000/api/users/register',
+          {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow',
+          },
+        );
+
+        if (response.ok) {
+          const result: registerResult = await response.json();
+          setRegisterSucc(result.msg);
+          console.log(result);
+        } else {
+          const result: registerResult = await response.json();
+          setRegisterErr(result.msg);
+          console.log(result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -96,13 +131,11 @@ function Register({}: Props) {
           >
             {pswFeedback &&
               pswFeedback.map((error, idx) => {
-                return (
-                  <>
-                    <p key={idx}>{error}</p>
-                  </>
-                );
+                return <p key={idx}>{error}</p>;
               })}
           </div>
+          <p>{registerErr}</p>
+          <p>{registerSucc}</p>
           <button
             type="submit"
             className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
