@@ -1,110 +1,103 @@
+import { useContext, useState, ChangeEvent, useEffect } from 'react';
+import { post } from '../../../types/types';
+import { AuthContext } from '../../../context/AuthContext';
 import {
-  Container,
-  Row,
-  Col,
-  Button,
-  FloatingLabel,
-  Form,
-} from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { useContext, useState, ChangeEvent, useEffect } from "react";
-import "../styles/contentPage.css";
-import { post } from "../types/types";
-import { AuthContext } from "../context/AuthContext";
-import { deleteFromUserArray, updateUserData } from "../utils/UserEditTools";
-import { addNewComment, deleteComment } from "../utils/CommentsTools";
-import { updatePost } from "../utils/PostsTools";
-import Comment from "../components/Comment";
-import "../styles/Comment.css";
+  deleteFromUserArray,
+  updateUserData,
+} from '../../../utils/UserEditTools';
+import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
+import { updatePost } from '../../../utils/PostsTools';
 
-function ContentDetails() {
-  const { id } = useParams();
-  const [data, setData] = useState<post>({
-    _id: "",
-    author: { _id: "", userImage: "", userName: "" },
-    comments: [
-      {
-        _id: "",
-        author: { _id: "", userImage: "", userName: "" },
-        comment: "",
-        relatedPost: "",
-      },
-    ],
-    description: "",
-    imageUrl: "",
-    location: "",
-    title: "",
-  });
+function ContentDetails({ params }: { params: { id: string } }) {
+  const locationID = params.id;
 
-  const { user, isUserLoggedIn } = useContext(AuthContext);
-  const [commentVal, setCommentVal] = useState("");
+  // const [data, setData] = useState<post>({
+  //   _id: "",
+  //   author: { _id: "", userImage: "", userName: "" },
+  //   comments: [
+  //     {
+  //       _id: "",
+  //       author: { _id: "", userImage: "", userName: "" },
+  //       comment: "",
+  //       relatedPost: "",
+  //     },
+  //   ],
+  //   description: "",
+  //   imageUrl: "",
+  //   location: "",
+  //   title: "",
+  // });
 
-  // * FETCH POST
-  const getPostDetails = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  // const { user } = useContext(AuthContext);
+  // const [commentVal, setCommentVal] = useState("");
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("id", id!);
+  // // * FETCH POST
+  // const getPostDetails = async () => {
+  //   const myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-    };
+  //   const urlencoded = new URLSearchParams();
+  //   urlencoded.append("id", id!);
 
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/posts/details",
-        requestOptions
-      );
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: urlencoded,
+  //   };
 
-  useEffect(() => {
-    getPostDetails();
-  }, []);
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:5000/api/posts/details",
+  //       requestOptions
+  //     );
+  //     const result = await response.json();
+  //     setData(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  // * ADD OR REMOVE POST FROM FAVOURITES
-  const handleAddFavs = async () => {
-    if (user!.favs.includes(data._id)) {
-      await deleteFromUserArray(user!.email, "favs", data._id);
-      isUserLoggedIn();
-    } else {
-      await updateUserData(user!.email, "favs", data._id);
-      isUserLoggedIn();
-    }
-  };
+  // useEffect(() => {
+  //   getPostDetails();
+  // }, []);
 
-  // * GET VALUE OF A COMMENT
-  const handleCommentValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setCommentVal(e.target.value);
-  };
+  // // * ADD OR REMOVE POST FROM FAVOURITES
+  // const handleAddFavs = async () => {
+  //   if (user!.favs.includes(data._id)) {
+  //     await deleteFromUserArray(user!.email, "favs", data._id);
+  //     isUserLoggedIn();
+  //   } else {
+  //     await updateUserData(user!.email, "favs", data._id);
+  //     isUserLoggedIn();
+  //   }
+  // };
 
-  // * ADD COMMENT AND RE FETCH DATA
-  const handleAddingComment = async () => {
-    const comment = await addNewComment(user!._id, commentVal, data._id);
-    await updateUserData(user!.email, "userComment", comment._id);
-    await updatePost(data._id, "comments", comment._id);
-    await getPostDetails();
-    isUserLoggedIn();
-  };
+  // // * GET VALUE OF A COMMENT
+  // const handleCommentValue = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setCommentVal(e.target.value);
+  // };
 
-  // *DELETE A COMMENT
-  const handleDeleteComment = async (id: string) => {
-    console.log("Im running!");
-    await deleteComment(id);
-    await getPostDetails();
-    isUserLoggedIn();
-  };
+  // // * ADD COMMENT AND RE FETCH DATA
+  // const handleAddingComment = async () => {
+  //   const comment = await addNewComment(user!._id, commentVal, data._id);
+  //   await updateUserData(user!.email, "userComment", comment._id);
+  //   await updatePost(data._id, "comments", comment._id);
+  //   await getPostDetails();
+  //   isUserLoggedIn();
+  // };
+
+  // // *DELETE A COMMENT
+  // const handleDeleteComment = async (id: string) => {
+  //   console.log("Im running!");
+  //   await deleteComment(id);
+  //   await getPostDetails();
+  //   isUserLoggedIn();
+  // };
 
   return (
     <>
-      <Container className="details-container">
+      <h1>Recipe details page {locationID}</h1>
+      {/* <Container className="details-container">
         <Row className="justify-content-center text-center">
           <Col xs={8} className="details-column">
             <h1>
@@ -191,7 +184,7 @@ function ContentDetails() {
             </div>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </>
   );
 }

@@ -53,7 +53,7 @@ async function Content() {
                   <h3 className="mb-3 text-xl font-bold">{post.title}</h3>
                   {/* Temporary location until connecting view is ready*/}
                   <Link
-                    href={'/'}
+                    href={`/locations/${post._id}`}
                     className="rounded-md bg-black px-3 py-2 text-white"
                   >
                     See more
