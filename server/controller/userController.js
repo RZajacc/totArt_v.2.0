@@ -69,7 +69,11 @@ const register = async (req, res) => {
 
           const savedUser = await newUser.save();
           res.status(201).json({
-            msg: `Successfully registered ${savedUser.userName} account. You will receive a confirmation email on ${savedUser.email} adress`,
+            msg: `Registration successfull!`,
+            user: {
+              userName: savedUser.userName,
+              email: savedUser.email,
+            },
           });
         } catch (error) {
           console.log(error);
