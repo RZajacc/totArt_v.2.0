@@ -39,8 +39,6 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   const { data } = useSWR(locationID, locationFetch);
 
-  // const [commentVal, setCommentVal] = useState("");
-
   // // * ADD OR REMOVE POST FROM FAVOURITES
   // const handleAddFavs = async () => {
   //   if (user!.favs.includes(data._id)) {
@@ -76,15 +74,17 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {/* <h1>
+      <h1>
         Title:{' '}
         <span className="image-title">
-          {data.title}
+          {data?.title}
           {'  '}
         </span>
         {user ? (
-          user?.favs.includes(data._id) ? (
-            <button onClick={handleAddFavs}>
+          user?.favs.includes(data ? data._id : '') ? (
+            <button
+            // onClick={handleAddFavs}
+            >
               Delete from{' '}
               <img
                 src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354709/other/ra5sovm9gaxynfz3ah6t.svg"
@@ -93,7 +93,9 @@ function ContentDetails({ params }: { params: { id: string } }) {
               />
             </button>
           ) : (
-            <button onClick={handleAddFavs}>
+            <button
+            // onClick={handleAddFavs}
+            >
               Add to{' '}
               <img
                 src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354710/other/l8kxiddecnqx6talp4bz.svg"
@@ -105,26 +107,26 @@ function ContentDetails({ params }: { params: { id: string } }) {
         ) : (
           ''
         )}
-      </h1> */}
+      </h1>
 
-      {/* <p>
+      <p>
         <em>
-          Added by: <img src={data.author.userImage} alt="user-mini" />{' '}
-          {data.author.userName}
+          Added by: <img src={data?.author.userImage} alt="user-mini" />{' '}
+          {data?.author.userName}
         </em>
       </p>
-      <img src={data.imageUrl} />
-      
+      <img src={data?.imageUrl} />
+
       <div>
         <h2>Description</h2>
-        <p>{data.description}</p>
+        <p>{data?.description}</p>
         <h2>Where to find it</h2>
-        <p>{data.location}</p>
-      </div> */}
+        <p>{data?.location}</p>
+      </div>
 
       {/* <div>
-        <h4>({data.comments.length}) Comments:</h4>
-        {data.comments &&
+        <h4>({data?.comments.length}) Comments:</h4>
+        {data?.comments &&
           data.comments.map((comment) => {
             return (
               <Comment
@@ -138,13 +140,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
             type="textarea"
             placeholder="Leave a comment"
             style={{ height: '125px' }}
-            onChange={handleCommentValue}
+            // onChange={handleCommentValue}
           />
         </label>
         <button
-          onClick={handleAddingComment}
-          className="submit-message-button"
-          variant="info"
+          // onClick={handleAddingComment}
         >
           Submit new Comment
         </button>
