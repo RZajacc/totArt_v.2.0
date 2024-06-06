@@ -1,47 +1,27 @@
 'use client';
 import { FormEvent, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import Link from 'next/link';
+import { validatePassword } from '../../utils/ValidatePassword';
 
 type Props = {};
 
 function Register({}: Props) {
-  // *Setting up context
   const {} = useContext(AuthContext);
 
-  // *4 Register a new user
   const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    // User credentials
+    const userName = formData.get('username') as string;
+    const password = formData.get('password') as string;
+    const confirmPassword = formData.get('confirm-password') as string;
+
     //   ! Walidacja do osobnego pliku i tylko wynik tutaj, form data
     //   ! Rejstracja z contextu, na backendzie zmniejsz nowego użytkownika do trzech pól które ma
 
-    // const formValidation: string[] = [];
-
-    // if (newUser.password !== confirmPassword) {
-    //   formValidation.push("Provided passwords don't match!");
-    // } else {
-    //   if (newUser.password.length < 8 || confirmPassword.length < 8) {
-    //     formValidation.push('Password is too short!');
-    //   }
-
-    //   if (!/[A-Z]/.test(newUser.password) || !/[A-Z]/.test(confirmPassword)) {
-    //     formValidation.push(
-    //       'Password needs to have at least one uppercase letter!',
-    //     );
-    //   }
-
-    //   if (
-    //     !/[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g.test(newUser.password) ||
-    //     !/[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g.test(confirmPassword)
-    //   ) {
-    //     formValidation.push(
-    //       'Password needs to contain at least 1 special character!',
-    //     );
-    //   }
-
-    //   if (!/[0-9]/.test(newUser.password) || !/[0-9]/.test(confirmPassword)) {
-    //     formValidation.push('Password needs to contain at least one number!');
-    //   }
-    // }
+    const pswValidation = validatePassword(password, confirmPassword);
 
     // setPasswordErr(formValidation);
 
@@ -53,49 +33,60 @@ function Register({}: Props) {
 
   return (
     <>
-      <div className="welcome-div">
-        <h4>Welcome to TotArt</h4>
-        <p>To use all of our functionalities please register a new account</p>
-        {/* Link to lgin */}
+      <div className="mx-auto mt-5 max-w-sm rounded-md bg-slate-200 p-4">
+        <h4 className="mb-3 text-center text-xl font-bold">
+          Register at TotArt
+        </h4>
         <p className="logreg-paragraph">
-          If you already have an one then simply{' '}
+          If you already have an existing account simply go to{' '}
+          <Link href={'/login'} className="font-bold">
+            login.
+          </Link>
         </p>
+        <form onSubmit={handleRegister} className="my-4 grid gap-2">
+          <label htmlFor="username">Username:</label>
+          <input type="text" required name="username" placeholder="i.e. John" />
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            required
+            name="email"
+            placeholder="john@doe.com"
+          />
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            required
+            name="password"
+            placeholder="password"
+            minLength={8}
+          />
+          <label htmlFor="confirm-password">Confirm password:</label>
+          <input
+            type="password"
+            required
+            name="confirm-password"
+            placeholder="password"
+            minLength={8}
+          />
+          <div className="text-sm italic text-slate-500">
+            <p>Password needs to have at least:</p>
+            <ul className="ml-5 list-disc">
+              <li>8 characters.</li>
+              <li>1 lowercase character.</li>
+              <li>1 uppercase character.</li>
+              <li>1 number.</li>
+              <li>1 special character.</li>
+            </ul>
+          </div>
+          <button
+            type="submit"
+            className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
+          >
+            Register
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleRegister} className="my-4 grid gap-2">
-        <label htmlFor="username">Username:</label>
-        <input type="text" required name="username" placeholder="username" />
-        <label htmlFor="email">Email:</label>
-        <input type="email" required name="email" placeholder="john@doe.com" />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          required
-          name="password"
-          placeholder="password"
-        />
-        <label htmlFor="confirm-password">Confirm password:</label>
-        <input
-          type="password"
-          required
-          name="confirm-password"
-          placeholder="password"
-        />
-        <div className="text-centers text-sm italic text-slate-500">
-          <p>Password needs to have at least:</p>
-          <ul className="list-disc">
-            <li>8 characters</li>
-            <li>1 uppercase character</li>
-            <li>1 number</li>
-            <li>1 special character</li>
-          </ul>
-        </div>
-        <button
-          type="submit"
-          className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
-        >
-          Register
-        </button>
-      </form>
     </>
   );
 }

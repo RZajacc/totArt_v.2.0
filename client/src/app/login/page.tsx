@@ -64,7 +64,7 @@ function Login({}: Props) {
 
   return (
     <>
-      <div className="welcome-div mx-auto mt-5 max-w-sm rounded-md bg-slate-200 p-4">
+      <div className="mx-auto mt-5 max-w-sm rounded-md bg-slate-200 p-4">
         <h4 className="mb-3 text-center text-xl font-bold">
           Welcome to TotArt
         </h4>
