@@ -1,22 +1,40 @@
 'use client';
-import { FormEvent, useContext, useRef, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { FormEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import { validatePassword } from '../../utils/ValidatePassword';
 
-type Props = {};
+type registerSucc = {
+  msg: string;
+  user: {
+    userName: string;
+    email: string;
+  };
+};
 
-type registerResult = {
+type registerErr = {
   msg: string;
 };
 
-function Register({}: Props) {
-  const {} = useContext(AuthContext);
+function Register() {
+  // -------States-------
   const [pswFeedback, setPswFeedback] = useState<string[]>();
-  const pswErrorDiv = useRef<HTMLDivElement>(null);
-  const [registerSucc, setRegisterSucc] = useState('');
+  const [registerSucc, setRegisterSucc] = useState<registerSucc>({
+    msg: '',
+    user: { email: '', userName: '' },
+  });
   const [registerErr, setRegisterErr] = useState('');
+  // -------Registration Refs-------
+  const pswErrorDiv = useRef<HTMLDivElement>(null);
+  const regErrorParagraph = useRef<HTMLDivElement>(null);
+  const regSuccessDiv = useRef<HTMLParagraphElement>(null);
 
+  // -------Input refs-------
+  const usernameInput = useRef<HTMLInputElement>(null);
+  const emailInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
+  const confirmPasswordInput = useRef<HTMLInputElement>(null);
+
+  // User registration
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -27,6 +45,7 @@ function Register({}: Props) {
     const password = formData.get('password') as string;
     const confirmPassword = formData.get('confirm-password') as string;
 
+    // Get a table containing password errors
     const pswValidation = validatePassword(password, confirmPassword);
     setPswFeedback(pswValidation);
 
@@ -57,17 +76,34 @@ function Register({}: Props) {
         );
 
         if (response.ok) {
-          const result: registerResult = await response.json();
-          setRegisterSucc(result.msg);
-          console.log(result);
+          const result: registerSucc = await response.json();
+          setRegisterSucc(result);
+          regSuccessDiv.current?.classList.remove('hidden');
+          usernameInput.current!.value = '';
+          emailInput.current!.value = '';
+          passwordInput.current!.value = '';
+          confirmPasswordInput.current!.value = '';
         } else {
-          const result: registerResult = await response.json();
-          setRegisterErr(result.msg);
+          const result: registerErr = await response.json();
           console.log(result);
+          setRegisterErr(result.msg);
+          regErrorParagraph.current?.classList.remove('hidden');
         }
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  const hideFeedbackInfo = () => {
+    if (!regSuccessDiv.current?.classList.contains('hidden')) {
+      regSuccessDiv.current?.classList.add('hidden');
+    }
+    if (!regErrorParagraph.current?.classList.contains('hidden')) {
+      regErrorParagraph.current?.classList.add('hidden');
+    }
+    if (!pswErrorDiv.current?.classList.contains('hidden')) {
+      pswErrorDiv.current?.classList.add('hidden');
     }
   };
 
@@ -85,35 +121,42 @@ function Register({}: Props) {
         </p>
         <form onSubmit={handleRegister} className="my-4 grid gap-2">
           <label htmlFor="username">Username:</label>
-          <input type="text" required name="username" placeholder="i.e. John" />
+          <input
+            ref={usernameInput}
+            type="text"
+            required
+            name="username"
+            placeholder="i.e. John"
+            onChange={hideFeedbackInfo}
+          />
           <label htmlFor="email">Email:</label>
           <input
+            ref={emailInput}
             type="email"
             required
             name="email"
             placeholder="john@doe.com"
+            onChange={hideFeedbackInfo}
           />
           <label htmlFor="password">Password:</label>
           <input
+            ref={passwordInput}
             type="password"
             required
             name="password"
             placeholder="password"
             minLength={8}
-            onChange={() => {
-              pswErrorDiv.current?.classList.add('hidden');
-            }}
+            onChange={hideFeedbackInfo}
           />
           <label htmlFor="confirm-password">Confirm password:</label>
           <input
+            ref={confirmPasswordInput}
             type="password"
             required
             name="confirm-password"
             placeholder="password"
             minLength={8}
-            onChange={() => {
-              pswErrorDiv.current?.classList.add('hidden');
-            }}
+            onChange={hideFeedbackInfo}
           />
           <div className="text-sm italic text-slate-500">
             <p>Password needs to have at least:</p>
@@ -134,8 +177,28 @@ function Register({}: Props) {
                 return <p key={idx}>{error}</p>;
               })}
           </div>
-          <p>{registerErr}</p>
-          <p>{registerSucc}</p>
+          <p
+            className="hidden rounded-xl bg-red-500 px-4 py-2 text-white"
+            ref={regErrorParagraph}
+          >
+            {registerErr}
+          </p>
+          <div
+            className="hidden rounded-xl bg-green-400 p-2"
+            ref={regSuccessDiv}
+          >
+            <p className="text-center text-lg font-bold">{registerSucc.msg}</p>
+            <p className="text-center">
+              You will receive a confirmation email on{' '}
+              <span className="font-bold">{registerSucc.user.email}</span>{' '}
+              adress.
+            </p>
+            <small className="font-bold italic text-red-500">
+              *Functionality to be applied soon! For now just go to login page
+              to continue
+            </small>
+          </div>
+
           <button
             type="submit"
             className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
