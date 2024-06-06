@@ -1,5 +1,5 @@
 'use client';
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Link from 'next/link';
 import { validatePassword } from '../../utils/ValidatePassword';
@@ -8,6 +8,8 @@ type Props = {};
 
 function Register({}: Props) {
   const {} = useContext(AuthContext);
+  const [pswFeedback, setPswFeedback] = useState<string[]>();
+  const pswErrorDiv = useRef<HTMLDivElement>(null);
 
   const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,12 +20,15 @@ function Register({}: Props) {
     const password = formData.get('password') as string;
     const confirmPassword = formData.get('confirm-password') as string;
 
-    //   ! Walidacja do osobnego pliku i tylko wynik tutaj, form data
     //   ! Rejstracja z contextu, na backendzie zmniejsz nowego użytkownika do trzech pól które ma
 
     const pswValidation = validatePassword(password, confirmPassword);
+    setPswFeedback(pswValidation);
 
-    // setPasswordErr(formValidation);
+    // If password is not matching requirements show error div
+    if (pswValidation.length !== 0) {
+      pswErrorDiv.current?.classList.remove('hidden');
+    }
 
     // if (passwordErr?.length === 0) {
     //   registerWithEmail(newUser);
@@ -60,6 +65,9 @@ function Register({}: Props) {
             name="password"
             placeholder="password"
             minLength={8}
+            onChange={() => {
+              pswErrorDiv.current?.classList.add('hidden');
+            }}
           />
           <label htmlFor="confirm-password">Confirm password:</label>
           <input
@@ -68,6 +76,9 @@ function Register({}: Props) {
             name="confirm-password"
             placeholder="password"
             minLength={8}
+            onChange={() => {
+              pswErrorDiv.current?.classList.add('hidden');
+            }}
           />
           <div className="text-sm italic text-slate-500">
             <p>Password needs to have at least:</p>
@@ -78,6 +89,19 @@ function Register({}: Props) {
               <li>1 number.</li>
               <li>1 special character.</li>
             </ul>
+          </div>
+          <div
+            ref={pswErrorDiv}
+            className="hidden rounded-xl bg-red-500 px-4 py-2 text-white"
+          >
+            {pswFeedback &&
+              pswFeedback.map((error, idx) => {
+                return (
+                  <>
+                    <p key={idx}>{error}</p>
+                  </>
+                );
+              })}
           </div>
           <button
             type="submit"
