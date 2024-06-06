@@ -53,7 +53,7 @@ const register = async (req, res) => {
   try {
     const hashedPassword = await bcrypt_hash(req.body.password);
     if (hashedPassword) {
-      // * Check if a new user exists already
+      // Check if a new user exists already
       const existingUser = await userModel.findOne({ email: req.body.email });
       if (existingUser) {
         res.status(200).json({
@@ -65,9 +65,6 @@ const register = async (req, res) => {
             userName: req.body.userName,
             email: req.body.email,
             password: hashedPassword,
-            userImage: req.body.userImage,
-            userWebsite: req.body.website,
-            userBio: req.body.bio,
           });
 
           const savedUser = await newUser.save();
@@ -77,9 +74,6 @@ const register = async (req, res) => {
               id: savedUser.id,
               userName: savedUser.userName,
               email: savedUser.email,
-              userImage: savedUser.userImage,
-              userWebsite: savedUser.website,
-              userBio: savedUser.bio,
             },
           });
         } catch (error) {
