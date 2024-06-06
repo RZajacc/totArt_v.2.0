@@ -1,7 +1,9 @@
 'use client';
 import { useContext, useState, ChangeEvent, useEffect } from 'react';
-import { post } from '../../../types/types';
 import { AuthContext } from '../../../context/AuthContext';
+import useSWR from 'swr';
+
+import { post } from '../../../types/types';
 import {
   deleteFromUserArray,
   updateUserData,
@@ -13,55 +15,31 @@ function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
   const { user } = useContext(AuthContext);
 
-  // const [data, setData] = useState<post>({
-  //   _id: "",
-  //   author: { _id: "", userImage: "", userName: "" },
-  //   comments: [
-  //     {
-  //       _id: "",
-  //       author: { _id: "", userImage: "", userName: "" },
-  //       comment: "",
-  //       relatedPost: "",
-  //     },
-  //   ],
-  //   description: "",
-  //   imageUrl: "",
-  //   location: "",
-  //   title: "",
-  // });
+  const locationFetch = async (locationID: string) => {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
-  // const { user } = useContext(AuthContext);
+    const urlencoded = new URLSearchParams();
+    urlencoded.append('id', locationID);
+
+    const response = await fetch('http://localhost:5000/api/posts/details', {
+      method: 'POST',
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: 'follow',
+    });
+
+    if (response.ok) {
+      const result: post = await response.json();
+      return result;
+    } else {
+      throw new Error('Failed to fetch data');
+    }
+  };
+
+  const { data } = useSWR(locationID, locationFetch);
+
   // const [commentVal, setCommentVal] = useState("");
-
-  // // * FETCH POST
-  // const getPostDetails = async () => {
-  //   const myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-  //   const urlencoded = new URLSearchParams();
-  //   urlencoded.append("id", id!);
-
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: urlencoded,
-  //   };
-
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:5000/api/posts/details",
-  //       requestOptions
-  //     );
-  //     const result = await response.json();
-  //     setData(result);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getPostDetails();
-  // }, []);
 
   // // * ADD OR REMOVE POST FROM FAVOURITES
   // const handleAddFavs = async () => {
