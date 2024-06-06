@@ -1,3 +1,4 @@
+'use client';
 import { useContext, useState, ChangeEvent, useEffect } from 'react';
 import { post } from '../../../types/types';
 import { AuthContext } from '../../../context/AuthContext';
@@ -10,6 +11,7 @@ import { updatePost } from '../../../utils/PostsTools';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
+  const { user } = useContext(AuthContext);
 
   // const [data, setData] = useState<post>({
   //   _id: "",
@@ -96,95 +98,79 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <h1>Recipe details page {locationID}</h1>
-      {/* <Container className="details-container">
-        <Row className="justify-content-center text-center">
-          <Col xs={8} className="details-column">
-            <h1>
-              Title:{" "}
-              <span className="image-title">
-                {data.title}
-                {"  "}
-              </span>
-              {user ? (
-                user?.favs.includes(data._id) ? (
-                  <Button variant="light" onClick={handleAddFavs}>
-                    Delete from{" "}
-                    <img
-                      src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354709/other/ra5sovm9gaxynfz3ah6t.svg"
-                      alt="empty-heart"
-                      width={"25px"}
-                    />
-                  </Button>
-                ) : (
-                  <Button variant="light" onClick={handleAddFavs}>
-                    Add to{" "}
-                    <img
-                      src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354710/other/l8kxiddecnqx6talp4bz.svg"
-                      alt="empty-heart"
-                      width={"25px"}
-                    />
-                  </Button>
-                )
-              ) : (
-                ""
-              )}
-            </h1>
-            <p>
-              <em>
-                Added by:{" "}
-                <img
-                  src={data.author.userImage}
-                  alt="user-mini"
-                  className="author-miniature"
-                />{" "}
-                {data.author.userName}
-              </em>
-            </p>
-            <img src={data.imageUrl} className="details-image" />
-            <div className="image-info">
-              <h2>Description</h2>
-              <p className="details-text">{data.description}</p>
-              <h2>Where to find it</h2>
-              <p className="details-text">{data.location}</p>
-            </div>
-          </Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col xs={8}>
-            <div className="comments-div">
-              <h4>({data.comments.length}) Comments:</h4>
-              {data.comments &&
-                data.comments.map((comment) => {
-                  return (
-                    <Comment
-                      comment={comment}
-                      handleDeleteComment={handleDeleteComment}
-                    />
-                  );
-                })}
-              <FloatingLabel
-                controlId="comment-textarea"
-                label="Leave a comment below:"
-              >
-                <Form.Control
-                  as="textarea"
-                  placeholder="Leave a comment"
-                  style={{ height: "125px" }}
-                  onChange={handleCommentValue}
-                />
-              </FloatingLabel>
-              <Button
-                onClick={handleAddingComment}
-                className="submit-message-button"
-                variant="info"
-              >
-                Submit new Comment
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </Container> */}
+      {/* <h1>
+        Title:{' '}
+        <span className="image-title">
+          {data.title}
+          {'  '}
+        </span>
+        {user ? (
+          user?.favs.includes(data._id) ? (
+            <button onClick={handleAddFavs}>
+              Delete from{' '}
+              <img
+                src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354709/other/ra5sovm9gaxynfz3ah6t.svg"
+                alt="empty-heart"
+                width={'25px'}
+              />
+            </button>
+          ) : (
+            <button onClick={handleAddFavs}>
+              Add to{' '}
+              <img
+                src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354710/other/l8kxiddecnqx6talp4bz.svg"
+                alt="empty-heart"
+                width={'25px'}
+              />
+            </button>
+          )
+        ) : (
+          ''
+        )}
+      </h1> */}
+
+      {/* <p>
+        <em>
+          Added by: <img src={data.author.userImage} alt="user-mini" />{' '}
+          {data.author.userName}
+        </em>
+      </p>
+      <img src={data.imageUrl} />
+      
+      <div>
+        <h2>Description</h2>
+        <p>{data.description}</p>
+        <h2>Where to find it</h2>
+        <p>{data.location}</p>
+      </div> */}
+
+      {/* <div>
+        <h4>({data.comments.length}) Comments:</h4>
+        {data.comments &&
+          data.comments.map((comment) => {
+            return (
+              <Comment
+                comment={comment}
+                handleDeleteComment={handleDeleteComment}
+              />
+            );
+          })}
+        <label>
+          <input
+            type="textarea"
+            placeholder="Leave a comment"
+            style={{ height: '125px' }}
+            onChange={handleCommentValue}
+          />
+        </label>
+        <button
+          onClick={handleAddingComment}
+          className="submit-message-button"
+          variant="info"
+        >
+          Submit new Comment
+        </button>
+      </div> */}
     </>
   );
 }
