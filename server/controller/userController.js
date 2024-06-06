@@ -56,8 +56,8 @@ const register = async (req, res) => {
       // Check if a new user exists already
       const existingUser = await userModel.findOne({ email: req.body.email });
       if (existingUser) {
-        res.status(200).json({
-          msg: "Email already exists in the database",
+        res.status(400).json({
+          msg: "Email already exists in the database!",
         });
       } else {
         try {
@@ -69,12 +69,7 @@ const register = async (req, res) => {
 
           const savedUser = await newUser.save();
           res.status(201).json({
-            msg: "New user registered",
-            user: {
-              id: savedUser.id,
-              userName: savedUser.userName,
-              email: savedUser.email,
-            },
+            msg: `Successfully registered ${savedUser.userName} account. You will receive a confirmation email on ${savedUser.email} adress`,
           });
         } catch (error) {
           console.log(error);
