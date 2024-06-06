@@ -58,12 +58,20 @@ function NavDesktop({}: Props) {
             </button>
           </>
         ) : (
-          <Link
-            href={'login'}
-            className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
-          >
-            Login
-          </Link>
+          <>
+            <Link
+              href={'register'}
+              className={`link ${pathname === '/register' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+            >
+              Register
+            </Link>
+            <Link
+              href={'login'}
+              className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+            >
+              Login
+            </Link>
+          </>
         )}
       </section>
     </div>
