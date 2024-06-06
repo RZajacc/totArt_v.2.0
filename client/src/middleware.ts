@@ -7,5 +7,11 @@ export function middleware(request: NextRequest) {
     return Response.redirect(new URL('/login', request.url));
   }
 
-  // ? Here will come protection of location detail routes
+  if (!currentUser && request.nextUrl.pathname.startsWith('/locations/')) {
+    return Response.redirect(new URL('/login', request.url));
+  }
 }
+
+export const config = {
+  matcher: ['/account', '/locations/:path*'],
+};
