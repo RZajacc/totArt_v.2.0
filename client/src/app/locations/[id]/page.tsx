@@ -1,70 +1,20 @@
 'use client';
-import { useContext, useState, ChangeEvent, useEffect } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import useSWR from 'swr';
 
 import { post } from '../../../types/types';
-import {
-  deleteFromUserArray,
-  updateUserData,
-} from '../../../utils/UserEditTools';
+
 import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
 import { updatePost } from '../../../utils/PostsTools';
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
-
-// Error interface to return more information from fetcher
-interface FetchError extends Error {
-  info?: any;
-  status?: number;
-}
+import { locationFetch } from '../../../fetchers/LocationFetch';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
   const { user } = useContext(AuthContext);
 
-  const locationFetch = async (locationID: string) => {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append('id', locationID);
-
-    const response = await fetch('http://localhost:5000/api/posts/details', {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    });
-
-    if (response.ok) {
-      const result: post = await response.json();
-      return result;
-    } else {
-      // Attach extra info to the error object.
-      const result = await response.json();
-      // Create error
-      const error = new Error(
-        'An error occurred while fetching the data.',
-      ) as FetchError;
-      // Assign information returning from request to extended error
-      error.info = result.msg;
-      error.status = response.status;
-      throw error;
-    }
-  };
-
   const { data: locationData, error } = useSWR(locationID, locationFetch);
-
-  // // * ADD OR REMOVE POST FROM FAVOURITES
-  // const handleAddFavs = async () => {
-  //   if (user!.favs.includes(data._id)) {
-  //     await deleteFromUserArray(user!.email, "favs", data._id);
-  //     isUserLoggedIn();
-  //   } else {
-  //     await updateUserData(user!.email, "favs", data._id);
-  //     isUserLoggedIn();
-  //   }
-  // };
 
   // // * GET VALUE OF A COMMENT
   // const handleCommentValue = (e: ChangeEvent<HTMLInputElement>) => {
