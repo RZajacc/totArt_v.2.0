@@ -10,6 +10,13 @@ import {
 } from '../../../utils/UserEditTools';
 import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
 import { updatePost } from '../../../utils/PostsTools';
+import LocationDetails from '../../../_components/locationDetails/LocationDetails';
+
+// Error interface to return more information from fetcher
+interface FetchError extends Error {
+  info?: any;
+  status?: number;
+}
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
@@ -33,11 +40,24 @@ function ContentDetails({ params }: { params: { id: string } }) {
       const result: post = await response.json();
       return result;
     } else {
-      throw new Error('Failed to fetch data');
+      // Attach extra info to the error object.
+      const result = await response.json();
+      // Create error
+      const error = new Error(
+        'An error occurred while fetching the data.',
+      ) as FetchError;
+      // Assign information returning from request to extended error
+      error.info = result.msg;
+      error.status = response.status;
+      throw error;
     }
   };
 
-  const { data } = useSWR(locationID, locationFetch);
+  const {
+    data: locationData,
+    error,
+    isLoading,
+  } = useSWR(locationID, locationFetch);
 
   // // * ADD OR REMOVE POST FROM FAVOURITES
   // const handleAddFavs = async () => {
@@ -74,55 +94,16 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <h1>
-        Title:{' '}
-        <span className="image-title">
-          {data?.title}
-          {'  '}
-        </span>
-        {user ? (
-          user?.favs.includes(data ? data._id : '') ? (
-            <button
-            // onClick={handleAddFavs}
-            >
-              Delete from{' '}
-              <img
-                src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354709/other/ra5sovm9gaxynfz3ah6t.svg"
-                alt="empty-heart"
-                width={'25px'}
-              />
-            </button>
-          ) : (
-            <button
-            // onClick={handleAddFavs}
-            >
-              Add to{' '}
-              <img
-                src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354710/other/l8kxiddecnqx6talp4bz.svg"
-                alt="empty-heart"
-                width={'25px'}
-              />
-            </button>
-          )
-        ) : (
-          ''
-        )}
-      </h1>
-
-      <p>
-        <em>
-          Added by: <img src={data?.author.userImage} alt="user-mini" />{' '}
-          {data?.author.userName}
-        </em>
-      </p>
-      <img src={data?.imageUrl} />
-
-      <div>
-        <h2>Description</h2>
-        <p>{data?.description}</p>
-        <h2>Where to find it</h2>
-        <p>{data?.location}</p>
-      </div>
+      {error ? (
+        <>
+          <div className="mt-10">
+            <h1 className="text-center text-lg font-bold">{error.message}</h1>
+            <p className="text-center text-red-500">{error.info}</p>
+          </div>
+        </>
+      ) : (
+        <LocationDetails user={user!} data={locationData!} />
+      )}
 
       {/* <div>
         <h4>({data?.comments.length}) Comments:</h4>
