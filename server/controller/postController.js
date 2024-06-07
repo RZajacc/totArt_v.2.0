@@ -34,25 +34,39 @@ const addNewPost = async (req, res) => {
 };
 
 const getDetails = async (req, res) => {
-  const postData = await postModel
-    .findOne({ _id: req.body.id })
-    .populate({ path: "author", select: ["userName", "userImage"] })
-    .populate({
-      path: "comments",
-      populate: { path: "author", select: ["userName", "userImage"] },
-    });
+  try {
+    // Check if post exists
+    const postData = await postModel
+      .findById(req.body.id)
+      .populate({ path: "author", select: ["userName", "userImage"] })
+      .populate({
+        path: "comments",
+        populate: { path: "author", select: ["userName", "userImage"] },
+      });
 
-  console.log(postData);
-  res.json({
-    _id: postData._id,
-    title: postData.title,
-    description: postData.description,
-    location: postData.location,
-    imageUrl: postData.imageUrl,
-    author: postData.author,
-    favs: postData.favs,
-    comments: postData.comments,
-  });
+    // If it doesnt return a message
+    if (!postData) {
+      res.status(400).json({
+        msg: "Requested location does not exist",
+      });
+    } else {
+      // If it does return data
+      res.status(200).json({
+        _id: postData._id,
+        title: postData.title,
+        description: postData.description,
+        location: postData.location,
+        imageUrl: postData.imageUrl,
+        author: postData.author,
+        favs: postData.favs,
+        comments: postData.comments,
+      });
+    }
+  } catch {
+    res.status(500).json({
+      msg: "Something went wrong",
+    });
+  }
 };
 
 const updatePost = async (req, res) => {
