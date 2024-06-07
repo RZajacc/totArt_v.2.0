@@ -53,11 +53,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
     }
   };
 
-  const {
-    data: locationData,
-    error,
-    isLoading,
-  } = useSWR(locationID, locationFetch);
+  const { data: locationData, error } = useSWR(locationID, locationFetch);
 
   // // * ADD OR REMOVE POST FROM FAVOURITES
   // const handleAddFavs = async () => {

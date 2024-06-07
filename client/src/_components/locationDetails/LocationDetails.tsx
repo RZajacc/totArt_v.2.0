@@ -1,5 +1,8 @@
 import React from 'react';
 import { User, post } from '../../types/types';
+import emptyHeart from '../../../public/heart_empty.svg';
+import fullHeart from '../../../public/heart_full.svg';
+import Image from 'next/image';
 
 type Props = {
   user: User;
@@ -9,54 +12,55 @@ type Props = {
 function LocationDetails({ user, data }: Props) {
   return (
     <>
-      <h1>
-        Title:{' '}
-        <span className="image-title">
-          {data?.title}
-          {'  '}
-        </span>
-        {user ? (
-          user?.favs.includes(data ? data._id : '') ? (
+      <div className="grid gap-y-3">
+        <section className="flex items-center justify-center">
+          <h1 className="mx-4 text-center text-lg font-bold">
+            Title: <span className="font-normal">{data?.title}</span>
+          </h1>
+          {user?.favs.includes(data ? data._id : '') ? (
             <button
             // onClick={handleAddFavs}
             >
-              Delete from{' '}
-              <img
-                src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354709/other/ra5sovm9gaxynfz3ah6t.svg"
-                alt="empty-heart"
-                width={'25px'}
-              />
+              <Image src={fullHeart} alt="full-heart" />
             </button>
           ) : (
             <button
             // onClick={handleAddFavs}
             >
-              Add to{' '}
-              <img
-                src="https://res.cloudinary.com/dqdofxwft/image/upload/v1699354710/other/l8kxiddecnqx6talp4bz.svg"
+              <Image
+                src={emptyHeart}
                 alt="empty-heart"
-                width={'25px'}
+                width={30}
+                height={30}
               />
             </button>
-          )
-        ) : (
-          ''
-        )}
-      </h1>
+          )}
+        </section>
 
-      <p>
-        <em>
-          Added by: <img src={data?.author.userImage} alt="user-mini" />{' '}
-          {data?.author.userName}
-        </em>
-      </p>
-      <img src={data?.imageUrl} />
+        <section>
+          <h2 className="text-center font-bold">Description:</h2>
+          <p className="text-center">{data?.description}</p>
+        </section>
+        <section>
+          <h2 className="text-center font-bold">Where to find it</h2>
+          <p className="text-center">{data?.location}</p>
+        </section>
 
-      <div>
-        <h2>Description</h2>
-        <p>{data?.description}</p>
-        <h2>Where to find it</h2>
-        <p>{data?.location}</p>
+        <section className="flex items-center justify-center">
+          <div>
+            <strong>Posted by: </strong>
+            <em>{data?.author.userName}</em>
+          </div>
+        </section>
+
+        <Image
+          src={data?.imageUrl}
+          alt="user-img"
+          width={500}
+          height={500}
+          className="rounded-sm"
+        />
+        <div></div>
       </div>
     </>
   );
