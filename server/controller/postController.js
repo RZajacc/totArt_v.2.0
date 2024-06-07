@@ -33,6 +33,7 @@ const addNewPost = async (req, res) => {
   } catch (error) {}
 };
 
+// ! Naming to change
 const getDetails = async (req, res) => {
   try {
     // Check if post exists
@@ -69,6 +70,7 @@ const getDetails = async (req, res) => {
   }
 };
 
+// ! Naming to change
 const updatePost = async (req, res) => {
   const filter = { _id: req.body._id };
   const elementName = req.body.elementName;

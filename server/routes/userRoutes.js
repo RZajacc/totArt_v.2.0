@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addToUserFavourites,
   deleteFromUserArray,
   deleteImage,
   deleteUser,
@@ -20,6 +21,7 @@ router.post("/imageUpload", multerUpload.single("userImage"), uploadImage);
 router.post("/imageDelete", deleteImage);
 router.post("/register", register);
 router.post("/login", login);
+router.post("/addToUserFavourites", addToUserFavourites);
 router.post("/updateUser", updateUserData);
 router.get("/profile", jwtAuth, getProfle);
 router.post("/allUserPosts", getAllUserPosts);

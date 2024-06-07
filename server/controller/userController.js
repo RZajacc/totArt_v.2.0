@@ -6,50 +6,7 @@ import { generateToken } from "../utils/tokenServices.js";
 import postModel from "../models/postModel.js";
 import commentModel from "../models/commentModel.js";
 
-const uploadImage = async (req, res) => {
-  //   * Upload file to cloudinary
-  const options = {
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-    folder: req.body.folder,
-  };
-
-  if (req.file) {
-    try {
-      // Upload the image
-      const result = await cloudinary.uploader.upload(req.file.path, options);
-      console.log(result);
-      res.status(200).json({
-        message: "Image uploaded successfully",
-        userImage: result.secure_url,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } else {
-    res.status(500).json({
-      error: "File type not supported",
-    });
-  }
-};
-
-const deleteImage = async (req, res) => {
-  try {
-    const result = await cloudinary.uploader.destroy(req.body.publicId);
-    console.log(result);
-    res.status(200).json({
-      message: "Image deleted successfully",
-      userImage: result,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const register = async (req, res) => {
-  console.log("Request body--->", req.body);
-
   try {
     const hashedPassword = await bcrypt_hash(req.body.password);
     if (hashedPassword) {
@@ -158,8 +115,32 @@ const getProfle = async (req, res) => {
   }
 };
 
+// !Currently working on!!
+const addToUserFavourites = async (req, res) => {
+  console.log(req.body);
+  const filter = { email: req.body.email };
+  try {
+    const updatedUser = await userModel.findOneAndUpdate(
+      filter,
+      { $push: { favs: req.body.favId } },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({
+      msg: "Posts populated properly",
+      user: {
+        username: updatedUser.userName,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Server error",
+    });
+  }
+};
+
 const updateUserData = async (req, res) => {
-  console.log("Server Response", req.body);
   const elementName = req.body.elementName;
   const elementValue = req.body.elementValue;
   const filter = { email: req.body.email };
@@ -269,6 +250,47 @@ const deleteUser = async (req, res) => {
   res.json({ msg: "user deleted successfully" });
 };
 
+const uploadImage = async (req, res) => {
+  //   * Upload file to cloudinary
+  const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+    folder: req.body.folder,
+  };
+
+  if (req.file) {
+    try {
+      // Upload the image
+      const result = await cloudinary.uploader.upload(req.file.path, options);
+      console.log(result);
+      res.status(200).json({
+        message: "Image uploaded successfully",
+        userImage: result.secure_url,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    res.status(500).json({
+      error: "File type not supported",
+    });
+  }
+};
+
+const deleteImage = async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.destroy(req.body.publicId);
+    console.log(result);
+    res.status(200).json({
+      message: "Image deleted successfully",
+      userImage: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
   uploadImage,
   deleteImage,
@@ -280,4 +302,5 @@ export {
   getAllFavs,
   deleteFromUserArray,
   deleteUser,
+  addToUserFavourites,
 };
