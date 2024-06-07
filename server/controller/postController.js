@@ -64,7 +64,7 @@ const getDetails = async (req, res) => {
     }
   } catch {
     res.status(500).json({
-      msg: "Something went wrong",
+      msg: "Server error",
     });
   }
 };
