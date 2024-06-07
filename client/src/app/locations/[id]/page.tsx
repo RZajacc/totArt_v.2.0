@@ -3,18 +3,18 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import useSWR from 'swr';
 
-import { post } from '../../../types/types';
+// import { post } from '../../../types/types';
 
-import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
-import { updatePost } from '../../../utils/PostsTools';
+// import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
+// import { updatePost } from '../../../utils/PostsTools';
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
-import { locationFetch } from '../../../fetchers/LocationFetch';
+import { locationDetails } from '../../../fetchers/LocationDetails';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
   const { user } = useContext(AuthContext);
 
-  const { data: locationData, error } = useSWR(locationID, locationFetch);
+  const { data: locationData, error } = useSWR(locationID, locationDetails);
 
   // // * GET VALUE OF A COMMENT
   // const handleCommentValue = (e: ChangeEvent<HTMLInputElement>) => {

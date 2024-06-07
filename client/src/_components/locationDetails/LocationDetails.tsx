@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { User, post } from '../../types/types';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import Image from 'next/image';
-import { deleteFromUserArray, updateUserData } from '../../utils/UserEditTools';
-import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
   user: User;
@@ -13,14 +11,14 @@ type Props = {
 
 function LocationDetails({ user, data }: Props) {
   // * ADD OR REMOVE POST FROM FAVOURITES
-  const { setIsLoggedIn } = useContext(AuthContext);
-  const handleAddFavs = async () => {
-    if (user!.favs.includes(data._id)) {
-      await deleteFromUserArray(user!.email, 'favs', data._id);
-    } else {
-      await updateUserData(user!.email, 'favs', data._id);
-    }
-  };
+  //   const { setIsLoggedIn } = useContext(AuthContext);
+  //   const handleAddFavs = async () => {
+  //     if (user!.favs.includes(data._id)) {
+  //       await deleteFromUserArray(user!.email, 'favs', data._id);
+  //     } else {
+  //       await updateUserData(user!.email, 'favs', data._id);
+  //     }
+  //   };
   return (
     <>
       <div className="grid gap-y-3">
@@ -29,11 +27,15 @@ function LocationDetails({ user, data }: Props) {
             Title: <span className="font-normal">{data?.title}</span>
           </h1>
           {user?.favs.includes(data ? data._id : '') ? (
-            <button onClick={handleAddFavs}>
+            <button
+            //   onClick={handleAddFavs}
+            >
               <Image src={fullHeart} alt="full-heart" width={30} height={30} />
             </button>
           ) : (
-            <button onClick={handleAddFavs}>
+            <button
+            //   onClick={handleAddFavs}
+            >
               <Image
                 src={emptyHeart}
                 alt="empty-heart"

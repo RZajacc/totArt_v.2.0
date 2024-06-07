@@ -6,7 +6,7 @@ interface FetchError extends Error {
   status?: number;
 }
 
-export const locationFetch = async (locationID: string) => {
+export const locationDetails = async (locationID: string) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
