@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  addToUserFavourites,
+  handleFavouriteLocations,
   deleteFromUserArray,
   deleteImage,
   deleteUser,
@@ -23,7 +23,7 @@ router.get("/profile", jwtAuth, getProfle);
 router.post("/login", login);
 router.post("/register", register);
 
-router.patch("/addToUserFavourites", addToUserFavourites);
+router.patch("/addToUserFavourites", handleFavouriteLocations);
 
 router.post("/imageUpload", multerUpload.single("userImage"), uploadImage);
 router.post("/imageDelete", deleteImage);

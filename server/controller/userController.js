@@ -115,32 +115,43 @@ const getProfle = async (req, res) => {
   }
 };
 
-// !Currently working on!!
-const addToUserFavourites = async (req, res) => {
-  console.log(req.body);
+const handleFavouriteLocations = async (req, res) => {
+  // Filter to find a user in the database
   const filter = { email: req.body.email };
   try {
-    const updatedUser = await userModel.findOneAndUpdate(
-      filter,
-      { $push: { favs: req.body.favId } },
-      {
-        new: true,
-      }
-    );
-    if (updatedUser) {
-      res.status(200).json({
-        msg: "Posts populated properly",
-        user: {
-          _id: updatedUser.id,
-          userName: updatedUser.userName,
-          email: updatedUser.email,
-          userImage: updatedUser.userImage,
-          userWebsite: updatedUser.userWebsite,
-          userBio: updatedUser.userBio,
-          posts: updatedUser.posts,
-          favs: updatedUser.favs,
-        },
+    // Check if user exists in DB
+    const updateUser = await userModel.findOne(filter);
+
+    // Check if user already has this location in favs
+    const hasFav = updateUser.favs.includes(req.body.favId);
+
+    // If user exists and doesnt have location in fav
+    if (updateUser && !hasFav) {
+      const updatedUser = await userModel.findOneAndUpdate(
+        filter,
+        { $push: { favs: req.body.favId } },
+        {
+          new: true,
+        }
+      );
+      res.status(201).json({
+        msg: "Location added to favourites",
+        userFavs: updatedUser.favs,
       });
+      // If user exists and have location in fav
+    } else if (updateUser && hasFav) {
+      const updatedUser = await userModel.findOneAndUpdate(
+        filter,
+        { $pull: { favs: req.body.favId } },
+        {
+          new: true,
+        }
+      );
+      res.status(201).json({
+        msg: "Location removed from favourites",
+        userFavs: updatedUser.favs,
+      });
+      // User is not found
     } else {
       res.status(404).json({
         msg: `Usermail ${req.body.email}, was not found in the database!`,
@@ -315,5 +326,5 @@ export {
   getAllFavs,
   deleteFromUserArray,
   deleteUser,
-  addToUserFavourites,
+  handleFavouriteLocations,
 };
