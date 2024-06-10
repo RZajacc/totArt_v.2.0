@@ -17,13 +17,17 @@ import jwtAuth from "../middlewares/jwtAuth.js";
 
 const router = express.Router();
 
+router.get("/profile", jwtAuth, getProfle);
+
+// Login has post since Im creating a token as a result
+router.post("/login", login);
+router.post("/register", register);
+
+router.patch("/addToUserFavourites", addToUserFavourites);
+
 router.post("/imageUpload", multerUpload.single("userImage"), uploadImage);
 router.post("/imageDelete", deleteImage);
-router.post("/register", register);
-router.post("/login", login);
-router.post("/addToUserFavourites", addToUserFavourites);
 router.post("/updateUser", updateUserData);
-router.get("/profile", jwtAuth, getProfle);
 router.post("/allUserPosts", getAllUserPosts);
 router.post("/allUserFavs", getAllFavs);
 router.post("/deleteFromUserArray", deleteFromUserArray);
