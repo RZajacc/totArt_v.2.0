@@ -19,6 +19,7 @@ function LocationDetails({ user, data }: Props) {
   //       await updateUserData(user!.email, 'favs', data._id);
   //     }
   //   };
+
   return (
     <>
       <div className="grid gap-y-3">

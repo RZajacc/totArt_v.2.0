@@ -1,3 +1,8 @@
+export interface FetchError extends Error {
+  info?: any;
+  status?: number;
+}
+
 export interface User {
   _id: string;
   userName: string;

@@ -8,13 +8,13 @@ import useSWR from 'swr';
 // import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
 // import { updatePost } from '../../../utils/PostsTools';
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
-import { locationDetails } from '../../../fetchers/LocationDetails';
+import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
   const { user } = useContext(AuthContext);
 
-  const { data: locationData, error } = useSWR(locationID, locationDetails);
+  const { data: locationData, error } = useSWR(locationID, locationDetailsData);
 
   // // * GET VALUE OF A COMMENT
   // const handleCommentValue = (e: ChangeEvent<HTMLInputElement>) => {

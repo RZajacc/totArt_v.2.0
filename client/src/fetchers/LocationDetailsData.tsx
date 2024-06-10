@@ -1,12 +1,6 @@
-import { post } from '../types/types';
+import { FetchError, post } from '../types/types';
 
-// Error interface to return more information from fetcher
-interface FetchError extends Error {
-  info?: any;
-  status?: number;
-}
-
-export const locationDetails = async (locationID: string) => {
+export const locationDetailsData = async (locationID: string) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -27,9 +21,9 @@ export const locationDetails = async (locationID: string) => {
     // Attach extra info to the error object.
     const result = await response.json();
     // Create error
-    const error = new Error(
+    const error: FetchError = new Error(
       'An error occurred while fetching the data.',
-    ) as FetchError;
+    );
     // Assign information returning from request to extended error
     error.info = result.msg;
     error.status = response.status;
