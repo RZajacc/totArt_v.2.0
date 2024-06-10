@@ -127,12 +127,25 @@ const addToUserFavourites = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({
-      msg: "Posts populated properly",
-      user: {
-        username: updatedUser.userName,
-      },
-    });
+    if (updatedUser) {
+      res.status(200).json({
+        msg: "Posts populated properly",
+        user: {
+          _id: updatedUser.id,
+          userName: updatedUser.userName,
+          email: updatedUser.email,
+          userImage: updatedUser.userImage,
+          userWebsite: updatedUser.userWebsite,
+          userBio: updatedUser.userBio,
+          posts: updatedUser.posts,
+          favs: updatedUser.favs,
+        },
+      });
+    } else {
+      res.status(404).json({
+        msg: `Usermail ${req.body.email}, was not found in the database!`,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       msg: "Server error",
