@@ -12,7 +12,7 @@ import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { data: locationData, error } = useSWR(locationID, locationDetailsData);
 
@@ -48,7 +48,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
           </div>
         </>
       ) : (
-        <LocationDetails user={user!} setUser={setUser} data={locationData!} />
+        <LocationDetails user={user!} data={locationData!} />
       )}
 
       {/* <div>

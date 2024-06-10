@@ -3,10 +3,13 @@ import { ReactNode, createContext, useEffect, useState } from 'react';
 import { User } from '../types/types';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
+import useSWR from 'swr';
+import { getUserData } from '../fetchers/GetUserData';
 
 interface AuthContextType {
   user: User | null | undefined;
-  setUser: (user: User) => void;
+  mutate: (user: User) => void;
+  // setUser: (user: User) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   logout: () => void;
@@ -14,7 +17,8 @@ interface AuthContextType {
 
 const AuthInitContext = {
   user: null,
-  setUser: () => console.log('User not defined yey'),
+  mutate: () => console.log('Mutate user'),
+  // setUser: () => console.log('User not defined yey'),
   isLoggedIn: false,
   setIsLoggedIn: () => console.log('Change user status'),
   logout: () => console.log('Log user out'),
@@ -27,52 +31,60 @@ type AuthContexProviderProps = {
 export const AuthContext = createContext<AuthContextType>(AuthInitContext);
 
 export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   // LOGOUT
   const logout = () => {
     deleteCookie('auth_token');
-    setUser(null);
+    // setUser(null);
     setIsLoggedIn(false);
     router.push('/login');
   };
 
-  useEffect(() => {
-    // Get token from cookie
-    const token = getCookie('auth_token');
+  const { data: user, mutate } = useSWR(
+    'http://localhost:5000/api/users/profile',
+    getUserData,
+  );
 
-    // If token exists get user data
-    if (token) {
-      const myHeaders = new Headers();
-      myHeaders.append('Authorization', `Bearer ${token}`);
+  console.log('USER', user);
 
-      fetch('http://localhost:5000/api/users/profile', {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow',
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          const user: User | undefined = result.user;
-          if (user) {
-            setUser(user);
-            setIsLoggedIn(true);
-          } else {
-            setIsLoggedIn(false);
-            setUser(null);
-          }
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [isLoggedIn, user]);
+  // useEffect(() => {
+  //   // Get token from cookie
+  //   const token = getCookie('auth_token');
+
+  //   // If token exists get user data
+  //   if (token) {
+  //     const myHeaders = new Headers();
+  //     myHeaders.append('Authorization', `Bearer ${token}`);
+
+  //     fetch('http://localhost:5000/api/users/profile', {
+  //       method: 'GET',
+  //       headers: myHeaders,
+  //       redirect: 'follow',
+  //     })
+  //       .then((response) => response.json())
+  //       .then((result) => {
+  //         const user: User | undefined = result.user;
+  //         if (user) {
+  //           setUser(user);
+  //           setIsLoggedIn(true);
+  //         } else {
+  //           setIsLoggedIn(false);
+  //           setUser(null);
+  //         }
+  //       })
+  //       .catch((error) => console.error(error));
+  //   }
+  // }, [isLoggedIn]);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        setUser,
+        // setUser,
+        mutate,
         isLoggedIn,
         setIsLoggedIn,
         logout,
