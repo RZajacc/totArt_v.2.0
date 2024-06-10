@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, post } from '../../types/types';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import Image from 'next/image';
+import useSWRMutation from 'swr/mutation';
+import { locationFavsData } from '../../fetchers/LocationFavsData';
 
 type Props = {
   user: User;
   data: post;
+  setUser: (user: User) => void;
 };
 
-function LocationDetails({ user, data }: Props) {
-  // * ADD OR REMOVE POST FROM FAVOURITES
-  //   const { setIsLoggedIn } = useContext(AuthContext);
-  //   const handleAddFavs = async () => {
-  //     if (user!.favs.includes(data._id)) {
-  //       await deleteFromUserArray(user!.email, 'favs', data._id);
-  //     } else {
-  //       await updateUserData(user!.email, 'favs', data._id);
-  //     }
-  //   };
+function LocationDetails({ user, setUser, data }: Props) {
+  // Mutation to trigger on upon button click
+  const { trigger } = useSWRMutation(
+    [user?.email, data?._id],
+    locationFavsData,
+  );
+
+  // Location already stored
+  const [isFav, setIsFav] = useState(false);
+
+  // Add or remove from favourites
+  const handleFavourites = async () => {
+    try {
+      const result = await trigger();
+      if (result) {
+        setUser({ ...user, favs: result.favs });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && data) {
+      setIsFav(user.favs?.includes(data._id));
+    }
+  }, [user, data]);
 
   return (
     <>
@@ -27,16 +47,12 @@ function LocationDetails({ user, data }: Props) {
           <h1 className="mx-4 text-center text-lg font-bold">
             Title: <span className="font-normal">{data?.title}</span>
           </h1>
-          {user?.favs.includes(data ? data._id : '') ? (
-            <button
-            //   onClick={handleAddFavs}
-            >
+          {isFav ? (
+            <button onClick={handleFavourites}>
               <Image src={fullHeart} alt="full-heart" width={30} height={30} />
             </button>
           ) : (
-            <button
-            //   onClick={handleAddFavs}
-            >
+            <button onClick={handleFavourites}>
               <Image
                 src={emptyHeart}
                 alt="empty-heart"

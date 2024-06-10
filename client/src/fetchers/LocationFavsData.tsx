@@ -2,14 +2,14 @@ import { FetchError } from '../types/types';
 
 type result = {
   msg: string;
-  userFavs: string[];
+  favs: [postId: string];
 };
 
 type responseErr = {
   msg: string;
 };
 
-export const locationFavsData = async (email: string, favId: string) => {
+export const locationFavsData = async ([email, favId]: string[]) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 

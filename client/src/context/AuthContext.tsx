@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   user: User | null | undefined;
+  setUser: (user: User) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   logout: () => void;
@@ -13,6 +14,7 @@ interface AuthContextType {
 
 const AuthInitContext = {
   user: null,
+  setUser: () => console.log('User not defined yey'),
   isLoggedIn: false,
   setIsLoggedIn: () => console.log('Change user status'),
   logout: () => console.log('Log user out'),
@@ -64,12 +66,13 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
         })
         .catch((error) => console.error(error));
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user]);
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         isLoggedIn,
         setIsLoggedIn,
         logout,
