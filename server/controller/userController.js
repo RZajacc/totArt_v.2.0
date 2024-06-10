@@ -122,8 +122,10 @@ const handleFavouriteLocations = async (req, res) => {
     // Check if user exists in DB
     const updateUser = await userModel.findOne(filter);
 
-    // Check if user already has this location in favs
-    const hasFav = updateUser.favs.includes(req.body.favId);
+    // If user exists check if he has location saved already
+    let hasFav = updateUser
+      ? updateUser.favs.includes(req.body.favId)
+      : undefined;
 
     // If user exists and doesnt have location in fav
     if (updateUser && !hasFav) {
