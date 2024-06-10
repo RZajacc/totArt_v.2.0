@@ -95,22 +95,22 @@ const login = async (req, res) => {
 const getProfle = async (req, res) => {
   if (req.user) {
     res.status(200).json({
-      user: {
-        _id: req.user.id,
-        userName: req.user.userName,
-        email: req.user.email,
-        userImage: req.user.userImage,
-        userWebsite: req.user.userWebsite,
-        userBio: req.user.userBio,
-        posts: req.user.posts,
-        favs: req.user.favs,
-      },
+      // user: {
+      _id: req.user.id,
+      userName: req.user.userName,
+      email: req.user.email,
+      userImage: req.user.userImage,
+      userWebsite: req.user.userWebsite,
+      userBio: req.user.userBio,
+      posts: req.user.posts,
+      favs: req.user.favs,
+      // },
     });
   }
 
   if (!req.user) {
-    res.status(200).json({
-      msg: "You need to authorize first",
+    res.status(401).json({
+      msg: "You need to authorize first!",
     });
   }
 };
