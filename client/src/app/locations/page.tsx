@@ -1,38 +1,26 @@
+'use client';
 import Image from 'next/image';
-import { contentData } from '../../types/types';
 import Link from 'next/link';
-// import { useContext } from "react";
-// import { AuthContext } from "../../context/AuthContext";
+import useSWR from 'swr';
+import { getAllLocations } from '../../fetchers/GetAllLocations';
 
-async function getData(): Promise<contentData> {
-  const res = await fetch('http://localhost:5000/api/posts/all', {
-    method: 'GET',
-    redirect: 'follow',
-    next: { tags: ['locations'] },
-  });
+function Content() {
+  const { data: locations } = useSWR(
+    'http://localhost:5000/api/posts/all',
+    getAllLocations,
+  );
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  const data: contentData = await res.json();
-
-  return data;
-}
-
-async function Content() {
-  const posts = await getData();
   /* {user ? <AddContentModal /> : ""} */
 
   return (
     <>
       <h1 className="text-center text-xl font-bold">
         Number of locations found:{' '}
-        <span className="text-green-500">{posts.number}</span>
+        <span className="text-green-500">{locations?.number}</span>
       </h1>
       <div className="mx-auto mt-3 grid max-w-3xl gap-3 sm:grid-cols-2 md:grid-cols-3">
-        {posts &&
-          posts.posts.map((post) => {
+        {locations &&
+          locations.posts.map((post) => {
             return (
               <div
                 key={post._id}
