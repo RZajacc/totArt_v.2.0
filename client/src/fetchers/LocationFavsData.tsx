@@ -9,23 +9,23 @@ type responseErr = {
   msg: string;
 };
 
-export const locationFavsData = async ([email, favId]: string[]) => {
+export const locationFavsData = async (
+  url: string,
+  { arg }: { arg: { email: string; locactionId: string } },
+) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
   const urlencoded = new URLSearchParams();
-  urlencoded.append('email', email);
-  urlencoded.append('favId', favId);
+  urlencoded.append('email', arg.email);
+  urlencoded.append('favId', arg.locactionId);
 
-  const response = await fetch(
-    'http://localhost:5000/api/users/addToUserFavourites',
-    {
-      method: 'PATCH',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    },
-  );
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: 'follow',
+  });
 
   if (response.ok) {
     const result: result = await response.json();

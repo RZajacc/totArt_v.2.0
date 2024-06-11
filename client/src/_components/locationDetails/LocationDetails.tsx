@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { User, post } from '../../types/types';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
@@ -15,33 +15,25 @@ type Props = {
 function LocationDetails({ user, data, mutate }: Props) {
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
-    [user?.email, data?._id],
+    'http://localhost:5000/api/users/addToUserFavourites',
     locationFavsData,
   );
-
-  // Location already stored
-  const [isFav, setIsFav] = useState(false);
 
   // Add or remove from favourites
   const handleFavourites = async () => {
     try {
-      const result = await trigger();
+      const result = await trigger({
+        email: user.email,
+        locactionId: data._id,
+      });
       if (result) {
         mutate({ ...user, favs: result.favs });
-        // setUser({ ...user, favs: result.favs });
         console.log(user);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-  //
-  useEffect(() => {
-    if (user && data) {
-      setIsFav(user.favs?.includes(data._id));
-    }
-  }, [user, data]);
 
   return (
     <>
@@ -50,7 +42,7 @@ function LocationDetails({ user, data, mutate }: Props) {
           <h1 className="mx-4 text-center text-lg font-bold">
             Title: <span className="font-normal">{data?.title}</span>
           </h1>
-          {isFav ? (
+          {user?.favs?.includes(data?._id) ? (
             <button onClick={handleFavourites}>
               <Image src={fullHeart} alt="full-heart" width={30} height={30} />
             </button>
