@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/AuthContext';
 type Props = {};
 
 function NavDesktop({}: Props) {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const pathname = usePathname();
 
   return (
@@ -42,7 +42,7 @@ function NavDesktop({}: Props) {
 
       {/* User section */}
       <section className="mx-5 flex items-center space-x-5">
-        {isLoggedIn ? (
+        {user ? (
           <>
             <Link
               href={'account'}

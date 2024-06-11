@@ -13,7 +13,7 @@ type Props = {};
 
 function NavSideBar({}: Props) {
   const pathname = usePathname();
-  const { isLoggedIn, logout, user } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   // Handle closing mobile nav after clicking a link
   const handleSideNavVisibility = () => {
     const backdrop = document.querySelector('#backdrop') as HTMLDivElement;
