@@ -48,22 +48,26 @@ function ContentDetails({ params }: { params: { id: string } }) {
       )}
 
       <div>
-        <h4>({locationData?.comments.length}) Comments:</h4>
-        {locationData?.comments &&
-          locationData.comments.map((comment) => {
-            return (
-              <Comment
-                comment={comment}
-                handleDeleteComment={handleDeleteComment}
-              />
-            );
-          })}
+        <h4 className="py-2 text-center text-xl font-bold">
+          ({locationData?.comments.length}) Comments:
+        </h4>
+        <section className="grid gap-y-2">
+          {locationData?.comments &&
+            locationData.comments.map((comment) => {
+              return (
+                <Comment
+                  comment={comment}
+                  handleDeleteComment={handleDeleteComment}
+                />
+              );
+            })}
+        </section>
+
         <label>
           <input
             type="textarea"
             placeholder="Leave a comment"
             style={{ height: '125px' }}
-            // onChange={handleCommentValue}
           />
         </label>
         <button

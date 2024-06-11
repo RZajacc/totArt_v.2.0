@@ -18,3 +18,28 @@ main {
 #footer {
   grid-area: footer;
 }
+
+.comment {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  grid-template-areas:
+    'image user user user user user '
+    'image content content content content content '
+    'image date date date date date';
+}
+
+.comment__user-image {
+  grid-area: image;
+}
+
+.comment__user-name {
+  grid-area: user;
+}
+
+.comment__content {
+  grid-area: content;
+}
+
+.comment__date {
+  grid-area: date;
+}
