@@ -17,16 +17,18 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   const { data: locationData, error } = useSWR(locationID, locationDetailsData);
 
-  // // * ADD COMMENT AND RE FETCH DATA
-  // const handleAddingComment = async () => {
-  //   const comment = await addNewComment(user!._id, commentVal, data._id);
-  //   await updateUserData(user!.email, "userComment", comment._id);
-  //   await updatePost(data._id, "comments", comment._id);
-  //   await getPostDetails();
-  //   isUserLoggedIn();
-  // };
+  // ADD COMMENT AND RE FETCH DATA
+  const handleCommentSubmit = async () => {
+    console.log('SUBMITTTING NEW COMMENT');
+    // const comment = await addNewComment(user!._id, commentVal, data._id);
+    // await updateUserData(user!.email, "userComment", comment._id);
+    // await updatePost(data._id, "comments", comment._id);
+    // await getPostDetails();
+    // isUserLoggedIn();
+  };
 
   // *DELETE A COMMENT
+  // ? Być może wewnątrz komentarza zamiast podawać
   const handleDeleteComment = async (id: string) => {
     console.log('Im running!');
     // await deleteComment(id);
@@ -47,6 +49,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
         <LocationDetails user={user!} data={locationData!} mutate={mutate} />
       )}
 
+      {/* Comments section */}
       <div>
         <h4 className="py-2 text-center text-xl font-bold">
           ({locationData?.comments.length}) Comments:
@@ -63,18 +66,26 @@ function ContentDetails({ params }: { params: { id: string } }) {
             })}
         </section>
 
-        <label>
-          <input
-            type="textarea"
-            placeholder="Leave a comment"
-            style={{ height: '125px' }}
-          />
-        </label>
-        <button
-        // onClick={handleAddingComment}
-        >
-          Submit new Comment
-        </button>
+        {/* Adding a new comment */}
+        <section className="mt-5 grid">
+          <form onSubmit={handleCommentSubmit}>
+            <section className="relative h-36 rounded-md border-2 border-gray-400 bg-white focus-within:border-2 focus-within:border-blue-500">
+              <textarea
+                name="comment"
+                id="comment"
+                placeholder="Leave a comment"
+                rows={4}
+                className="w-full rounded-md p-2 focus-visible:outline-none"
+              />
+              <button
+                className="absolute bottom-2 right-2 rounded-md bg-purple-800 px-2 py-1 text-white"
+                type="submit"
+              >
+                Submit
+              </button>
+            </section>
+          </form>
+        </section>
       </div>
     </>
   );

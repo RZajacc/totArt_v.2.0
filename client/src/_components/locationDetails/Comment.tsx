@@ -14,6 +14,8 @@ function Comment({ comment, handleDeleteComment }: Props) {
     handleDeleteComment(comment._id);
   };
 
+  // TODO Handle edit comment
+
   return (
     <>
       <div className="comment rounded-2xl bg-slate-100 p-2">
