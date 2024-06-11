@@ -95,7 +95,6 @@ const login = async (req, res) => {
 const getProfle = async (req, res) => {
   if (req.user) {
     res.status(200).json({
-      // user: {
       _id: req.user.id,
       userName: req.user.userName,
       email: req.user.email,
@@ -104,7 +103,6 @@ const getProfle = async (req, res) => {
       userBio: req.user.userBio,
       posts: req.user.posts,
       favs: req.user.favs,
-      // },
     });
   }
 

@@ -1,40 +1,29 @@
-import commentModel from "../models/commentModel.js";
 import postModel from "../models/postModel.js";
-import userModel from "../models/userModel.js";
 
-const getAllPosts = async (req, res) => {
-  const allPosts = await postModel.find();
-  // const allPosts = await postModel
-  //   .find()
-  //   .populate({ path: "author", select: ["userName"] });
-
-  res.json({
-    number: allPosts.length,
-    posts: allPosts,
-  });
-};
-
-const addNewPost = async (req, res) => {
-  console.log(req.body);
-  const newPost = new postModel({
-    title: req.body.title,
-    description: req.body.description,
-    location: req.body.location,
-    imageUrl: req.body.imageUrl,
-    author: req.body.author,
-  });
-
+const getAllLocations = async (req, res) => {
   try {
-    const savedPost = newPost.save();
-    res.status(201).json({
-      msg: "new post uploaded uploaded",
-      postId: newPost._id,
+    const allPosts = await postModel
+      .find()
+      .populate({ path: "author", select: ["userName"] });
+
+    if (allPosts) {
+      res.status(200).json({
+        number: allPosts.length,
+        posts: allPosts,
+      });
+    } else {
+      res.status(404).json({
+        msg: "Location not found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: "Server error",
     });
-  } catch (error) {}
+  }
 };
 
-// ! Naming to change
-const getDetails = async (req, res) => {
+const getLocationDetails = async (req, res) => {
   try {
     // Check if post exists
     const postData = await postModel
@@ -70,6 +59,25 @@ const getDetails = async (req, res) => {
   }
 };
 
+const addNewPost = async (req, res) => {
+  console.log(req.body);
+  const newPost = new postModel({
+    title: req.body.title,
+    description: req.body.description,
+    location: req.body.location,
+    imageUrl: req.body.imageUrl,
+    author: req.body.author,
+  });
+
+  try {
+    const savedPost = newPost.save();
+    res.status(201).json({
+      msg: "new post uploaded uploaded",
+      postId: newPost._id,
+    });
+  } catch (error) {}
+};
+
 // ! Naming to change
 const updatePost = async (req, res) => {
   const filter = { _id: req.body._id };
@@ -92,4 +100,4 @@ const updatePost = async (req, res) => {
   }
 };
 
-export { getAllPosts, addNewPost, getDetails, updatePost };
+export { getAllLocations, addNewPost, getLocationDetails, updatePost };
