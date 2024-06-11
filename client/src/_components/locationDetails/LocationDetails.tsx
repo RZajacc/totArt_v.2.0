@@ -28,7 +28,6 @@ function LocationDetails({ user, data, mutate }: Props) {
       });
       if (result) {
         mutate({ ...user, favs: result.favs });
-        console.log(user);
       }
     } catch (error) {
       console.log(error);

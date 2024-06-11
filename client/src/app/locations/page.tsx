@@ -24,8 +24,8 @@ function Content() {
     locationFavsData,
   );
 
-  const handleFavourites = async (postId: string) => {
-    const result = await trigger({ email: user!.email, locactionId: postId });
+  const handleFavourites = async (locId: string) => {
+    const result = await trigger({ email: user!.email, locactionId: locId });
     mutate({ ...user!, favs: result.favs });
   };
 
@@ -37,19 +37,19 @@ function Content() {
       </h1>
       <div className="mx-auto mt-3 grid max-w-3xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&
-          locations.posts.map((post) => {
+          locations.posts.map((loc) => {
             return (
               <div
-                key={post._id}
+                key={loc._id}
                 className="rounded-lg border-2 border-black shadow-md shadow-black"
               >
                 <section className="relative">
                   {user ? (
-                    user.favs?.includes(post._id) ? (
+                    user.favs?.includes(loc._id) ? (
                       <button
                         className="absolute right-2 top-2"
                         onClick={() => {
-                          handleFavourites(post._id);
+                          handleFavourites(loc._id);
                         }}
                       >
                         <Image
@@ -63,7 +63,7 @@ function Content() {
                       <button
                         className="absolute right-2 top-2"
                         onClick={() => {
-                          handleFavourites(post._id);
+                          handleFavourites(loc._id);
                         }}
                       >
                         <Image
@@ -80,8 +80,8 @@ function Content() {
 
                   {/* For now Im using some arbitrary values untill I update image info in DB */}
                   <Image
-                    src={post.imageUrl}
-                    alt={post.title}
+                    src={loc.imageUrl}
+                    alt={loc.title}
                     width={600}
                     height={600}
                     layout="responsive"
@@ -89,10 +89,10 @@ function Content() {
                   />
                 </section>
                 <section className="mb-4 mt-1 text-center">
-                  <h3 className="mb-3 text-xl font-bold">{post.title}</h3>
+                  <h3 className="mb-3 text-xl font-bold">{loc.title}</h3>
                   {/* Temporary location until connecting view is ready*/}
                   <Link
-                    href={`/locations/${post._id}`}
+                    href={`/locations/${loc._id}`}
                     className="rounded-md bg-black px-3 py-2 text-white"
                   >
                     See more
