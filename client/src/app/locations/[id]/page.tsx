@@ -12,14 +12,9 @@ import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
-  const { user } = useContext(AuthContext);
+  const { user, mutate } = useContext(AuthContext);
 
   const { data: locationData, error } = useSWR(locationID, locationDetailsData);
-
-  // // * GET VALUE OF A COMMENT
-  // const handleCommentValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setCommentVal(e.target.value);
-  // };
 
   // // * ADD COMMENT AND RE FETCH DATA
   // const handleAddingComment = async () => {
@@ -48,7 +43,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
           </div>
         </>
       ) : (
-        <LocationDetails user={user!} data={locationData!} />
+        <LocationDetails user={user!} data={locationData!} mutate={mutate} />
       )}
 
       {/* <div>

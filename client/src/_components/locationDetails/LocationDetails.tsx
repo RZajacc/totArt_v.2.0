@@ -1,21 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, post } from '../../types/types';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
-import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
   user: User;
   data: post;
-  // setUser: (user: User) => void;
+  mutate: (user?: User) => void;
 };
 
-function LocationDetails({ user, data }: Props) {
+function LocationDetails({ user, data, mutate }: Props) {
   // Mutation to trigger on upon button click
-  const { mutate } = useContext(AuthContext);
   const { trigger } = useSWRMutation(
     [user?.email, data?._id],
     locationFavsData,
@@ -38,6 +36,7 @@ function LocationDetails({ user, data }: Props) {
     }
   };
 
+  //
   useEffect(() => {
     if (user && data) {
       setIsFav(user.favs?.includes(data._id));

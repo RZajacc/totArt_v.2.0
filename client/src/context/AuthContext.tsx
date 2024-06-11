@@ -25,6 +25,7 @@ type AuthContexProviderProps = {
 export const AuthContext = createContext<AuthContextType>(AuthInitContext);
 
 export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
+  // Handle redirection after logging out
   const router = useRouter();
 
   // LOGOUT
