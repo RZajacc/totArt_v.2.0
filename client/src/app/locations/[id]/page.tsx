@@ -9,6 +9,7 @@ import useSWR from 'swr';
 // import { updatePost } from '../../../utils/PostsTools';
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
+import Comment from '../../../_components/locationDetails/Comment';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
@@ -25,13 +26,13 @@ function ContentDetails({ params }: { params: { id: string } }) {
   //   isUserLoggedIn();
   // };
 
-  // // *DELETE A COMMENT
-  // const handleDeleteComment = async (id: string) => {
-  //   console.log("Im running!");
-  //   await deleteComment(id);
-  //   await getPostDetails();
-  //   isUserLoggedIn();
-  // };
+  // *DELETE A COMMENT
+  const handleDeleteComment = async (id: string) => {
+    console.log('Im running!');
+    // await deleteComment(id);
+    // await getPostDetails();
+    // isUserLoggedIn();
+  };
 
   return (
     <>
@@ -46,10 +47,10 @@ function ContentDetails({ params }: { params: { id: string } }) {
         <LocationDetails user={user!} data={locationData!} mutate={mutate} />
       )}
 
-      {/* <div>
-        <h4>({data?.comments.length}) Comments:</h4>
-        {data?.comments &&
-          data.comments.map((comment) => {
+      <div>
+        <h4>({locationData?.comments.length}) Comments:</h4>
+        {locationData?.comments &&
+          locationData.comments.map((comment) => {
             return (
               <Comment
                 comment={comment}
@@ -66,11 +67,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
           />
         </label>
         <button
-          // onClick={handleAddingComment}
+        // onClick={handleAddingComment}
         >
           Submit new Comment
         </button>
-      </div> */}
+      </div>
     </>
   );
 }
