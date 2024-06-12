@@ -5,6 +5,8 @@ import { AuthContext } from '../../context/AuthContext';
 import pencil from '../../../public/pencil.svg';
 import trash from '../../../public/trash-can.svg';
 import Image from 'next/image';
+import useSWRMutation from 'swr/mutation';
+import { deleteComment } from '../../fetchers/DeleteComment';
 
 type Props = {
   comment: comment;
@@ -12,6 +14,11 @@ type Props = {
 
 function CommentElement({ comment }: Props) {
   const { user } = useContext(AuthContext);
+
+  const { trigger } = useSWRMutation(
+    'http://localhost:5000/api/comments/deleteComment',
+    deleteComment,
+  );
 
   // Converting date back from ISO string and formatting it for proper display
   const date = new Date(comment.createdAt).toLocaleDateString('de-DE', {
@@ -27,7 +34,11 @@ function CommentElement({ comment }: Props) {
   // *DELETE A COMMENT
   // ? Być może wewnątrz komentarza zamiast podawać
   const handleDeleteComment = async () => {
-    console.log('Im running!');
+    try {
+      await trigger({ commentId: comment._id });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // TODO Handle edit comment
