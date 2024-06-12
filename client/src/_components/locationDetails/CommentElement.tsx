@@ -35,6 +35,8 @@ function CommentElement({ comment, mutateUser, mutateLocation }: Props) {
   // TODO Handle delete comment
   // Delete comment
   const handleDeleteComment = async () => {
+    // !Call modal and call this function in it
+    // !Maybe to avoid passing down mutations just make another call to SWR inside
     try {
       await trigger({ commentId: comment._id });
       // Refetch user and location
