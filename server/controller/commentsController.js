@@ -26,7 +26,8 @@ const addNewComment = async (req, res) => {
       // Update location with a new comment
       const commentedLocation = await postModel.findByIdAndUpdate(
         savedComment.relatedPost,
-        { $push: { comments: savedComment.id } }
+        { $push: { comments: savedComment.id } },
+        { new: true }
       );
 
       // Return a feedback about a new post
@@ -52,27 +53,38 @@ const addNewComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-  let comment = await commentModel
-    .findById(req.body._id)
-    .populate({ path: "author", select: ["_id"] })
-    .populate({ path: "relatedPost", select: ["_id"] });
+  try {
+    // Find comment and populate only ids
+    let comment = await commentModel
+      .findById(req.body._id)
+      .populate({ path: "author", select: ["_id"] })
+      .populate({ path: "relatedPost", select: ["_id"] });
 
-  // console.log(comment);
-  let updateUser = await userModel.findOneAndUpdate(
-    { _id: comment.author._id },
-    { $pull: { comments: comment._id } },
-    { new: true }
-  );
-  console.log(updateUser);
-  let updatePost = await postModel.findOneAndUpdate(
-    { _id: comment.relatedPost._id },
-    { $pull: { comments: comment._id } },
-    { new: true }
-  );
+    // find comment author and delete comment id
+    let updateUser = await userModel.findByIdAndUpdate(
+      comment.author._id,
+      { $pull: { comments: comment._id } },
+      { new: true }
+    );
 
-  let commentDelete = await commentModel.findByIdAndDelete(req.body._id);
+    // find commented location and delete comment id
+    let updateLocation = await postModel.findByIdAndUpdate(
+      comment.relatedPost,
+      { $pull: { comments: comment._id } },
+      { new: true }
+    );
 
-  res.json({ msg: "Comment deleted successfully" });
+    // delete the comment
+    let commentDelete = await commentModel.findByIdAndDelete(req.body._id);
+
+    res.status(200).json({
+      msg: `Comment - ${commentDelete.comment}, added by - ${updateUser.userName}, on location title - ${updateLocation.title}, deleted successfully!!`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Server error",
+    });
+  }
 };
 
 export { addNewComment, deleteComment };

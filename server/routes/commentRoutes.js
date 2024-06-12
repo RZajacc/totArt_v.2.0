@@ -7,6 +7,6 @@ import {
 const router = express.Router();
 
 router.post("/addComment", addNewComment);
-router.post("/deleteComment", deleteComment);
+router.delete("/deleteComment", deleteComment);
 
 export default router;
