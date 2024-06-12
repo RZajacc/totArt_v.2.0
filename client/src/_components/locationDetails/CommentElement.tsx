@@ -8,15 +8,10 @@ import Image from 'next/image';
 
 type Props = {
   comment: comment;
-  handleDeleteComment: (id: string) => void;
 };
 
-function CommentElement({ comment, handleDeleteComment }: Props) {
+function CommentElement({ comment }: Props) {
   const { user } = useContext(AuthContext);
-
-  const handleDelete = async () => {
-    handleDeleteComment(comment._id);
-  };
 
   // Converting date back from ISO string and formatting it for proper display
   const date = new Date(comment.createdAt).toLocaleDateString('de-DE', {
@@ -28,8 +23,17 @@ function CommentElement({ comment, handleDeleteComment }: Props) {
     second: 'numeric',
   });
 
-  // TODO Handle edit comment
+  // TODO Handle delete comment
+  // *DELETE A COMMENT
+  // ? Być może wewnątrz komentarza zamiast podawać
+  const handleDeleteComment = async () => {
+    console.log('Im running!');
+  };
 
+  // TODO Handle edit comment
+  const handleEditComment = async () => {
+    console.log('Im running!');
+  };
   return (
     <>
       <div
@@ -54,14 +58,14 @@ function CommentElement({ comment, handleDeleteComment }: Props) {
         {comment.author._id === user?._id ? (
           <>
             <button
-              onClick={handleDelete}
+              onClick={handleEditComment}
               className="comment__edit bg-blue-400 px-2 font-bold text-white"
             >
               <Image src={pencil} alt="pencil" width={25} height={25} />
             </button>
             <button
-              onClick={handleDelete}
-              className="comment__delete rounded-r-2xl bg-red-500 px-2 font-bold text-white"
+              onClick={handleDeleteComment}
+              className="comment__delete rounded-r-2xl bg-red-500 px-2 font-bold text-white hover:bg-slate-300"
             >
               <Image src={trash} alt="trash-can" width={25} height={25} />
             </button>

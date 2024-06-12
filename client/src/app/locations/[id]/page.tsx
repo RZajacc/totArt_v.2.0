@@ -12,23 +12,29 @@ import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
 
 function ContentDetails({ params }: { params: { id: string } }) {
+  // Get param from the route path
   const locationID = params.id;
 
+  // Context data
   const { user, mutateUser } = useContext(AuthContext);
+
+  // Ref to text area to add comment and clear content after
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
+  // Query location details data
   const {
     data: locationData,
     mutate: mutateLocation,
     error,
   } = useSWR(locationID, locationDetailsData);
 
+  // Prepare mutation to add comment
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/comments/addComment',
     addNewComment,
   );
 
-  // ADD COMMENT AND RE FETCH DATA
+  // Handle adding a new comment
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -49,12 +55,6 @@ function ContentDetails({ params }: { params: { id: string } }) {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  // *DELETE A COMMENT
-  // ? Być może wewnątrz komentarza zamiast podawać
-  const handleDeleteComment = async (id: string) => {
-    console.log('Im running!');
   };
 
   return (
@@ -82,13 +82,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
         <section className="grid gap-y-2">
           {locationData?.comments &&
             locationData.comments.map((comment) => {
-              return (
-                <CommentElement
-                  key={comment._id}
-                  comment={comment}
-                  handleDeleteComment={handleDeleteComment}
-                />
-              );
+              return <CommentElement key={comment._id} comment={comment} />;
             })}
         </section>
 
