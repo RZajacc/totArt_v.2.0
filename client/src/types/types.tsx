@@ -13,6 +13,7 @@ export interface User {
   userImage: string;
   posts: [postId: string];
   favs: [postId: string];
+  comments: [commentId: string];
 }
 
 export type contentData = {
@@ -30,10 +31,20 @@ export type post = {
   comments: [comment];
 };
 
+export type AddComment = {
+  msg: string;
+  comment: {
+    comment: string;
+    createdAt: string;
+    author: string;
+    relatedPost: string;
+  };
+};
+
 export type comment = {
   _id: string;
   comment: string;
-  createdAt: Date;
+  createdAt: string;
   isEdited?: boolean;
   author: authorType;
   relatedPost: string;

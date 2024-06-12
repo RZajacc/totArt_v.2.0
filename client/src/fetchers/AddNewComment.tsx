@@ -1,4 +1,4 @@
-import { FetchError, comment } from '../types/types';
+import { AddComment, FetchError } from '../types/types';
 
 type badResponse = {
   msg: string;
@@ -11,7 +11,7 @@ export const addNewComment = async (
   }: {
     arg: {
       comment: string;
-      createdAt: Date;
+      createdAt: string;
       author: string;
       relatedPost: string;
     };
@@ -22,7 +22,7 @@ export const addNewComment = async (
 
   const urlencoded = new URLSearchParams();
   urlencoded.append('comment', arg.comment);
-  urlencoded.append('createdAt', arg.createdAt.toString());
+  urlencoded.append('createdAt', arg.createdAt);
   urlencoded.append('author', arg.author);
   urlencoded.append('relatedPost', arg.relatedPost);
 
@@ -33,7 +33,7 @@ export const addNewComment = async (
     redirect: 'follow',
   });
   if (response.ok) {
-    const result: comment = await response.json();
+    const result: AddComment = await response.json();
     return result;
   } else {
     const result: badResponse = await response.json();

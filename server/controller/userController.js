@@ -100,6 +100,7 @@ const getProfle = async (req, res) => {
       userImage: req.user.userImage,
       userWebsite: req.user.userWebsite,
       userBio: req.user.userBio,
+      comments: req.user.comments,
       posts: req.user.posts,
       favs: req.user.favs,
     });

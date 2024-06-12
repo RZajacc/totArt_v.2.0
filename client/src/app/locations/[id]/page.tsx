@@ -1,16 +1,14 @@
 'use client';
+import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
+
 import { useContext, useRef } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
-import useSWR from 'swr';
 
-// import { post } from '../../../types/types';
-
-// import { addNewComment, deleteComment } from '../../../utils/CommentsTools';
-// import { updatePost } from '../../../utils/PostsTools';
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
+import CommentElement from '../../../_components/locationDetails/CommentElement';
+
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
-import Comment from '../../../_components/locationDetails/Comment';
-import useSWRMutation from 'swr/mutation';
 import { addNewComment } from '../../../fetchers/AddNewComment';
 
 function ContentDetails({ params }: { params: { id: string } }) {
@@ -34,22 +32,16 @@ function ContentDetails({ params }: { params: { id: string } }) {
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const createdAt = new Date();
+    const createdAt = new Date().toISOString();
     const commentValue = formData.get('comment') as string;
 
-    // Zmień typ danych które otrzymujesz z response
-    // Mutate tylko elementów które mutujesz
-    // Zmień mutate na userMutate w kontekście
-    // Uaktualnij wszystkie wywołania
-
     try {
-      const result = await trigger({
+      await trigger({
         comment: commentValue,
         createdAt: createdAt,
         author: user!._id,
         relatedPost: locationID,
       });
-      console.log(result);
       mutateUser();
       mutateLocation();
       // Reset value of comment text area
@@ -63,9 +55,6 @@ function ContentDetails({ params }: { params: { id: string } }) {
   // ? Być może wewnątrz komentarza zamiast podawać
   const handleDeleteComment = async (id: string) => {
     console.log('Im running!');
-    // await deleteComment(id);
-    // await getPostDetails();
-    // isUserLoggedIn();
   };
 
   return (
@@ -94,7 +83,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
           {locationData?.comments &&
             locationData.comments.map((comment) => {
               return (
-                <Comment
+                <CommentElement
                   key={comment._id}
                   comment={comment}
                   handleDeleteComment={handleDeleteComment}
