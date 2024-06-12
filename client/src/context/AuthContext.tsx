@@ -8,13 +8,13 @@ import { getUserData } from '../fetchers/GetUserData';
 
 interface AuthContextType {
   user: User | undefined;
-  mutate: (user?: User) => void;
+  mutateUser: (user?: User) => void;
   logout: () => void;
 }
 
 const AuthInitContext = {
   user: undefined,
-  mutate: () => console.log('Mutate user'),
+  mutateUser: () => console.log('Mutate user'),
   logout: () => console.log('Log user out'),
 };
 
@@ -31,11 +31,11 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   // LOGOUT
   const logout = () => {
     deleteCookie('auth_token');
-    mutate();
+    mutateUser();
     router.push('/login');
   };
 
-  const { data: user, mutate } = useSWR(
+  const { data: user, mutate: mutateUser } = useSWR(
     'http://localhost:5000/api/users/profile',
     getUserData,
   );
@@ -47,7 +47,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     <AuthContext.Provider
       value={{
         user,
-        mutate,
+        mutateUser,
         logout,
       }}
     >

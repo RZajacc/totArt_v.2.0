@@ -1,5 +1,5 @@
 'use client';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import useSWR from 'swr';
 
@@ -10,28 +10,53 @@ import useSWR from 'swr';
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import Comment from '../../../_components/locationDetails/Comment';
+import useSWRMutation from 'swr/mutation';
+import { addNewComment } from '../../../fetchers/AddNewComment';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   const locationID = params.id;
-  const { user, mutate } = useContext(AuthContext);
 
-  const { data: locationData, error } = useSWR(locationID, locationDetailsData);
+  const { user, mutateUser } = useContext(AuthContext);
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+
+  const {
+    data: locationData,
+    mutate: mutateLocation,
+    error,
+  } = useSWR(locationID, locationDetailsData);
+
+  const { trigger } = useSWRMutation(
+    'http://localhost:5000/api/comments/addComment',
+    addNewComment,
+  );
 
   // ADD COMMENT AND RE FETCH DATA
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const createdAt = new Date();
-    const commentValue = formData.get('comment');
+    const commentValue = formData.get('comment') as string;
 
-    // TODO - Fetcher z nowym komentarzem
-    // TODO - UseSWRMutation z parametrami w args
-    // TODO - Funkcje wywołuje tutaj a ponieważ dodaję też do użytkownika to usera też muszę rewalidować
+    // Zmień typ danych które otrzymujesz z response
+    // Mutate tylko elementów które mutujesz
+    // Zmień mutate na userMutate w kontekście
+    // Uaktualnij wszystkie wywołania
 
-    // const comment = await addNewComment(user!._id, commentVal, data._id);
-    // await updateUserData(user!.email, "userComment", comment._id);
-    // await updatePost(data._id, "comments", comment._id);
-    // await getPostDetails();
+    try {
+      const result = await trigger({
+        comment: commentValue,
+        createdAt: createdAt,
+        author: user!._id,
+        relatedPost: locationID,
+      });
+      console.log(result);
+      mutateUser();
+      mutateLocation();
+      // Reset value of comment text area
+      commentRef.current ? (commentRef.current.value = '') : null;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // *DELETE A COMMENT
@@ -53,7 +78,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
           </div>
         </>
       ) : (
-        <LocationDetails user={user!} data={locationData!} mutate={mutate} />
+        <LocationDetails
+          user={user!}
+          data={locationData!}
+          mutateUser={mutateUser}
+        />
       )}
 
       {/* Comments section */}
@@ -79,6 +108,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
           <form onSubmit={handleCommentSubmit}>
             <section className="relative h-36 rounded-md border-2 border-gray-400 bg-white focus-within:border-2 focus-within:border-blue-500">
               <textarea
+                ref={commentRef}
                 name="comment"
                 id="comment"
                 placeholder="Leave a comment"

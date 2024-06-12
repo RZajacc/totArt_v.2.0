@@ -9,10 +9,10 @@ import { locationFavsData } from '../../fetchers/LocationFavsData';
 type Props = {
   user: User;
   data: post;
-  mutate: (user?: User) => void;
+  mutateUser: (user?: User) => void;
 };
 
-function LocationDetails({ user, data, mutate }: Props) {
+function LocationDetails({ user, data, mutateUser }: Props) {
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/users/addToUserFavourites',
@@ -27,7 +27,7 @@ function LocationDetails({ user, data, mutate }: Props) {
         locactionId: data._id,
       });
       if (result) {
-        mutate({ ...user, favs: result.favs });
+        mutateUser({ ...user, favs: result.favs });
       }
     } catch (error) {
       console.log(error);

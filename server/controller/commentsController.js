@@ -15,29 +15,35 @@ const addNewComment = async (req, res) => {
     // Save a new comment in db
     const savedComment = await newComment.save();
 
-    // Update user posting a comment
-    const commentAuthor = await userModel.findByIdAndUpdate(
-      savedComment.author,
-      { $push: { comments: savedComment.id } },
-      { new: true }
-    );
+    if (savedComment) {
+      // Update user posting a comment
+      const commentAuthor = await userModel.findByIdAndUpdate(
+        savedComment.author,
+        { $push: { comments: savedComment.id } },
+        { new: true }
+      );
 
-    // Update location with a new comment
-    const commentedLocation = await postModel.findByIdAndUpdate(
-      savedComment.relatedPost,
-      { $push: { comments: savedComment.id } }
-    );
+      // Update location with a new comment
+      const commentedLocation = await postModel.findByIdAndUpdate(
+        savedComment.relatedPost,
+        { $push: { comments: savedComment.id } }
+      );
 
-    // Return a feedback about a new post
-    res.status(201).json({
-      msg: "Comment added successfully",
-      comment: {
-        comment: savedComment.comment,
-        createdAt: savedComment.createdAt,
-        author: commentAuthor.userName,
-        relatedPost: commentedLocation.title,
-      },
-    });
+      // Return a feedback about a new post
+      res.status(201).json({
+        msg: "Comment added successfully",
+        comment: {
+          comment: savedComment.comment,
+          createdAt: savedComment.createdAt,
+          author: commentAuthor.userName,
+          relatedPost: commentedLocation.title,
+        },
+      });
+    } else {
+      res.status(418).json({
+        msg: "I'm a teapot!",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       msg: "Adding new comment failed",
