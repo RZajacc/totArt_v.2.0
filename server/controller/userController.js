@@ -1,7 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/userModel.js";
 import { bcrypt_hash, bcrypt_verifyPassword } from "../utils/bcrypt_config.js";
-import { response } from "express";
 import { generateToken } from "../utils/tokenServices.js";
 import postModel from "../models/postModel.js";
 import commentModel from "../models/commentModel.js";
@@ -316,15 +315,15 @@ const deleteImage = async (req, res) => {
 };
 
 export {
-  uploadImage,
-  deleteImage,
   register,
   login,
   getProfle,
+  handleFavouriteLocations,
+  uploadImage,
+  deleteImage,
   updateUserData,
   getAllUserPosts,
   getAllFavs,
   deleteFromUserArray,
   deleteUser,
-  handleFavouriteLocations,
 };

@@ -5,6 +5,14 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    required: true,
+  },
+  isEdited: {
+    type: Boolean,
+    required: false,
+  },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   relatedPost: { type: mongoose.Schema.Types.ObjectId, ref: "post" },
 });

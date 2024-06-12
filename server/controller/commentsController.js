@@ -5,9 +5,15 @@ import postModel from "../models/postModel.js";
 const addNewComment = async (req, res) => {
   console.log(req.body);
 
+  // Dodaj post tak jak jest
+  // Jeżeli udało sie dodać post to znajdź użytkownika po id
+  // Dodaj do jego listy komentarzy id utworzonego komenta
+  // To samo z zrób z samym postem
+
   const newComment = new commentModel({
-    author: req.body.author,
     comment: req.body.comment,
+    createdAt: req.body.createdAt,
+    author: req.body.author,
     relatedPost: req.body.relatedPost,
   });
 
@@ -18,7 +24,9 @@ const addNewComment = async (req, res) => {
       comment: newComment,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      msg: "Adding new comment failed",
+    });
   }
 };
 

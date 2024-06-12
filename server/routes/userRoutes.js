@@ -1,14 +1,14 @@
 import express from "express";
 import {
+  register,
+  login,
+  getProfle,
   handleFavouriteLocations,
   deleteFromUserArray,
   deleteImage,
   deleteUser,
   getAllFavs,
   getAllUserPosts,
-  getProfle,
-  login,
-  register,
   updateUserData,
   uploadImage,
 } from "../controller/userController.js";
@@ -19,7 +19,6 @@ const router = express.Router();
 
 router.get("/profile", jwtAuth, getProfle);
 
-// Login has post since Im creating a token as a result
 router.post("/login", login);
 router.post("/register", register);
 
