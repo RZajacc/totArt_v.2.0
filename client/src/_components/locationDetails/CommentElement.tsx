@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { comment } from '../../types/types';
+import { User, comment, post } from '../../types/types';
 import { AuthContext } from '../../context/AuthContext';
 
 import pencil from '../../../public/pencil.svg';
@@ -10,9 +10,11 @@ import { deleteComment } from '../../fetchers/DeleteComment';
 
 type Props = {
   comment: comment;
+  mutateUser: (user?: User) => void;
+  mutateLocation: (location?: post) => void;
 };
 
-function CommentElement({ comment }: Props) {
+function CommentElement({ comment, mutateUser, mutateLocation }: Props) {
   const { user } = useContext(AuthContext);
 
   const { trigger } = useSWRMutation(
@@ -31,11 +33,13 @@ function CommentElement({ comment }: Props) {
   });
 
   // TODO Handle delete comment
-  // *DELETE A COMMENT
-  // ? Być może wewnątrz komentarza zamiast podawać
+  // Delete comment
   const handleDeleteComment = async () => {
     try {
       await trigger({ commentId: comment._id });
+      // Refetch user and location
+      mutateUser();
+      mutateLocation();
     } catch (error) {
       console.log(error);
     }

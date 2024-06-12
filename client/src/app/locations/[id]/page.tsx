@@ -82,7 +82,14 @@ function ContentDetails({ params }: { params: { id: string } }) {
         <section className="grid gap-y-2">
           {locationData?.comments &&
             locationData.comments.map((comment) => {
-              return <CommentElement key={comment._id} comment={comment} />;
+              return (
+                <CommentElement
+                  key={comment._id}
+                  comment={comment}
+                  mutateUser={mutateUser}
+                  mutateLocation={mutateLocation}
+                />
+              );
             })}
         </section>
 
