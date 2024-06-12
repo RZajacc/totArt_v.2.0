@@ -2,6 +2,10 @@ import { useContext } from 'react';
 import { comment } from '../../types/types';
 import { AuthContext } from '../../context/AuthContext';
 
+import pencil from '../../../public/pencil.svg';
+import trash from '../../../public/trash-can.svg';
+import Image from 'next/image';
+
 type Props = {
   comment: comment;
   handleDeleteComment: (id: string) => void;
@@ -31,13 +35,15 @@ function CommentElement({ comment, handleDeleteComment }: Props) {
       <div
         className={`${comment.author._id === user?._id ? 'comment__author' : 'comment'} rounded-2xl bg-slate-100`}
       >
-        <img
+        <Image
           src={comment.author.userImage}
-          alt=""
-          className="comment__user-image self-center rounded-full"
+          alt="user-image"
+          width={42}
+          height={42}
+          className="comment__user-image self-center justify-self-center rounded-full"
         />
 
-        <p className="comment__user-name ml-4 p-1 text-lg font-bold">
+        <p className="comment__user-name ml-4 p-1 font-bold">
           {comment.author.userName}
         </p>
         <p className="comment__content ml-4 p-1">{comment.comment}</p>
@@ -51,13 +57,13 @@ function CommentElement({ comment, handleDeleteComment }: Props) {
               onClick={handleDelete}
               className="comment__edit bg-blue-400 px-2 font-bold text-white"
             >
-              Edit
+              <Image src={pencil} alt="pencil" width={25} height={25} />
             </button>
             <button
               onClick={handleDelete}
               className="comment__delete rounded-r-2xl bg-red-500 px-2 font-bold text-white"
             >
-              Delete
+              <Image src={trash} alt="trash-can" width={25} height={25} />
             </button>
           </>
         ) : (

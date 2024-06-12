@@ -22,7 +22,7 @@ router.get("/profile", jwtAuth, getProfle);
 router.post("/login", login);
 router.post("/register", register);
 
-router.patch("/addToUserFavourites", handleFavouriteLocations);
+router.patch("/handleFavouriteLocations", handleFavouriteLocations);
 
 router.post("/imageUpload", multerUpload.single("userImage"), uploadImage);
 router.post("/imageDelete", deleteImage);
