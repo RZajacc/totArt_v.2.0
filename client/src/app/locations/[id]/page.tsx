@@ -18,13 +18,20 @@ function ContentDetails({ params }: { params: { id: string } }) {
   const { data: locationData, error } = useSWR(locationID, locationDetailsData);
 
   // ADD COMMENT AND RE FETCH DATA
-  const handleCommentSubmit = async () => {
-    console.log('SUBMITTTING NEW COMMENT');
+  const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const createdAt = new Date();
+    const commentValue = formData.get('comment');
+
+    // TODO - Fetcher z nowym komentarzem
+    // TODO - UseSWRMutation z parametrami w args
+    // TODO - Funkcje wywołuje tutaj a ponieważ dodaję też do użytkownika to usera też muszę rewalidować
+
     // const comment = await addNewComment(user!._id, commentVal, data._id);
     // await updateUserData(user!.email, "userComment", comment._id);
     // await updatePost(data._id, "comments", comment._id);
     // await getPostDetails();
-    // isUserLoggedIn();
   };
 
   // *DELETE A COMMENT
@@ -59,6 +66,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
             locationData.comments.map((comment) => {
               return (
                 <Comment
+                  key={comment._id}
                   comment={comment}
                   handleDeleteComment={handleDeleteComment}
                 />
