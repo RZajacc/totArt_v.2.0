@@ -3,13 +3,7 @@ import userModel from "../models/userModel.js";
 import postModel from "../models/postModel.js";
 
 const addNewComment = async (req, res) => {
-  console.log(req.body);
-
-  // Dodaj post tak jak jest
-  // Jeżeli udało sie dodać post to znajdź użytkownika po id
-  // Dodaj do jego listy komentarzy id utworzonego komenta
-  // To samo z zrób z samym postem
-
+  //Create a new comment object
   const newComment = new commentModel({
     comment: req.body.comment,
     createdAt: req.body.createdAt,
@@ -18,10 +12,31 @@ const addNewComment = async (req, res) => {
   });
 
   try {
-    const savedComment = newComment.save();
+    // Save a new comment in db
+    const savedComment = await newComment.save();
+
+    // Update user posting a comment
+    const commentAuthor = await userModel.findByIdAndUpdate(
+      savedComment.author,
+      { $push: { comments: savedComment.id } },
+      { new: true }
+    );
+
+    // Update location with a new comment
+    const commentedLocation = await postModel.findByIdAndUpdate(
+      savedComment.relatedPost,
+      { $push: { comments: savedComment.id } }
+    );
+
+    // Return a feedback about a new post
     res.status(201).json({
       msg: "Comment added successfully",
-      comment: newComment,
+      comment: {
+        comment: savedComment.comment,
+        createdAt: savedComment.createdAt,
+        author: commentAuthor.userName,
+        relatedPost: commentedLocation.title,
+      },
     });
   } catch (error) {
     res.status(500).json({
