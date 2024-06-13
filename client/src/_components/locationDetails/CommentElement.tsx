@@ -1,26 +1,23 @@
 import { useContext } from 'react';
-import { User, comment, post } from '../../types/types';
+import { comment } from '../../types/types';
 import { AuthContext } from '../../context/AuthContext';
 
 import pencil from '../../../public/pencil.svg';
 import trash from '../../../public/trash-can.svg';
 import Image from 'next/image';
-import useSWRMutation from 'swr/mutation';
-import { deleteComment } from '../../fetchers/DeleteComment';
 
 type Props = {
   comment: comment;
-  mutateUser: (user?: User) => void;
-  mutateLocation: (location?: post) => void;
+  setShowDeleteCommentModal: (show: boolean) => void;
+  setCommentIdToDelete: (id: string) => void;
 };
 
-function CommentElement({ comment, mutateUser, mutateLocation }: Props) {
+function CommentElement({
+  comment,
+  setShowDeleteCommentModal,
+  setCommentIdToDelete,
+}: Props) {
   const { user } = useContext(AuthContext);
-
-  const { trigger } = useSWRMutation(
-    'http://localhost:5000/api/comments/deleteComment',
-    deleteComment,
-  );
 
   // Converting date back from ISO string and formatting it for proper display
   const date = new Date(comment.createdAt).toLocaleDateString('de-DE', {
@@ -32,19 +29,12 @@ function CommentElement({ comment, mutateUser, mutateLocation }: Props) {
     second: 'numeric',
   });
 
-  // TODO Handle delete comment
   // Delete comment
   const handleDeleteComment = async () => {
-    // !Call modal and call this function in it
-    // !Maybe to avoid passing down mutations just make another call to SWR inside
-    try {
-      await trigger({ commentId: comment._id });
-      // Refetch user and location
-      mutateUser();
-      mutateLocation();
-    } catch (error) {
-      console.log(error);
-    }
+    // Show the delete warning modal
+    setShowDeleteCommentModal(true);
+    // Pass up the id of a current comment
+    setCommentIdToDelete(comment._id);
   };
 
   // TODO Handle edit comment

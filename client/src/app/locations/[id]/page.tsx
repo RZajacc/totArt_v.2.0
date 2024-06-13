@@ -2,7 +2,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
@@ -10,6 +10,7 @@ import CommentElement from '../../../_components/locationDetails/CommentElement'
 
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
+import DeleteCommentModal from '../../../_components/locationDetails/DeleteCommentModal';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
@@ -20,6 +21,10 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   // Ref to text area to add comment and clear content after
   const commentRef = useRef<HTMLTextAreaElement>(null);
+
+  // Setting a state for modal visibility and id of a selected comment to delete
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [commentIdToDelete, setCommentIdToDelete] = useState('');
 
   // Query location details data
   const {
@@ -86,8 +91,8 @@ function ContentDetails({ params }: { params: { id: string } }) {
                 <CommentElement
                   key={comment._id}
                   comment={comment}
-                  mutateUser={mutateUser}
-                  mutateLocation={mutateLocation}
+                  setShowDeleteCommentModal={setShowDeleteCommentModal}
+                  setCommentIdToDelete={setCommentIdToDelete}
                 />
               );
             })}
@@ -115,6 +120,15 @@ function ContentDetails({ params }: { params: { id: string } }) {
           </form>
         </section>
       </div>
+
+      <DeleteCommentModal
+        showDeleteCommentModal={showDeleteCommentModal}
+        setShowDeleteCommentModal={setShowDeleteCommentModal}
+        mutateUser={mutateUser}
+        mutateLocation={mutateLocation}
+        setCommentIdToDelete={setCommentIdToDelete}
+        commentIdToDelete={commentIdToDelete}
+      />
     </>
   );
 }
