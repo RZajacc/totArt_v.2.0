@@ -9,6 +9,10 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  editeddAt: {
+    type: Date,
+    required: false,
+  },
   isEdited: {
     type: Boolean,
     required: false,
