@@ -31,11 +31,12 @@ main {
 /* WHen user is an author of the comment */
 .comment__author {
   display: grid;
-  grid-template-columns: 1fr 6fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    'image user user user user user edit delete'
-    'image content content content content content edit delete'
-    'image date date date date date edit delete';
+    'image user user user user user user user'
+    'image content content content content content content content'
+    'date date date date date date date date'
+    'edit edit edit edit delete delete delete delete';
 }
 
 .comment__user-image {
@@ -48,6 +49,8 @@ main {
 
 .comment__content {
   grid-area: content;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .comment__date {

@@ -58,23 +58,25 @@ function CommentElement({
           {comment.author.userName}
         </p>
         <p className="comment__content ml-4 p-1">{comment.comment}</p>
-        <p className="comment__date ml-4 text-sm italic text-gray-400">
-          {date}
+        <p className="comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black">
+          <strong>Added:</strong> {date}
         </p>
 
         {comment.author._id === user?._id ? (
           <>
             <button
               onClick={handleEditComment}
-              className="comment__edit bg-blue-400 px-2 font-bold text-white"
+              className="comment__edit flex items-center justify-center gap-3 rounded-bl-2xl bg-blue-400 p-1 font-bold text-white"
             >
-              <Image src={pencil} alt="pencil" width={25} height={25} />
+              <Image src={pencil} alt="pencil" width={15} height={15} />
+              Edit
             </button>
             <button
               onClick={handleDeleteComment}
-              className="comment__delete rounded-r-2xl bg-red-500 px-2 font-bold text-white hover:bg-slate-300"
+              className="comment__delete flex items-center justify-center gap-3 rounded-br-2xl bg-red-500 px-2 font-bold text-white hover:bg-slate-300"
             >
-              <Image src={trash} alt="trash-can" width={25} height={25} />
+              Delete
+              <Image src={trash} alt="trash-can" width={15} height={15} />
             </button>
           </>
         ) : (
