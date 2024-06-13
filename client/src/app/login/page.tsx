@@ -17,7 +17,7 @@ type Props = {};
 
 function Login({}: Props) {
   // Context data
-  const { mutate } = useContext(AuthContext);
+  const { mutateUser } = useContext(AuthContext);
   // Login error message
   const [logErrMsg, setLogErrMsg] = useState('');
   // Ref to paragraph displaying error message
@@ -52,7 +52,7 @@ function Login({}: Props) {
       const result: loginSucc = await response.json();
       // Set cookie and change user status
       setCookie('auth_token', result.token);
-      mutate();
+      mutateUser();
       // Go to account
       router.push('/account');
     } else {
