@@ -88,17 +88,32 @@ const deleteComment = async (req, res) => {
 };
 
 const editComment = async (req, res) => {
-  console.log(req.body);
   try {
     const updatedComment = await commentModel.findByIdAndUpdate(
       req.body.commentId,
-      { comment: req.body.updatedComment, isEdited: true },
+      {
+        comment: req.body.updatedComment,
+        isEdited: true,
+        editedAt: req.body.editedAt,
+      },
       { new: true }
     );
-    res.status(200).json({
-      msg: "Im alive!",
+    if (updatedComment) {
+      res.status(200).json({
+        msg: "Comment updated properly!",
+        updatedVal: updatedComment.comment,
+        editDate: updatedComment.editedAt,
+      });
+    } else {
+      res.status(404).json({
+        msg: "User with provided id not found!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: "Server error!",
     });
-  } catch (error) {}
+  }
 };
 
 export { addNewComment, deleteComment, editComment };

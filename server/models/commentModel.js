@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  editeddAt: {
+  editedAt: {
     type: Date,
     required: false,
   },
