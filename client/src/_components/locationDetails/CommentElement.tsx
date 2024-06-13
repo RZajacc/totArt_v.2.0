@@ -44,21 +44,28 @@ function CommentElement({
   return (
     <>
       <div
-        className={`${comment.author._id === user?._id ? 'comment__author' : 'comment'} rounded-2xl bg-slate-100`}
+        className={`${comment.author._id === user?._id ? 'comment__author' : 'comment'} rounded-2xl`}
       >
-        <Image
-          src={comment.author.userImage}
-          alt="user-image"
-          width={42}
-          height={42}
-          className="comment__user-image self-center justify-self-center rounded-full"
-        />
+        <div className="comment__user-image self-center rounded-tr-2xl p-1">
+          <Image
+            src={comment.author.userImage}
+            alt="user-image"
+            width={36}
+            height={36}
+            className="rounded-xl"
+          />
+        </div>
 
-        <p className="comment__user-name ml-4 p-1 font-bold">
+        <p className="comment__user-name rounded-t-2xl bg-slate-200 pl-4 pt-2 font-bold">
           {comment.author.userName}
         </p>
-        <p className="comment__content ml-4 p-1">{comment.comment}</p>
-        <p className="comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black">
+
+        <p className="comment__content bg-slate-200 px-4 py-2">
+          {comment.comment}
+        </p>
+        <p
+          className={`comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black ${comment.author._id !== user?._id ? 'rounded-b-2xl' : ''}`}
+        >
           <strong>Added:</strong> {date}
         </p>
 

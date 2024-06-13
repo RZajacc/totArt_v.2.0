@@ -21,22 +21,24 @@ main {
 
 .comment {
   display: grid;
-  grid-template-columns: 1fr 6fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    'image user user user user user '
-    'image content content content content content '
-    'image date date date date date';
+    'image user user user user user user user user'
+    'image content content content content content content content content'
+    'blank content content content content content content content content'
+    'blank date date date date date date date date';
 }
 
 /* WHen user is an author of the comment */
 .comment__author {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    'image user user user user user user user'
-    'image content content content content content content content'
-    'date date date date date date date date'
-    'edit edit edit edit delete delete delete delete';
+    'image user user user user user user user user'
+    'image content content content content content content content content'
+    'blank content content content content content content content content'
+    'blank date date date date date date date date'
+    'blank edit edit edit edit delete delete delete delete';
 }
 
 .comment__user-image {
