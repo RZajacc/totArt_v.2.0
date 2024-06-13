@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { comment } from '../../types/types';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -18,6 +18,8 @@ function CommentElement({
   setCommentIdToDelete,
 }: Props) {
   const { user } = useContext(AuthContext);
+
+  const [isAuthor] = useState(comment.author._id === user?._id);
 
   // Converting date back from ISO string and formatting it for proper display
   const date = new Date(comment.createdAt).toLocaleDateString('de-DE', {
@@ -44,7 +46,7 @@ function CommentElement({
   return (
     <>
       <div
-        className={`${comment.author._id === user?._id ? 'comment__author' : 'comment'} rounded-2xl`}
+        className={`${isAuthor ? 'comment__author' : 'comment'} rounded-2xl`}
       >
         <div className="comment__user-image self-center rounded-tr-2xl p-1">
           <Image
@@ -64,12 +66,12 @@ function CommentElement({
           {comment.comment}
         </p>
         <p
-          className={`comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black ${comment.author._id !== user?._id ? 'rounded-b-2xl' : ''}`}
+          className={`${!isAuthor ? 'rounded-b-2xl' : ''} comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black `}
         >
           <strong>Added:</strong> {date}
         </p>
 
-        {comment.author._id === user?._id ? (
+        {isAuthor ? (
           <>
             <button
               onClick={handleEditComment}
