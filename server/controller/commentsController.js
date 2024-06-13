@@ -87,4 +87,10 @@ const deleteComment = async (req, res) => {
   }
 };
 
-export { addNewComment, deleteComment };
+const editComment = async (req, res) => {
+  res.status(200).json({
+    msg: "Im alive!",
+  });
+};
+
+export { addNewComment, deleteComment, editComment };
