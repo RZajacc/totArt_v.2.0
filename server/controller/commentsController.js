@@ -88,9 +88,17 @@ const deleteComment = async (req, res) => {
 };
 
 const editComment = async (req, res) => {
-  res.status(200).json({
-    msg: "Im alive!",
-  });
+  console.log(req.body);
+  try {
+    const updatedComment = await commentModel.findByIdAndUpdate(
+      req.body.commentId,
+      { comment: req.body.updatedComment, isEdited: true },
+      { new: true }
+    );
+    res.status(200).json({
+      msg: "Im alive!",
+    });
+  } catch (error) {}
 };
 
 export { addNewComment, deleteComment, editComment };
