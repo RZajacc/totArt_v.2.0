@@ -45,6 +45,7 @@ export type comment = {
   _id: string;
   comment: string;
   createdAt: string;
+  editeddAt?: string;
   isEdited?: boolean;
   author: authorType;
   relatedPost: string;
