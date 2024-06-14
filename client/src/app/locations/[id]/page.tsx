@@ -112,7 +112,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
                 name="comment"
                 id="comment"
                 placeholder="Leave a comment"
-                rows={4}
+                rows={3}
                 className="w-full rounded-md p-2 focus-visible:outline-none"
               />
               <button

@@ -70,7 +70,8 @@ function EditCommentModal({
         <section className="my-4 px-1">
           <textarea
             value={selectedCommentContent}
-            className="w-full bg-slate-400"
+            className="w-full p-1"
+            rows={5}
             onChange={(e) => {
               setSelectedCommentContent(e.target.value);
             }}

@@ -11,7 +11,7 @@ import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
 
 function Content() {
-  const { user, mutate } = useContext(AuthContext);
+  const { user, mutateUser } = useContext(AuthContext);
 
   const { data: locations } = useSWR(
     'http://localhost:5000/api/posts/all',
@@ -26,7 +26,7 @@ function Content() {
 
   const handleFavourites = async (locId: string) => {
     const result = await trigger({ email: user!.email, locactionId: locId });
-    mutate({ ...user!, favs: result.favs });
+    mutateUser({ ...user!, favs: result.favs });
   };
 
   return (

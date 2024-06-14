@@ -26,7 +26,9 @@ function CommentElement({
   const [isAuthor] = useState(comment.author._id === user?._id);
 
   // Converting date back from ISO string and formatting it for proper display
-  const date = new Date(comment.createdAt).toLocaleDateString('de-DE', {
+  const date = new Date(
+    comment.isEdited ? comment.editedAt! : comment.createdAt,
+  ).toLocaleDateString('de-DE', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
@@ -43,7 +45,7 @@ function CommentElement({
     setSelectedCommentId(comment._id);
   };
 
-  // TODO Handle edit comment
+  // Handle edit comment
   const handleEditComment = async () => {
     // Show edit comment modal
     setShowEditCommentModal(true);
@@ -77,7 +79,7 @@ function CommentElement({
         <p
           className={`${!isAuthor ? 'rounded-b-2xl' : ''} comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black `}
         >
-          <strong>Added:</strong> {date}
+          <strong>{comment.isEdited ? 'Edited' : 'Added'}:</strong> {date}
         </p>
 
         {isAuthor ? (
