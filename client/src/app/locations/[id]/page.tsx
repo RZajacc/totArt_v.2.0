@@ -11,6 +11,7 @@ import CommentElement from '../../../_components/locationDetails/CommentElement'
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
 import DeleteCommentModal from '../../../_components/locationDetails/DeleteCommentModal';
+import EditCommentModal from '../../../_components/locationDetails/EditCommentModal';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
@@ -24,7 +25,9 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   // Setting a state for modal visibility and id of a selected comment to delete
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [showEditCommentModal, setShowEditCommentModal] = useState(false);
   const [selectedCommentId, setSelectedCommentId] = useState('');
+  const [selectedCommentContent, setSelectedCommentContent] = useState('');
 
   // Query location details data
   const {
@@ -92,7 +95,9 @@ function ContentDetails({ params }: { params: { id: string } }) {
                   key={comment._id}
                   comment={comment}
                   setShowDeleteCommentModal={setShowDeleteCommentModal}
+                  setShowEditCommentModal={setShowEditCommentModal}
                   setSelectedCommentId={setSelectedCommentId}
+                  setSelectedCommentContent={setSelectedCommentContent}
                 />
               );
             })}
@@ -128,6 +133,12 @@ function ContentDetails({ params }: { params: { id: string } }) {
         mutateLocation={mutateLocation}
         setSelectedCommentId={setSelectedCommentId}
         selectedCommentId={selectedCommentId}
+      />
+      <EditCommentModal
+        showEditCommentModal={showEditCommentModal}
+        setShowEditCommentModal={setShowEditCommentModal}
+        selectedCommentContent={selectedCommentContent}
+        setSelectedCommentContent={setSelectedCommentContent}
       />
     </>
   );

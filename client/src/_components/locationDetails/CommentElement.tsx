@@ -9,13 +9,17 @@ import Image from 'next/image';
 type Props = {
   comment: comment;
   setShowDeleteCommentModal: (show: boolean) => void;
+  setShowEditCommentModal: (show: boolean) => void;
   setSelectedCommentId: (id: string) => void;
+  setSelectedCommentContent: (comment: string) => void;
 };
 
 function CommentElement({
   comment,
   setShowDeleteCommentModal,
+  setShowEditCommentModal,
   setSelectedCommentId,
+  setSelectedCommentContent,
 }: Props) {
   const { user } = useContext(AuthContext);
 
@@ -41,7 +45,12 @@ function CommentElement({
 
   // TODO Handle edit comment
   const handleEditComment = async () => {
-    console.log('Im running!');
+    // Show edit comment modal
+    setShowEditCommentModal(true);
+    // Pass up the id of a current comment
+    setSelectedCommentId(comment._id);
+    // Pass up comments value
+    setSelectedCommentContent(comment.comment);
   };
   return (
     <>
