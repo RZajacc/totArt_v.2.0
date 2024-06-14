@@ -9,13 +9,13 @@ import Image from 'next/image';
 type Props = {
   comment: comment;
   setShowDeleteCommentModal: (show: boolean) => void;
-  setCommentIdToDelete: (id: string) => void;
+  setSelectedCommentId: (id: string) => void;
 };
 
 function CommentElement({
   comment,
   setShowDeleteCommentModal,
-  setCommentIdToDelete,
+  setSelectedCommentId,
 }: Props) {
   const { user } = useContext(AuthContext);
 
@@ -36,7 +36,7 @@ function CommentElement({
     // Show the delete warning modal
     setShowDeleteCommentModal(true);
     // Pass up the id of a current comment
-    setCommentIdToDelete(comment._id);
+    setSelectedCommentId(comment._id);
   };
 
   // TODO Handle edit comment

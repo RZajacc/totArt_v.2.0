@@ -8,8 +8,8 @@ type Props = {
   setShowDeleteCommentModal: (show: boolean) => void;
   mutateUser: (user?: User) => void;
   mutateLocation: (location?: post) => void;
-  setCommentIdToDelete: (id: string) => void;
-  commentIdToDelete: string | null;
+  setSelectedCommentId: (id: string) => void;
+  selectedCommentId: string | null;
 };
 
 function DeleteCommentModal({
@@ -17,8 +17,8 @@ function DeleteCommentModal({
   setShowDeleteCommentModal,
   mutateUser,
   mutateLocation,
-  setCommentIdToDelete,
-  commentIdToDelete,
+  setSelectedCommentId,
+  selectedCommentId,
 }: Props) {
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/comments/deleteComment',
@@ -27,12 +27,12 @@ function DeleteCommentModal({
 
   const handleDeleteComment = async () => {
     try {
-      await trigger({ commentId: commentIdToDelete ? commentIdToDelete : '' });
+      await trigger({ commentId: selectedCommentId ? selectedCommentId : '' });
       // Refetch user and location
       mutateUser();
       mutateLocation();
       // Reset comment to delete id value to empty string
-      setCommentIdToDelete('');
+      setSelectedCommentId('');
       // Hide the modal
       setShowDeleteCommentModal(false);
     } catch (error) {

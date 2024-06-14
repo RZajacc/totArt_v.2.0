@@ -24,7 +24,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   // Setting a state for modal visibility and id of a selected comment to delete
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
-  const [commentIdToDelete, setCommentIdToDelete] = useState('');
+  const [selectedCommentId, setSelectedCommentId] = useState('');
 
   // Query location details data
   const {
@@ -92,7 +92,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
                   key={comment._id}
                   comment={comment}
                   setShowDeleteCommentModal={setShowDeleteCommentModal}
-                  setCommentIdToDelete={setCommentIdToDelete}
+                  setSelectedCommentId={setSelectedCommentId}
                 />
               );
             })}
@@ -126,8 +126,8 @@ function ContentDetails({ params }: { params: { id: string } }) {
         setShowDeleteCommentModal={setShowDeleteCommentModal}
         mutateUser={mutateUser}
         mutateLocation={mutateLocation}
-        setCommentIdToDelete={setCommentIdToDelete}
-        commentIdToDelete={commentIdToDelete}
+        setSelectedCommentId={setSelectedCommentId}
+        selectedCommentId={selectedCommentId}
       />
     </>
   );
