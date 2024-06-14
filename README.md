@@ -2,12 +2,22 @@
 
 ### Version information:
 
-It is the initial version of the project built with **MERN** stack. Most of the functionality is working fine, although the application is not full responsive (especially on mobile devices it won't look especially well).
+This is the most recent version of the project built with **MERN** stack. It is currently being refactored. Most of the functionality is taken directly from previous version that you might find [here](https://github.com/RZajacc/totArt). But due to migrating from Vite React app to Next.js with app router, not all functionalities are currently applied.
 
-- **Client** side of the application is built with React and Vite, Typescript, and Bootstrap.
+- **Client** side of the application is built with React and Next.js, Typescript, and TailwindCSS. For data fetching I'm using SWR library.
 - **Server** side is built with Node.js, Express.js and MongoDB.
 
-Current version of the app is available [here](https://github.com/RZajacc/totArt_v.2.0).
+**Currently working on**:
+
+- Adding new locations
+- User dashboard
+- Error and Loading pages
+- Responsiveness - app is built mobile first, currently its not styled for desktop
+- Email confirmation link
+- Resetting forgotten password
+- Introducing Typescript to server side of the app
+
+**_Some of those functionalities are working in the previous version linked before._**
 
 ### Description:
 
