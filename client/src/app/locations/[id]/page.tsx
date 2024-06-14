@@ -139,6 +139,10 @@ function ContentDetails({ params }: { params: { id: string } }) {
         setShowEditCommentModal={setShowEditCommentModal}
         selectedCommentContent={selectedCommentContent}
         setSelectedCommentContent={setSelectedCommentContent}
+        selectedCommentId={selectedCommentId}
+        setSelectedCommentId={setSelectedCommentId}
+        mutateUser={mutateUser}
+        mutateLocation={mutateLocation}
       />
     </>
   );

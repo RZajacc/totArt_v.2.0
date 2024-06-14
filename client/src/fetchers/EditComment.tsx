@@ -10,11 +10,14 @@ type editCommentErr = {
   msg: string;
 };
 
-export const editComment = async ({
-  arg,
-}: {
-  arg: { commentId: string; updatedComment: string; editedAt: string };
-}) => {
+export const editComment = async (
+  url: string,
+  {
+    arg,
+  }: {
+    arg: { commentId: string; updatedComment: string; editedAt: string };
+  },
+) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -23,15 +26,12 @@ export const editComment = async ({
   urlencoded.append('updatedComment', arg.updatedComment);
   urlencoded.append('editedAt', arg.editedAt);
 
-  const response = await fetch(
-    'http://localhost:5000/api/comments/editComment',
-    {
-      method: 'PATCH',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    },
-  );
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: 'follow',
+  });
 
   if (response.ok) {
     const result: editCommentSucc = await response.json();
