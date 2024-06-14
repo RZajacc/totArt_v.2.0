@@ -46,7 +46,9 @@ function EditCommentModal({
           </button>
           <button
             className="rounded-md bg-red-500 px-2 py-1 hover:border-2 hover:border-black"
-            onClick={() => {}}
+            onClick={() => {
+              setShowEditCommentModal(false);
+            }}
           >
             Cancel
           </button>
