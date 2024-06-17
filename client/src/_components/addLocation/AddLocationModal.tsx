@@ -1,6 +1,8 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { post } from '../../types/types';
+import useSWRMutation from 'swr/mutation';
+import { uploadImage } from '../../fetchers/UploadImage';
 
 type Props = {
   showAddLocation: boolean;
@@ -8,8 +10,13 @@ type Props = {
 };
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
-  const [selectedFile, setSelectedFile] = useState<File | string>('');
   const { user } = useContext(AuthContext);
+  const { trigger } = useSWRMutation(
+    'http://localhost:5000/api/images/imageUpload',
+    uploadImage,
+  );
+
+  // !TEMP
   const [isImageUploaded, setIsImageUploaded] = useState<null | boolean>(null);
 
   const [newContent, setNewContent] = useState<post>({
@@ -35,26 +42,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     e.preventDefault();
 
     const formdata = new FormData(e.currentTarget);
-    console.log('IMAGE', formdata.get('locationImage'));
-    // formdata.append('userImage', selectedFile);
-    formdata.append('folder', 'postImages');
-
-    // const requestOptions = {
-    //   method: 'POST',
-    //   body: formdata,
-    // };
-
-    // try {
-    //   const response = await fetch(
-    //     'http://localhost:5000/api/users/imageUpload',
-    //     requestOptions,
-    //   );
-    //   const result = await response.json();
-    //   setNewContent({ ...newContent, imageUrl: result.userImage });
-    //   setIsImageUploaded(true);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    const image = formdata.get('locationImage') as File;
+    console.log('HI');
+    const result = await trigger({ image: image, folder: 'postImages' });
+    console.log('WAITING FOR THE RESULT');
+    console.log('RESULT', result);
   };
 
   // ------------- SUBMIT A NEW POST -----------------

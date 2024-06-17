@@ -9,13 +9,18 @@ type responseErr = {
   msg: string;
 };
 
-export const uploadImage = async (formData: FormData) => {
+export const uploadImage = async (
+  url: string,
+  { arg }: { arg: { image: File; folder: string } },
+) => {
   // Append cloudinary folder name
-  formData.append('folder', 'postImages');
+  const formdata = new FormData();
+  formdata.append('userImage', arg.image);
+  formdata.append('folder', arg.folder);
 
-  const response = await fetch('http://localhost:5000/api/images/imageUpload', {
+  const response = await fetch(url, {
     method: 'POST',
-    body: formData,
+    body: formdata,
     redirect: 'follow',
   });
 
