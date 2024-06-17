@@ -35,6 +35,15 @@ function Content() {
         Number of locations found:{' '}
         <span className="text-green-500">{locations?.number}</span>
       </h1>
+
+      {user ? (
+        <button className="mx-auto mb-4 mt-1 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black">
+          Add new location
+        </button>
+      ) : (
+        ''
+      )}
+
       <div className="mx-auto mt-3 grid max-w-3xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&
           locations.posts.map((loc) => {

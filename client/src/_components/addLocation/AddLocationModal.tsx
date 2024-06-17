@@ -1,29 +1,27 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import { Button, Container, Form, InputGroup, Modal } from "react-bootstrap";
-import { UserImage, post } from "../types/types";
-import "../styles/contentPage.css";
-import { AuthContext } from "../context/AuthContext";
-import { updateUserData } from "../utils/UserEditTools";
+import { useState, ChangeEvent, FormEvent, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { post } from '../../types/types';
 
 const AddContentModal = () => {
   const [show, setShow] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | string>("");
+  const [selectedFile, setSelectedFile] = useState<File | string>('');
   const { user } = useContext(AuthContext);
   const [isImageUploaded, setIsImageUploaded] = useState<null | boolean>(null);
 
   const [newContent, setNewContent] = useState<post>({
-    _id: " ",
-    title: "",
-    description: "",
-    location: "",
-    imageUrl: "",
-    author: { _id: "", userImage: "", userName: "" },
+    _id: ' ',
+    title: '',
+    description: '',
+    location: '',
+    imageUrl: '',
+    author: { _id: '', userImage: '', userName: '' },
     comments: [
       {
-        _id: "",
-        author: { _id: "", userImage: "", userName: "" },
-        comment: "",
-        relatedPost: "",
+        _id: '',
+        author: { _id: '', userImage: '', userName: '' },
+        comment: '',
+        relatedPost: '',
+        createdAt: '',
       },
     ],
   });
@@ -32,7 +30,7 @@ const AddContentModal = () => {
 
   // *-----------HANDLE INCOMING DATA---------------------------
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(e.target.files ? e.target.files[0] : "");
+    setSelectedFile(e.target.files ? e.target.files[0] : '');
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,18 +42,18 @@ const AddContentModal = () => {
     e.preventDefault();
 
     const formdata = new FormData();
-    formdata.append("userImage", selectedFile);
-    formdata.append("folder", "postImages");
+    formdata.append('userImage', selectedFile);
+    formdata.append('folder', 'postImages');
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       body: formdata,
     };
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/imageUpload",
-        requestOptions
+        'http://localhost:5000/api/users/imageUpload',
+        requestOptions,
       );
       const result = (await response.json()) as UserImage;
       setNewContent({ ...newContent, imageUrl: result.userImage });
@@ -69,28 +67,28 @@ const AddContentModal = () => {
   const submitNewPost = async (e) => {
     if (newContent.imageUrl) {
       const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
       const urlencoded = new URLSearchParams();
-      urlencoded.append("title", newContent.title);
-      urlencoded.append("description", newContent.description);
-      urlencoded.append("location", newContent.location);
-      urlencoded.append("imageUrl", newContent.imageUrl);
-      urlencoded.append("author", user!._id);
+      urlencoded.append('title', newContent.title);
+      urlencoded.append('description', newContent.description);
+      urlencoded.append('location', newContent.location);
+      urlencoded.append('imageUrl', newContent.imageUrl);
+      urlencoded.append('author', user!._id);
 
       const requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: urlencoded,
       };
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/posts/addNewPost",
-          requestOptions
+          'http://localhost:5000/api/posts/addNewPost',
+          requestOptions,
         );
         const result = await response.json();
-        updateUserData(user!.email, "posts", result.postId);
+        // updateUserData(user!.email, 'posts', result.postId);
       } catch (error) {
         console.log(error);
       }
@@ -105,7 +103,7 @@ const AddContentModal = () => {
       <Container className="modal-container">
         <p className="add-content-p">
           <strong>{user?.userName}</strong> - to add new content press a button
-          :{" "}
+          :{' '}
         </p>
         <Button variant="dark" onClick={handleShow}>
           Add content
@@ -123,7 +121,7 @@ const AddContentModal = () => {
                   onChange={handleFileInput}
                   required
                   isInvalid={isImageUploaded === false}
-                  isValid={newContent.imageUrl != ""}
+                  isValid={newContent.imageUrl != ''}
                 />
                 <Button type="submit">Upload image</Button>
                 <Form.Control.Feedback type="valid">

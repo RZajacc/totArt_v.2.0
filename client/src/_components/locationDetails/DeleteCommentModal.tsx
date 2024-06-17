@@ -47,7 +47,7 @@ function DeleteCommentModal({
       }}
     >
       <div
-        className="relative top-1/3 mx-auto w-10/12 rounded-md border-2 border-orange-500 bg-slate-50 py-2"
+        className="relative top-1/3 mx-auto w-10/12 rounded-md border-2 border-black bg-slate-50 py-2"
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -60,7 +60,7 @@ function DeleteCommentModal({
         </section>
         <section className="flex justify-end gap-x-2 px-2">
           <button
-            className="rounded-md bg-green-400 px-2 py-1 hover:border-2 hover:border-black"
+            className="rounded-md border-2 bg-green-400 px-2 py-1 hover:border-2 hover:border-black"
             onClick={handleDeleteComment}
           >
             Yes!
