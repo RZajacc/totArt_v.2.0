@@ -16,7 +16,7 @@ const uploadImage = async (req, res) => {
       console.log(result);
       res.status(200).json({
         message: "Image uploaded successfully",
-        userImage: {
+        Image: {
           asset_id: result.asset_id,
           public_id: result.public_id,
           version: result.version,

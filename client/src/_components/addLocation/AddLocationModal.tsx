@@ -34,26 +34,27 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formdata = new FormData();
-    formdata.append('userImage', selectedFile);
+    const formdata = new FormData(e.currentTarget);
+    console.log('IMAGE', formdata.get('locationImage'));
+    // formdata.append('userImage', selectedFile);
     formdata.append('folder', 'postImages');
 
-    const requestOptions = {
-      method: 'POST',
-      body: formdata,
-    };
+    // const requestOptions = {
+    //   method: 'POST',
+    //   body: formdata,
+    // };
 
-    try {
-      const response = await fetch(
-        'http://localhost:5000/api/users/imageUpload',
-        requestOptions,
-      );
-      const result = await response.json();
-      setNewContent({ ...newContent, imageUrl: result.userImage });
-      setIsImageUploaded(true);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await fetch(
+    //     'http://localhost:5000/api/users/imageUpload',
+    //     requestOptions,
+    //   );
+    //   const result = await response.json();
+    //   setNewContent({ ...newContent, imageUrl: result.userImage });
+    //   setIsImageUploaded(true);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   // ------------- SUBMIT A NEW POST -----------------
@@ -102,16 +103,24 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
         <div
           className={`relative top-[15%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation;
           }}
         >
           <section>
             <h1>Share some unique content:</h1>
           </section>
           <section>
-            <form onSubmit={handleFileSubmit} className="grid">
-              <input type="file" required />
-              <button type="submit">Upload image</button>
+            <form
+              onSubmit={handleFileSubmit}
+              className="grid gap-y-1"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <input type="file" name="locationImage" required />
+              <button type="submit" className="rounded-sm bg-black text-white">
+                Upload image
+              </button>
               {/* Valid and invalid feedback */}
               <p></p>
               <p></p>
