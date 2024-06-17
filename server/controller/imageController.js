@@ -2,7 +2,6 @@ import { v2 as cloudinary } from "cloudinary";
 
 // Upload image to cloudinary
 const uploadImage = async (req, res) => {
-  //   * Upload file to cloudinary
   const options = {
     use_filename: true,
     unique_filename: false,
@@ -17,14 +16,14 @@ const uploadImage = async (req, res) => {
       console.log(result);
       res.status(200).json({
         message: "Image uploaded successfully",
-        userImage: result.secure_url,
+        userImage: result,
       });
     } catch (error) {
       console.error(error);
     }
   } else {
     res.status(500).json({
-      error: "File type not supported",
+      error: "File type not supported or file not selected",
     });
   }
 };
