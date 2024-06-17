@@ -28,17 +28,8 @@ const AddContentModal = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // *-----------HANDLE INCOMING DATA---------------------------
-  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(e.target.files ? e.target.files[0] : '');
-  };
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewContent({ ...newContent, [`${e.target.name}`]: e.target.value });
-  };
-
   // * --------- UPLOAD IMAGE -------------------------------
-  const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formdata = new FormData();
@@ -55,7 +46,7 @@ const AddContentModal = () => {
         'http://localhost:5000/api/users/imageUpload',
         requestOptions,
       );
-      const result = (await response.json()) as UserImage;
+      const result = await response.json();
       setNewContent({ ...newContent, imageUrl: result.userImage });
       setIsImageUploaded(true);
     } catch (error) {
@@ -64,7 +55,7 @@ const AddContentModal = () => {
   };
 
   // *------------- SUBMIT A NEW POST -----------------
-  const submitNewPost = async (e) => {
+  const submitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
     if (newContent.imageUrl) {
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -100,89 +91,40 @@ const AddContentModal = () => {
 
   return (
     <>
-      <Container className="modal-container">
-        <p className="add-content-p">
-          <strong>{user?.userName}</strong> - to add new content press a button
-          :{' '}
-        </p>
-        <Button variant="dark" onClick={handleShow}>
-          Add content
-        </Button>
+      <div>
+        <section>
+          <h1>Share some unique content:</h1>
+        </section>
+        <section>
+          <form onSubmit={handleFileSubmit}>
+            <input type="file" required />
+            <button type="submit">Upload image</button>
+            {/* Valid and invalid feedback */}
+            <p></p>
+            <p></p>
+          </form>
+        </section>
+        <section>
+          <form onClick={submitNewPost}>
+            <label htmlFor="title">Start with giving it a title</label>
+            <input
+              type="text"
+              placeholder="example title"
+              name="title"
+              required
+            />
+            <label htmlFor="description">Add some description</label>
+            <textarea rows={3} name="description" required />
+            <label htmlFor="location">Where was it?</label>
+            <textarea rows={3} name="location" required />
+            <button type="submit">Submit</button>
+          </form>
+        </section>
 
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Share some unique content:</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={handleFileSubmit}>
-              <InputGroup>
-                <Form.Control
-                  type="file"
-                  onChange={handleFileInput}
-                  required
-                  isInvalid={isImageUploaded === false}
-                  isValid={newContent.imageUrl != ''}
-                />
-                <Button type="submit">Upload image</Button>
-                <Form.Control.Feedback type="valid">
-                  Image uploaded successfully
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Uploading image is required!
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form>
-            <Form onSubmit={submitNewPost}>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Start with giving it a title</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="example title"
-                  name="title"
-                  onChange={handleInputChange}
-                  autoFocus
-                  required
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Add some description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="description"
-                  onChange={handleInputChange}
-                  required
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Where was it?</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="location"
-                  onChange={handleInputChange}
-                  required
-                />
-              </Form.Group>
-              <Button type="submit">Submit</Button>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Container>
+        <section>
+          <button onClick={handleClose}>Close</button>
+        </section>
+      </div>
     </>
   );
 };
