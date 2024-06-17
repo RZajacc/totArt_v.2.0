@@ -94,7 +94,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   return (
     <>
       <div
-        className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-10 h-screen w-screen`}
+        className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-30 h-screen w-screen bg-slate-600/70`}
       >
         <div
           className={`relative top-[15%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
