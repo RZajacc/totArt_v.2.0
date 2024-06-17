@@ -16,7 +16,26 @@ const uploadImage = async (req, res) => {
       console.log(result);
       res.status(200).json({
         message: "Image uploaded successfully",
-        userImage: result,
+        userImage: {
+          asset_id: result.asset_id,
+          public_id: result.public_id,
+          version: result.version,
+          version_id: result.version_id,
+          signature: result.signature,
+          width: result.width,
+          height: result.height,
+          format: result.format,
+          resource_type: result.resource_type,
+          created_at: result.created_at,
+          bytes: result.bytes,
+          type: result.type,
+          etag: result.etag,
+          placeholder: result.placeholder,
+          url: result.url,
+          secure_url: result.secure_url,
+          folder: result.folder,
+          original_filename: result.original_filename,
+        },
       });
     } catch (error) {
       console.error(error);
