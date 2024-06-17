@@ -3,15 +3,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { getAllLocations } from '../../fetchers/GetAllLocations';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
+import AddLocationModal from '../../_components/addLocation/AddLocationModal';
 
 function Content() {
   const { user, mutateUser } = useContext(AuthContext);
+  const [showAddLocation, setShowAddLocation] = useState(false);
 
   const { data: locations } = useSWR(
     'http://localhost:5000/api/posts/all',
@@ -35,14 +37,23 @@ function Content() {
         Number of locations found:{' '}
         <span className="text-green-500">{locations?.number}</span>
       </h1>
-
       {user ? (
-        <button className="mx-auto mb-4 mt-1 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black">
+        <button
+          className="mx-auto mb-4 mt-1 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
+          onClick={() => {
+            setShowAddLocation(true);
+          }}
+        >
           Add new location
         </button>
       ) : (
         ''
       )}
+
+      <AddLocationModal
+        showAddLocation={showAddLocation}
+        setShowAddLocation={setShowAddLocation}
+      />
 
       <div className="mx-auto mt-3 grid max-w-3xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&

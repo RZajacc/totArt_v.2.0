@@ -1,9 +1,13 @@
-import { useState, ChangeEvent, FormEvent, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { post } from '../../types/types';
 
-const AddContentModal = () => {
-  const [show, setShow] = useState(false);
+type Props = {
+  showAddLocation: boolean;
+  setShowAddLocation: (show: boolean) => void;
+};
+
+const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const [selectedFile, setSelectedFile] = useState<File | string>('');
   const { user } = useContext(AuthContext);
   const [isImageUploaded, setIsImageUploaded] = useState<null | boolean>(null);
@@ -25,10 +29,8 @@ const AddContentModal = () => {
       },
     ],
   });
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  // * --------- UPLOAD IMAGE -------------------------------
+  //  --------- UPLOAD IMAGE -------------------------------
   const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -54,7 +56,7 @@ const AddContentModal = () => {
     }
   };
 
-  // *------------- SUBMIT A NEW POST -----------------
+  // ------------- SUBMIT A NEW POST -----------------
   const submitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
     if (newContent.imageUrl) {
       const myHeaders = new Headers();
@@ -91,7 +93,7 @@ const AddContentModal = () => {
 
   return (
     <>
-      <div>
+      <div className={`${!showAddLocation ? 'hidden' : ''}`}>
         <section>
           <h1>Share some unique content:</h1>
         </section>
@@ -122,11 +124,11 @@ const AddContentModal = () => {
         </section>
 
         <section>
-          <button onClick={handleClose}>Close</button>
+          <button>Close</button>
         </section>
       </div>
     </>
   );
 };
 
-export default AddContentModal;
+export default AddLocationModal;
