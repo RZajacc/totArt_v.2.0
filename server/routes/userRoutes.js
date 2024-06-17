@@ -24,8 +24,6 @@ router.post("/register", register);
 
 router.patch("/handleFavouriteLocations", handleFavouriteLocations);
 
-router.post("/imageUpload", multerUpload.single("userImage"), uploadImage);
-router.post("/imageDelete", deleteImage);
 router.post("/updateUser", updateUserData);
 router.post("/allUserPosts", getAllUserPosts);
 router.post("/allUserFavs", getAllFavs);

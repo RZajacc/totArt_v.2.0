@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import postRoute from "./routes/postsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
+import imageRoutes from "./routes/imageRoutes.js";
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
 import passport from "passport";
 import passportConfig from "./config/passport.js";
@@ -44,6 +45,7 @@ const addRoutes = () => {
   app.use("/api/posts", postRoute);
   app.use("/api/users", userRoutes);
   app.use("/api/comments", commentRoutes);
+  app.use("/api/images", imageRoutes);
 };
 
 // * 4_START SERVER
