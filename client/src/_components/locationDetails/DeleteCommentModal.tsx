@@ -47,7 +47,7 @@ function DeleteCommentModal({
       }}
     >
       <div
-        className="relative top-1/3 mx-auto w-10/12 rounded-md border-2 border-black bg-slate-50 py-2"
+        className="relative top-1 mx-auto w-10/12 rounded-md border-2 border-black bg-slate-50 py-2"
         onClick={(e) => {
           e.stopPropagation();
         }}

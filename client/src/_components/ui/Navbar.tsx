@@ -4,7 +4,7 @@ import NavMobile from './NavMobile';
 
 function Navbar() {
   return (
-    <nav className="fixed left-0 top-0 w-full bg-gradient-to-t from-amber-50 to-white">
+    <nav className="fixed left-0 top-0 z-20 w-full bg-gradient-to-t from-amber-50 to-white">
       {/* DESKTOP NAVBAR */}
       <NavDesktop />
 

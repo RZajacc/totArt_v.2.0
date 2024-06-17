@@ -93,39 +93,51 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
 
   return (
     <>
-      <div className={`${!showAddLocation ? 'hidden' : ''}`}>
-        <section>
-          <h1>Share some unique content:</h1>
-        </section>
-        <section>
-          <form onSubmit={handleFileSubmit}>
-            <input type="file" required />
-            <button type="submit">Upload image</button>
-            {/* Valid and invalid feedback */}
-            <p></p>
-            <p></p>
-          </form>
-        </section>
-        <section>
-          <form onClick={submitNewPost}>
-            <label htmlFor="title">Start with giving it a title</label>
-            <input
-              type="text"
-              placeholder="example title"
-              name="title"
-              required
-            />
-            <label htmlFor="description">Add some description</label>
-            <textarea rows={3} name="description" required />
-            <label htmlFor="location">Where was it?</label>
-            <textarea rows={3} name="location" required />
-            <button type="submit">Submit</button>
-          </form>
-        </section>
+      <div
+        className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-10 h-screen w-screen`}
+      >
+        <div
+          className={`relative top-[15%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
+        >
+          <section>
+            <h1>Share some unique content:</h1>
+          </section>
+          <section>
+            <form onSubmit={handleFileSubmit} className="grid">
+              <input type="file" required />
+              <button type="submit">Upload image</button>
+              {/* Valid and invalid feedback */}
+              <p></p>
+              <p></p>
+            </form>
+          </section>
+          <section>
+            <form onClick={submitNewPost} className="grid">
+              <label htmlFor="title">Start with giving it a title</label>
+              <input
+                type="text"
+                placeholder="example title"
+                name="title"
+                required
+              />
+              <label htmlFor="description">Add some description</label>
+              <textarea rows={3} name="description" required />
+              <label htmlFor="location">Where was it?</label>
+              <textarea rows={3} name="location" required />
+              <button type="submit">Submit</button>
+            </form>
+          </section>
 
-        <section>
-          <button>Close</button>
-        </section>
+          <section>
+            <button
+              onClick={() => {
+                setShowAddLocation(false);
+              }}
+            >
+              Close
+            </button>
+          </section>
+        </div>
       </div>
     </>
   );
