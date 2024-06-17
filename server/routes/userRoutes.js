@@ -5,16 +5,14 @@ import {
   getProfle,
   handleFavouriteLocations,
   deleteFromUserArray,
-  deleteImage,
   deleteUser,
   getAllFavs,
   getAllUserPosts,
   updateUserData,
-  uploadImage,
 } from "../controller/userController.js";
-import multerUpload from "../middlewares/multer.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
 
+// Set up a express router
 const router = express.Router();
 
 router.get("/profile", jwtAuth, getProfle);
