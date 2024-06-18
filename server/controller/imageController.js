@@ -50,12 +50,21 @@ const uploadImage = async (req, res) => {
 const deleteImage = async (req, res) => {
   try {
     const result = await cloudinary.uploader.destroy(req.body.publicId);
-    res.status(200).json({
-      message: "Image deleted successfully",
-      userImage: result,
-    });
+    if (result) {
+      res.status(200).json({
+        message: "Image deleted successfully",
+        userImage: result,
+      });
+    } else {
+      res.status(404).json({
+        msg: "Image not found!",
+      });
+    }
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      msg: "Server error",
+    });
   }
 };
 
