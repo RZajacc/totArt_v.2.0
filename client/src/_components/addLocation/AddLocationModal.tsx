@@ -59,15 +59,9 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     <>
       <div
         className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-30 h-screen w-screen bg-slate-600/70`}
-        onClick={() => {
-          setShowAddLocation(false);
-        }}
       >
         <div
           className={`relative top-[10%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
-          onClick={(e) => {
-            e.stopPropagation;
-          }}
         >
           <section>
             <h1 className="m-1 text-center font-bold">
@@ -75,13 +69,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             </h1>
           </section>
           <section>
-            <form
-              onSubmit={handleFileSubmit}
-              className="grid gap-y-1"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
+            <form onSubmit={handleFileSubmit} className="grid gap-y-1">
               <input
                 type="file"
                 name="locationImage"
@@ -105,13 +93,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             </form>
           </section>
           <section>
-            <form
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              className="grid"
-              onSubmit={submitNewPost}
-            >
+            <form className="grid" onSubmit={submitNewPost}>
               <label htmlFor="title">Start with giving it a title</label>
               <input
                 type="text"
