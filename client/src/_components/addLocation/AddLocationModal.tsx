@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { post } from '../../types/types';
 import useSWRMutation from 'swr/mutation';
 import { uploadImage } from '../../fetchers/UploadImage';
 
@@ -11,77 +10,55 @@ type Props = {
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { user } = useContext(AuthContext);
-  const { trigger } = useSWRMutation(
+  const [imagePublicId, setImagePublicId] = useState<string>();
+
+  const { trigger, isMutating, error } = useSWRMutation(
     'http://localhost:5000/api/images/imageUpload',
     uploadImage,
   );
-
-  // !TEMP
-  const [isImageUploaded, setIsImageUploaded] = useState<null | boolean>(null);
-
-  const [newContent, setNewContent] = useState<post>({
-    _id: ' ',
-    title: '',
-    description: '',
-    location: '',
-    imageUrl: '',
-    author: { _id: '', userImage: '', userName: '' },
-    comments: [
-      {
-        _id: '',
-        author: { _id: '', userImage: '', userName: '' },
-        comment: '',
-        relatedPost: '',
-        createdAt: '',
-      },
-    ],
-  });
 
   //  --------- UPLOAD IMAGE -------------------------------
   const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formdata = new FormData(e.currentTarget);
-    const image = formdata.get('locationImage') as File;
-    console.log('HI');
-    const result = await trigger({ image: image, folder: 'postImages' });
-    console.log('WAITING FOR THE RESULT');
-    console.log('RESULT', result);
+    // Get the file from submitted in the form
+    const formData = new FormData(e.currentTarget);
+    const imageFile = formData.get('locationImage') as File;
+
+    const result = await trigger({ file: imageFile, folder: 'postImages' });
+    setImagePublicId(result.Image.public_id);
   };
 
   // ------------- SUBMIT A NEW POST -----------------
   const submitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (newContent.imageUrl) {
-      const myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-
-      const urlencoded = new URLSearchParams();
-      urlencoded.append('title', newContent.title);
-      urlencoded.append('description', newContent.description);
-      urlencoded.append('location', newContent.location);
-      urlencoded.append('imageUrl', newContent.imageUrl);
-      urlencoded.append('author', user!._id);
-
-      const requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
-      };
-
-      try {
-        const response = await fetch(
-          'http://localhost:5000/api/posts/addNewPost',
-          requestOptions,
-        );
-        const result = await response.json();
-        // updateUserData(user!.email, 'posts', result.postId);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setIsImageUploaded(false);
-      e.preventDefault();
-    }
+    // if (newContent.imageUrl) {
+    //   const myHeaders = new Headers();
+    //   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+    //   const urlencoded = new URLSearchParams();
+    //   urlencoded.append('title', newContent.title);
+    //   urlencoded.append('description', newContent.description);
+    //   urlencoded.append('location', newContent.location);
+    //   urlencoded.append('imageUrl', newContent.imageUrl);
+    //   urlencoded.append('author', user!._id);
+    //   const requestOptions = {
+    //     method: 'POST',
+    //     headers: myHeaders,
+    //     body: urlencoded,
+    //   };
+    //   try {
+    //     const response = await fetch(
+    //       'http://localhost:5000/api/posts/addNewPost',
+    //       requestOptions,
+    //     );
+    //     const result = await response.json();
+    //     // updateUserData(user!.email, 'posts', result.postId);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // } else {
+    //   setIsImageUploaded(false);
+    //   e.preventDefault();
+    // }
   };
 
   return (

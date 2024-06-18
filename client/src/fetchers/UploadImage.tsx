@@ -1,21 +1,11 @@
 import { FetchError, Image } from '../types/types';
 
-type responseOk = {
-  msg: string;
-  Image: Image;
-};
-
-type responseErr = {
-  msg: string;
-};
-
 export const uploadImage = async (
   url: string,
-  { arg }: { arg: { image: File; folder: string } },
+  { arg }: { arg: { file: File; folder: string } },
 ) => {
-  // Append cloudinary folder name
   const formdata = new FormData();
-  formdata.append('userImage', arg.image);
+  formdata.append('userImage', arg.file);
   formdata.append('folder', arg.folder);
 
   const response = await fetch(url, {
@@ -25,10 +15,10 @@ export const uploadImage = async (
   });
 
   if (response.ok) {
-    const result: responseOk = await response.json();
+    const result: { msg: string; Image: Image } = await response.json();
     return result;
   } else {
-    const result: responseErr = await response.json();
+    const result: { msg: string } = await response.json();
     const error: FetchError = new Error('Something went wrong');
     error.info = result.msg;
     error.status = response.status;
