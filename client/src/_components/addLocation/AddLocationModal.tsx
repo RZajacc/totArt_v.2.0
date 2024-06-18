@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllLocations } from '../../fetchers/GetAllLocations';
+import { deleteImage } from '../../fetchers/DeleteImage';
 
 type Props = {
   showAddLocation: boolean;
@@ -28,6 +29,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { trigger: triggerGetLocations } = useSWRMutation(
     'http://localhost:5000/api/posts/all',
     getAllLocations,
+  );
+
+  const { trigger: triggerDeletingImage } = useSWRMutation(
+    'http://localhost:5000/api/images/imageDelete',
+    deleteImage,
   );
 
   //  --------- UPLOAD IMAGE -------------------------------
@@ -67,6 +73,14 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     triggerGetLocations();
     setUploadedImage(undefined);
     setShowAddLocation(false);
+  };
+
+  const handleClosingModal = async () => {
+    if (uploadedImage) {
+      triggerDeletingImage({ publicId: uploadedImage.public_id });
+    }
+    setShowAddLocation(false);
+    setUploadedImage(undefined);
   };
 
   return (
@@ -130,9 +144,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
 
           <section className="py-2">
             <button
-              onClick={() => {
-                setShowAddLocation(false);
-              }}
+              onClick={handleClosingModal}
               className="ml-auto block rounded-md border-2 border-black bg-red-500 px-2 py-1 font-bold text-white shadow-md shadow-black"
             >
               Close

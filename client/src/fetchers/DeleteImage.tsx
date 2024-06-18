@@ -7,7 +7,6 @@ export const deleteImage = async (
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
-  // const url = 'http://localhost:5000/api/images/imageDelete'
   const urlencoded = new URLSearchParams();
   urlencoded.append('publicId', arg.publicId);
 
