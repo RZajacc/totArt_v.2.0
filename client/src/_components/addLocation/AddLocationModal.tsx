@@ -5,6 +5,7 @@ import { Image as ImageType } from '../../types/types';
 import Image from 'next/image';
 import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';
+import { getAllLocations } from '../../fetchers/GetAllLocations';
 
 type Props = {
   showAddLocation: boolean;
@@ -12,14 +13,20 @@ type Props = {
 };
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
-  const { user } = useContext(AuthContext);
+  const { user, mutateUser } = useContext(AuthContext);
   const [uploadedImage, setUploadedImage] = useState<ImageType>();
 
   const { trigger: triggerImageUpload, isMutating: imageIsMutating } =
     useSWRMutation('http://localhost:5000/api/images/imageUpload', uploadImage);
+
   const { trigger: triggerAddLocation } = useSWRMutation(
     'http://localhost:5000/api/posts/addNewLocation',
     addNewLocation,
+  );
+
+  const { trigger: triggerGetLocations } = useSWRMutation(
+    'http://localhost:5000/api/posts/all',
+    getAllLocations,
   );
 
   //  --------- UPLOAD IMAGE -------------------------------
@@ -53,6 +60,10 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       imageUrl: uploadedImage ? uploadedImage.secure_url : '',
       author: user ? user._id : '',
     });
+
+    mutateUser();
+    triggerGetLocations();
+    setShowAddLocation(false);
   };
 
   return (

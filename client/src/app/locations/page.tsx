@@ -22,7 +22,7 @@ function Content() {
 
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
-    'http://localhost:5000/api/users/addToUserFavourites',
+    'http://localhost:5000/api/users/handleFavouriteLocations',
     locationFavsData,
   );
 
