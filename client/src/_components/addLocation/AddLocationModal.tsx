@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { uploadImage } from '../../fetchers/UploadImage';
+import { Image as ImageType } from '../../types/types';
+import Image from 'next/image';
 
 type Props = {
   showAddLocation: boolean;
@@ -9,10 +10,9 @@ type Props = {
 };
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
-  const { user } = useContext(AuthContext);
-  const [imagePublicId, setImagePublicId] = useState<string>();
+  const [uploadedImage, setUploadedImage] = useState<ImageType>();
 
-  const { trigger, isMutating, error } = useSWRMutation(
+  const { trigger, isMutating } = useSWRMutation(
     'http://localhost:5000/api/images/imageUpload',
     uploadImage,
   );
@@ -25,40 +25,14 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const formData = new FormData(e.currentTarget);
     const imageFile = formData.get('locationImage') as File;
 
+    // Trigger the mutation
     const result = await trigger({ file: imageFile, folder: 'postImages' });
-    setImagePublicId(result.Image.public_id);
+    setUploadedImage(result.Image);
   };
 
   // ------------- SUBMIT A NEW POST -----------------
   const submitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
-    // if (newContent.imageUrl) {
-    //   const myHeaders = new Headers();
-    //   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-    //   const urlencoded = new URLSearchParams();
-    //   urlencoded.append('title', newContent.title);
-    //   urlencoded.append('description', newContent.description);
-    //   urlencoded.append('location', newContent.location);
-    //   urlencoded.append('imageUrl', newContent.imageUrl);
-    //   urlencoded.append('author', user!._id);
-    //   const requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: urlencoded,
-    //   };
-    //   try {
-    //     const response = await fetch(
-    //       'http://localhost:5000/api/posts/addNewPost',
-    //       requestOptions,
-    //     );
-    //     const result = await response.json();
-    //     // updateUserData(user!.email, 'posts', result.postId);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // } else {
-    //   setIsImageUploaded(false);
-    //   e.preventDefault();
-    // }
+    e.preventDefault();
   };
 
   return (
@@ -70,13 +44,15 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
         }}
       >
         <div
-          className={`relative top-[15%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
+          className={`relative top-[10%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
           onClick={(e) => {
             e.stopPropagation;
           }}
         >
           <section>
-            <h1>Share some unique content:</h1>
+            <h1 className="m-1 text-center font-bold">
+              Share some unique content:
+            </h1>
           </section>
           <section>
             <form
@@ -86,7 +62,20 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 e.stopPropagation();
               }}
             >
-              <input type="file" name="locationImage" required />
+              <input
+                type="file"
+                name="locationImage"
+                required
+                className=" file:rounded-md file:bg-purple-400 file:shadow-md file:shadow-black"
+              />
+              <p>{isMutating ? 'Loading' : ''}</p>
+              <Image
+                src={uploadedImage ? uploadedImage.secure_url : ''}
+                width={uploadedImage ? uploadedImage.width : undefined}
+                height={uploadedImage ? uploadedImage.height : undefined}
+                alt="Uploaded image"
+                className="mx-auto w-1/4 rounded-md"
+              />
               <button type="submit" className="rounded-sm bg-black text-white">
                 Upload image
               </button>

@@ -15,7 +15,7 @@ export const uploadImage = async (
   });
 
   if (response.ok) {
-    const result: { msg: string; Image: Image } = await response.json();
+    const result: { Image: Image } = await response.json();
     return result;
   } else {
     const result: { msg: string } = await response.json();
