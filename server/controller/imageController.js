@@ -14,35 +14,37 @@ const uploadImage = async (req, res) => {
       // Upload the image
       const result = await cloudinary.uploader.upload(req.file.path, options);
       console.log(result);
-      res.status(200).json({
-        message: "Image uploaded successfully",
-        Image: {
-          asset_id: result.asset_id,
-          public_id: result.public_id,
-          version: result.version,
-          version_id: result.version_id,
-          signature: result.signature,
-          width: result.width,
-          height: result.height,
-          format: result.format,
-          resource_type: result.resource_type,
-          created_at: result.created_at,
-          bytes: result.bytes,
-          type: result.type,
-          etag: result.etag,
-          placeholder: result.placeholder,
-          url: result.url,
-          secure_url: result.secure_url,
-          folder: result.folder,
-          original_filename: result.original_filename,
-        },
-      });
+      if (result) {
+        res.status(200).json({
+          message: "Image uploaded successfully",
+          Image: {
+            asset_id: result.asset_id,
+            public_id: result.public_id,
+            version: result.version,
+            version_id: result.version_id,
+            signature: result.signature,
+            width: result.width,
+            height: result.height,
+            format: result.format,
+            resource_type: result.resource_type,
+            created_at: result.created_at,
+            bytes: result.bytes,
+            type: result.type,
+            etag: result.etag,
+            placeholder: result.placeholder,
+            url: result.url,
+            secure_url: result.secure_url,
+            folder: result.folder,
+            original_filename: result.original_filename,
+          },
+        });
+      }
     } catch (error) {
       console.error(error);
     }
   } else {
     res.status(500).json({
-      error: "File type not supported or file not selected",
+      msg: "File type not supported or file not selected!",
     });
   }
 };

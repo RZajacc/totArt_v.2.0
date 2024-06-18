@@ -22,8 +22,14 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const descriptionTextRef = useRef<HTMLTextAreaElement>(null);
   const locationTextRef = useRef<HTMLTextAreaElement>(null);
 
-  const { trigger: triggerImageUpload, isMutating: imageIsMutating } =
-    useSWRMutation('http://localhost:5000/api/images/imageUpload', uploadImage);
+  const {
+    trigger: triggerImageUpload,
+    isMutating: imageIsMutating,
+    error: imageUploadError,
+  } = useSWRMutation(
+    'http://localhost:5000/api/images/imageUpload',
+    uploadImage,
+  );
 
   const { trigger: triggerAddLocation } = useSWRMutation(
     'http://localhost:5000/api/posts/addNewLocation',
@@ -138,9 +144,12 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               <button type="submit" className="rounded-sm bg-black text-white">
                 Upload image
               </button>
-              {/* Valid and invalid feedback */}
-              <p></p>
-              <p></p>
+              {/* Invalid feedback */}
+              <p
+                className={`${!imageUploadError ? 'hidden' : ''} rounded-lg bg-red-500 px-2 py-1 text-center text-white`}
+              >
+                {imageUploadError ? imageUploadError.info : ''}
+              </p>
             </form>
           </section>
           <section>
@@ -151,6 +160,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 type="text"
                 placeholder="example title"
                 name="title"
+                className="rounded-sm p-1"
                 required
               />
               <label htmlFor="description">Add some description</label>
@@ -158,16 +168,18 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 ref={descriptionTextRef}
                 rows={3}
                 name="description"
-                required
                 placeholder="Describe the image"
+                className="rounded-sm p-1"
+                required
               />
               <label htmlFor="location">Where was it?</label>
               <textarea
                 ref={locationTextRef}
                 rows={3}
                 name="location"
-                required
+                className="rounded-sm p-1"
                 placeholder="Doesnt have to be precise but provide some information"
+                required
               />
               <button type="submit" className="rounded-sm bg-black text-white">
                 Submit
