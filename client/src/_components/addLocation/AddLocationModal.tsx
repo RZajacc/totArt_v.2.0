@@ -16,7 +16,11 @@ type Props = {
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { user, mutateUser } = useContext(AuthContext);
   const [uploadedImage, setUploadedImage] = useState<ImageType>();
+  // Input refs
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const descriptionTextRef = useRef<HTMLTextAreaElement>(null);
+  const locationTextRef = useRef<HTMLTextAreaElement>(null);
 
   const { trigger: triggerImageUpload, isMutating: imageIsMutating } =
     useSWRMutation('http://localhost:5000/api/images/imageUpload', uploadImage);
@@ -49,7 +53,13 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       file: imageFile,
       folder: 'postImages',
     });
+    // If there was an image already uploded delete it to allow uploading a new one
+    if (uploadedImage) {
+      triggerDeletingImage({ publicId: uploadedImage.public_id });
+    }
+    // If there were no image before or was just deleted set a new one
     setUploadedImage(result.Image);
+    // Reset ref
     imageInputRef.current!.value = '';
   };
 
@@ -69,18 +79,28 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       author: user ? user._id : '',
     });
 
+    // Refresh data in connected models
     mutateUser();
     triggerGetLocations();
+    // Reset uploaded image
     setUploadedImage(undefined);
+    // Close the modal
     setShowAddLocation(false);
   };
 
   const handleClosingModal = async () => {
+    // If there is an image then delete it
     if (uploadedImage) {
       triggerDeletingImage({ publicId: uploadedImage.public_id });
     }
-    setShowAddLocation(false);
+    // Reset the image
     setUploadedImage(undefined);
+    // Reset input refs
+    titleInputRef.current!.value = '';
+    descriptionTextRef.current!.value = '';
+    locationTextRef.current!.value = '';
+    // Close the modal
+    setShowAddLocation(false);
   };
 
   return (
@@ -127,15 +147,28 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             <form className="grid gap-y-1" onSubmit={submitNewPost}>
               <label htmlFor="title">Start with giving it a title</label>
               <input
+                ref={titleInputRef}
                 type="text"
                 placeholder="example title"
                 name="title"
                 required
               />
               <label htmlFor="description">Add some description</label>
-              <textarea rows={3} name="description" required />
+              <textarea
+                ref={descriptionTextRef}
+                rows={3}
+                name="description"
+                required
+                placeholder="Describe the image"
+              />
               <label htmlFor="location">Where was it?</label>
-              <textarea rows={3} name="location" required />
+              <textarea
+                ref={locationTextRef}
+                rows={3}
+                name="location"
+                required
+                placeholder="Doesnt have to be precise but provide some information"
+              />
               <button type="submit" className="rounded-sm bg-black text-white">
                 Submit
               </button>
