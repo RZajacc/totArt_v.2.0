@@ -18,7 +18,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { trigger: triggerImageUpload, isMutating: imageIsMutating } =
     useSWRMutation('http://localhost:5000/api/images/imageUpload', uploadImage);
   const { trigger: triggerAddLocation } = useSWRMutation(
-    'http://localhost:5000/api/posts/addNewPost',
+    'http://localhost:5000/api/posts/addNewLocation',
     addNewLocation,
   );
 

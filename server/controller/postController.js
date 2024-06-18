@@ -59,8 +59,8 @@ const getLocationDetails = async (req, res) => {
   }
 };
 
-const addNewPost = async (req, res) => {
-  console.log(req.body);
+const addNewLocation = async (req, res) => {
+  // Create a new post
   const newPost = new postModel({
     title: req.body.title,
     description: req.body.description,
@@ -73,9 +73,11 @@ const addNewPost = async (req, res) => {
     const savedPost = newPost.save();
     res.status(201).json({
       msg: "new post uploaded uploaded",
-      postId: newPost._id,
+      postId: savedPost._id,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // ! Naming to change
@@ -100,4 +102,4 @@ const updatePost = async (req, res) => {
   }
 };
 
-export { getAllLocations, addNewPost, getLocationDetails, updatePost };
+export { getAllLocations, getLocationDetails, addNewLocation, updatePost };
