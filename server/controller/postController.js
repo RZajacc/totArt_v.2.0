@@ -1,4 +1,5 @@
 import postModel from "../models/postModel.js";
+import userModel from "../models/userModel.js";
 
 const getAllLocations = async (req, res) => {
   try {
@@ -70,10 +71,14 @@ const addNewLocation = async (req, res) => {
   });
 
   try {
-    const savedPost = newPost.save();
+    const savedPost = await newPost.save();
+    const author = await userModel.findByIdAndUpdate(req.body.author, {
+      $push: { posts: savedPost.id },
+    });
     res.status(201).json({
       msg: "new post uploaded uploaded",
       postId: savedPost._id,
+      author: author.id,
     });
   } catch (error) {
     console.log(error);

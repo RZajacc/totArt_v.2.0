@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { uploadImage } from '../../fetchers/UploadImage';
 import { Image as ImageType } from '../../types/types';
@@ -15,6 +15,7 @@ type Props = {
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { user, mutateUser } = useContext(AuthContext);
   const [uploadedImage, setUploadedImage] = useState<ImageType>();
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const { trigger: triggerImageUpload, isMutating: imageIsMutating } =
     useSWRMutation('http://localhost:5000/api/images/imageUpload', uploadImage);
@@ -43,6 +44,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       folder: 'postImages',
     });
     setUploadedImage(result.Image);
+    imageInputRef.current!.value = '';
   };
 
   // ------------- SUBMIT A NEW POST -----------------
@@ -63,6 +65,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
 
     mutateUser();
     triggerGetLocations();
+    setUploadedImage(undefined);
     setShowAddLocation(false);
   };
 
@@ -82,6 +85,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
           <section>
             <form onSubmit={handleFileSubmit} className="grid gap-y-1">
               <input
+                ref={imageInputRef}
                 type="file"
                 name="locationImage"
                 required
