@@ -61,7 +61,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
         className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-30 h-screen w-screen bg-slate-600/70`}
       >
         <div
-          className={`relative top-[10%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
+          className={`relative top-[5%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
         >
           <section>
             <h1 className="m-1 text-center font-bold">
@@ -76,13 +76,15 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 required
                 className=" file:rounded-md file:bg-purple-400 file:shadow-md file:shadow-black"
               />
-              <p>{imageIsMutating ? 'Loading' : ''}</p>
+              <p className="text-center font-bold">
+                {imageIsMutating ? 'Uploading...' : ''}
+              </p>
               <Image
                 src={uploadedImage ? uploadedImage.secure_url : ''}
                 width={uploadedImage ? uploadedImage.width : undefined}
                 height={uploadedImage ? uploadedImage.height : undefined}
                 alt="Uploaded image"
-                className="mx-auto w-1/4 rounded-md"
+                className={`${!uploadedImage ? 'hidden' : ''} mx-auto w-1/4 rounded-md`}
               />
               <button type="submit" className="rounded-sm bg-black text-white">
                 Upload image
@@ -93,7 +95,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             </form>
           </section>
           <section>
-            <form className="grid" onSubmit={submitNewPost}>
+            <form className="grid gap-y-1" onSubmit={submitNewPost}>
               <label htmlFor="title">Start with giving it a title</label>
               <input
                 type="text"
@@ -105,15 +107,18 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               <textarea rows={3} name="description" required />
               <label htmlFor="location">Where was it?</label>
               <textarea rows={3} name="location" required />
-              <button type="submit">Submit</button>
+              <button type="submit" className="rounded-sm bg-black text-white">
+                Submit
+              </button>
             </form>
           </section>
 
-          <section>
+          <section className="py-2">
             <button
               onClick={() => {
                 setShowAddLocation(false);
               }}
+              className="ml-auto block rounded-md border-2 border-black bg-red-500 px-2 py-1 font-bold text-white shadow-md shadow-black"
             >
               Close
             </button>
