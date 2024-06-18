@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { uploadImage } from '../../fetchers/UploadImage';
 import { Image as ImageType } from '../../types/types';
 import Image from 'next/image';
+import { addNewLocation } from '../../fetchers/AddNewLocation';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
   showAddLocation: boolean;
@@ -10,11 +12,14 @@ type Props = {
 };
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
+  const { user } = useContext(AuthContext);
   const [uploadedImage, setUploadedImage] = useState<ImageType>();
 
-  const { trigger, isMutating } = useSWRMutation(
-    'http://localhost:5000/api/images/imageUpload',
-    uploadImage,
+  const { trigger: triggerImageUpload, isMutating: imageIsMutating } =
+    useSWRMutation('http://localhost:5000/api/images/imageUpload', uploadImage);
+  const { trigger: triggerAddLocation } = useSWRMutation(
+    'http://localhost:5000/api/posts/addNewPost',
+    addNewLocation,
   );
 
   //  --------- UPLOAD IMAGE -------------------------------
@@ -26,13 +31,28 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const imageFile = formData.get('locationImage') as File;
 
     // Trigger the mutation
-    const result = await trigger({ file: imageFile, folder: 'postImages' });
+    const result = await triggerImageUpload({
+      file: imageFile,
+      folder: 'postImages',
+    });
     setUploadedImage(result.Image);
   };
 
   // ------------- SUBMIT A NEW POST -----------------
   const submitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const title = formData.get('title') as string;
+    const description = formData.get('description') as string;
+    const location = formData.get('location') as string;
+
+    await triggerAddLocation({
+      title,
+      description,
+      location,
+      imageUrl: uploadedImage ? uploadedImage.secure_url : '',
+      author: user ? user._id : '',
+    });
   };
 
   return (
@@ -68,7 +88,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 required
                 className=" file:rounded-md file:bg-purple-400 file:shadow-md file:shadow-black"
               />
-              <p>{isMutating ? 'Loading' : ''}</p>
+              <p>{imageIsMutating ? 'Loading' : ''}</p>
               <Image
                 src={uploadedImage ? uploadedImage.secure_url : ''}
                 width={uploadedImage ? uploadedImage.width : undefined}
@@ -85,7 +105,13 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             </form>
           </section>
           <section>
-            <form onClick={submitNewPost} className="grid">
+            <form
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="grid"
+              onSubmit={submitNewPost}
+            >
               <label htmlFor="title">Start with giving it a title</label>
               <input
                 type="text"
