@@ -1,4 +1,4 @@
-import { FetchError } from '../types/UserTypes';
+import { FetchError } from '../types/GeneralTypes';
 
 export const addNewLocation = async (
   url: string,

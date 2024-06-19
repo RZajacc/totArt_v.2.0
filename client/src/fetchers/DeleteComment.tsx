@@ -1,8 +1,4 @@
-import { FetchError } from '../types/UserTypes';
-
-type deleteResponse = {
-  msg: string;
-};
+import { FetchError } from '../types/GeneralTypes';
 
 export const deleteComment = async (
   url: string,
@@ -22,10 +18,10 @@ export const deleteComment = async (
   });
 
   if (response.ok) {
-    const result: deleteResponse = await response.json();
+    const result: { msg: string } = await response.json();
     return result;
   } else {
-    const result: deleteResponse = await response.json();
+    const result: { msg: string } = await response.json();
     const error: FetchError = new Error('Something went wrong');
     error.info = result.msg;
     error.status = response.status;
