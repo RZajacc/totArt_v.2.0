@@ -64,7 +64,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
       console.log(error);
     }
   };
-
+  console.log('LOCATION DATA--->', locationData);
   return (
     <>
       {error ? (
@@ -77,7 +77,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
       ) : (
         <LocationDetails
           user={user!}
-          data={locationData!}
+          data={locationData!.locationData}
           mutateUser={mutateUser}
         />
       )}
@@ -85,11 +85,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
       {/* Comments section */}
       <div>
         <h4 className="py-2 text-center text-xl font-bold">
-          ({locationData?.comments.length}) Comments:
+          ({locationData?.locationData.comments.length}) comments:
         </h4>
         <section className="grid gap-y-2">
-          {locationData?.comments &&
-            locationData.comments.map((comment) => {
+          {locationData?.locationData.comments &&
+            locationData.locationData.comments.map((comment) => {
               return (
                 <CommentElement
                   key={comment._id}

@@ -2,13 +2,13 @@ import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { deleteComment } from '../../fetchers/DeleteComment';
 import { User } from '../../types/UserTypes';
-import { locationType } from '../../types/LocationTypes';
+import { locationDetailsType } from '../../types/LocationTypes';
 
 type Props = {
   showDeleteCommentModal: boolean;
   setShowDeleteCommentModal: (show: boolean) => void;
   mutateUser: (user?: User) => void;
-  mutateLocation: (location?: locationType) => void;
+  mutateLocation: (location?: locationDetailsType) => void;
   setSelectedCommentId: (id: string) => void;
   selectedCommentId: string | null;
 };

@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/all", getAllLocations);
-router.get("/details", getLocationDetails);
+router.post("/details", getLocationDetails);
 router.post("/addNewLocation", addNewLocation);
 // router.post("/updatePost", updatePost);
 
