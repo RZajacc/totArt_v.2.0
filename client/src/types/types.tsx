@@ -28,10 +28,6 @@ export type AddComment = {
   };
 };
 
-export type ImageUrlUpdateResponse = {
-  msg: string;
-};
-
 export type editFieldStatus = {
   inputField: boolean;
   editField: boolean;
