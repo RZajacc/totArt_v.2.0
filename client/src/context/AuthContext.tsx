@@ -12,7 +12,7 @@ interface AuthContextType {
   logout: () => void;
 }
 
-const AuthInitContext = {
+const AuthInitContext: AuthContextType = {
   user: undefined,
   mutateUser: () => console.log('Mutate user'),
   logout: () => console.log('Log user out'),
