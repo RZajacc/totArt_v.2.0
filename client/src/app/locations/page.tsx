@@ -57,7 +57,7 @@ function Content() {
 
       <div className="mx-auto mt-3 grid max-w-3xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&
-          locations.posts.map((loc) => {
+          locations.locations.map((loc) => {
             return (
               <div
                 key={loc._id}
