@@ -1,7 +1,7 @@
 import userModel from "../models/userModel.js";
 import { bcrypt_hash, bcrypt_verifyPassword } from "../utils/bcrypt_config.js";
 import { generateToken } from "../utils/tokenServices.js";
-import postModel from "../models/postModel.js";
+import locationModel from "../models/locationModel.js";
 import commentModel from "../models/commentModel.js";
 
 const register = async (req, res) => {
@@ -262,7 +262,7 @@ const deleteUser = async (req, res) => {
   const userToDelete = await userModel.findById(req.body._id);
   // console.log(userToDelete);
   userToDelete.posts.forEach(async (post) => {
-    let postToDelete = await postModel.findByIdAndDelete(post);
+    let postToDelete = await locationModel.findByIdAndDelete(post);
   });
 
   userToDelete.comments.forEach(async (comment) => {

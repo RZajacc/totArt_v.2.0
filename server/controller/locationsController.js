@@ -1,16 +1,17 @@
-import postModel from "../models/postModel.js";
+import locationModel from "../models/locationModel.js";
 import userModel from "../models/userModel.js";
 
 const getAllLocations = async (req, res) => {
   try {
-    const allPosts = await postModel
+    const allLocations = await locationModel
       .find()
-      .populate({ path: "author", select: ["userName"] });
+      .populate({ path: "author", select: ["userName"] })
+      .populate({ path: "image" });
 
-    if (allPosts) {
+    if (allLocations) {
       res.status(200).json({
-        number: allPosts.length,
-        posts: allPosts,
+        number: allLocations.length,
+        locations: allLocations,
       });
     } else {
       res.status(404).json({
@@ -27,30 +28,24 @@ const getAllLocations = async (req, res) => {
 const getLocationDetails = async (req, res) => {
   try {
     // Check if post exists
-    const postData = await postModel
+    const locationData = await locationModel
       .findById(req.body.id)
       .populate({ path: "author", select: ["userName", "userImage"] })
+      .populate({ path: "image" })
       .populate({
         path: "comments",
         populate: { path: "author", select: ["userName", "userImage"] },
       });
 
     // If it doesnt return a message
-    if (!postData) {
+    if (!locationData) {
       res.status(400).json({
         msg: "Requested location does not exist",
       });
     } else {
       // If it does return data
       res.status(200).json({
-        _id: postData._id,
-        title: postData.title,
-        description: postData.description,
-        location: postData.location,
-        imageUrl: postData.imageUrl,
-        author: postData.author,
-        favs: postData.favs,
-        comments: postData.comments,
+        locationData,
       });
     }
   } catch {
@@ -62,7 +57,7 @@ const getLocationDetails = async (req, res) => {
 
 const addNewLocation = async (req, res) => {
   // Create a new post
-  const newPost = new postModel({
+  const newPost = new locationModel({
     title: req.body.title,
     description: req.body.description,
     location: req.body.location,
@@ -94,7 +89,7 @@ const updatePost = async (req, res) => {
 
   // * This section covers connecting user with his posts
   if (req.body.elementName === "comments") {
-    let updatedPost = await postModel.findOneAndUpdate(
+    let updatedPost = await locationModel.findOneAndUpdate(
       filter,
       { $push: { comments: elementValue } },
       {

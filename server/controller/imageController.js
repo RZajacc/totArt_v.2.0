@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
-import postModel from "../models/postModel.js";
+import locationModel from "../models/locationModel.js";
 
 // Upload image to cloudinary
 const locationImageUpload = async (req, res) => {
@@ -26,7 +26,7 @@ const locationImageUpload = async (req, res) => {
       // Save the image in the database
       const savedImage = await image.save();
       // Update location with a newly saved image
-      const location = await postModel.findByIdAndUpdate(
+      const location = await locationModel.findByIdAndUpdate(
         req.body.related_location,
         {
           image: savedImage._id,

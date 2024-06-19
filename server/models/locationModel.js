@@ -19,6 +19,6 @@ const postSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
 });
 
-const postModel = mongoose.model("post", postSchema);
+const locationModel = mongoose.model("location", postSchema);
 
-export default postModel;
+export default locationModel;

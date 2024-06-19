@@ -1,6 +1,6 @@
 import commentModel from "../models/commentModel.js";
 import userModel from "../models/userModel.js";
-import postModel from "../models/postModel.js";
+import locationModel from "../models/locationModel.js";
 
 const addNewComment = async (req, res) => {
   //Create a new comment object
@@ -24,7 +24,7 @@ const addNewComment = async (req, res) => {
       );
 
       // Update location with a new comment
-      const commentedLocation = await postModel.findByIdAndUpdate(
+      const commentedLocation = await locationModel.findByIdAndUpdate(
         savedComment.relatedPost,
         { $push: { comments: savedComment.id } },
         { new: true }
@@ -68,7 +68,7 @@ const deleteComment = async (req, res) => {
     );
 
     // find commented location and delete comment id
-    let updateLocation = await postModel.findByIdAndUpdate(
+    let updateLocation = await locationModel.findByIdAndUpdate(
       comment.relatedPost,
       { $pull: { comments: comment._id } },
       { new: true }
