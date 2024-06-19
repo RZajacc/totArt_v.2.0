@@ -16,7 +16,7 @@ function Content() {
   const [showAddLocation, setShowAddLocation] = useState(false);
 
   const { data: locations } = useSWR(
-    'http://localhost:5000/api/posts/all',
+    'http://localhost:5000/api/locations/all',
     getAllLocations,
   );
 

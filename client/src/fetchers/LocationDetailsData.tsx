@@ -7,7 +7,7 @@ export const locationDetailsData = async (locationID: string) => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('id', locationID);
 
-  const response = await fetch('http://localhost:5000/api/posts/details', {
+  const response = await fetch('http://localhost:5000/api/locations/details', {
     method: 'POST',
     headers: myHeaders,
     body: urlencoded,

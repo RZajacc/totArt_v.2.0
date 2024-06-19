@@ -31,19 +31,19 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     uploadImage,
   );
 
+  const { trigger: triggerDeletingImage } = useSWRMutation(
+    'http://localhost:5000/api/images/imageDelete',
+    deleteImage,
+  );
+
   const { trigger: triggerAddLocation } = useSWRMutation(
-    'http://localhost:5000/api/posts/addNewLocation',
+    'http://localhost:5000/api/locations/addNewLocation',
     addNewLocation,
   );
 
   const { trigger: triggerGetLocations } = useSWRMutation(
-    'http://localhost:5000/api/posts/all',
+    'http://localhost:5000/api/locations/all',
     getAllLocations,
-  );
-
-  const { trigger: triggerDeletingImage } = useSWRMutation(
-    'http://localhost:5000/api/images/imageDelete',
-    deleteImage,
   );
 
   //  --------- UPLOAD IMAGE -------------------------------
