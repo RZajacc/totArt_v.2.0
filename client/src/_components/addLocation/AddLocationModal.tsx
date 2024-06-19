@@ -1,12 +1,12 @@
 import { useContext, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { uploadImage } from '../../fetchers/UploadImage';
-import { Image as ImageType } from '../../types/UserTypes';
 import Image from 'next/image';
 import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllLocations } from '../../fetchers/GetAllLocations';
 import { deleteImage } from '../../fetchers/DeleteImage';
+import { ImageType } from '../../types/ImageTypes';
 
 type Props = {
   showAddLocation: boolean;
