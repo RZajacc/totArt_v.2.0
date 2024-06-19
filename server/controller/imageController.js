@@ -1,8 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
+import postModel from "../models/postModel.js";
 
 // Upload image to cloudinary
 const locationImageUpload = async (req, res) => {
+  // Cloudinary options
   const options = {
     use_filename: true,
     unique_filename: false,
@@ -21,36 +23,22 @@ const locationImageUpload = async (req, res) => {
         ...result,
         related_location: req.body.related_location,
       });
+      // Save the image in the database
       const savedImage = await image.save();
+      // Update location with a newly saved image
+      const location = await postModel.findByIdAndUpdate(
+        req.body.related_location,
+        {
+          image: savedImage._id,
+        }
+      );
+
+      // Return the result of all operations
       res.status(200).json({
-        result,
+        msg: "Image uploaded successfully",
+        imageUrl: savedImage.secure_url,
+        updatedLocation: location.title,
       });
-      // console.log(result);
-      // if (result) {
-      //   res.status(200).json({
-      //     message: "Image uploaded successfully",
-      //     Image: {
-      //       asset_id: result.asset_id,
-      //       public_id: result.public_id,
-      //       version: result.version,
-      //       version_id: result.version_id,
-      //       signature: result.signature,
-      //       width: result.width,
-      //       height: result.height,
-      //       format: result.format,
-      //       resource_type: result.resource_type,
-      //       created_at: result.created_at,
-      //       bytes: result.bytes,
-      //       type: result.type,
-      //       etag: result.etag,
-      //       placeholder: result.placeholder,
-      //       url: result.url,
-      //       secure_url: result.secure_url,
-      //       folder: result.folder,
-      //       original_filename: result.original_filename,
-      //     },
-      //   });
-      // }
     } catch (error) {
       console.error(error);
     }
