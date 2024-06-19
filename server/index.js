@@ -3,7 +3,7 @@ import colors from "colors";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-import postRoute from "./routes/postsRoutes.js";
+import locationsRoutes from "./routes/locationsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import imageRoutes from "./routes/imageRoutes.js";
@@ -42,7 +42,7 @@ const addMiddlewares = () => {
 
 // * 3_ADD ROUTES
 const addRoutes = () => {
-  app.use("/api/posts", postRoute);
+  app.use("/api/locations", locationsRoutes);
   app.use("/api/users", userRoutes);
   app.use("/api/comments", commentRoutes);
   app.use("/api/images", imageRoutes);

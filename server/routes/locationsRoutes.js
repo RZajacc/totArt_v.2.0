@@ -4,7 +4,7 @@ import {
   getLocationDetails,
   addNewLocation,
   updatePost,
-} from "../controller/postController.js";
+} from "../controller/locationsController.js";
 
 const router = express.Router();
 
