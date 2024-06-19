@@ -57,22 +57,22 @@ const getLocationDetails = async (req, res) => {
 
 const addNewLocation = async (req, res) => {
   // Create a new post
-  const newPost = new locationModel({
+  const newLocationModel = new locationModel({
     title: req.body.title,
     description: req.body.description,
     location: req.body.location,
-    imageUrl: req.body.imageUrl,
+    image: req.body.image,
     author: req.body.author,
   });
 
   try {
-    const savedPost = await newPost.save();
+    const newLocation = await newLocationModel.save();
     const author = await userModel.findByIdAndUpdate(req.body.author, {
-      $push: { posts: savedPost.id },
+      $push: { posts: newLocation.id },
     });
     res.status(201).json({
       msg: "new post uploaded uploaded",
-      postId: savedPost._id,
+      postId: newLocation._id,
       author: author.id,
     });
   } catch (error) {
@@ -80,7 +80,7 @@ const addNewLocation = async (req, res) => {
   }
 };
 
-// ! Naming to change
+// ! Naming and functionality to change
 const updatePost = async (req, res) => {
   const filter = { _id: req.body._id };
   const elementName = req.body.elementName;
