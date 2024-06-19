@@ -19,7 +19,7 @@ const locationImageUpload = async (req, res) => {
       // Create image object
       const image = new imageModel({
         ...result,
-        related_location: "6551fb6679b950ffc7a6ea48",
+        related_location: req.body.related_location,
       });
       const savedImage = await image.save();
       res.status(200).json({
