@@ -1,8 +1,5 @@
-import { AddComment, FetchError } from '../types/UserTypes';
-
-type badResponse = {
-  msg: string;
-};
+import { FetchError } from '../types/GeneralTypes';
+import { AddComment } from '../types/LocationTypes';
 
 export const addNewComment = async (
   url: string,
@@ -36,7 +33,7 @@ export const addNewComment = async (
     const result: AddComment = await response.json();
     return result;
   } else {
-    const result: badResponse = await response.json();
+    const result: { msg: string } = await response.json();
     const error: FetchError = new Error('Something went wrong');
     error.info = result.msg;
     error.status = response.status;

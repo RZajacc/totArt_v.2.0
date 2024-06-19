@@ -1,5 +1,5 @@
-import { locationType } from '../types/locationTypes';
-import { FetchError } from '../types/UserTypes';
+import { FetchError } from '../types/GeneralTypes';
+import { locationType } from '../types/LocationTypes';
 
 type ErrRes = {
   msg: string;
