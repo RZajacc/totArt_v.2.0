@@ -4,15 +4,6 @@ import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
 
-export type loginSucc = {
-  msg: string;
-  token: string;
-};
-
-type loginErr = {
-  msg: string;
-};
-
 type Props = {};
 
 function Login({}: Props) {
@@ -49,14 +40,14 @@ function Login({}: Props) {
     });
 
     if (response.ok) {
-      const result: loginSucc = await response.json();
+      const result: { msg: string; token: string } = await response.json();
       // Set cookie and change user status
       setCookie('auth_token', result.token);
       mutateUser();
       // Go to account
       router.push('/account');
     } else {
-      const result: loginErr = await response.json();
+      const result: { msg: string } = await response.json();
       setLogErrMsg(result.msg);
       errorParagraph.current?.classList.remove('hidden');
     }

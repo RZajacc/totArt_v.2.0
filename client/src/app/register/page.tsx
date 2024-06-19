@@ -11,10 +11,6 @@ type registerSucc = {
   };
 };
 
-type registerErr = {
-  msg: string;
-};
-
 function Register() {
   // -------States-------
   const [pswFeedback, setPswFeedback] = useState<string[]>();
@@ -84,7 +80,7 @@ function Register() {
           passwordInput.current!.value = '';
           confirmPasswordInput.current!.value = '';
         } else {
-          const result: registerErr = await response.json();
+          const result: { msg: string } = await response.json();
           console.log(result);
           setRegisterErr(result.msg);
           regErrorParagraph.current?.classList.remove('hidden');
