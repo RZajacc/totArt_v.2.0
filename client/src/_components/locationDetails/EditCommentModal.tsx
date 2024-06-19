@@ -1,7 +1,7 @@
 import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { editComment } from '../../fetchers/EditComment';
-import { User, post } from '../../types/types';
+import { User, post } from '../../types/UserTypes';
 
 type Props = {
   showEditCommentModal: boolean;

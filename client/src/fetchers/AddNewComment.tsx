@@ -1,4 +1,4 @@
-import { AddComment, FetchError } from '../types/types';
+import { AddComment, FetchError } from '../types/UserTypes';
 
 type badResponse = {
   msg: string;

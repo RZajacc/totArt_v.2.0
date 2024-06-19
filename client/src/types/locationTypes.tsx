@@ -20,6 +20,16 @@ export type comment = {
   relatedPost: string;
 };
 
+export type AddComment = {
+  msg: string;
+  comment: {
+    comment: string;
+    createdAt: string;
+    author: string;
+    relatedPost: string;
+  };
+};
+
 export type authorType = {
   _id: string;
   userName: string;

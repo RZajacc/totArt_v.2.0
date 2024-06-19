@@ -7,7 +7,7 @@ import {
   destructureUrlToImageID,
   updateUserData,
 } from '../utils/UserEditTools';
-import { UserImage, editFieldStatus } from '../types/types';
+import { UserImage, editFieldStatus } from '../types/UserTypes';
 import DeleteUserModal from './DeleteUserModal';
 
 function UserUpdate() {

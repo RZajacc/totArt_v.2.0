@@ -1,4 +1,4 @@
-import { FetchError, Image } from '../types/types';
+import { FetchError, Image } from '../types/UserTypes';
 
 export const uploadImage = async (
   url: string,

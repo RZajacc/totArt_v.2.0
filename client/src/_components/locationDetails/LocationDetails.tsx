@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, post } from '../../types/types';
+import { User, post } from '../../types/UserTypes';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import Image from 'next/image';

@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { uploadImage } from '../../fetchers/UploadImage';
-import { Image as ImageType } from '../../types/types';
+import { Image as ImageType } from '../../types/UserTypes';
 import Image from 'next/image';
 import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';

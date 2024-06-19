@@ -1,4 +1,4 @@
-import { FetchError } from '../types/types';
+import { FetchError } from '../types/UserTypes';
 
 type editCommentSucc = {
   msg: string;

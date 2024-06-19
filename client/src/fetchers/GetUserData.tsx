@@ -1,5 +1,5 @@
 import { getCookie } from 'cookies-next';
-import { FetchError, User } from '../types/types';
+import { FetchError, User } from '../types/UserTypes';
 
 type fetchErr = {
   msg: string;

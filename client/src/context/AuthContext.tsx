@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode, createContext } from 'react';
-import { User } from '../types/types';
+import { User } from '../types/UserTypes';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';

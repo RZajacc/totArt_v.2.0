@@ -1,4 +1,4 @@
-import { FetchError, post } from '../types/types';
+import { FetchError, post } from '../types/UserTypes';
 
 export const locationDetailsData = async (locationID: string) => {
   const myHeaders = new Headers();

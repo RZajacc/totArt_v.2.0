@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { post } from "../types/types";
-import { ListGroup } from "react-bootstrap";
-import "../styles/userDashboard.css";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { post } from '../types/UserTypes';
+import { ListGroup } from 'react-bootstrap';
+import '../styles/userDashboard.css';
+import { Link } from 'react-router-dom';
 
 function UserPosts() {
   const { user } = useContext(AuthContext);
@@ -11,21 +11,21 @@ function UserPosts() {
 
   const getAllUsersPosts = async () => {
     const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("email", user!.email);
+    urlencoded.append('email', user!.email);
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: urlencoded,
     };
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/allUserPosts",
-        requestOptions
+        'http://localhost:5000/api/users/allUserPosts',
+        requestOptions,
       );
       const result = await response.json();
       setPosts(result.posts);

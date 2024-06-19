@@ -1,7 +1,7 @@
 import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { deleteComment } from '../../fetchers/DeleteComment';
-import { User, post } from '../../types/types';
+import { User, post } from '../../types/UserTypes';
 
 type Props = {
   showDeleteCommentModal: boolean;
