@@ -1,14 +1,15 @@
 import React from 'react';
-import { User, post } from '../../types/UserTypes';
+import { User } from '../../types/UserTypes';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
+import { locationType } from '../../types/LocationTypes';
 
 type Props = {
   user: User;
-  data: post;
+  data: locationType;
   mutateUser: (user?: User) => void;
 };
 
@@ -74,7 +75,7 @@ function LocationDetails({ user, data, mutateUser }: Props) {
         </section>
 
         <Image
-          src={data?.imageUrl}
+          src={data?.image.secure_url}
           alt="user-img"
           width={500}
           height={500}
