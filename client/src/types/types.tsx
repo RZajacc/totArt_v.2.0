@@ -18,11 +18,6 @@ export interface User {
   comments: [commentId: string];
 }
 
-export type contentData = {
-  number: number;
-  locations: locationType[];
-};
-
 export type AddComment = {
   msg: string;
   comment: {

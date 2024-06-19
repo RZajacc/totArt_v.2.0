@@ -1,4 +1,5 @@
-import { FetchError, contentData } from '../types/types';
+import { locationType } from '../types/locationTypes';
+import { FetchError } from '../types/types';
 
 type ErrRes = {
   msg: string;
@@ -11,7 +12,8 @@ export const getAllLocations = async (url: string) => {
   });
 
   if (response.ok) {
-    const data: contentData = await response.json();
+    const data: { number: number; locations: locationType[] } =
+      await response.json();
     return data;
   } else {
     const result: ErrRes = await response.json();
