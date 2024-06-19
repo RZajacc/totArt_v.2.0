@@ -1,9 +1,11 @@
+import { ImageType } from './ImageTypes';
+
 export type locationType = {
   _id: string;
   title: string;
   description: string;
   location: string;
-  image: string;
+  image: ImageType;
   author: authorType;
   comments: [comment];
 };

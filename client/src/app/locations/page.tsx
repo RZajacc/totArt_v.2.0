@@ -100,7 +100,7 @@ function Content() {
 
                   {/* For now Im using some arbitrary values untill I update image info in DB */}
                   <Image
-                    src={loc.imageUrl}
+                    src={loc.image.secure_url}
                     alt={loc.title}
                     width={600}
                     height={600}

@@ -1,3 +1,5 @@
+import { locationType } from './locationTypes';
+
 export interface FetchError extends Error {
   info?: any;
   status?: number;
@@ -18,7 +20,7 @@ export interface User {
 
 export type contentData = {
   number: number;
-  posts: post[];
+  locations: locationType[];
 };
 
 export type AddComment = {
