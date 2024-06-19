@@ -2,7 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
 
 // Upload image to cloudinary
-const uploadImage = async (req, res) => {
+const locationImageUpload = async (req, res) => {
   const options = {
     use_filename: true,
     unique_filename: false,
@@ -82,4 +82,4 @@ const deleteImage = async (req, res) => {
   }
 };
 
-export { uploadImage, deleteImage };
+export { locationImageUpload, deleteImage };
