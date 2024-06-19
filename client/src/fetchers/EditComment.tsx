@@ -1,14 +1,4 @@
-import { FetchError } from '../types/UserTypes';
-
-type editCommentSucc = {
-  msg: string;
-  updatedVal: string;
-  editDate: string;
-};
-
-type editCommentErr = {
-  msg: string;
-};
+import { FetchError } from '../types/GeneralTypes';
 
 export const editComment = async (
   url: string,
@@ -34,10 +24,11 @@ export const editComment = async (
   });
 
   if (response.ok) {
-    const result: editCommentSucc = await response.json();
+    const result: { msg: string; updatedVal: string; editDate: string } =
+      await response.json();
     return result;
   } else {
-    const result: editCommentErr = await response.json();
+    const result: { msg: string } = await response.json();
     const error: FetchError = new Error(
       'Something went wront with editing comment!',
     );

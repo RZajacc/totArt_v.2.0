@@ -1,9 +1,6 @@
 import { getCookie } from 'cookies-next';
-import { FetchError, User } from '../types/UserTypes';
-
-type fetchErr = {
-  msg: string;
-};
+import { User } from '../types/UserTypes';
+import { FetchError } from '../types/GeneralTypes';
 
 export const getUserData = async (url: string) => {
   // Get token from cookie
@@ -24,7 +21,7 @@ export const getUserData = async (url: string) => {
       const user: User = await response.json();
       return user;
     } else {
-      const result: fetchErr = await response.json();
+      const result: { msg: string } = await response.json();
       const error: FetchError = new Error('Something went wrong');
       error.info = result.msg;
       error.status = response.status;

@@ -1,4 +1,5 @@
-import { FetchError, Image } from '../types/UserTypes';
+import { FetchError } from '../types/GeneralTypes';
+import { ImageType } from '../types/ImageTypes';
 
 export const uploadImage = async (
   url: string,
@@ -15,7 +16,7 @@ export const uploadImage = async (
   });
 
   if (response.ok) {
-    const result: { Image: Image } = await response.json();
+    const result: { Image: ImageType } = await response.json();
     return result;
   } else {
     const result: { msg: string } = await response.json();
