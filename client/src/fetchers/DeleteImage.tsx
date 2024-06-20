@@ -2,13 +2,14 @@ import { FetchError } from '../types/GeneralTypes';
 
 export const deleteImage = async (
   url: string,
-  { arg }: { arg: { publicId: string } },
+  { arg }: { arg: { publicId: string; imageId: string } },
 ) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
   const urlencoded = new URLSearchParams();
   urlencoded.append('publicId', arg.publicId);
+  urlencoded.append('imageId', arg.imageId);
 
   const response = await fetch(url, {
     method: 'DELETE',
