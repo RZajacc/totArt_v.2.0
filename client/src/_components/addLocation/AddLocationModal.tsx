@@ -60,7 +60,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     });
     // If there was an image already uploded delete it to allow uploading a new one
     if (imageData) {
-      triggerDeletingImage({ publicId: imageData._id });
+      triggerDeletingImage({ publicId: imageData._id, imageId: imageData._id });
     }
     // Reset ref
     imageInputRef.current!.value = '';
@@ -92,7 +92,10 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const handleClosingModal = async () => {
     // If there is an image then delete it
     if (imageData) {
-      triggerDeletingImage({ publicId: imageData.public_id });
+      triggerDeletingImage({
+        publicId: imageData.public_id,
+        imageId: imageData._id,
+      });
     }
     // Reset input refs
     titleInputRef.current!.value = '';
