@@ -5,12 +5,12 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import passport from "passport";
 
-import locationsRoutes from "./routes/locationsRoutes";
-import userRoutes from "./routes/userRoutes";
-import commentRoutes from "./routes/commentRoutes";
-import imageRoutes from "./routes/imageRoutes";
-import cloudinaryConfig from "./config/cloudinaryConfig";
-import passportConfig from "./config/passport";
+import locationsRoutes from "./routes/locationsRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
+import imageRoutes from "./routes/imageRoutes.js";
+import cloudinaryConfig from "./config/cloudinaryConfig.js";
+import passportConfig from "./config/passport.js";
 
 dotenv.config();
 
@@ -53,7 +53,7 @@ const addRoutes = () => {
 const startServer = () => {
   const port = process.env.PORT || 5000;
   app.listen(port, () => {
-    console.log("Server running on port :".italic.magenta.bold, port);
+    console.log(colors.magenta.italic("Server running on port :"), port);
   });
 };
 
