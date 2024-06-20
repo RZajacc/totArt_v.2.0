@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { locationImageUpload } from '../../fetchers/LocationImageUpload';
 import Image from 'next/image';
@@ -6,7 +6,6 @@ import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllLocations } from '../../fetchers/GetAllLocations';
 import { deleteImage } from '../../fetchers/DeleteImage';
-import { ImageType } from '../../types/ImageTypes';
 
 type Props = {
   showAddLocation: boolean;
@@ -15,7 +14,6 @@ type Props = {
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { user, mutateUser } = useContext(AuthContext);
-  const [uploadedImage, setUploadedImage] = useState<ImageType>();
   // Input refs
   const imageInputRef = useRef<HTMLInputElement>(null);
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +21,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const locationTextRef = useRef<HTMLTextAreaElement>(null);
 
   const {
+    data: imageData,
     trigger: triggerImageUpload,
     isMutating: imageIsMutating,
     error: imageUploadError,
@@ -55,17 +54,14 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const imageFile = formData.get('locationImage') as File;
 
     // Trigger the mutation
-    const result = await triggerImageUpload({
+    await triggerImageUpload({
       file: imageFile,
       folder: 'postImages',
-      related_location: 
     });
     // If there was an image already uploded delete it to allow uploading a new one
-    if (uploadedImage) {
-      triggerDeletingImage({ publicId: uploadedImage.public_id });
+    if (imageData) {
+      triggerDeletingImage({ publicId: imageData._id });
     }
-    // If there were no image before or was just deleted set a new one
-    setUploadedImage(result.Image);
     // Reset ref
     imageInputRef.current!.value = '';
   };
@@ -82,26 +78,22 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       title,
       description,
       location,
-      imageUrl: uploadedImage ? uploadedImage.secure_url : '',
+      imageUrl: imageData ? imageData.secure_url : '',
       author: user ? user._id : '',
     });
 
     // Refresh data in connected models
     mutateUser();
     triggerGetLocations();
-    // Reset uploaded image
-    setUploadedImage(undefined);
     // Close the modal
     setShowAddLocation(false);
   };
 
   const handleClosingModal = async () => {
     // If there is an image then delete it
-    if (uploadedImage) {
-      triggerDeletingImage({ publicId: uploadedImage.public_id });
+    if (imageData) {
+      triggerDeletingImage({ publicId: imageData.public_id });
     }
-    // Reset the image
-    setUploadedImage(undefined);
     // Reset input refs
     titleInputRef.current!.value = '';
     descriptionTextRef.current!.value = '';
@@ -136,11 +128,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 {imageIsMutating ? 'Uploading...' : ''}
               </p>
               <Image
-                src={uploadedImage ? uploadedImage.secure_url : ''}
-                width={uploadedImage ? uploadedImage.width : undefined}
-                height={uploadedImage ? uploadedImage.height : undefined}
+                src={imageData ? imageData.secure_url : ''}
+                width={imageData ? imageData.width : undefined}
+                height={imageData ? imageData.height : undefined}
                 alt="Uploaded image"
-                className={`${!uploadedImage ? 'hidden' : ''} mx-auto w-1/4 rounded-md`}
+                className={`${!imageData ? 'hidden' : ''} mx-auto w-1/4 rounded-md`}
               />
               <small className="text-gray-500 ">
                 *Supported formats : .jpg, .jpeg, .png

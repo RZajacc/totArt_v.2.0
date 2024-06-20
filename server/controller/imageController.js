@@ -23,9 +23,7 @@ const locationImageUpload = async (req, res) => {
       // Save the image in the database
       const savedImage = await image.save();
       // Return the result of all operations
-      res.status(200).json({
-        savedImage,
-      });
+      res.status(200).json(savedImage);
     } catch (error) {
       console.error(error);
     }
