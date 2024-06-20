@@ -80,11 +80,20 @@ const locationImageUpload = async (req, res) => {
 
 const deleteImage = async (req, res) => {
   try {
-    const result = await cloudinary.uploader.destroy(req.body.publicId);
-    if (result) {
+    // Delete image instance from cloudinary
+    const cloudinaryImage = await cloudinary.uploader.destroy(
+      req.body.publicId
+    );
+    // Delete image instance from the db
+    const dbImage = await imageModel.findByIdAndDelete(req.body.imageId);
+
+    if (cloudinaryImage && dbImage) {
       res.status(200).json({
-        message: "Image deleted successfully",
-        userImage: result,
+        message: "Image deleted from cloudinary and database",
+        cloudinary_publicId: req.body.publicId,
+        cloudinaryStatus: cloudinaryImage.result,
+        db_status: "Image deleted",
+        db_publicId: dbImage.public_id,
       });
     } else {
       res.status(404).json({
