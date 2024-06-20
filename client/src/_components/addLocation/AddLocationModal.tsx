@@ -58,6 +58,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const result = await triggerImageUpload({
       file: imageFile,
       folder: 'postImages',
+      related_location: 
     });
     // If there was an image already uploded delete it to allow uploading a new one
     if (uploadedImage) {
