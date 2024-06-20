@@ -1,13 +1,14 @@
 import { FetchError } from '../types/GeneralTypes';
 import { ImageType } from '../types/ImageTypes';
 
-export const uploadImage = async (
+export const locationImageUpload = async (
   url: string,
-  { arg }: { arg: { file: File; folder: string } },
+  { arg }: { arg: { file: File; folder: string; related_location: string } },
 ) => {
   const formdata = new FormData();
   formdata.append('userImage', arg.file);
   formdata.append('folder', arg.folder);
+  formdata.append('related_location', arg.related_location);
 
   const response = await fetch(url, {
     method: 'POST',

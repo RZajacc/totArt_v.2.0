@@ -33,6 +33,7 @@ const locationImageUpload = async (req, res) => {
         }
       );
 
+      console.log(location);
       // Return the result of all operations
       res.status(200).json({
         msg: "Image uploaded successfully",
