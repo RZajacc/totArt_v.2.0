@@ -6,11 +6,11 @@ import mongoose from "mongoose";
 import passport from "passport";
 
 import locationsRoutes from "./routes/locationsRoutes";
-import userRoutes from "./routes/userRoutes.js";
-import commentRoutes from "./routes/commentRoutes.js";
-import imageRoutes from "./routes/imageRoutes.js";
-import cloudinaryConfig from "./config/cloudinaryConfig.js";
-import passportConfig from "./config/passport.js";
+import userRoutes from "./routes/userRoutes";
+import commentRoutes from "./routes/commentRoutes";
+import imageRoutes from "./routes/imageRoutes";
+import cloudinaryConfig from "./config/cloudinaryConfig";
+import passportConfig from "./config/passport";
 
 dotenv.config();
 
