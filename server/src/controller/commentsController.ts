@@ -3,7 +3,7 @@ import userModel from "../models/userModel.js";
 import locationModel from "../models/locationModel.js";
 import { RequestHandler } from "express";
 import { Comment } from "../types/CommentTypes.js";
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
 
 const addNewComment: RequestHandler = async (req, res) => {
   // Specify req body type
@@ -15,8 +15,8 @@ const addNewComment: RequestHandler = async (req, res) => {
   } = req.body;
 
   const createdAt = new Date(input.createdAt);
-  const authorId = new Schema.Types.ObjectId(input.author);
-  const relatedPostId = new Schema.Types.ObjectId(input.relatedPost);
+  const authorId = new Types.ObjectId(input.author);
+  const relatedPostId = new Types.ObjectId(input.relatedPost);
 
   //Create a new comment object
   const newComment = new commentModel({
