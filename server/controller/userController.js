@@ -115,7 +115,6 @@ const getProfle = async (req, res) => {
 const handleFavouriteLocations = async (req, res) => {
   // Filter to find a user in the database
   const filter = { email: req.body.email };
-  console.log(req.body);
   try {
     // Check if user exists in DB
     const updateUser = await userModel.findOne(filter);
