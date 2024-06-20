@@ -85,11 +85,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
       {/* Comments section */}
       <div>
         <h4 className="py-2 text-center text-xl font-bold">
-          ({locationData?.locationData.comments.length}) comments:
+          ({locationData?.comments.length}) comments:
         </h4>
         <section className="grid gap-y-2">
-          {locationData?.locationData.comments &&
-            locationData.locationData.comments.map((comment) => {
+          {locationData?.comments &&
+            locationData.comments.map((comment) => {
               return (
                 <CommentElement
                   key={comment._id}

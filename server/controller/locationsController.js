@@ -45,9 +45,7 @@ const getLocationDetails = async (req, res) => {
       });
     } else {
       // If it does return data
-      res.status(200).json({
-        locationData,
-      });
+      res.status(200).json(locationData);
     }
   } catch {
     res.status(500).json({

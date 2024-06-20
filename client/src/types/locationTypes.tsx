@@ -10,18 +10,6 @@ export type locationType = {
   comments: [comment];
 };
 
-export type locationDetailsType = {
-  locationData: {
-    _id: string;
-    title: string;
-    description: string;
-    location: string;
-    image: ImageType;
-    author: authorType;
-    comments: [comment];
-  };
-};
-
 export type comment = {
   _id: string;
   comment: string;
