@@ -70,7 +70,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   };
 
   // ------------- SUBMIT A NEW POST -----------------
-  const submitNewPost = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitNewLocation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const title = formData.get('title') as string;
@@ -159,7 +159,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             </form>
           </section>
           <section>
-            <form className="grid gap-y-1" onSubmit={submitNewPost}>
+            <form className="grid gap-y-1" onSubmit={submitNewLocation}>
               <label htmlFor="title">Start with giving it a title</label>
               <input
                 ref={titleInputRef}

@@ -1,3 +1,4 @@
+import imageModel from "../models/imageModel.js";
 import locationModel from "../models/locationModel.js";
 import userModel from "../models/userModel.js";
 
@@ -65,14 +66,25 @@ const addNewLocation = async (req, res) => {
   });
 
   try {
+    // Save new location
     const newLocation = await newLocationModel.save();
+    // Update user with a new location id
     const author = await userModel.findByIdAndUpdate(req.body.author, {
       $push: { posts: newLocation.id },
     });
+    // Update image with a new locationid
+    const relatedImage = await imageModel.findByIdAndUpdate(
+      req.body.image,
+      {
+        related_location: newLocation.id,
+      },
+      { new: true }
+    );
     res.status(201).json({
       msg: "new post uploaded uploaded",
-      postId: newLocation._id,
+      locationId: newLocation._id,
       author: author.id,
+      relatedImageId: relatedImage.id,
     });
   } catch (error) {
     console.log(error);
