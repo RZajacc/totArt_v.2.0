@@ -77,7 +77,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
       ) : (
         <LocationDetails
           user={user!}
-          data={locationData!.locationData}
+          data={locationData!}
           mutateUser={mutateUser}
         />
       )}

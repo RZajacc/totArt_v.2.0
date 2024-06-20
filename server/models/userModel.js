@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
-  favs: [{ type: mongoose.Schema.Types.ObjectId, ref: "post" }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "location" }],
+  favs: [{ type: mongoose.Schema.Types.ObjectId, ref: "location" }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
 });
 

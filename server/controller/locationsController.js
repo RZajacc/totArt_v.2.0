@@ -37,6 +37,7 @@ const getLocationDetails = async (req, res) => {
         populate: { path: "author", select: ["userName", "userImage"] },
       });
 
+    console.log(locationData);
     // If it doesnt return a message
     if (!locationData) {
       res.status(400).json({

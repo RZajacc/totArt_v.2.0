@@ -60,6 +60,7 @@ const deleteComment = async (req, res) => {
       .populate({ path: "author", select: ["_id"] })
       .populate({ path: "relatedPost", select: ["_id"] });
 
+    console.log(comment);
     // find comment author and delete comment id
     let updateUser = await userModel.findByIdAndUpdate(
       comment.author._id,
