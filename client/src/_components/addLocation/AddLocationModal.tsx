@@ -81,7 +81,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       title,
       description,
       location,
-      imageUrl: imageData ? imageData.secure_url : '',
+      imageId: imageData ? imageData._id : '',
       author: user ? user._id : '',
     });
 

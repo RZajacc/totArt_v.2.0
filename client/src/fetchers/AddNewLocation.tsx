@@ -9,7 +9,7 @@ export const addNewLocation = async (
       title: string;
       description: string;
       location: string;
-      imageUrl: string;
+      imageId: string;
       author: string;
     };
   },
@@ -21,7 +21,7 @@ export const addNewLocation = async (
   urlencoded.append('title', arg.title);
   urlencoded.append('description', arg.description);
   urlencoded.append('location', arg.location);
-  urlencoded.append('imageUrl', arg.imageUrl);
+  urlencoded.append('image', arg.imageId);
   urlencoded.append('author', arg.author);
 
   const response = await fetch(url, {
