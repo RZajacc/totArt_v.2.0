@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
+import { Comment } from "../types/CommentTypes";
 
-const commentSchema = new mongoose.Schema({
+const commentSchema = new Schema<Comment>({
   comment: {
     type: String,
     required: true,
@@ -17,10 +18,10 @@ const commentSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
   },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
-  relatedPost: { type: mongoose.Schema.Types.ObjectId, ref: "location" },
+  author: { type: Schema.Types.ObjectId, ref: "user" },
+  relatedPost: { type: Schema.Types.ObjectId, ref: "location" },
 });
 
-const commentModel = mongoose.model("comment", commentSchema);
+const commentModel = model<Comment>("comment", commentSchema);
 
 export default commentModel;

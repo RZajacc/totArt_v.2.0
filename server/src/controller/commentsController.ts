@@ -2,19 +2,33 @@ import commentModel from "../models/commentModel.js";
 import userModel from "../models/userModel.js";
 import locationModel from "../models/locationModel.js";
 import { RequestHandler } from "express";
+import { Comment } from "../types/CommentTypes.js";
+import { Schema } from "mongoose";
 
 const addNewComment: RequestHandler = async (req, res) => {
+  // Specify req body type
+  const input: {
+    comment: string;
+    createdAt: string;
+    author: string;
+    relatedPost: string;
+  } = req.body;
+
+  const createdAt = new Date(input.createdAt);
+  const authorId = new Schema.Types.ObjectId(input.author);
+  const relatedPostId = new Schema.Types.ObjectId(input.relatedPost);
+
   //Create a new comment object
   const newComment = new commentModel({
-    comment: req.body.comment,
-    createdAt: req.body.createdAt,
-    author: req.body.author,
-    relatedPost: req.body.relatedPost,
-  });
+    comment: input.comment,
+    createdAt: createdAt,
+    author: authorId,
+    relatedPost: relatedPostId,
+  } as Comment);
 
   try {
     // Save a new comment in db
-    const savedComment = await newComment.save();
+    const savedComment: Comment = await newComment.save();
 
     if (savedComment) {
       // Update user posting a comment
@@ -37,8 +51,8 @@ const addNewComment: RequestHandler = async (req, res) => {
         comment: {
           comment: savedComment.comment,
           createdAt: savedComment.createdAt,
-          author: commentAuthor.userName,
-          relatedPost: commentedLocation.title,
+          author: commentAuthor?.userName,
+          relatedPost: commentedLocation?.title,
         },
       });
     } else {
@@ -53,10 +67,10 @@ const addNewComment: RequestHandler = async (req, res) => {
   }
 };
 
-const deleteComment = async (req, res) => {
+const deleteComment: RequestHandler = async (req, res) => {
   try {
     // Find comment and populate only ids
-    let comment = await commentModel
+    let comment: Comment = await commentModel
       .findById(req.body._id)
       .populate({ path: "author", select: ["_id"] })
       .populate({ path: "relatedPost", select: ["_id"] });
