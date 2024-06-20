@@ -9,12 +9,17 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
+<p style="color:orange">Adding typescript to my server side REST Api</p>
+
+**Still on todolist:**
+
+- Deleting user locations
+- Updateding user locations
 - User dashboard
 - Error and Loading pages
 - Responsiveness - app is built mobile first, currently its not styled for desktop
 - Email confirmation link
 - Resetting forgotten password
-- Introducing Typescript to server side of the app
 
 **_Some of those functionalities are working in the previous version linked before._**
 
