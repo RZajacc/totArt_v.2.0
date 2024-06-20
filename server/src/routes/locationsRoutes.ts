@@ -1,12 +1,11 @@
-import express from "express";
+import { Router } from "express";
 import {
   getAllLocations,
   getLocationDetails,
   addNewLocation,
-  updatePost,
 } from "../controller/locationsController.js";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/all", getAllLocations);
 router.post("/details", getLocationDetails);

@@ -3,12 +3,13 @@ import colors from "colors";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-import locationsRoutes from "./routes/locationsRoutes.js";
+import passport from "passport";
+
+import locationsRoutes from "./routes/locationsRoutes";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import imageRoutes from "./routes/imageRoutes.js";
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
-import passport from "passport";
 import passportConfig from "./config/passport.js";
 
 dotenv.config();
@@ -19,7 +20,7 @@ const app = express();
 // * 1_DB CONNECTION
 const DBConnection = async () => {
   try {
-    await mongoose.connect(process.env.DB);
+    await mongoose.connect(process.env.DB as string);
     console.log("Connection to MONGODB established".bgGreen);
   } catch (error) {
     console.log("Connection to MONGODB failed".bgRed);
