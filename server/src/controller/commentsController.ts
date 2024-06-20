@@ -1,8 +1,9 @@
 import commentModel from "../models/commentModel.js";
 import userModel from "../models/userModel.js";
 import locationModel from "../models/locationModel.js";
+import { RequestHandler } from "express";
 
-const addNewComment = async (req, res) => {
+const addNewComment: RequestHandler = async (req, res) => {
   //Create a new comment object
   const newComment = new commentModel({
     comment: req.body.comment,
