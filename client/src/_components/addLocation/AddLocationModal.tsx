@@ -25,6 +25,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     trigger: triggerImageUpload,
     isMutating: imageIsMutating,
     error: imageUploadError,
+    reset: resetImageData,
   } = useSWRMutation(
     'http://localhost:5000/api/images/locationImageUpload',
     locationImageUpload,
@@ -53,15 +54,17 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const formData = new FormData(e.currentTarget);
     const imageFile = formData.get('locationImage') as File;
 
+    // If there was an image already uploded delete it to allow uploading a new one
+    if (imageData) {
+      triggerDeletingImage({ publicId: imageData._id, imageId: imageData._id });
+    }
+
     // Trigger the mutation
     await triggerImageUpload({
       file: imageFile,
       folder: 'postImages',
     });
-    // If there was an image already uploded delete it to allow uploading a new one
-    if (imageData) {
-      triggerDeletingImage({ publicId: imageData._id, imageId: imageData._id });
-    }
+
     // Reset ref
     imageInputRef.current!.value = '';
   };
@@ -97,6 +100,10 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
         imageId: imageData._id,
       });
     }
+
+    // Reset image data
+    resetImageData();
+
     // Reset input refs
     titleInputRef.current!.value = '';
     descriptionTextRef.current!.value = '';
