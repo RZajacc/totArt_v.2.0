@@ -2,6 +2,7 @@ import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import "dotenv/config";
 import userModel from "../models/userModel.js";
 import { PassportStatic } from "passport";
+import { JwtPayload } from "jsonwebtoken";
 
 const opts = {
   secretOrKey: process.env.SECRET_OR_PRIVATE_KEY as string,
@@ -9,7 +10,10 @@ const opts = {
 };
 
 // *1. Define a strategy
-const jwtStrategy = new JwtStrategy(opts, async function (jwt_payload, done) {
+const jwtStrategy = new JwtStrategy(opts, async function (
+  jwt_payload: JwtPayload,
+  done
+) {
   try {
     const user = await userModel.findById(jwt_payload.sub);
     if (user) {
