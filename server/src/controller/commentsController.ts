@@ -3,7 +3,8 @@ import userModel from "../models/userModel.js";
 import locationModel from "../models/locationModel.js";
 import { RequestHandler } from "express";
 import { Comment } from "../types/CommentTypes.js";
-import { Types } from "mongoose";
+import { Types, HydratedDocument } from "mongoose";
+import { User } from "../types/UserTypes.js";
 
 const addNewComment: RequestHandler = async (req, res) => {
   // Specify req body type
@@ -20,24 +21,25 @@ const addNewComment: RequestHandler = async (req, res) => {
   const relatedPostId = new Types.ObjectId(input.relatedPost);
 
   //Create a new comment object
-  const newComment = new commentModel<Comment>({
+  const newComment: HydratedDocument<Comment> = new commentModel({
     comment: input.comment,
     createdAt: createdAt,
     author: authorId,
     relatedPost: relatedPostId,
-  } as Comment);
+  });
 
   try {
     // Save a new comment in db
-    const savedComment: Comment = await newComment.save();
+    const savedComment: HydratedDocument<Comment> = await newComment.save();
 
     if (savedComment) {
       // Update user posting a comment
-      const commentAuthor = await userModel.findByIdAndUpdate(
-        savedComment.author,
-        { $push: { comments: savedComment.id } },
-        { new: true }
-      );
+      const commentAuthor: HydratedDocument<User> | null =
+        await userModel.findByIdAndUpdate(
+          savedComment.author,
+          { $push: { comments: savedComment.id } },
+          { new: true }
+        );
 
       // Update location with a new comment
       const commentedLocation = await locationModel.findByIdAndUpdate(
