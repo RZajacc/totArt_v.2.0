@@ -1,9 +1,10 @@
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import "dotenv/config";
 import userModel from "../models/userModel.js";
+import { PassportStatic } from "passport";
 
 const opts = {
-  secretOrKey: process.env.SECRET_OR_PRIVATE_KEY,
+  secretOrKey: process.env.SECRET_OR_PRIVATE_KEY as string,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
@@ -24,7 +25,7 @@ const jwtStrategy = new JwtStrategy(opts, async function (jwt_payload, done) {
 });
 
 // *2. Use strategy with passport
-const passportConfig = (passport) => {
+const passportConfig = (passport: PassportStatic) => {
   passport.use(jwtStrategy);
 };
 

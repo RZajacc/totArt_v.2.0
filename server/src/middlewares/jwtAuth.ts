@@ -1,5 +1,7 @@
-import passport from "passport";
+import passport, { PassportStatic } from "passport";
 
-const jwtAuth = passport.authenticate("jwt", { session: false });
+const jwtAuth: PassportStatic = passport.authenticate("jwt", {
+  session: false,
+});
 
 export default jwtAuth;
