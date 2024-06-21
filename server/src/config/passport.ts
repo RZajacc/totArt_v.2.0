@@ -9,7 +9,7 @@ const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-// *1. Define a strategy
+// 1. Define a strategy
 const jwtStrategy = new JwtStrategy(opts, async function (
   jwt_payload: JwtPayload,
   done
@@ -28,7 +28,7 @@ const jwtStrategy = new JwtStrategy(opts, async function (
   }
 });
 
-// *2. Use strategy with passport
+// 2. Use strategy with passport
 const passportConfig = (passport: PassportStatic) => {
   passport.use(jwtStrategy);
 };
