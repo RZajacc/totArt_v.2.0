@@ -1,5 +1,6 @@
-import multer from "multer";
+import multer, { FileFilterCallback } from "multer";
 import path from "path";
+import { Request } from "express";
 
 const storage = multer.diskStorage({
   filename: function (req, file, cb) {
@@ -8,7 +9,11 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
+const fileFilter = (
+  req: Request,
+  file: Express.Multer.File,
+  cb: FileFilterCallback
+) => {
   // * FILE EXTENSION
   const extension = path.extname(file.originalname);
 
