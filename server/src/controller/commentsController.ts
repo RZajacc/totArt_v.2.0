@@ -1,10 +1,15 @@
+import { Types, HydratedDocument } from "mongoose";
+import { RequestHandler } from "express";
+
+// Models
 import commentModel from "../models/commentModel.js";
 import userModel from "../models/userModel.js";
 import locationModel from "../models/locationModel.js";
-import { RequestHandler } from "express";
+
+// Types
 import { Comment } from "../types/CommentTypes.js";
-import { Types, HydratedDocument } from "mongoose";
 import { User } from "../types/UserTypes.js";
+import { Location } from "../types/LocationTypes.js";
 
 const addNewComment: RequestHandler = async (req, res) => {
   // Specify req body type
@@ -42,11 +47,12 @@ const addNewComment: RequestHandler = async (req, res) => {
         );
 
       // Update location with a new comment
-      const commentedLocation = await locationModel.findByIdAndUpdate(
-        savedComment.relatedPost,
-        { $push: { comments: savedComment.id } },
-        { new: true }
-      );
+      const commentedLocation: HydratedDocument<Location> | null =
+        await locationModel.findByIdAndUpdate(
+          savedComment.relatedPost,
+          { $push: { comments: savedComment.id } },
+          { new: true }
+        );
 
       // Return a feedback about a new post
       res.status(201).json({
