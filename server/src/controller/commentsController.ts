@@ -7,7 +7,7 @@ import userModel from "../models/userModel.js";
 import locationModel from "../models/locationModel.js";
 
 // Types
-import { Comment } from "../types/CommentTypes.js";
+import { Comment, PopulatedComment } from "../types/CommentTypes.js";
 import { User } from "../types/UserTypes.js";
 import { Location } from "../types/LocationTypes.js";
 
@@ -79,31 +79,32 @@ const addNewComment: RequestHandler = async (req, res) => {
 const deleteComment: RequestHandler = async (req, res) => {
   try {
     // Find comment and populate only ids
-    let comment = await commentModel
+    let comment: HydratedDocument<PopulatedComment> | null = await commentModel
       .findById(req.body._id)
       .populate({ path: "author", select: ["_id"] })
       .populate({ path: "relatedPost", select: ["_id"] });
 
-    console.log(comment);
     // find comment author and delete comment id
     let updateUser = await userModel.findByIdAndUpdate(
-      comment.author._id,
-      { $pull: { comments: comment._id } },
+      comment?.author?.id,
+      { $pull: { comments: comment?._id } },
       { new: true }
     );
 
     // find commented location and delete comment id
-    let updateLocation = await locationModel.findByIdAndUpdate(
-      comment.relatedPost,
-      { $pull: { comments: comment._id } },
-      { new: true }
-    );
+    let updateLocation: HydratedDocument<Location> | null =
+      await locationModel.findByIdAndUpdate(
+        comment?.relatedPost,
+        { $pull: { comments: comment?._id } },
+        { new: true }
+      );
 
     // delete the comment
-    let commentDelete = await commentModel.findByIdAndDelete(req.body._id);
+    let commentDelete: HydratedDocument<Comment> | null =
+      await commentModel.findByIdAndDelete(req.body._id);
 
     res.status(200).json({
-      msg: `Comment - ${commentDelete.comment}, added by - ${updateUser.userName}, on location title - ${updateLocation.title}, deleted successfully!!`,
+      msg: `Comment - ${commentDelete?.comment}, added by - ${updateUser?.userName}, on location title - ${updateLocation?.title}, deleted successfully!!`,
     });
   } catch (error) {
     res.status(500).json({
