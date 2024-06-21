@@ -77,10 +77,16 @@ const addNewComment: RequestHandler = async (req, res) => {
 };
 
 const deleteComment: RequestHandler = async (req, res) => {
+  // Input types
+  const input: { _id: string } = req.body;
+
+  // Convert incoming id string to Id object
+  const commentId = new Types.ObjectId(input._id);
+
   try {
     // Find comment and populate only ids
     let comment: HydratedDocument<PopulatedComment> | null = await commentModel
-      .findById(req.body._id)
+      .findById(commentId)
       .populate({ path: "author", select: ["_id"] })
       .populate({ path: "relatedPost", select: ["_id"] });
 
@@ -113,17 +119,18 @@ const deleteComment: RequestHandler = async (req, res) => {
   }
 };
 
-const editComment = async (req, res) => {
+const editComment: RequestHandler = async (req, res) => {
   try {
-    const updatedComment = await commentModel.findByIdAndUpdate(
-      req.body.commentId,
-      {
-        comment: req.body.updatedComment,
-        isEdited: true,
-        editedAt: req.body.editedAt,
-      },
-      { new: true }
-    );
+    const updatedComment: HydratedDocument<Comment> | null =
+      await commentModel.findByIdAndUpdate(
+        req.body.commentId,
+        {
+          comment: req.body.updatedComment,
+          isEdited: true,
+          editedAt: req.body.editedAt,
+        },
+        { new: true }
+      );
     if (updatedComment) {
       res.status(200).json({
         msg: "Comment updated properly!",
