@@ -1,11 +1,13 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload, SignOptions, Secret } from "jsonwebtoken";
 
 const generateToken = (userId: string) => {
-  const payload = {
+  // Secret key
+  const sercretOrPrivateKey: Secret = process.env.SECRET_OR_PRIVATE_KEY!;
+
+  const payload: JwtPayload = {
     sub: userId,
   };
-  const sercretOrPrivateKey = process.env.SECRET_OR_PRIVATE_KEY as string;
-  const options = {
+  const options: SignOptions = {
     expiresIn: "3 days",
   };
   const token = jwt.sign(payload, sercretOrPrivateKey, options);
