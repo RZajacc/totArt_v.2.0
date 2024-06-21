@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 
-const generateToken = (userId) => {
+const generateToken = (userId: string) => {
   const payload = {
     sub: userId,
   };
-  const sercretOrPrivateKey = process.env.SECRET_OR_PRIVATE_KEY;
+  const sercretOrPrivateKey = process.env.SECRET_OR_PRIVATE_KEY as string;
   const options = {
     expiresIn: "3 days",
   };
