@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { User } from "../types/UserTypes";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<User>({
   userName: {
     type: String,
     required: true,
@@ -30,6 +31,6 @@ const userSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
 });
 
-const userModel = mongoose.model("user", userSchema);
+const userModel = mongoose.model<User>("user", userSchema);
 
 export default userModel;
