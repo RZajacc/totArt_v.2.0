@@ -14,12 +14,13 @@ const addNewComment: RequestHandler = async (req, res) => {
     relatedPost: string;
   } = req.body;
 
+  // Convert incoming data to type matching model
   const createdAt = new Date(input.createdAt);
   const authorId = new Types.ObjectId(input.author);
   const relatedPostId = new Types.ObjectId(input.relatedPost);
 
   //Create a new comment object
-  const newComment = new commentModel({
+  const newComment = new commentModel<Comment>({
     comment: input.comment,
     createdAt: createdAt,
     author: authorId,
@@ -70,7 +71,7 @@ const addNewComment: RequestHandler = async (req, res) => {
 const deleteComment: RequestHandler = async (req, res) => {
   try {
     // Find comment and populate only ids
-    let comment: Comment = await commentModel
+    let comment = await commentModel
       .findById(req.body._id)
       .populate({ path: "author", select: ["_id"] })
       .populate({ path: "relatedPost", select: ["_id"] });
