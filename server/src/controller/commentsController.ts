@@ -120,14 +120,22 @@ const deleteComment: RequestHandler = async (req, res) => {
 };
 
 const editComment: RequestHandler = async (req, res) => {
+  // Adding input types
+  const input: { commentId: string; updatedComment: string; editedAt: string } =
+    req.body;
+
+  // Convert types to match mongoose models
+  const commentId = new Types.ObjectId(input.commentId);
+  const editedAt = new Date(input.editedAt);
+
   try {
     const updatedComment: HydratedDocument<Comment> | null =
       await commentModel.findByIdAndUpdate(
-        req.body.commentId,
+        commentId,
         {
-          comment: req.body.updatedComment,
+          comment: input.updatedComment,
           isEdited: true,
-          editedAt: req.body.editedAt,
+          editedAt: editedAt,
         },
         { new: true }
       );
