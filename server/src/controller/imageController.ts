@@ -1,22 +1,31 @@
 import { v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
 import locationModel from "../models/locationModel.js";
+import { RequestHandler } from "express";
 
 // Upload image to cloudinary
-const ImageUpload = async (req, res) => {
+const ImageUpload: RequestHandler = async (req, res) => {
+  // Collecting inputs
+  const input: { folder: string } = req.body;
+  const uploadedImage: Express.Multer.File | undefined = req.file;
+
   // Cloudinary options
   const options = {
     use_filename: true,
     unique_filename: false,
     overwrite: true,
-    folder: req.body.folder,
+    folder: input.folder,
   };
 
-  if (req.file) {
+  if (uploadedImage) {
     try {
       // Upload the image
-      const result = await cloudinary.uploader.upload(req.file.path, options);
+      const result = await cloudinary.uploader.upload(
+        uploadedImage.path,
+        options
+      );
       // Remove unused variables from returned value
+      // const api_keyProp: keyof result = "api_key";
       delete result[("api_key", "tags")];
       // Create image object
       const image = new imageModel(result);
