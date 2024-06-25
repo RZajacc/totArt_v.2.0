@@ -1,6 +1,6 @@
 import passport, { PassportStatic } from "passport";
 
-const jwtAuth: PassportStatic = passport.authenticate("jwt", {
+const jwtAuth = passport.authenticate("jwt", {
   session: false,
 });
 

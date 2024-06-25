@@ -4,7 +4,6 @@ import {
   login,
   getProfle,
   handleFavouriteLocations,
-  deleteFromUserArray,
   deleteUser,
   getAllFavs,
   getAllUserPosts,
@@ -25,7 +24,6 @@ router.patch("/handleFavouriteLocations", handleFavouriteLocations);
 router.post("/updateUser", updateUserData);
 router.post("/allUserPosts", getAllUserPosts);
 router.post("/allUserFavs", getAllFavs);
-router.post("/deleteFromUserArray", deleteFromUserArray);
 router.post("/deleteUser", deleteUser);
 
 export default router;
