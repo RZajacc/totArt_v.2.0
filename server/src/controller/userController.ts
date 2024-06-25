@@ -54,9 +54,13 @@ const register: RequestHandler = async (req, res) => {
 };
 
 const login: RequestHandler = async (req, res) => {
+  // Define incoming data
+  const inputs: { email: string; password: string } = req.body;
   // Check if the user exists in the database
   try {
-    const existingUser = await userModel.findOne({ email: req.body.email });
+    const existingUser: HydratedDocument<User> | null = await userModel.findOne(
+      { email: inputs.email }
+    );
     if (!existingUser) {
       res.status(404).json({
         msg: "No user found with provided email!",
