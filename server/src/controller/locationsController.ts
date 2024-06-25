@@ -2,7 +2,11 @@ import { RequestHandler } from "express";
 import imageModel from "../models/imageModel.js";
 import locationModel from "../models/locationModel.js";
 import userModel from "../models/userModel.js";
-import { PopulatedLocation } from "../types/LocationTypes.js";
+import {
+  PopulatedLocation,
+  PopulatedLocationDetails,
+} from "../types/LocationTypes.js";
+import { HydratedDocument } from "mongoose";
 
 const getAllLocations: RequestHandler = async (req, res) => {
   try {
@@ -31,14 +35,15 @@ const getAllLocations: RequestHandler = async (req, res) => {
 const getLocationDetails: RequestHandler = async (req, res) => {
   try {
     // Check if post exists
-    const locationData = await locationModel
-      .findById(req.body.id)
-      .populate({ path: "author", select: ["userName", "userImage"] })
-      .populate({ path: "image" })
-      .populate({
-        path: "comments",
-        populate: { path: "author", select: ["userName", "userImage"] },
-      });
+    const locationData: HydratedDocument<PopulatedLocationDetails> | null =
+      await locationModel
+        .findById(req.body.id)
+        .populate({ path: "author", select: ["userName", "userImage"] })
+        .populate({ path: "image" })
+        .populate({
+          path: "comments",
+          populate: { path: "author", select: ["userName", "userImage"] },
+        });
 
     console.log(locationData);
     // If it doesnt return a message
