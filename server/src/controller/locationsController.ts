@@ -1,10 +1,12 @@
+import { RequestHandler } from "express";
 import imageModel from "../models/imageModel.js";
 import locationModel from "../models/locationModel.js";
 import userModel from "../models/userModel.js";
+import { PopulatedLocation } from "../types/LocationTypes.js";
 
-const getAllLocations = async (req, res) => {
+const getAllLocations: RequestHandler = async (req, res) => {
   try {
-    const allLocations = await locationModel
+    const allLocations: PopulatedLocation[] | undefined = await locationModel
       .find()
       .populate({ path: "author", select: ["userName"] })
       .populate({ path: "image" });
@@ -26,7 +28,7 @@ const getAllLocations = async (req, res) => {
   }
 };
 
-const getLocationDetails = async (req, res) => {
+const getLocationDetails: RequestHandler = async (req, res) => {
   try {
     // Check if post exists
     const locationData = await locationModel
@@ -55,7 +57,7 @@ const getLocationDetails = async (req, res) => {
   }
 };
 
-const addNewLocation = async (req, res) => {
+const addNewLocation: RequestHandler = async (req, res) => {
   // Create a new post
   const newLocationModel = new locationModel({
     title: req.body.title,
@@ -92,25 +94,24 @@ const addNewLocation = async (req, res) => {
 };
 
 // ! Naming and functionality to change
-const updatePost = async (req, res) => {
-  const filter = { _id: req.body._id };
-  const elementName = req.body.elementName;
-  const elementValue = req.body.elementValue;
-  const update = { [`${elementName}`]: elementValue };
-
-  // * This section covers connecting user with his posts
-  if (req.body.elementName === "comments") {
-    let updatedPost = await locationModel.findOneAndUpdate(
-      filter,
-      { $push: { comments: elementValue } },
-      {
-        new: true,
-      }
-    );
-    res.status(200).json({
-      msg: "Posts updated properly",
-    });
-  }
+const updatePost: RequestHandler = async (req, res) => {
+  // const filter = { _id: req.body._id };
+  // const elementName = req.body.elementName;
+  // const elementValue = req.body.elementValue;
+  // const update = { [`${elementName}`]: elementValue };
+  // // * This section covers connecting user with his posts
+  // if (req.body.elementName === "comments") {
+  //   let updatedPost = await locationModel.findOneAndUpdate(
+  //     filter,
+  //     { $push: { comments: elementValue } },
+  //     {
+  //       new: true,
+  //     }
+  //   );
+  //   res.status(200).json({
+  //     msg: "Posts updated properly",
+  //   });
+  // }
 };
 
 export { getAllLocations, getLocationDetails, addNewLocation, updatePost };

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Location } from "../types/LocationTypes";
 
-const postSchema = new mongoose.Schema<Location>({
+const locationSchema = new mongoose.Schema<Location>({
   title: {
     type: String,
     required: true,
@@ -20,6 +20,6 @@ const postSchema = new mongoose.Schema<Location>({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
 });
 
-const locationModel = mongoose.model<Location>("location", postSchema);
+const locationModel = mongoose.model<Location>("location", locationSchema);
 
 export default locationModel;
