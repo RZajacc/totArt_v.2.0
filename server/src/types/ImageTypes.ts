@@ -1,7 +1,8 @@
-export interface CloudinaryImage {
+import { Document } from "mongoose";
+
+export interface CloudinaryImage extends Document {
   asset_id: string;
   public_id: string;
-  api_key: string;
   version: number;
   version_id: string;
   signature: string;
@@ -10,7 +11,6 @@ export interface CloudinaryImage {
   format: string;
   resource_type: string;
   created_at: string;
-  tags: string[];
   pages: number;
   bytes: number;
   type: string;

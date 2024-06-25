@@ -1,7 +1,8 @@
-import { v2 as cloudinary } from "cloudinary";
+import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
 import locationModel from "../models/locationModel.js";
 import { RequestHandler } from "express";
+import { CloudinaryImage } from "../types/ImageTypes.js";
 
 // Upload image to cloudinary
 const ImageUpload: RequestHandler = async (req, res) => {
@@ -20,13 +21,19 @@ const ImageUpload: RequestHandler = async (req, res) => {
   if (uploadedImage) {
     try {
       // Upload the image
-      const result = await cloudinary.uploader.upload(
+      const result: UploadApiResponse = await cloudinary.uploader.upload(
         uploadedImage.path,
         options
       );
-      // Remove unused variables from returned value
-      // const api_keyProp: keyof result = "api_key";
-      delete result[("api_key", "tags")];
+
+      // Define valid keys for unnecessary properties to remove from the upload response
+      const api_keyProp: keyof UploadApiResponse = "api_key";
+      const tags_keyProp: keyof UploadApiResponse = "tags";
+
+      // Delete properties
+      delete result[api_keyProp];
+      delete result[tags_keyProp];
+
       // Create image object
       const image = new imageModel(result);
       // Save the image in the database
