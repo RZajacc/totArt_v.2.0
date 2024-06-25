@@ -3,6 +3,8 @@ import "dotenv/config";
 import userModel from "../models/userModel.js";
 import { PassportStatic } from "passport";
 import { JwtPayload } from "jsonwebtoken";
+import { HydratedDocument } from "mongoose";
+import { User } from "../types/UserTypes.js";
 
 const opts = {
   secretOrKey: process.env.SECRET_OR_PRIVATE_KEY as string,
@@ -15,7 +17,9 @@ const jwtStrategy = new JwtStrategy(opts, async function (
   done
 ) {
   try {
-    const user = await userModel.findById(jwt_payload.sub);
+    const user: HydratedDocument<User> | null = await userModel.findById(
+      jwt_payload.sub
+    );
     if (user) {
       console.log("User found");
       return done(null, user);

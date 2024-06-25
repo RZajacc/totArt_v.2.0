@@ -102,6 +102,11 @@ const login: RequestHandler = async (req, res) => {
 };
 
 const getProfle: RequestHandler = async (req, res) => {
+  // Define incoming data
+  const user: Express.User | undefined = req.user;
+
+  // ! Namespace for the user!
+
   if (req.user) {
     res.status(200).json({
       _id: req.user.id,
