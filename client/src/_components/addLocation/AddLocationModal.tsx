@@ -27,7 +27,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     error: imageUploadError,
     reset: resetImageData,
   } = useSWRMutation(
-    'http://localhost:5000/api/images/locationImageUpload',
+    'http://localhost:5000/api/images/ImageUpload',
     locationImageUpload,
   );
 
