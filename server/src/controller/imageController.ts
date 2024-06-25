@@ -50,19 +50,23 @@ const ImageUpload: RequestHandler = async (req, res) => {
   }
 };
 
-const deleteImage = async (req, res) => {
+const deleteImage: RequestHandler = async (req, res) => {
+  // Define request data
+  const inputs: { publicId: string; imageId: string } = req.body;
+
   try {
     // Delete image instance from cloudinary
-    const cloudinaryImage = await cloudinary.uploader.destroy(
-      req.body.publicId
-    );
+    const cloudinaryImage: { result: string } =
+      await cloudinary.uploader.destroy(inputs.publicId);
+
     // Delete image instance from the db
-    const dbImage = await imageModel.findByIdAndDelete(req.body.imageId);
+    const dbImage: HydratedDocument<Image> | null =
+      await imageModel.findByIdAndDelete(inputs.imageId);
 
     if (cloudinaryImage && dbImage) {
       res.status(200).json({
         message: "Image deleted from cloudinary and database",
-        cloudinary_publicId: req.body.publicId,
+        cloudinary_publicId: inputs.publicId,
         cloudinaryStatus: cloudinaryImage.result,
         db_status: "Image deleted",
         db_publicId: dbImage.public_id,
