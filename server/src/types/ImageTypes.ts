@@ -1,6 +1,6 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
-export interface CloudinaryImage extends Document {
+export interface Image extends Document {
   asset_id: string;
   public_id: string;
   version: number;
@@ -18,7 +18,10 @@ export interface CloudinaryImage extends Document {
   placeholder: boolean;
   url: string;
   secure_url: string;
+  folder: string;
   access_mode: string;
   existing: boolean;
   original_filename: string;
+  related_user: Types.ObjectId;
+  related_location: Types.ObjectId;
 }

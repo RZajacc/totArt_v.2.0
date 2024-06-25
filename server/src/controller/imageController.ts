@@ -1,8 +1,7 @@
 import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
-import locationModel from "../models/locationModel.js";
 import { RequestHandler } from "express";
-import { CloudinaryImage } from "../types/ImageTypes.js";
+import { Image } from "../types/ImageTypes.js";
 
 // Upload image to cloudinary
 const ImageUpload: RequestHandler = async (req, res) => {

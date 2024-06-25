@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { Image } from "../types/ImageTypes";
 
-const imageSchema = new mongoose.Schema({
+const imageSchema = new mongoose.Schema<Image>({
   asset_id: { type: String, required: true },
   public_id: { type: String, required: true },
   version: { type: Number, required: true },
@@ -23,6 +24,6 @@ const imageSchema = new mongoose.Schema({
   related_location: { type: mongoose.Schema.Types.ObjectId, ref: "location" },
 });
 
-const imageModel = mongoose.model("image", imageSchema);
+const imageModel = mongoose.model<Image>("image", imageSchema);
 
 export default imageModel;
