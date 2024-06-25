@@ -2,6 +2,7 @@ import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import imageModel from "../models/imageModel.js";
 import { RequestHandler } from "express";
 import { Image } from "../types/ImageTypes.js";
+import { HydratedDocument } from "mongoose";
 
 // Upload image to cloudinary
 const ImageUpload: RequestHandler = async (req, res) => {
@@ -34,9 +35,9 @@ const ImageUpload: RequestHandler = async (req, res) => {
       delete result[tags_keyProp];
 
       // Create image object
-      const image = new imageModel(result);
+      const image: HydratedDocument<Image> = new imageModel(result);
       // Save the image in the database
-      const savedImage = await image.save();
+      const savedImage: HydratedDocument<Image> = await image.save();
       // Return the result of all operations
       res.status(200).json(savedImage);
     } catch (error) {
