@@ -39,25 +39,35 @@ function LocationDetails({ user, data, mutateUser }: Props) {
   return (
     <>
       <div className="grid gap-y-3">
-        <section className="flex items-center justify-center">
-          <h1 className="mx-4 text-center text-lg font-bold">
-            Title: <span className="font-normal">{data?.title}</span>
-          </h1>
+        <section className="">
+          <h1 className=" text-center text-lg font-bold">Title:</h1>
+          <div className="flex items-center justify-center space-x-6">
+            <p>{data?.title}</p>
+            {data?.author._id === user?._id ? (
+              <button>
+                <Image src={pencil} alt="pencil" width={20} />
+              </button>
+            ) : (
+              ''
+            )}
+          </div>
         </section>
 
         <section>
-          <h2 className="text-center font-bold">Description:</h2>
+          <h1 className="text-center text-lg font-bold">Description:</h1>
           <p className="text-center">{data?.description}</p>
         </section>
         <section>
-          <h2 className="text-center font-bold">Where to find it</h2>
+          <h1 className="text-center text-lg font-bold">Where to find it</h1>
           <p className="text-center">{data?.location}</p>
         </section>
 
         <section className="flex items-center justify-center">
           <div>
-            <strong>Posted by: </strong>
-            <em>{data?.author.userName}</em>
+            <h1 className="text-lg font-bold">
+              Posted by:{' '}
+              <em className="font-normal">{data?.author.userName}</em>
+            </h1>
           </div>
         </section>
 
