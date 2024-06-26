@@ -2,6 +2,7 @@ import React from 'react';
 import { User } from '../../types/UserTypes';
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
+import pencil from '../../../public/pencil.svg';
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
@@ -42,20 +43,6 @@ function LocationDetails({ user, data, mutateUser }: Props) {
           <h1 className="mx-4 text-center text-lg font-bold">
             Title: <span className="font-normal">{data?.title}</span>
           </h1>
-          {user?.favs?.includes(data?._id) ? (
-            <button onClick={handleFavourites}>
-              <Image src={fullHeart} alt="full-heart" width={30} height={30} />
-            </button>
-          ) : (
-            <button onClick={handleFavourites}>
-              <Image
-                src={emptyHeart}
-                alt="empty-heart"
-                width={30}
-                height={30}
-              />
-            </button>
-          )}
         </section>
 
         <section>
@@ -74,14 +61,35 @@ function LocationDetails({ user, data, mutateUser }: Props) {
           </div>
         </section>
 
-        <Image
-          src={data?.image.secure_url}
-          alt="user-img"
-          width={500}
-          height={500}
-          className="rounded-sm"
-        />
-        <div></div>
+        <section className="relative">
+          <Image
+            src={data?.image.secure_url}
+            alt="user-img"
+            width={500}
+            height={500}
+            className="rounded-sm"
+          />
+          {user?.favs?.includes(data?._id) ? (
+            <button
+              onClick={handleFavourites}
+              className="absolute right-2 top-2"
+            >
+              <Image src={fullHeart} alt="full-heart" width={42} height={42} />
+            </button>
+          ) : (
+            <button
+              onClick={handleFavourites}
+              className="absolute right-2 top-2"
+            >
+              <Image
+                src={emptyHeart}
+                alt="empty-heart"
+                width={42}
+                height={42}
+              />
+            </button>
+          )}
+        </section>
       </div>
     </>
   );
