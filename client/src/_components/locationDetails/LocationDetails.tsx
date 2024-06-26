@@ -40,9 +40,8 @@ function LocationDetails({ user, data, mutateUser }: Props) {
     <>
       <div className="grid gap-y-3">
         <section className="">
-          <h1 className=" text-center text-lg font-bold">Title:</h1>
-          <div className="flex items-center justify-center space-x-6">
-            <p>{data?.title}</p>
+          <div className="flex items-center justify-center space-x-3">
+            <h1 className=" text-center text-lg font-bold">Title</h1>
             {data?.author._id === user?._id ? (
               <button>
                 <Image src={pencil} alt="pencil" width={20} />
@@ -51,14 +50,33 @@ function LocationDetails({ user, data, mutateUser }: Props) {
               ''
             )}
           </div>
+          <p className="text-center">{data?.title}</p>
         </section>
 
         <section>
-          <h1 className="text-center text-lg font-bold">Description:</h1>
+          <div className="flex items-center justify-center space-x-3">
+            <h1 className="text-center text-lg font-bold">Description</h1>
+            {data?.author._id === user?._id ? (
+              <button>
+                <Image src={pencil} alt="pencil" width={20} />
+              </button>
+            ) : (
+              ''
+            )}
+          </div>
           <p className="text-center">{data?.description}</p>
         </section>
         <section>
-          <h1 className="text-center text-lg font-bold">Where to find it</h1>
+          <div className="flex items-center justify-center space-x-3">
+            <h1 className="text-center text-lg font-bold">Where to find it</h1>
+            {data?.author._id === user?._id ? (
+              <button>
+                <Image src={pencil} alt="pencil" width={20} />
+              </button>
+            ) : (
+              ''
+            )}
+          </div>
           <p className="text-center">{data?.location}</p>
         </section>
 
