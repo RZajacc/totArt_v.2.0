@@ -132,7 +132,7 @@ const addNewLocation: RequestHandler = async (req, res) => {
 };
 
 // ! Naming and functionality to change
-const updatePost: RequestHandler = async (req, res) => {
+const updateLocation: RequestHandler = async (req, res) => {
   // const filter = { _id: req.body._id };
   // const elementName = req.body.elementName;
   // const elementValue = req.body.elementValue;
@@ -152,4 +152,4 @@ const updatePost: RequestHandler = async (req, res) => {
   // }
 };
 
-export { getAllLocations, getLocationDetails, addNewLocation, updatePost };
+export { getAllLocations, getLocationDetails, addNewLocation, updateLocation };

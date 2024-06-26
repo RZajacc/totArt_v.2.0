@@ -1,12 +1,16 @@
 import React from 'react';
+// Types
 import { User } from '../../types/UserTypes';
+import { locationType } from '../../types/LocationTypes';
+// Images
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import pencil from '../../../public/pencil.svg';
+// Dependencies
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
+// Data
 import { locationFavsData } from '../../fetchers/LocationFavsData';
-import { locationType } from '../../types/LocationTypes';
 
 type Props = {
   user: User;

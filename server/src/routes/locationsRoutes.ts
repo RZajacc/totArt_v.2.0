@@ -3,6 +3,7 @@ import {
   getAllLocations,
   getLocationDetails,
   addNewLocation,
+  updateLocation,
 } from "../controller/locationsController.js";
 
 const router = Router();
@@ -10,6 +11,6 @@ const router = Router();
 router.get("/all", getAllLocations);
 router.post("/details", getLocationDetails);
 router.post("/addNewLocation", addNewLocation);
-// router.post("/updatePost", updatePost);
+router.patch("/updatePost", updateLocation);
 
 export default router;
