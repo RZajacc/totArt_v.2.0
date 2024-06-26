@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
+import noUser from '../../../public/noUser.png';
 import pencil from '../../../public/pencil.svg';
 import trash from '../../../public/trash-can.svg';
 import Image from 'next/image';
@@ -59,9 +60,9 @@ function CommentElement({
       <div
         className={`${isAuthor ? 'comment__author' : 'comment'} rounded-2xl`}
       >
-        <div className="comment__user-image self-center rounded-tr-2xl p-1">
+        <div className="comment__user-image self-center rounded-tr-2xl">
           <Image
-            src={comment.author.userImage}
+            src={comment.author.userImage ? comment.author.userImage : noUser}
             alt="user-image"
             width={36}
             height={36}
