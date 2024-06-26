@@ -1,4 +1,4 @@
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 import userModel from "../models/userModel.js";
 import { bcrypt_hash, bcrypt_verifyPassword } from "../utils/bcrypt_config.js";
 import { generateToken } from "../utils/tokenServices.js";
@@ -102,11 +102,6 @@ const login: RequestHandler = async (req, res) => {
 };
 
 const getProfle: RequestHandler = async (req, res) => {
-  // Define incoming data
-  const user: Express.User | undefined = req.user;
-
-  // ! Namespace for the user!
-
   if (req.user) {
     res.status(200).json({
       _id: req.user.id,
@@ -129,47 +124,60 @@ const getProfle: RequestHandler = async (req, res) => {
 };
 
 const handleFavouriteLocations: RequestHandler = async (req, res) => {
+  // Define incoming data
+  const inputs: { email: string; favId: string } = req.body;
+
+  // Convert incoming string to id
+  const favId = new Types.ObjectId(inputs.favId);
+
   // Filter to find a user in the database
-  const filter = { email: req.body.email };
+  const filter = { email: inputs.email };
+
   try {
     // Check if user exists in DB
-    const updateUser = await userModel.findOne(filter);
+    const userToUpdate: HydratedDocument<User> | null = await userModel.findOne(
+      filter
+    );
 
     // If user exists check if he has location saved already
-    let hasFav = updateUser
-      ? updateUser.favs.includes(req.body.favId)
-      : undefined;
+    let hasFav = userToUpdate ? userToUpdate.favs.includes(favId) : undefined;
 
     // If user exists and doesnt have location in fav
-    if (updateUser && !hasFav) {
-      const updatedUser = await userModel.findOneAndUpdate(
-        filter,
-        { $push: { favs: req.body.favId } },
-        {
-          new: true,
-        }
-      );
-      res.status(201).json({
-        msg: "Location added to favourites",
-        userFavs: updatedUser.favs,
-      });
+    if (userToUpdate && !hasFav) {
+      const updatedUser: HydratedDocument<User> | null =
+        await userModel.findOneAndUpdate(
+          filter,
+          { $push: { favs: favId } },
+          {
+            new: true,
+          }
+        );
+      if (updatedUser) {
+        res.status(201).json({
+          msg: "Location added to favourites",
+          userFavs: updatedUser.favs,
+        });
+      }
       // If user exists and have location in fav
-    } else if (updateUser && hasFav) {
-      const updatedUser = await userModel.findOneAndUpdate(
-        filter,
-        { $pull: { favs: req.body.favId } },
-        {
-          new: true,
-        }
-      );
-      res.status(201).json({
-        msg: "Location removed from favourites",
-        userFavs: updatedUser.favs,
-      });
+    } else if (userToUpdate && hasFav) {
+      const updatedUser: HydratedDocument<User> | null =
+        await userModel.findOneAndUpdate(
+          filter,
+          { $pull: { favs: favId } },
+          {
+            new: true,
+          }
+        );
+      if (updatedUser) {
+        res.status(201).json({
+          msg: "Location removed from favourites",
+          userFavs: updatedUser.favs,
+        });
+      }
       // User is not found
     } else {
       res.status(404).json({
-        msg: `Usermail ${req.body.email}, was not found in the database!`,
+        msg: `Usermail ${inputs.email}, was not found in the database!`,
       });
     }
   } catch (error) {
