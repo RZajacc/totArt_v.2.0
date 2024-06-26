@@ -11,6 +11,6 @@ const router = Router();
 router.get("/all", getAllLocations);
 router.post("/details", getLocationDetails);
 router.post("/addNewLocation", addNewLocation);
-router.patch("/updatePost", updateLocation);
+router.patch("/updateLocation", updateLocation);
 
 export default router;

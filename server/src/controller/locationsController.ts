@@ -131,25 +131,44 @@ const addNewLocation: RequestHandler = async (req, res) => {
   }
 };
 
-// ! Naming and functionality to change
 const updateLocation: RequestHandler = async (req, res) => {
-  // const filter = { _id: req.body._id };
-  // const elementName = req.body.elementName;
-  // const elementValue = req.body.elementValue;
-  // const update = { [`${elementName}`]: elementValue };
-  // // * This section covers connecting user with his posts
-  // if (req.body.elementName === "comments") {
-  //   let updatedPost = await locationModel.findOneAndUpdate(
-  //     filter,
-  //     { $push: { comments: elementValue } },
-  //     {
-  //       new: true,
-  //     }
-  //   );
-  //   res.status(200).json({
-  //     msg: "Posts updated properly",
-  //   });
-  // }
+  // Define incoming data
+  const inputs: {
+    locationId: string;
+    propertyName: string;
+    updatedValue: string;
+  } = req.body;
+
+  // Convert locationId into id type
+  const locationId = new Types.ObjectId(inputs.locationId);
+
+  // Find and update location data
+  try {
+    let updatedLocation: HydratedDocument<Location> | null =
+      await locationModel.findByIdAndUpdate(
+        locationId,
+        {
+          [`${inputs.propertyName}`]: inputs.updatedValue,
+        },
+        {
+          new: true,
+        }
+      );
+    if (updatedLocation) {
+      res.status(200).json({
+        msg: `Locations ${inputs.propertyName} successfully updated`,
+      });
+    } else {
+      res.status(404).json({
+        msg: "Could not find requested location!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Unknown server error",
+    });
+  }
 };
 
 export { getAllLocations, getLocationDetails, addNewLocation, updateLocation };
