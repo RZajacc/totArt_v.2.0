@@ -1,4 +1,6 @@
 import React from 'react';
+import useSWRMutation from 'swr/mutation';
+import { editLocation } from '../../fetchers/EditLocation';
 
 type Props = {
   showEditLocationModal: boolean;
@@ -15,7 +17,12 @@ function EditLocationModal({
   editLocationData,
   setEditLocationData,
 }: Props) {
-  console.log(editLocationData);
+  const { trigger } = useSWRMutation(
+    'http://localhost:5000/api/locations/updateLocation',
+    editLocation,
+  );
+
+  const handleEditLocation = async () => {};
   return (
     <div
       className={`fixed left-0 top-0 ${!showEditLocationModal ? 'hidden' : ''} z-30 h-screen w-screen bg-slate-600/70`}
@@ -44,7 +51,7 @@ function EditLocationModal({
         </section>
         <section className="flex justify-end gap-x-2 px-2">
           <button
-            // onClick={handleEditComment}
+            onClick={handleEditLocation}
             className="rounded-md bg-green-400 px-2 py-1 hover:border-2 hover:border-black"
           >
             Update
