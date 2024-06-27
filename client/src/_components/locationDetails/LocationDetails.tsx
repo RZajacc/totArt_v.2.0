@@ -88,7 +88,7 @@ function LocationDetails({ user, data, mutateUser }: Props) {
           <div className="flex items-center justify-center space-x-3">
             <h1 className="text-center text-lg font-bold">Description</h1>
             {data?.author._id === user?._id ? (
-              <button>
+              <button value="description">
                 <Image src={pencil} alt="pencil" width={20} />
               </button>
             ) : (
@@ -101,7 +101,7 @@ function LocationDetails({ user, data, mutateUser }: Props) {
           <div className="flex items-center justify-center space-x-3">
             <h1 className="text-center text-lg font-bold">Where to find it</h1>
             {data?.author._id === user?._id ? (
-              <button>
+              <button value="location">
                 <Image src={pencil} alt="pencil" width={20} />
               </button>
             ) : (
