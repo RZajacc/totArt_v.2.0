@@ -6,12 +6,12 @@ import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 
 import LocationDetails from '../../../_components/locationDetails/LocationDetails';
-import CommentElement from '../../../_components/locationDetails/CommentElement';
+import CommentElement from '../../../_components/comments/CommentElement';
 
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
-import DeleteCommentModal from '../../../_components/locationDetails/DeleteCommentModal';
-import EditCommentModal from '../../../_components/locationDetails/EditCommentModal';
+import DeleteCommentModal from '../../../_components/comments/DeleteCommentModal';
+import EditCommentModal from '../../../_components/comments/EditCommentModal';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
