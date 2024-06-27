@@ -17,9 +17,10 @@ type Props = {
   user: User;
   data: locationType;
   mutateUser: (user?: User) => void;
+  mutateLocation: (location?: locationType) => void;
 };
 
-function LocationDetails({ user, data, mutateUser }: Props) {
+function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   // Edit location variables
   const [showEditLocationModal, setShowEditLocationModal] = useState(false);
   const [editLocationData, setEditLocationData] = useState('');
@@ -151,11 +152,13 @@ function LocationDetails({ user, data, mutateUser }: Props) {
         </section>
       </div>
       <EditLocationModal
+        locationId={data?._id}
         showEditLocationModal={showEditLocationModal}
         setShowEditLocationModal={setShowEditLocationModal}
         selectedProperty={selectedProperty}
         editLocationData={editLocationData}
         setEditLocationData={setEditLocationData}
+        mutateLocation={mutateLocation}
       />
     </>
   );

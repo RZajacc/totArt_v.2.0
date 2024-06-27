@@ -64,7 +64,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
       console.log(error);
     }
   };
-  console.log('LOCATION DATA--->', locationData);
+
   return (
     <>
       {error ? (
@@ -79,6 +79,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
           user={user!}
           data={locationData!}
           mutateUser={mutateUser}
+          mutateLocation={mutateLocation}
         />
       )}
 

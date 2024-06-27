@@ -1,28 +1,46 @@
 import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { editLocation } from '../../fetchers/EditLocation';
+import { locationType } from '../../types/LocationTypes';
 
 type Props = {
+  locationId: string;
   showEditLocationModal: boolean;
   setShowEditLocationModal: (show: boolean) => void;
   selectedProperty: string;
   editLocationData: string;
   setEditLocationData: (data: string) => void;
+  mutateLocation: (location?: locationType) => void;
 };
 
 function EditLocationModal({
+  locationId,
   showEditLocationModal,
   setShowEditLocationModal,
   selectedProperty,
   editLocationData,
   setEditLocationData,
+  mutateLocation,
 }: Props) {
+  // Trigger function to update location data
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/locations/updateLocation',
     editLocation,
   );
 
-  const handleEditLocation = async () => {};
+  // Handler for editing
+  const handleEditLocation = async () => {
+    // Trigger function with relevant data
+    await trigger({
+      locatinId: locationId,
+      propertyName: selectedProperty,
+      updatedValue: editLocationData,
+    });
+    // Refetch location details data
+    mutateLocation();
+    // Close the modal
+    setShowEditLocationModal(false);
+  };
   return (
     <div
       className={`fixed left-0 top-0 ${!showEditLocationModal ? 'hidden' : ''} z-30 h-screen w-screen bg-slate-600/70`}
