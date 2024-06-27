@@ -35,3 +35,7 @@ export type authorType = {
   userName: string;
   userImage: string;
 };
+
+export type EditLocationData = {
+  [property: string]: string;
+};

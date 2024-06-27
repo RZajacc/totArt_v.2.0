@@ -20,7 +20,10 @@ type Props = {
 };
 
 function LocationDetails({ user, data, mutateUser }: Props) {
+  // Edit location variables
   const [showEditLocationModal, setShowEditLocationModal] = useState(false);
+  const [editLocationData, setEditLocationData] = useState('');
+  const [selectedProperty, setSelectedProperty] = useState('');
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
@@ -42,6 +45,28 @@ function LocationDetails({ user, data, mutateUser }: Props) {
     }
   };
 
+  const handleEditLocationModal = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    // Get the value stored in the button
+    const selectedValue = e.currentTarget.value;
+    // Depending on this value feed state var with a proper value
+    switch (selectedValue) {
+      case 'title':
+        setEditLocationData(data.title);
+        break;
+      case 'description':
+        setEditLocationData(data.description);
+        break;
+      case 'location':
+        setEditLocationData(data.location);
+        break;
+    }
+    setSelectedProperty(selectedValue);
+    // setEditLocationData(data[buttonValue]);
+    setShowEditLocationModal(true);
+  };
+
   return (
     <>
       <div className="grid gap-y-3">
@@ -49,7 +74,7 @@ function LocationDetails({ user, data, mutateUser }: Props) {
           <div className="flex items-center justify-center space-x-3">
             <h1 className=" text-center text-lg font-bold">Title</h1>
             {data?.author._id === user?._id ? (
-              <button>
+              <button value="title" onClick={handleEditLocationModal}>
                 <Image src={pencil} alt="pencil" width={20} />
               </button>
             ) : (
@@ -128,6 +153,9 @@ function LocationDetails({ user, data, mutateUser }: Props) {
       <EditLocationModal
         showEditLocationModal={showEditLocationModal}
         setShowEditLocationModal={setShowEditLocationModal}
+        selectedProperty={selectedProperty}
+        editLocationData={editLocationData}
+        setEditLocationData={setEditLocationData}
       />
     </>
   );
