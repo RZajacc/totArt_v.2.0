@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Types
 import { User } from '../../types/UserTypes';
 import { locationType } from '../../types/LocationTypes';
@@ -11,6 +11,7 @@ import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 // Data
 import { locationFavsData } from '../../fetchers/LocationFavsData';
+import EditLocationModal from './EditLocationModal';
 
 type Props = {
   user: User;
@@ -19,6 +20,7 @@ type Props = {
 };
 
 function LocationDetails({ user, data, mutateUser }: Props) {
+  const [showEditLocationModal, setShowEditLocationModal] = useState(false);
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
@@ -123,6 +125,10 @@ function LocationDetails({ user, data, mutateUser }: Props) {
           )}
         </section>
       </div>
+      <EditLocationModal
+        showEditLocationModal={showEditLocationModal}
+        setShowEditLocationModal={setShowEditLocationModal}
+      />
     </>
   );
 }
