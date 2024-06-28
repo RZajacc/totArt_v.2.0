@@ -9,13 +9,12 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Updateding user locations</p>
+<p style="color:orange">Deleting user locations</p>
 
 **Still on todolist:**
 
-- Deleting user locations
-- User dashboard
 - Error and Loading pages
+- User dashboard
 - Responsiveness - app is built mobile first, currently its not styled for desktop
 - Email confirmation link
 - Resetting forgotten password
