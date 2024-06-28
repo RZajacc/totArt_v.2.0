@@ -121,6 +121,13 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
+        {/* START HERE */}
+        <section>
+          <button className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white">
+            Delete location
+          </button>
+        </section>
+
         <section className="relative">
           <Image
             src={data?.image.secure_url}
