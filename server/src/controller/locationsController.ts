@@ -171,4 +171,14 @@ const updateLocation: RequestHandler = async (req, res) => {
   }
 };
 
-export { getAllLocations, getLocationDetails, addNewLocation, updateLocation };
+const deleteLocation: RequestHandler = async (req, res) => {
+  console.log(req.body);
+};
+
+export {
+  getAllLocations,
+  getLocationDetails,
+  addNewLocation,
+  updateLocation,
+  deleteLocation,
+};
