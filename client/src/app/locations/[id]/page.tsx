@@ -10,8 +10,8 @@ import CommentElement from '../../../_components/comments/CommentElement';
 
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
-import DeleteCommentModal from '../../../_components/comments/DeleteCommentModal';
-import EditCommentModal from '../../../_components/comments/EditCommentModal';
+import DeleteCommentModal from '../../../_components/commentModals/DeleteCommentModal';
+import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path

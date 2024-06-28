@@ -9,7 +9,7 @@ import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
-import AddLocationModal from '../../_components/addLocation/AddLocationModal';
+import AddLocationModal from '../../_components/locationModals/AddLocationModal';
 
 function Content() {
   const { user, mutateUser } = useContext(AuthContext);

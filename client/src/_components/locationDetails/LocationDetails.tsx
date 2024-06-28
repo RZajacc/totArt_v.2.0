@@ -11,7 +11,7 @@ import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 // Data
 import { locationFavsData } from '../../fetchers/LocationFavsData';
-import EditLocationModal from './EditLocationModal';
+import EditLocationModal from '../locationModals/EditLocationModal';
 
 type Props = {
   user: User;
