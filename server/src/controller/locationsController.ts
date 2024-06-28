@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import imageModel from "../models/imageModel.js";
 import locationModel from "../models/locationModel.js";
 import userModel from "../models/userModel.js";
+import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import {
   Location,
   PopulatedLocation,
@@ -172,7 +173,46 @@ const updateLocation: RequestHandler = async (req, res) => {
 };
 
 const deleteLocation: RequestHandler = async (req, res) => {
-  console.log(req.body);
+  // Define incoming data
+  const inputs: { imageId: string; imagePublicId: string; locationId: string } =
+    req.body;
+  // Convert string to object id
+  const imageId = new Types.ObjectId(inputs.imageId);
+  const locationId = new Types.ObjectId(inputs.locationId);
+
+  try {
+    // Delete image both in db and remove from cloudinary
+    const cloudinaryImage: { result: string } =
+      await cloudinary.uploader.destroy(inputs.imagePublicId);
+
+    // Delete image instance from the db
+    const dbImage: HydratedDocument<Image> | null =
+      await imageModel.findByIdAndDelete(imageId);
+
+    // Delete location
+    const deletedLocation: HydratedDocument<Location> | null =
+      await locationModel.findByIdAndDelete(locationId);
+
+    // Remove locations id from author
+    if (deletedLocation) {
+      const locationAuthor = await userModel.findByIdAndUpdate(
+        deletedLocation.author._id,
+        { $pull: { posts: deletedLocation.id } }
+      );
+      res.status(200).json({
+        msg: "Location deleted successfully",
+        cloudinaryResponse: cloudinaryImage.result,
+        deletedImageId: dbImage?.id,
+        locationTitle: deletedLocation.title,
+        locationAuthor: locationAuthor?.userName,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      msg: "Unknown server error",
+    });
+  }
 };
 
 export {
