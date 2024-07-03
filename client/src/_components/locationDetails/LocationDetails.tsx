@@ -25,6 +25,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   const [showEditLocationModal, setShowEditLocationModal] = useState(false);
   const [editLocationData, setEditLocationData] = useState('');
   const [selectedProperty, setSelectedProperty] = useState('');
+  const [deleteField, setDeleteField] = useState('hidden');
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
@@ -51,6 +52,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   ) => {
     // Get the value stored in the button
     const selectedValue = e.currentTarget.value;
+
     // Depending on this value feed state var with a proper value
     switch (selectedValue) {
       case 'title':
@@ -121,11 +123,24 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
-        {/* START HERE */}
-        <section>
-          <button className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white">
-            Delete location
-          </button>
+        {data.author._id === user._id ? (
+          <section>
+            <button className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white">
+              Delete location
+            </button>
+          </section>
+        ) : (
+          ''
+        )}
+
+        <section className="mx-auto rounded-md border-2 border-gray-500 focus-within:border-red-400">
+          <input
+            type="text"
+            className=" rounded-l-md p-1 focus-visible:outline-none"
+            placeholder="type: delete"
+          />
+          <button className="bg-red-500 p-1">Delete</button>
+          <button className="rounded-r-sm bg-green-500 p-1">Cancel</button>
         </section>
 
         <section className="relative">
