@@ -25,7 +25,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   const [showEditLocationModal, setShowEditLocationModal] = useState(false);
   const [editLocationData, setEditLocationData] = useState('');
   const [selectedProperty, setSelectedProperty] = useState('');
-  const [deleteField, setDeleteField] = useState('hidden');
+  const [deleteField, setDeleteField] = useState(false);
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
@@ -123,9 +123,14 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
-        {data.author._id === user._id ? (
+        {data.author._id === user._id && !deleteField ? (
           <section>
-            <button className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white">
+            <button
+              className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white"
+              onClick={() => {
+                setDeleteField(true);
+              }}
+            >
               Delete location
             </button>
           </section>
@@ -133,14 +138,26 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           ''
         )}
 
-        <section className="mx-auto rounded-md border-2 border-gray-500 focus-within:border-red-400">
-          <input
-            type="text"
-            className=" rounded-l-md p-1 focus-visible:outline-none"
-            placeholder="type: delete"
-          />
-          <button className="bg-red-500 p-1">Delete</button>
-          <button className="rounded-r-sm bg-green-500 p-1">Cancel</button>
+        <section className={`text-center ${!deleteField ? 'hidden' : ''}`}>
+          <p className=" mb-2 text-red-500">
+            If you dedide to continue all data will be permanently removed!
+          </p>
+          <div className="inline-block rounded-md border-2 border-gray-500 focus-within:border-red-400">
+            <input
+              type="text"
+              className=" rounded-l-md p-1 focus-visible:outline-none"
+              placeholder="type: delete"
+            />
+            <button className="bg-red-500 p-1">Delete</button>
+            <button
+              className="rounded-r-sm bg-green-500 p-1"
+              onClick={() => {
+                setDeleteField(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </section>
 
         <section className="relative">
