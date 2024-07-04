@@ -26,6 +26,8 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   const [editLocationData, setEditLocationData] = useState('');
   const [selectedProperty, setSelectedProperty] = useState('');
   const [deleteField, setDeleteField] = useState(false);
+  const [deleteInput, setDeleteInput] = useState('');
+  const [deleteError, setDeleteError] = useState(false);
   // Mutation to trigger on upon button click
   const { trigger } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
@@ -68,6 +70,20 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
     setSelectedProperty(selectedValue);
     // setEditLocationData(data[buttonValue]);
     setShowEditLocationModal(true);
+  };
+
+  const deleteLocationHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Collect the form data
+    const formData = new FormData(e.currentTarget);
+    const deleteInput = formData.get('delete-input') as string;
+
+    if (deleteInput !== 'delete') {
+      setDeleteInput(deleteInput);
+      setDeleteError(true);
+    } else {
+      console.log('Im gonna delete it');
+    }
   };
 
   return (
@@ -123,7 +139,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
-        {data.author._id === user._id && !deleteField ? (
+        {data?.author._id === user?._id && !deleteField ? (
           <section>
             <button
               className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white"
@@ -142,22 +158,40 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           <p className=" mb-2 text-red-500">
             If you dedide to continue all data will be permanently removed!
           </p>
-          <div className="inline-block rounded-md border-2 border-gray-500 focus-within:border-red-400">
+
+          <form
+            onSubmit={deleteLocationHandler}
+            className="inline-block rounded-md border-2 border-gray-500 focus-within:border-red-400"
+          >
             <input
               type="text"
+              name="delete-input"
               className=" rounded-l-md p-1 focus-visible:outline-none"
               placeholder="type: delete"
+              value={deleteInput}
+              onChange={(e) => {
+                setDeleteInput(e.target.value);
+                setDeleteError(false);
+              }}
             />
-            <button className="bg-red-500 p-1">Delete</button>
+            <button type="submit" className="bg-red-500 p-1">
+              Delete
+            </button>
             <button
               className="rounded-r-sm bg-green-500 p-1"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setDeleteField(false);
+                setDeleteInput('');
               }}
             >
               Cancel
             </button>
-          </div>
+          </form>
+          <p className={`font-bold ${!deleteError ? 'hidden' : ''}`}>
+            <span className="text-red-500">delete</span> is required. You typed{' '}
+            <span className="text-red-500">{deleteInput}</span>!
+          </p>
         </section>
 
         <section className="relative">
