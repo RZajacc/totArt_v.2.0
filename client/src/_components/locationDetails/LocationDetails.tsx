@@ -12,6 +12,8 @@ import useSWRMutation from 'swr/mutation';
 // Data
 import { locationFavsData } from '../../fetchers/LocationFavsData';
 import EditLocationModal from '../locationModals/EditLocationModal';
+import { DeleteLocation } from '../../fetchers/DeleteLocation';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   user: User;
@@ -28,16 +30,26 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   const [deleteField, setDeleteField] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
   const [deleteError, setDeleteError] = useState(false);
+
+  // Set router
+  const router = useRouter();
+
   // Mutation to trigger on upon button click
-  const { trigger } = useSWRMutation(
+  const { trigger: triggerHandleFavs } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
     locationFavsData,
+  );
+
+  // Delete location
+  const { trigger: triggerDeleteLocation } = useSWRMutation(
+    'http://localhost:5000/api/locations/deleteLocation',
+    DeleteLocation,
   );
 
   // Add or remove from favourites
   const handleFavourites = async () => {
     try {
-      const result = await trigger({
+      const result = await triggerHandleFavs({
         email: user.email,
         locactionId: data._id,
       });
@@ -68,11 +80,10 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
         break;
     }
     setSelectedProperty(selectedValue);
-    // setEditLocationData(data[buttonValue]);
     setShowEditLocationModal(true);
   };
 
-  const deleteLocationHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const deleteLocationHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Collect the form data
     const formData = new FormData(e.currentTarget);
@@ -82,7 +93,17 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
       setDeleteInput(deleteInput);
       setDeleteError(true);
     } else {
-      console.log('Im gonna delete it');
+      // Trigger deleting and mutate location and user data
+      await triggerDeleteLocation({
+        imageId: data.image._id,
+        impagePublicId: data.image.public_id,
+        locationId: data._id,
+      });
+      mutateLocation();
+      mutateUser();
+
+      // Redirect to locations
+      router.push('/locations');
     }
   };
 
@@ -182,6 +203,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
               onClick={(e) => {
                 e.preventDefault();
                 setDeleteField(false);
+                setDeleteError(false);
                 setDeleteInput('');
               }}
             >
