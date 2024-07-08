@@ -34,11 +34,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
   const {
     data: locationData,
     mutate: mutateLocation,
-    error,
+    error: locationDetailsError,
   } = useSWR(locationID, locationDetailsData);
 
   // Prepare mutation to add comment
-  const { trigger } = useSWRMutation(
+  const { trigger, error: addCommentError } = useSWRMutation(
     'http://localhost:5000/api/comments/addComment',
     addNewComment,
   );
@@ -67,8 +67,12 @@ function ContentDetails({ params }: { params: { id: string } }) {
   };
 
   // If Error occurs while fetching the data display only This section
-  if (error) {
-    return <FetchErrorSection error={error} />;
+  if (locationDetailsError) {
+    return <FetchErrorSection error={locationDetailsError} />;
+  }
+
+  if (addCommentError) {
+    return <FetchErrorSection error={addCommentError} />;
   }
 
   return (
