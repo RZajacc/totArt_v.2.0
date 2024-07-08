@@ -10,18 +10,19 @@ import fullHeart from '../../../public/heart_full.svg';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
 import AddLocationModal from '../../_components/locationModals/AddLocationModal';
+import { FetchErrorSection } from '../../_components/FetchErrorSection';
 
 function Content() {
   const { user, mutateUser } = useContext(AuthContext);
   const [showAddLocation, setShowAddLocation] = useState(false);
 
-  const { data: locations } = useSWR(
+  const { data: locations, error: locationError } = useSWR(
     'http://localhost:5000/api/locations/all',
     getAllLocations,
   );
 
   // Mutation to trigger on upon button click
-  const { trigger } = useSWRMutation(
+  const { trigger, error: favshandlerError } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
     locationFavsData,
   );
@@ -30,6 +31,14 @@ function Content() {
     const result = await trigger({ email: user!.email, locactionId: locId });
     mutateUser({ ...user!, favs: result.favs });
   };
+
+  if (locationError) {
+    return <FetchErrorSection error={locationError} />;
+  }
+
+  if (favshandlerError) {
+    return <FetchErrorSection error={favshandlerError} />;
+  }
 
   return (
     <>

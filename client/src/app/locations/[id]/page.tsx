@@ -12,6 +12,7 @@ import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
 import DeleteCommentModal from '../../../_components/commentModals/DeleteCommentModal';
 import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
+import { FetchErrorSection } from '../../../_components/FetchErrorSection';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
@@ -65,23 +66,19 @@ function ContentDetails({ params }: { params: { id: string } }) {
     }
   };
 
+  // If Error occurs while fetching the data display only This section
+  if (error) {
+    return <FetchErrorSection error={error} />;
+  }
+
   return (
     <>
-      {error ? (
-        <>
-          <div className="mt-10">
-            <h1 className="text-center text-lg font-bold">{error.message}</h1>
-            <p className="text-center text-red-500">{error.info}</p>
-          </div>
-        </>
-      ) : (
-        <LocationDetails
-          user={user!}
-          data={locationData!}
-          mutateUser={mutateUser}
-          mutateLocation={mutateLocation}
-        />
-      )}
+      <LocationDetails
+        user={user!}
+        data={locationData!}
+        mutateUser={mutateUser}
+        mutateLocation={mutateLocation}
+      />
 
       {/* Comments section */}
       <div>
