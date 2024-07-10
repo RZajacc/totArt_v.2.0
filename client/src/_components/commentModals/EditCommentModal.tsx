@@ -2,7 +2,7 @@ import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { editComment } from '../../fetchers/EditComment';
 import { User } from '../../types/UserTypes';
-import { locationType } from '../../types/LocationTypes';
+import type { locationData } from '../../types/LocationTypes';
 
 type Props = {
   showEditCommentModal: boolean;
@@ -12,7 +12,7 @@ type Props = {
   selectedCommentId: string;
   setSelectedCommentId: (id: string) => void;
   mutateUser: (user?: User) => void;
-  mutateLocation: (location?: locationType) => void;
+  mutateLocation: (location?: locationData) => void;
 };
 
 function EditCommentModal({

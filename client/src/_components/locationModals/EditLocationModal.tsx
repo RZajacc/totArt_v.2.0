@@ -1,7 +1,7 @@
 import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { editLocation } from '../../fetchers/EditLocation';
-import { locationType } from '../../types/LocationTypes';
+import type { locationData } from '../../types/LocationTypes';
 
 type Props = {
   locationId: string;
@@ -10,7 +10,7 @@ type Props = {
   selectedProperty: string;
   editLocationData: string;
   setEditLocationData: (data: string) => void;
-  mutateLocation: (location?: locationType) => void;
+  mutateLocation: (location?: locationData) => void;
 };
 
 function EditLocationModal({

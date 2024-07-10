@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // Types
 import { User } from '../../types/UserTypes';
-import { locationType } from '../../types/LocationTypes';
+import type { locationData } from '../../types/LocationTypes';
 // Images
 import emptyHeart from '../../../public/heart_empty.svg';
 import fullHeart from '../../../public/heart_full.svg';
@@ -14,12 +14,13 @@ import { locationFavsData } from '../../fetchers/LocationFavsData';
 import EditLocationModal from '../locationModals/EditLocationModal';
 import { DeleteLocation } from '../../fetchers/DeleteLocation';
 import { useRouter } from 'next/navigation';
+import { ErrorView } from '../ui/ErrorView';
 
 type Props = {
   user: User;
-  data: locationType;
+  data: locationData;
   mutateUser: (user?: User) => void;
-  mutateLocation: (location?: locationType) => void;
+  mutateLocation: (location?: locationData) => void;
 };
 
 function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
@@ -35,16 +36,17 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   const router = useRouter();
 
   // Mutation to trigger on upon button click
-  const { trigger: triggerHandleFavs } = useSWRMutation(
+  const { trigger: triggerHandleFavs, error: handleFavsError } = useSWRMutation(
     'http://localhost:5000/api/users/handleFavouriteLocations',
     locationFavsData,
   );
 
   // Delete location
-  const { trigger: triggerDeleteLocation } = useSWRMutation(
-    'http://localhost:5000/api/locations/deleteLocation',
-    DeleteLocation,
-  );
+  const { trigger: triggerDeleteLocation, error: deleteLocationError } =
+    useSWRMutation(
+      'http://localhost:5000/api/locations/deleteLocation',
+      DeleteLocation,
+    );
 
   // Add or remove from favourites
   const handleFavourites = async () => {
@@ -106,6 +108,15 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
       router.push('/locations');
     }
   };
+
+  // Display errors if there are any
+  if (handleFavsError) {
+    return <ErrorView error={handleFavsError} />;
+  }
+
+  if (deleteLocationError) {
+    return <ErrorView error={deleteLocationError} />;
+  }
 
   return (
     <>

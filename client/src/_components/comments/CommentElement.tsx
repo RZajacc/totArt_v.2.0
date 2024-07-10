@@ -5,7 +5,8 @@ import noUser from '../../../public/noUser.png';
 import pencil from '../../../public/pencil.svg';
 import trash from '../../../public/trash-can.svg';
 import Image from 'next/image';
-import { comment } from '../../types/LocationTypes';
+
+import type { comment } from '../../types/LocationTypes';
 
 type Props = {
   comment: comment;

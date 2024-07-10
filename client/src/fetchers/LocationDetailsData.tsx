@@ -1,5 +1,5 @@
 import { FetchError } from '../types/GeneralTypes';
-import { locationType } from '../types/LocationTypes';
+import type { locationData } from '../types/LocationTypes';
 
 export const locationDetailsData = async (locationID: string) => {
   const myHeaders = new Headers();
@@ -16,7 +16,7 @@ export const locationDetailsData = async (locationID: string) => {
   });
 
   if (response.ok) {
-    const result: locationType = await response.json();
+    const result: locationData = await response.json();
     return result;
   } else {
     // Attach extra info to the error object.

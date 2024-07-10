@@ -12,7 +12,7 @@ import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
 import DeleteCommentModal from '../../../_components/commentModals/DeleteCommentModal';
 import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
-import { FetchErrorSection } from '../../../_components/FetchErrorSection';
+import { FetchErrorSection } from '../../../_components/ui/ErrorView';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path

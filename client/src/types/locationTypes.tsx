@@ -1,6 +1,6 @@
 import { ImageType } from './ImageTypes';
 
-export type locationType = {
+export type locationData = {
   _id: string;
   title: string;
   description: string;

@@ -1,10 +1,10 @@
-import { FetchError } from '../types/GeneralTypes';
+import { FetchError } from '../../types/GeneralTypes';
 
 type Props = {
   error: FetchError;
 };
 
-export const FetchErrorSection = ({ error }: Props) => {
+export const ErrorView = ({ error }: Props) => {
   return (
     <div className="mt-10">
       <h1 className="text-center text-lg font-bold">Status: {error.status}</h1>
