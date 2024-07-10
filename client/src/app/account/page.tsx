@@ -1,22 +1,59 @@
-// import { useState } from "react";
-// import "../styles/accountPage.css";
+import { useState } from 'react';
+import UserProfile from '../components/UserProfile';
+import UserUpdate from '../components/UserUpdate';
+import UserFavs from '../components/UserFavs';
+import UserPosts from '../components/UserPosts';
 
 function Account() {
-  // const [LogReg, setLogReg] = useState("register");
+  // *-----------HANDLE USER NAV-------------------------------
+  const [activeComponent, setActiveComponent] = useState('User profile');
+
+  // ! TYPESCRIPT ON EVENT!
+  const userNavHandle = (e) => {
+    setActiveComponent(e.target.innerText);
+  };
+
   return (
     <>
-      <h1>Accountpage</h1>
-      {/* <Container className="userAuthContainer">
-        <Row className="justify-content-center">
-          <Col xs={8} className="login-register">
-            {LogReg === "register" ? (
-              <Register setLogReg={setLogReg} />
+      <Container className="dashboard-container">
+        <Row className="justify-content-center text-center">
+          <Col className="dashboard-nav-column" xs={2}>
+            <Row>
+              <p className="dashboard-nav-link" onClick={userNavHandle}>
+                User profile
+              </p>
+            </Row>
+            <Row>
+              <p className="dashboard-nav-link" onClick={userNavHandle}>
+                Update profile
+              </p>
+            </Row>
+            <Row>
+              <p className="dashboard-nav-link" onClick={userNavHandle}>
+                Favourites
+              </p>
+            </Row>
+            <Row>
+              <p className="dashboard-nav-link" onClick={userNavHandle}>
+                Your posts
+              </p>
+            </Row>
+          </Col>
+          <Col className="dashboard-data-column" xs={6}>
+            {activeComponent === 'User profile' ? (
+              <UserProfile />
+            ) : activeComponent === 'Update profile' ? (
+              <UserUpdate />
+            ) : activeComponent === 'Favourites' ? (
+              <UserFavs />
+            ) : activeComponent === 'Your posts' ? (
+              <UserPosts />
             ) : (
-              <Login setLogReg={setLogReg} />
+              ''
             )}
           </Col>
         </Row>
-      </Container> */}
+      </Container>
     </>
   );
 }
