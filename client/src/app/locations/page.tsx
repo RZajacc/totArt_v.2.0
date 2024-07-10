@@ -11,15 +11,17 @@ import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
 import AddLocationModal from '../../_components/locationModals/AddLocationModal';
 import { ErrorView } from '../../_components/ui/ErrorView';
+import LoadingView from '../../_components/ui/LoadingView';
 
 function Content() {
   const { user, mutateUser } = useContext(AuthContext);
   const [showAddLocation, setShowAddLocation] = useState(false);
 
-  const { data: locations, error: locationError } = useSWR(
-    'http://localhost:5000/api/locations/all',
-    getAllLocations,
-  );
+  const {
+    data: locations,
+    error: locationError,
+    isLoading: locationsLoading,
+  } = useSWR('http://localhost:5000/api/locations/all', getAllLocations);
 
   // Mutation to trigger on upon button click
   const { trigger, error: favshandlerError } = useSWRMutation(
@@ -32,8 +34,13 @@ function Content() {
     mutateUser({ ...user!, favs: result.favs });
   };
 
+  // Displaying loaders and errors
   if (locationError) {
     return <ErrorView error={locationError} />;
+  }
+
+  if (locationsLoading) {
+    return <LoadingView />;
   }
 
   if (favshandlerError) {
