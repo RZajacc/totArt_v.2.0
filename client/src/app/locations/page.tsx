@@ -49,7 +49,6 @@ function Content() {
 
   return (
     <>
-      <LoadingView />
       <h1 className="text-center text-xl font-bold">
         Number of locations found:{' '}
         <span className="text-green-500">{locations?.number}</span>
