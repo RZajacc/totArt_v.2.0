@@ -9,11 +9,10 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Loading view</p>
+<p style="color:orange">User dashboard</p>
 
 **Still on todolist:**
 
-- User dashboard
 - Responsiveness - app is built mobile first, currently its not styled for desktop
 - Email confirmation link
 - Resetting forgotten password
