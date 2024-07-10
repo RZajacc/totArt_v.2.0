@@ -13,6 +13,7 @@ import { addNewComment } from '../../../fetchers/AddNewComment';
 import DeleteCommentModal from '../../../_components/commentModals/DeleteCommentModal';
 import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
 import { ErrorView } from '../../../_components/ui/ErrorView';
+import LoadingView from '../../../_components/ui/LoadingView';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
@@ -35,6 +36,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
     data: locationData,
     mutate: mutateLocation,
     error: locationDetailsError,
+    isLoading: locationDetailsLoading,
   } = useSWR(locationID, locationDetailsData);
 
   // Prepare mutation to add comment
@@ -66,9 +68,13 @@ function ContentDetails({ params }: { params: { id: string } }) {
     }
   };
 
-  // If Error occurs while fetching the data display only This section
+  // Display loader and errors
   if (locationDetailsError) {
     return <ErrorView error={locationDetailsError} />;
+  }
+
+  if (locationDetailsLoading) {
+    return <LoadingView />;
   }
 
   if (addCommentError) {
