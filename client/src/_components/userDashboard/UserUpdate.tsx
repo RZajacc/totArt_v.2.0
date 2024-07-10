@@ -1,5 +1,5 @@
 import { useContext, ChangeEvent, FormEvent, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import '../styles/userDashboard.css';
 import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import {
@@ -7,7 +7,7 @@ import {
   destructureUrlToImageID,
   updateUserData,
 } from '../utils/UserEditTools';
-import { UserImage, editFieldStatus } from '../types/UserTypes';
+import { UserImage, editFieldStatus } from '../../types/UserTypes';
 import DeleteUserModal from './DeleteUserModal';
 
 function UserUpdate() {

@@ -1,21 +1,23 @@
+'use client';
 import { useState } from 'react';
-import UserProfile from '../components/UserProfile';
-import UserUpdate from '../components/UserUpdate';
-import UserFavs from '../components/UserFavs';
-import UserPosts from '../components/UserPosts';
+import UserProfile from '../../_components/userDashboard/UserProfile';
+import UserUpdate from '../../_components/userDashboard/UserUpdate';
+import UserFavs from '../../_components/userDashboard/UserFavs';
+import UserPosts from '../../_components/userDashboard/UserPosts';
 
 function Account() {
   // *-----------HANDLE USER NAV-------------------------------
   const [activeComponent, setActiveComponent] = useState('User profile');
 
   // ! TYPESCRIPT ON EVENT!
-  const userNavHandle = (e) => {
-    setActiveComponent(e.target.innerText);
-  };
+  // const userNavHandle = (e) => {
+  //   setActiveComponent(e.target.innerText);
+  // };
 
   return (
     <>
-      <Container className="dashboard-container">
+      <UserProfile />
+      {/* <Container className="dashboard-container">
         <Row className="justify-content-center text-center">
           <Col className="dashboard-nav-column" xs={2}>
             <Row>
@@ -53,7 +55,7 @@ function Account() {
             )}
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </>
   );
 }

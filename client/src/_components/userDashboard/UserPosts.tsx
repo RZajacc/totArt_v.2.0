@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { post } from '../types/UserTypes';
+import { AuthContext } from '../../context/AuthContext';
+import { post } from '../../types/UserTypes';
 import { ListGroup } from 'react-bootstrap';
 import '../styles/userDashboard.css';
 import { Link } from 'react-router-dom';
