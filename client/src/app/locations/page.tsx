@@ -10,7 +10,7 @@ import fullHeart from '../../../public/heart_full.svg';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
 import AddLocationModal from '../../_components/locationModals/AddLocationModal';
-import { FetchErrorSection } from '../../_components/ui/ErrorView';
+import { ErrorView } from '../../_components/ui/ErrorView';
 
 function Content() {
   const { user, mutateUser } = useContext(AuthContext);
@@ -33,11 +33,11 @@ function Content() {
   };
 
   if (locationError) {
-    return <FetchErrorSection error={locationError} />;
+    return <ErrorView error={locationError} />;
   }
 
   if (favshandlerError) {
-    return <FetchErrorSection error={favshandlerError} />;
+    return <ErrorView error={favshandlerError} />;
   }
 
   return (

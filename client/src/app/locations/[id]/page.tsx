@@ -12,7 +12,7 @@ import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
 import { addNewComment } from '../../../fetchers/AddNewComment';
 import DeleteCommentModal from '../../../_components/commentModals/DeleteCommentModal';
 import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
-import { FetchErrorSection } from '../../../_components/ui/ErrorView';
+import { ErrorView } from '../../../_components/ui/ErrorView';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
@@ -68,11 +68,11 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   // If Error occurs while fetching the data display only This section
   if (locationDetailsError) {
-    return <FetchErrorSection error={locationDetailsError} />;
+    return <ErrorView error={locationDetailsError} />;
   }
 
   if (addCommentError) {
-    return <FetchErrorSection error={addCommentError} />;
+    return <ErrorView error={addCommentError} />;
   }
 
   return (
