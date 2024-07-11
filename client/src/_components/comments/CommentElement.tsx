@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-import noUser from '../../../public/noUser.png';
-import pencil from '../../../public/pencil.svg';
-import trash from '../../../public/trash-can.svg';
+import noUser from '../../assets/noUser.png';
+import pencil from '../../assets/pencil.svg';
+import trash from '../../assets/trash-can.svg';
 import Image from 'next/image';
 
 import type { comment } from '../../types/LocationTypes';

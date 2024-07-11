@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import noUser from '../../../public/noUser.png';
+import noUser from '../../assets/noUser.png';
 import Image from 'next/image';
 import UserData from './UserData';
 

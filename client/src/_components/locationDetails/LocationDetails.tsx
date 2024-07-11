@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { User } from '../../types/UserTypes';
 import type { locationData } from '../../types/LocationTypes';
 // Images
-import emptyHeart from '../../../public/heart_empty.svg';
-import fullHeart from '../../../public/heart_full.svg';
-import pencil from '../../../public/pencil.svg';
+import emptyHeart from '../../assets/heart_empty.svg';
+import fullHeart from '../../assets/heart_full.svg';
+import pencil from '../../assets/pencil.svg';
 // Dependencies
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
