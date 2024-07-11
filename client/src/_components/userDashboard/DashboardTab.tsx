@@ -1,11 +1,19 @@
 import React from 'react';
 
-type Props = { tabName: string };
+type Props = {
+  tabName: string;
+  setActiveComponent: (activeComponent: string) => void;
+};
 
-function DashboardTab({ tabName }: Props) {
+function DashboardTab({ tabName, setActiveComponent }: Props) {
   return (
     <li>
-      <button className=" rounded-md border-2 border-black bg-amber-300 px-2 py-1 shadow-md shadow-black">
+      <button
+        className=" rounded-md border-2 border-black bg-amber-300 px-2 py-1 shadow-md shadow-black"
+        onClick={() => {
+          setActiveComponent(tabName);
+        }}
+      >
         {tabName}
       </button>
     </li>
