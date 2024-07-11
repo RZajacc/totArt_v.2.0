@@ -1,22 +1,33 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import noUser from '../../../public/noUser.png';
+import Image from 'next/image';
+import UserData from './UserData';
 
 function UserProfile() {
   const { user } = useContext(AuthContext);
   return (
     <>
-      <img src={user?.userImage} alt="userImage" className={'user-image'} />
-      <div>
-        <p>Username:</p>
-        <p>Email adress:</p>
-        <p>Website:</p>
-        <p>Bio:</p>
+      <section>
+        <Image
+          src={user?.userImage ? user.userImage : noUser}
+          alt="userImage"
+          className="mx-auto w-36 rounded-full"
+        />
+      </section>
 
-        <p>{user!.userName}</p>
-        <p> {user!.email}</p>
-        <p>{user!.userWebsite ? user!.userWebsite : '-'}</p>
-        <p>{user!.userBio ? user!.userBio : '-'}</p>
-      </div>
+      <section className="mt-10 p-2">
+        <UserData propName="Username:" propValue={user!.userName} />
+        <UserData propName="Email adress:" propValue={user!.email} />
+        <UserData
+          propName="Website:"
+          propValue={user!.userWebsite ? user!.userWebsite : '-'}
+        />
+        <UserData
+          propName="Bio:"
+          propValue={user!.userBio ? user!.userBio : '-'}
+        />
+      </section>
     </>
   );
 }
