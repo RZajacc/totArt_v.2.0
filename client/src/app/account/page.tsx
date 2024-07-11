@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import UserProfile from '../../_components/userDashboard/UserProfile';
-import UserUpdate from '../../_components/userDashboard/UserUpdate';
 import UserFavs from '../../_components/userDashboard/UserFavs';
 import UserPosts from '../../_components/userDashboard/UserPosts';
 import DashboardTab from '../../_components/userDashboard/DashboardTab';
