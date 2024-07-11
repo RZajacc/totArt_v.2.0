@@ -9,6 +9,16 @@ function Account() {
   // *-----------HANDLE USER NAV-------------------------------
   const [activeComponent, setActiveComponent] = useState('User profile');
 
+  let renderedComponent = <UserProfile />;
+
+  if (activeComponent === 'User profile') {
+    renderedComponent = <UserProfile />;
+  } else if (activeComponent === 'Favourites') {
+    renderedComponent = <UserFavs />;
+  } else {
+    renderedComponent = <UserPosts />;
+  }
+
   // ! TYPESCRIPT ON EVENT!
   // const userNavHandle = (e) => {
   //   setActiveComponent(e.target.innerText);
@@ -22,7 +32,7 @@ function Account() {
           <DashboardTab tabName="Favourites" />
           <DashboardTab tabName="Your locations" />
         </ul>
-        <UserProfile />
+        {renderedComponent}
       </div>
       {/* <Container className="dashboard-container">
         <Row className="justify-content-center text-center">
