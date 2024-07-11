@@ -4,6 +4,7 @@ import UserProfile from '../../_components/userDashboard/UserProfile';
 import UserUpdate from '../../_components/userDashboard/UserUpdate';
 import UserFavs from '../../_components/userDashboard/UserFavs';
 import UserPosts from '../../_components/userDashboard/UserPosts';
+import DashboardTab from '../../_components/userDashboard/DashboardTab';
 
 function Account() {
   // *-----------HANDLE USER NAV-------------------------------
@@ -16,7 +17,14 @@ function Account() {
 
   return (
     <>
-      <UserProfile />
+      <div className="rounded-md bg-green-400 p-2 shadow-md shadow-gray-800">
+        <ul className="mb-6 mt-2 flex justify-center gap-2">
+          <DashboardTab tabName="Profile" />
+          <DashboardTab tabName="Favourites" />
+          <DashboardTab tabName="Your locations" />
+        </ul>
+        <UserProfile />
+      </div>
       {/* <Container className="dashboard-container">
         <Row className="justify-content-center text-center">
           <Col className="dashboard-nav-column" xs={2}>

@@ -4,6 +4,9 @@ import noUser from '../../../public/noUser.png';
 import Image from 'next/image';
 import UserData from './UserData';
 
+// TODO - IMG upload
+// TODO - Editing entries
+
 function UserProfile() {
   const { user } = useContext(AuthContext);
   return (
