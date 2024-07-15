@@ -29,6 +29,7 @@ function UserProfile() {
         <UserData
           propName="Bio:"
           propValue={user!.userBio ? user!.userBio : '-'}
+          textarea
         />
       </section>
     </>
