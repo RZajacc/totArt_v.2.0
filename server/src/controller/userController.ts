@@ -193,6 +193,18 @@ const updateUserData: RequestHandler = async (req, res) => {
   const inputs: { email: string; elementName: string; elementValue: string } =
     req.body;
 
+  const availableUpdates = ["userName", "userWebsite", "userBio"];
+
+  // Check if provided prop is on the list to update
+  if (availableUpdates.includes(inputs.elementName)) {
+    res.status(200).json({
+      msg: "Value possible to update",
+    });
+  } else {
+    res.status(404).json({
+      msg: `Property you are trying to update does not exist in the database. Properties available to update are the following: ${availableUpdates}`,
+    });
+  }
   // const filter = { email: req.body.email };
   // const update = { [`${elementName}`]: elementValue };
   // // * This section covers connecting user with his posts
