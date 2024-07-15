@@ -20,8 +20,9 @@ router.post("/login", login);
 router.post("/register", register);
 
 router.patch("/handleFavouriteLocations", handleFavouriteLocations);
+router.patch("/updateUser", updateUserData);
 
-router.post("/updateUser", updateUserData);
+// !To be checked
 router.post("/allUserPosts", getAllUserPosts);
 router.post("/allUserFavs", getAllFavs);
 router.post("/deleteUser", deleteUser);

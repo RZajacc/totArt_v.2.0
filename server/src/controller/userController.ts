@@ -189,8 +189,10 @@ const handleFavouriteLocations: RequestHandler = async (req, res) => {
 
 // ! Methods from here on needs check and possibly refinement
 const updateUserData: RequestHandler = async (req, res) => {
-  // const elementName = req.body.elementName;
-  // const elementValue = req.body.elementValue;
+  // Define inputs
+  const inputs: { email: string; elementName: string; elementValue: string } =
+    req.body;
+
   // const filter = { email: req.body.email };
   // const update = { [`${elementName}`]: elementValue };
   // // * This section covers connecting user with his posts
