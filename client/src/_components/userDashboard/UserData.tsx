@@ -9,6 +9,7 @@ type Props = {
 };
 
 function UserData({ propName, propValue }: Props) {
+  // States necessary for updating fields
   const [isEdited, setIsEdited] = useState(false);
   const [propState, setPropState] = useState(propValue);
 
@@ -16,18 +17,22 @@ function UserData({ propName, propValue }: Props) {
   let renderIcon = undefined;
   let valueField = <span className="col-span-3">{propValue}</span>;
 
+  // Input handler
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPropState(e.target.value);
+  };
+
+  // Conditional rendering of icon and span displaying data | input field
   if (propName !== 'Email adress:' && !isEdited) {
     renderIcon = <Image src={pencil} alt="pencil" className="mx-auto w-5" />;
     valueField = <span className="col-span-3">{propValue}</span>;
   } else if (propName !== 'Email adress:' && isEdited) {
-    renderIcon = <Image src={confirm} alt="pencil" className="w-5" />;
+    renderIcon = <Image src={confirm} alt="confirm" className="w-5" />;
     valueField = (
       <input
         type="text"
         value={propState}
-        onChange={(e) => {
-          setPropState(e.target.value);
-        }}
+        onChange={handleInputChange}
         className="col-span-3 rounded-md border-2 border-black px-1 outline-none focus-within:border-blue-500"
       />
     );
