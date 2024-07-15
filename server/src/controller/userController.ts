@@ -187,7 +187,6 @@ const handleFavouriteLocations: RequestHandler = async (req, res) => {
   }
 };
 
-// ! Methods from here on needs check and possibly refinement
 const updateUserData: RequestHandler = async (req, res) => {
   // Define inputs
   const inputs: { email: string; elementName: string; elementValue: string } =
@@ -197,61 +196,39 @@ const updateUserData: RequestHandler = async (req, res) => {
 
   // Check if provided prop is on the list to update
   if (availableUpdates.includes(inputs.elementName)) {
-    res.status(200).json({
-      msg: "Value possible to update",
-    });
+    // Filter and update selectors
+    const filter = { email: inputs.email };
+    const update = { [`${inputs.elementName}`]: inputs.elementValue };
+
+    // Update a user
+    try {
+      let updatedUser = await userModel.findOneAndUpdate(filter, update, {
+        new: true,
+      });
+
+      // If user was found return a message
+      if (updatedUser) {
+        res.status(200).json({
+          msg: `${inputs.elementName} field updated successfully to a new value - ${inputs.elementValue}`,
+        });
+      } else {
+        res.status(400).json({
+          msg: "User could not be found or updated",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        msg: "Unknown server error",
+      });
+    }
   } else {
     res.status(404).json({
       msg: `Property you are trying to update does not exist in the database. Properties available to update are the following: ${availableUpdates}`,
     });
   }
-  // const filter = { email: req.body.email };
-  // const update = { [`${elementName}`]: elementValue };
-  // // * This section covers connecting user with his posts
-  // if (req.body.elementName === "posts") {
-  //   let updatedUser = await userModel.findOneAndUpdate(
-  //     filter,
-  //     { $push: { posts: req.body.elementValue } },
-  //     {
-  //       new: true,
-  //     }
-  //   );
-  //   res.status(200).json({
-  //     msg: "Posts populated properly",
-  //   });
-  // } else if (req.body.elementName === "favs") {
-  //   let updatedUser = await userModel.findOneAndUpdate(
-  //     filter,
-  //     { $push: { favs: req.body.elementValue } },
-  //     {
-  //       new: true,
-  //     }
-  //   );
-  //   res.status(200).json({
-  //     msg: "Favs populated properly",
-  //   });
-  // } else if (req.body.elementName === "userComment") {
-  //   let updatedUser = await userModel.findOneAndUpdate(
-  //     filter,
-  //     { $push: { comments: req.body.elementValue } },
-  //     {
-  //       new: true,
-  //     }
-  //   );
-  //   res.status(200).json({
-  //     msg: "Favs populated properly",
-  //   });
-  // } else {
-  //   // * Or just continue with updateing other user fields
-  //   let updatedUser = await userModel.findOneAndUpdate(filter, update, {
-  //     new: true,
-  //   });
-  //   res.status(200).json({
-  //     msg: "User updated successfully",
-  //   });
-  // }
 };
 
+// ! Methods from here on needs check and possibly refinement
 const getAllUserPosts: RequestHandler = async (req, res) => {
   // const userPosts = await userModel
   //   .findOne({ email: req.body.email })
