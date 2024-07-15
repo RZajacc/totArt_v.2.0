@@ -16,7 +16,7 @@ function UserData({ propName, propValue, textarea }: Props) {
 
   // Prepare the value to render
   let renderIcon = undefined;
-  let dataField = undefined;
+  let dataField = <span className="col-span-3">{propValue}</span>;
   let inputField = undefined;
 
   // Input handler

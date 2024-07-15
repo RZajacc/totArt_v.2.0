@@ -19,7 +19,7 @@ function UserProfile() {
         />
       </section>
 
-      <section className="mt-10 p-2">
+      <section className="mt-10 space-y-4 p-2">
         <UserData propName="Username:" propValue={user!.userName} />
         <UserData propName="Email adress:" propValue={user!.email} />
         <UserData
