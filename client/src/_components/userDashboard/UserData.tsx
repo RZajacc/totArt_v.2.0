@@ -17,7 +17,7 @@ function UserData({ propName, textarea }: Props) {
   const [fieldName, setFieldName] = useState<string | undefined>(propName);
   const [propState, setPropState] = useState<string | undefined>(undefined);
   const { user, mutateUser } = useContext(AuthContext);
-  const { trigger: triggerUpdate, error: errorUpdating } = useSWRMutation(
+  const { trigger: triggerUpdate } = useSWRMutation(
     'http://localhost:5000/api/users/updateUser',
     updateUserData,
   );
@@ -78,7 +78,7 @@ function UserData({ propName, textarea }: Props) {
   // Conditional rendering of icon and span displaying data | input field
   if (propName !== 'userEmail' && !isEdited) {
     renderIcon = <Image src={pencil} alt="pencil" className="mx-auto w-5" />;
-    dataField = <span className="col-span-3">{propState}</span>;
+    dataField = <span className="col-span-3 break-all">{propState}</span>;
   } else if (propName !== 'userEmail' && isEdited) {
     renderIcon = <Image src={confirm} alt="confirm" className="mx-auto w-5" />;
     dataField = inputField;
