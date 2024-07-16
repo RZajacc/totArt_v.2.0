@@ -6,7 +6,6 @@ import UserPosts from '../../_components/userDashboard/UserPosts';
 import DashboardTab from '../../_components/userDashboard/DashboardTab';
 
 function Account() {
-  // *-----------HANDLE USER NAV-------------------------------
   const [activeComponent, setActiveComponent] = useState('Profile');
 
   // Active component to render
