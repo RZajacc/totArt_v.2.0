@@ -20,17 +20,10 @@ function UserProfile() {
       </section>
 
       <section className="mt-10 space-y-4 p-2">
-        <UserData propName="Username:" propValue={user!.userName} />
-        <UserData propName="Email adress:" propValue={user!.email} />
-        <UserData
-          propName="Website:"
-          propValue={user!.userWebsite ? user!.userWebsite : '-'}
-        />
-        <UserData
-          propName="Bio:"
-          propValue={user!.userBio ? user!.userBio : '-'}
-          textarea
-        />
+        <UserData propName="userName" />
+        <UserData propName="userEmail" />
+        <UserData propName="userWebsite" />
+        <UserData propName="userBio" textarea />
       </section>
     </>
   );

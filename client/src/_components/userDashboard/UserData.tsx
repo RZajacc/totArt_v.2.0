@@ -1,22 +1,51 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import pencil from '../../assets/pencil.svg';
 import confirm from '../../assets/confirm-svgrepo-com.svg';
 import Image from 'next/image';
+import useSWRMutation from 'swr/mutation';
+import { updateUserData } from '../../fetchers/UpdateUserData';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
   propName: string;
-  propValue: string;
   textarea?: boolean | undefined;
 };
 
-function UserData({ propName, propValue, textarea }: Props) {
+function UserData({ propName, textarea }: Props) {
   // States necessary for updating fields
   const [isEdited, setIsEdited] = useState(false);
-  const [propState, setPropState] = useState(propValue);
+  const [fieldName, setFieldName] = useState<string | undefined>(propName);
+  const [propState, setPropState] = useState<string | undefined>(undefined);
+  const { user, mutateUser } = useContext(AuthContext);
+  const { trigger: triggerUpdate, error: errorUpdating } = useSWRMutation(
+    'http://localhost:5000/api/users/updateUser',
+    updateUserData,
+  );
+
+  useEffect(() => {
+    switch (propName) {
+      case 'userName':
+        setFieldName('Username');
+        setPropState(user?.userName);
+        break;
+      case 'userEmail':
+        setFieldName('Email');
+        setPropState(user?.email);
+        break;
+      case 'userWebsite':
+        setFieldName('Website');
+        setPropState(user?.userWebsite ? user.userWebsite : '-');
+        break;
+      case 'userBio':
+        setFieldName('Bio');
+        setPropState(user?.userBio ? user.userBio : '-');
+        break;
+    }
+  }, [propName, user]);
 
   // Prepare the value to render
   let renderIcon = undefined;
-  let dataField = <span className="col-span-3">{propValue}</span>;
+  let dataField = <span className="col-span-3">{propState}</span>;
   let inputField = undefined;
 
   // Input handler
@@ -47,26 +76,33 @@ function UserData({ propName, propValue, textarea }: Props) {
   }
 
   // Conditional rendering of icon and span displaying data | input field
-  if (propName !== 'Email adress:' && !isEdited) {
+  if (propName !== 'userEmail' && !isEdited) {
     renderIcon = <Image src={pencil} alt="pencil" className="mx-auto w-5" />;
-    dataField = <span className="col-span-3">{propValue}</span>;
-  } else if (propName !== 'Email adress:' && isEdited) {
+    dataField = <span className="col-span-3">{propState}</span>;
+  } else if (propName !== 'userEmail' && isEdited) {
     renderIcon = <Image src={confirm} alt="confirm" className="mx-auto w-5" />;
     dataField = inputField;
   }
 
   // Handle button state
-  const handleIsEdited = () => {
+  const handleIsEdited = async () => {
     setIsEdited((prevState) => {
       const newState = !prevState;
-      //TODO If newState is truthy update value with new prop state
       return newState;
     });
+    if (isEdited) {
+      await triggerUpdate({
+        elementName: propName,
+        elementValue: propState ? propState : '',
+        email: user!.email,
+      });
+      mutateUser();
+    }
   };
 
   return (
     <article className="grid grid-cols-6 items-center">
-      <span className="col-span-2 font-bold">{propName}</span>
+      <span className="col-span-2 font-bold">{fieldName}:</span>
       {dataField}
       <span className="text-center">
         <button onClick={handleIsEdited}>{renderIcon}</button>
