@@ -16,7 +16,10 @@ function UserData({ propName, textarea }: Props) {
   const [isEdited, setIsEdited] = useState(false);
   const [fieldName, setFieldName] = useState<string | undefined>(propName);
   const [propState, setPropState] = useState<string | undefined>(undefined);
+
   const { user, mutateUser } = useContext(AuthContext);
+
+  // SWR method to trigger update
   const { trigger: triggerUpdate } = useSWRMutation(
     'http://localhost:5000/api/users/updateUser',
     updateUserData,
