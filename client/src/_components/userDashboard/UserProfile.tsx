@@ -3,6 +3,8 @@ import { AuthContext } from '../../context/AuthContext';
 import noUser from '../../assets/noUser.png';
 import Image from 'next/image';
 import UserData from './UserData';
+import useSWRMutation from 'swr/mutation';
+import { ImageUpload } from '../../fetchers/ImageUpload';
 
 // TODO - IMG upload
 // TODO - Editing entries
@@ -11,6 +13,21 @@ function UserProfile() {
   const { user } = useContext(AuthContext);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
+  const { trigger: triggerImageUpload, isMutating: isMutatingImage } =
+    useSWRMutation('http://localhost:5000/api/images/ImageUpload', ImageUpload);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const data = await triggerImageUpload({
+        file: files[0],
+        folder: 'userImages',
+      });
+
+      imageInputRef.current ? (imageInputRef.current.value = '') : '';
+      console.log(data);
+    }
+  };
   return (
     <>
       <section className="text-center">
@@ -19,14 +36,16 @@ function UserProfile() {
           alt="userImage"
           className="mx-auto w-36 rounded-full"
         />
-        <input ref={imageInputRef} type="file" className="hidden" />
+        {/* <input ref={imageInputRef} type="file" className="hidden" /> */}
+        <input ref={imageInputRef} type="file" onChange={handleImageUpload} />
+        {isMutatingImage ? <p>Loading...</p> : ''}
         <button
           className="mt-4 rounded-md border-2 border-stone-500 bg-purple-500 px-2 py-1 hover:bg-stone-300 hover:font-bold"
           onClick={() => {
             imageInputRef.current?.click();
           }}
         >
-          Upload image
+          Select image
         </button>
       </section>
 
