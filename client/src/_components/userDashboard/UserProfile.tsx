@@ -36,9 +36,19 @@ function UserProfile() {
           alt="userImage"
           className="mx-auto w-36 rounded-full"
         />
-        {/* <input ref={imageInputRef} type="file" className="hidden" /> */}
-        <input ref={imageInputRef} type="file" onChange={handleImageUpload} />
-        {isMutatingImage ? <p>Loading...</p> : ''}
+        <input
+          ref={imageInputRef}
+          type="file"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
+        {isMutatingImage && (
+          <div className="mb-2 mt-4 flex items-center justify-center">
+            <div className="h-7 w-7 animate-spin rounded-full border-b-2 border-t-2 border-purple-500"></div>
+            <p className="mx-2  font-bold">Loading...</p>
+          </div>
+        )}
+
         <button
           className="mt-4 rounded-md border-2 border-stone-500 bg-purple-500 px-2 py-1 hover:bg-stone-300 hover:font-bold"
           onClick={() => {
