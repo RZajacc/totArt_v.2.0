@@ -6,9 +6,6 @@ import UserData from './UserData';
 import useSWRMutation from 'swr/mutation';
 import { ImageUpload } from '../../fetchers/ImageUpload';
 
-// TODO - IMG upload
-// TODO - Editing entries
-
 function UserProfile() {
   const { user } = useContext(AuthContext);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
@@ -17,13 +14,17 @@ function UserProfile() {
     useSWRMutation('http://localhost:5000/api/images/ImageUpload', ImageUpload);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Access files from input
     const files = e.target.files;
+
+    // If they are not empty upload an image and reset inputs value
     if (files) {
       const data = await triggerImageUpload({
         file: files[0],
         folder: 'userImages',
       });
 
+      // Reset inputs value
       imageInputRef.current ? (imageInputRef.current.value = '') : '';
       console.log(data);
     }
@@ -36,12 +37,15 @@ function UserProfile() {
           alt="userImage"
           className="mx-auto w-36 rounded-full"
         />
+
         <input
           ref={imageInputRef}
           type="file"
           onChange={handleImageUpload}
           className="hidden"
         />
+
+        {/* If image is loading to the server */}
         {isMutatingImage && (
           <div className="mb-2 mt-4 flex items-center justify-center">
             <div className="h-7 w-7 animate-spin rounded-full border-b-2 border-t-2 border-purple-500"></div>
@@ -49,6 +53,7 @@ function UserProfile() {
           </div>
         )}
 
+        {/* Button managing input via ref */}
         <button
           className="mt-4 rounded-md border-2 border-stone-500 bg-purple-500 px-2 py-1 hover:bg-stone-300 hover:font-bold"
           onClick={() => {
