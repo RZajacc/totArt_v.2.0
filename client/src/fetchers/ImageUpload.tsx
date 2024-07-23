@@ -1,7 +1,7 @@
 import { FetchError } from '../types/GeneralTypes';
 import { ImageType } from '../types/ImageTypes';
 
-export const locationImageUpload = async (
+export const ImageUpload = async (
   url: string,
   { arg }: { arg: { file: File; folder: string } },
 ) => {

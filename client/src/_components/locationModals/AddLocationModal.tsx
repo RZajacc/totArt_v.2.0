@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
 import useSWRMutation from 'swr/mutation';
-import { locationImageUpload } from '../../fetchers/LocationImageUpload';
+import { ImageUpload } from '../../fetchers/ImageUpload';
 import Image from 'next/image';
 import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';
@@ -28,7 +28,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     reset: resetImageData,
   } = useSWRMutation(
     'http://localhost:5000/api/images/ImageUpload',
-    locationImageUpload,
+    ImageUpload,
   );
 
   const { trigger: triggerDeletingImage } = useSWRMutation(
