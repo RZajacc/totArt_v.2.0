@@ -192,7 +192,7 @@ const updateUserData: RequestHandler = async (req, res) => {
   const inputs: { email: string; elementName: string; elementValue: string } =
     req.body;
 
-  const availableUpdates = ["userName", "userWebsite", "userBio"];
+  const availableUpdates = ["userName", "userWebsite", "userBio", "userImage"];
 
   // Check if provided prop is on the list to update
   if (availableUpdates.includes(inputs.elementName)) {
