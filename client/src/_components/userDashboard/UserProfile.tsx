@@ -108,8 +108,8 @@ function UserProfile() {
       <section className="mt-10 space-y-4 p-2">
         <UserData propName="userName" />
         <UserData propName="userEmail" />
-        <UserData propName="userWebsite" />
         <UserData propName="userBio" textarea />
+        <UserData propName="userWebsite" />
       </section>
     </>
   );
