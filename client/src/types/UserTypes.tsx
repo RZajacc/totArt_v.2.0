@@ -1,3 +1,5 @@
+import { ImageType } from './ImageTypes';
+
 export interface User {
   _id: string;
   userName: string;
@@ -5,7 +7,7 @@ export interface User {
   password: string;
   userWebsite: string;
   userBio: string;
-  userImage: string;
+  userImage: ImageType;
   posts: [postId: string];
   favs: [postId: string];
   comments: [commentId: string];

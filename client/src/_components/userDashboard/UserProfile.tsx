@@ -8,7 +8,7 @@ import { ImageUpload } from '../../fetchers/ImageUpload';
 import { updateUserData } from '../../fetchers/UpdateUserData';
 
 function UserProfile() {
-  const { user } = useContext(AuthContext);
+  const { user, mutateUser } = useContext(AuthContext);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   const { trigger: triggerImageUpload, isMutating: isMutatingImage } =
@@ -37,6 +37,7 @@ function UserProfile() {
         elementName: 'userImage',
         elementValue: data._id,
       });
+      mutateUser();
       console.log(data);
     }
   };
@@ -44,9 +45,11 @@ function UserProfile() {
     <>
       <section className="text-center">
         <Image
-          src={user?.userImage ? user.userImage : noUser}
+          src={user?.userImage ? user.userImage.secure_url : noUser}
+          width={user?.userImage.width}
+          height={user?.userImage.height}
           alt="userImage"
-          className="mx-auto w-36 rounded-full"
+          className="mx-auto w-36 rounded-2xl"
         />
 
         <input
