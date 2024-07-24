@@ -1,40 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 function UserFavs() {
-  // const { user } = useContext(AuthContext);
-  // const [favs, setFavs] = useState<fav[]>();
-
-  // const getUserFavs = async () => {
-  //   const myHeaders = new Headers();
-  //   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-
-  //   const urlencoded = new URLSearchParams();
-  //   urlencoded.append('email', user!.email);
-
-  //   const requestOptions = {
-  //     method: 'POST',
-  //     headers: myHeaders,
-  //     body: urlencoded,
-  //   };
-
-  //   try {
-  //     const response = await fetch(
-  //       'http://localhost:5000/api/users/allUserFavs',
-  //       requestOptions,
-  //     );
-  //     const result = await response.json();
-  //     setFavs(result.favs);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // console.log(favs);
-
-  // useEffect(() => {
-  //   getUserFavs();
-  // }, []);
+  const { user } = useContext(AuthContext);
 
   return (
     <>
