@@ -14,6 +14,7 @@ This is the most recent version of the project built with **MERN** stack. It is 
 **Still on todolist:**
 
 - Displaying locations created by the user
+- Changing password from user dashboard level
 - Deleting userProfile
 - Responsiveness - app is built mobile first, currently its not styled for desktop
 - Email confirmation link
