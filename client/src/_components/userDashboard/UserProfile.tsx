@@ -6,6 +6,7 @@ import UserData from './UserData';
 import useSWRMutation from 'swr/mutation';
 import { ImageUpload } from '../../fetchers/ImageUpload';
 import { updateUserData } from '../../fetchers/UpdateUserData';
+import { deleteImage } from '../../fetchers/DeleteImage';
 
 function UserProfile() {
   const { user, mutateUser } = useContext(AuthContext);
@@ -17,6 +18,11 @@ function UserProfile() {
   const { trigger: triggerUserUpdate } = useSWRMutation(
     'http://localhost:5000/api/users/updateUser',
     updateUserData,
+  );
+
+  const { trigger: triggerImageDelete } = useSWRMutation(
+    'http://localhost:5000/api/images/imageDelete',
+    deleteImage,
   );
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,11 +38,23 @@ function UserProfile() {
 
       // Reset inputs value
       imageInputRef.current ? (imageInputRef.current.value = '') : '';
+
+      // Delete previously added userImage if it exists
+      if (user?.userImage) {
+        await triggerImageDelete({
+          imageId: user.userImage._id,
+          publicId: user.userImage.public_id,
+        });
+      }
+
+      // Update userImage field
       await triggerUserUpdate({
         email: user!.email,
         elementName: 'userImage',
         elementValue: data._id,
       });
+
+      // Refresh user data with newly updated image
       mutateUser();
       console.log(data);
     }
@@ -44,13 +62,21 @@ function UserProfile() {
   return (
     <>
       <section className="text-center">
-        <Image
-          src={user?.userImage ? user.userImage.secure_url : noUser}
-          width={user?.userImage.width}
-          height={user?.userImage.height}
-          alt="userImage"
-          className="mx-auto w-36 rounded-2xl"
-        />
+        {user?.userImage ? (
+          <Image
+            src={user.userImage.secure_url}
+            width={user.userImage.width}
+            height={user.userImage.height}
+            alt="userImage"
+            className="mx-auto w-36 rounded-2xl"
+          />
+        ) : (
+          <Image
+            src={noUser}
+            alt="userImage"
+            className="mx-auto w-36 rounded-2xl"
+          />
+        )}
 
         <input
           ref={imageInputRef}
