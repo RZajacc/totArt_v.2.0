@@ -9,13 +9,6 @@ export interface User {
   userBio: string;
   userImage: ImageType;
   posts: [postId: string];
-  favs: [postId: string];
+  favs: [{ _id: string; title: string }];
   comments: [commentId: string];
 }
-
-// !User update (probablt to remove)
-export type editFieldStatus = {
-  inputField: boolean;
-  editField: boolean;
-  submitField: boolean;
-};
