@@ -5,6 +5,7 @@ import Image from 'next/image';
 import UserData from './UserData';
 import useSWRMutation from 'swr/mutation';
 import { ImageUpload } from '../../fetchers/ImageUpload';
+import { updateUserData } from '../../fetchers/UpdateUserData';
 
 function UserProfile() {
   const { user } = useContext(AuthContext);
@@ -12,6 +13,11 @@ function UserProfile() {
 
   const { trigger: triggerImageUpload, isMutating: isMutatingImage } =
     useSWRMutation('http://localhost:5000/api/images/ImageUpload', ImageUpload);
+
+  const { trigger: triggerUserUpdate } = useSWRMutation(
+    'http://localhost:5000/api/users/updateUser',
+    updateUserData,
+  );
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     // Access files from input
@@ -26,6 +32,11 @@ function UserProfile() {
 
       // Reset inputs value
       imageInputRef.current ? (imageInputRef.current.value = '') : '';
+      await triggerUserUpdate({
+        email: user!.email,
+        elementName: 'userImage',
+        elementValue: data._id,
+      });
       console.log(data);
     }
   };
