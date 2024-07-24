@@ -24,11 +24,11 @@ function UserFavs() {
           {user!.favs
             ? user?.favs.map((fav) => {
                 return (
-                  <li className="my-2 flex justify-between border-b-2 border-black py-2">
-                    <div>
+                  <li className="my-2 flex justify-between border-b-2 border-stone-400 py-2">
+                    <p>
                       <span className="font-bold">Title : </span>
-                      <Link href={`/locations/${fav._id}`}>{fav.title}</Link>
-                    </div>
+                      {fav.title}
+                    </p>
                     <div className="mr-2 flex gap-x-3">
                       <Link href={`/locations/${fav._id}`}>
                         <Image src={linkIcon} alt="link" className="w-5" />
