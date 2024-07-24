@@ -30,8 +30,8 @@ function Content() {
   );
 
   const handleFavourites = async (locId: string) => {
-    const result = await trigger({ email: user!.email, locactionId: locId });
-    mutateUser({ ...user!, favs: result.favs });
+    await trigger({ email: user!.email, locactionId: locId });
+    mutateUser();
   };
 
   // Displaying loaders and errors
