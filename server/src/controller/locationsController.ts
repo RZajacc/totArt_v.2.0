@@ -47,7 +47,11 @@ const getLocationDetails: RequestHandler = async (req, res) => {
     const locationData: HydratedDocument<PopulatedLocationDetails> | null =
       await locationModel
         .findById(locationId)
-        .populate({ path: "author", select: ["userName", "userImage"] })
+        .populate({
+          path: "author",
+          select: ["userName", "userImage"],
+          populate: "userImage",
+        })
         .populate({ path: "image" })
         .populate({
           path: "comments",
