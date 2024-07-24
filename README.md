@@ -9,11 +9,10 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Uploading user image</p>
+<p style="color:orange">Displaying user favourites</p>
 
 **Still on todolist:**
 
-- Displaying user favourites
 - Displaying locations created by the user
 - Deleting userProfile
 - Responsiveness - app is built mobile first, currently its not styled for desktop
