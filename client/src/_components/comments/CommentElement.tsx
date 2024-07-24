@@ -56,19 +56,24 @@ function CommentElement({
     // Pass up comments value
     setSelectedCommentContent(comment.comment);
   };
+
   return (
     <>
       <div
         className={`${isAuthor ? 'comment__author' : 'comment'} rounded-2xl`}
       >
         <div className="comment__user-image self-center rounded-tr-2xl">
-          <Image
-            src={comment.author.userImage ? comment.author.userImage : noUser}
-            alt="user-image"
-            width={36}
-            height={36}
-            className="rounded-xl"
-          />
+          {comment.author.userImage ? (
+            <Image
+              src={comment.author.userImage.secure_url}
+              alt="user-image"
+              width={comment.author.userImage.width}
+              height={comment.author.userImage.height}
+              className="rounded-lg pr-1"
+            />
+          ) : (
+            <Image src={noUser} alt="user-image" className="rounded-lg pr-1" />
+          )}
         </div>
 
         <p className="comment__user-name rounded-t-2xl bg-slate-200 pl-4 pt-2 font-bold">

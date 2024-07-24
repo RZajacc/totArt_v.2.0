@@ -33,5 +33,5 @@ export type AddComment = {
 export type authorType = {
   _id: string;
   userName: string;
-  userImage: string;
+  userImage: ImageType;
 };

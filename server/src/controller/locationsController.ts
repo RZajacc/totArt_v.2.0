@@ -50,12 +50,15 @@ const getLocationDetails: RequestHandler = async (req, res) => {
         .populate({
           path: "author",
           select: ["userName", "userImage"],
-          populate: "userImage",
         })
         .populate({ path: "image" })
         .populate({
           path: "comments",
-          populate: { path: "author", select: ["userName", "userImage"] },
+          populate: {
+            path: "author",
+            select: ["userName", "userImage"],
+            populate: "userImage",
+          },
         });
 
     // If it doesnt return a message

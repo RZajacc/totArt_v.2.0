@@ -36,7 +36,7 @@ main {
   grid-template-areas:
     'image user user user user user user user user'
     'image content content content content content content content content'
-    'blank content content content content content content content content'
+    'image content content content content content content content content'
     'blank date date date date date date date date'
     'blank edit edit edit edit delete delete delete delete';
 }

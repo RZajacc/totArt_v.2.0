@@ -81,6 +81,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
     return <ErrorView error={addCommentError} />;
   }
 
+  console.log(locationData);
   return (
     <>
       <LocationDetails
