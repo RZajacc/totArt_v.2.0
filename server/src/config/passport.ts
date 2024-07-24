@@ -19,7 +19,8 @@ const jwtStrategy = new JwtStrategy(opts, async function (
   try {
     const user: HydratedDocument<User> | null = await userModel
       .findById(jwt_payload.sub)
-      .populate({ path: "userImage" });
+      .populate({ path: "userImage" })
+      .populate({ path: "favs", select: ["title"] });
     if (user) {
       console.log("User found");
       return done(null, user);

@@ -1,11 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-type fav = {
-  _id: string;
-  title: string;
-};
-
 function UserFavs() {
   // const { user } = useContext(AuthContext);
   // const [favs, setFavs] = useState<fav[]>();
