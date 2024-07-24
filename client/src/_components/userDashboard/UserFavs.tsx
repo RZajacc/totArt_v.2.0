@@ -41,24 +41,6 @@ function UserFavs() {
             : noFavs}
         </ol>
       </div>
-      {/* {favs ? (
-        <h4>List of your favourite posts:</h4>
-      ) : (
-        <h4>You didn't add any posts to favourites yet!</h4>
-      )}
-      <ListGroup as="ol" numbered>
-        {favs &&
-          favs.map((fav) => {
-            return (
-              <ListGroup.Item>
-                <strong>Post title: </strong>
-                <Link className="link-to-own-post" to={`/content/${fav._id}`}>
-                  {fav.title}
-                </Link>
-              </ListGroup.Item>
-            );
-          })}
-      </ListGroup> */}
     </>
   );
 }
