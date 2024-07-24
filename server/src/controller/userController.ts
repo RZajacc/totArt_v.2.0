@@ -1,4 +1,4 @@
-import { HydratedDocument, Types } from "mongoose";
+import { HydratedDocument, ObjectId, Schema, Types } from "mongoose";
 import userModel from "../models/userModel.js";
 import { bcrypt_hash, bcrypt_verifyPassword } from "../utils/bcrypt_config.js";
 import { generateToken } from "../utils/tokenServices.js";
@@ -198,7 +198,14 @@ const updateUserData: RequestHandler = async (req, res) => {
   if (availableUpdates.includes(inputs.elementName)) {
     // Filter and update selectors
     const filter = { email: inputs.email };
-    const update = { [`${inputs.elementName}`]: inputs.elementValue };
+
+    // Add conditional type conversion if userImage is being updated
+    const update = {
+      [`${inputs.elementName}`]:
+        inputs.elementName === "userImage"
+          ? new Types.ObjectId(inputs.elementValue)
+          : inputs.elementValue,
+    };
 
     // Update a user
     try {

@@ -14,10 +14,6 @@ const userSchema = new mongoose.Schema<User>({
     type: String,
     required: true,
   },
-  userImage: {
-    type: String,
-    required: false,
-  },
   userWebsite: {
     type: String,
     required: false,
@@ -25,6 +21,10 @@ const userSchema = new mongoose.Schema<User>({
   userBio: {
     type: String,
     required: false,
+  },
+  userImage: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "image",
   },
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "location" }],
   favs: [{ type: mongoose.Schema.Types.ObjectId, ref: "location" }],
