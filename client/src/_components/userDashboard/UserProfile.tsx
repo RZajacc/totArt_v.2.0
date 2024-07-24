@@ -62,6 +62,7 @@ function UserProfile() {
   return (
     <>
       <section className="text-center">
+        {/* Conditional render of an image depending on data stored by the user */}
         {user?.userImage ? (
           <Image
             src={user.userImage.secure_url}
@@ -95,7 +96,7 @@ function UserProfile() {
 
         {/* Button managing input via ref */}
         <button
-          className="mt-4 rounded-md border-2 border-stone-500 bg-purple-500 px-2 py-1 hover:bg-stone-300 hover:font-bold"
+          className="hover mt-4 rounded-md border-2 border-black bg-black px-6 py-2 text-white shadow-md shadow-gray-500 hover:bg-white hover:font-bold hover:text-black"
           onClick={() => {
             imageInputRef.current?.click();
           }}
