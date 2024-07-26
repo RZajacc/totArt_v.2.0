@@ -12,13 +12,12 @@ function UserFavs() {
   return (
     <>
       <div className="mx-auto w-11/12 rounded-sm bg-slate-200 px-4 py-2">
-        {user!.favs && <FavHeader favsCount={user!.favs.length} />}
+        {user!.favs ? <FavHeader favsCount={user!.favs.length} /> : noFavs}
         <ol className="list-inside list-decimal">
-          {user!.favs
-            ? user?.favs.map((fav) => {
-                return <FavItem id={fav._id} title={fav.title} />;
-              })
-            : noFavs}
+          {user!.favs &&
+            user?.favs.map((fav) => {
+              return <FavItem id={fav._id} title={fav.title} />;
+            })}
         </ol>
       </div>
     </>
