@@ -17,16 +17,18 @@ function Content() {
   const { user, mutateUser } = useContext(AuthContext);
   const [showAddLocation, setShowAddLocation] = useState(false);
 
+  // Mutation to trigger on upon button click
+  const { trigger: triggerFavsHandler, error: favshandlerError } =
+    useSWRMutation(
+      'http://localhost:5000/api/users/handleFavouriteLocations',
+      locationFavsData,
+    );
+
   const {
     data: locations,
     error: locationError,
     isLoading: locationsLoading,
   } = useSWR('http://localhost:5000/api/locations/all', getAllLocations);
-
-  const handleFavourites = async (locId: string) => {
-    await trigger({ email: user!.email, locactionId: locId });
-    mutateUser();
-  };
 
   // Displaying loaders and errors
   if (locationError) {
@@ -40,6 +42,11 @@ function Content() {
   if (favshandlerError) {
     return <ErrorView error={favshandlerError} />;
   }
+
+  const handleFavourites = async (locId: string) => {
+    await triggerFavsHandler({ email: user!.email, locactionId: locId });
+    mutateUser();
+  };
 
   return (
     <>
