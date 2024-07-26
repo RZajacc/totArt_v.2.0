@@ -1,15 +1,20 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
 
-import emptyHeart from '../../assets/heart_empty.svg';
-import fullHeart from '../../assets/heart_full.svg';
-import { AuthContext } from '../../context/AuthContext';
+// SWR Fetching functions
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
+
+// Components
 import { ErrorView } from '../ui/ErrorView';
 import { locationData } from '../../types/LocationTypes';
 import FavButton from './FavButton';
+
+// Assets
+import emptyHeart from '../../assets/heart_empty.svg';
+import fullHeart from '../../assets/heart_full.svg';
 
 type Props = {
   locationData: locationData;
@@ -26,16 +31,19 @@ function LocationCard({ locationData }: Props) {
       locationFavsData,
     );
 
+  // Render error view if favourite was not added properly
   if (favshandlerError) {
     return <ErrorView error={favshandlerError} />;
   }
 
+  // Add or remove favourite from the list
   const handleFavourites = async (locId: string) => {
     await triggerFavsHandler({ email: user!.email, locactionId: locId });
     setIsFav((prevState) => !prevState);
     mutateUser();
   };
 
+  // Check if current location is saved by the user
   useEffect(() => {
     const test = user?.favs.filter((fav) => {
       return fav._id === locationData._id;
@@ -46,10 +54,7 @@ function LocationCard({ locationData }: Props) {
   }, [user]);
 
   return (
-    <div
-      key={locationData._id}
-      className="rounded-lg border-2 border-black shadow-md shadow-black"
-    >
+    <div className="rounded-lg border-2 border-black shadow-md shadow-black">
       <section className="relative">
         {isFav ? (
           <FavButton
