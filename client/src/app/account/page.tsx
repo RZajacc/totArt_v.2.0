@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import UserProfile from '../../_components/userDashboard/UserProfile';
 import UserFavs from '../../_components/userDashboard/UserFavs';
-import UserPosts from '../../_components/userDashboard/UserPosts';
+import UserPosts from '../../_components/userDashboard/UserLocations';
 import DashboardTab from '../../_components/userDashboard/DashboardTab';
 
 function Account() {
