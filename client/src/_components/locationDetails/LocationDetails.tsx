@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // Types
 import { User } from '../../types/UserTypes';
 import type { locationData } from '../../types/LocationTypes';
@@ -26,6 +26,7 @@ type Props = {
 function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   // Edit location variables
   const [showEditLocationModal, setShowEditLocationModal] = useState(false);
+  const [isFav, setIsFav] = useState(false);
   const [editLocationData, setEditLocationData] = useState('');
   const [selectedProperty, setSelectedProperty] = useState('');
   const [deleteField, setDeleteField] = useState(false);
@@ -56,7 +57,8 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
         locactionId: data._id,
       });
       if (result) {
-        mutateUser({ ...user, favs: result.favs });
+        mutateUser();
+        setIsFav((prevState) => !prevState);
       }
     } catch (error) {
       console.log(error);
@@ -117,6 +119,16 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   if (deleteLocationError) {
     return <ErrorView error={deleteLocationError} />;
   }
+
+  // Check if current location is saved by the user
+  useEffect(() => {
+    const test = user?.favs.filter((fav) => {
+      return fav._id === data._id;
+    });
+    if (test?.length !== 0) {
+      setIsFav(true);
+    }
+  }, [user]);
 
   return (
     <>
@@ -235,7 +247,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
             height={500}
             className="rounded-sm"
           />
-          {user?.favs?.includes(data?._id) ? (
+          {isFav ? (
             <button
               onClick={handleFavourites}
               className="absolute right-2 top-2"
