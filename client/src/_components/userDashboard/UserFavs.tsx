@@ -24,7 +24,7 @@ function UserFavs() {
           {user!.favs
             ? user?.favs.map((fav) => {
                 return (
-                  <li className="my-2 flex justify-between border-b-2 border-stone-400 py-2">
+                  <li className="my-2 flex items-center justify-between border-b-2 border-stone-400 py-2">
                     <p>
                       <span className="font-bold">Title : </span>
                       {fav.title}
