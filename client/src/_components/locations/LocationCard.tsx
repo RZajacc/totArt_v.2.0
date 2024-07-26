@@ -9,6 +9,7 @@ import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '../../fetchers/LocationFavsData';
 import { ErrorView } from '../ui/ErrorView';
 import { locationData } from '../../types/LocationTypes';
+import FavButton from './FavButton';
 
 type Props = {
   locationData: locationData;
@@ -51,23 +52,19 @@ function LocationCard({ locationData }: Props) {
     >
       <section className="relative">
         {isFav ? (
-          <button
-            className="absolute right-2 top-2"
+          <FavButton
+            imgSrc={fullHeart}
             onClick={() => {
               handleFavourites(locationData._id);
             }}
-          >
-            <Image src={fullHeart} width={42} height={42} alt="empty-heart" />
-          </button>
+          />
         ) : (
-          <button
-            className="absolute right-2 top-2"
+          <FavButton
+            imgSrc={emptyHeart}
             onClick={() => {
               handleFavourites(locationData._id);
             }}
-          >
-            <Image src={emptyHeart} width={42} height={42} alt="empty-heart" />
-          </button>
+          />
         )}
 
         <Image
