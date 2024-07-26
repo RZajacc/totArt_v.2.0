@@ -8,7 +8,9 @@ export interface User {
   userWebsite: string;
   userBio: string;
   userImage: ImageType;
-  posts: [postId: string];
+  posts: [
+    { _id: string; title: string; image: { _id: string; public_id: string } },
+  ];
   favs: [{ _id: string; title: string }];
   comments: [commentId: string];
 }
