@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import LocationItem from './LocationItem';
 
 function UserLocations() {
   const { user } = useContext(AuthContext);
@@ -23,7 +24,13 @@ function UserLocations() {
         <ol className="list-inside list-decimal">
           {user!.posts &&
             user?.posts.map((location) => {
-              return <p>{location.title}</p>;
+              return (
+                <LocationItem
+                  key={location._id}
+                  id={location._id}
+                  title={location.title}
+                />
+              );
             })}
         </ol>
       </div>

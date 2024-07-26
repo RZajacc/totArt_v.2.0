@@ -26,6 +26,7 @@ function UserFavs() {
             user?.favs.map((fav) => {
               return (
                 <FavItem
+                  key={fav._id}
                   id={fav._id}
                   title={fav.title}
                   userEmail={user.email}
