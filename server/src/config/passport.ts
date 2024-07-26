@@ -5,6 +5,7 @@ import { PassportStatic } from "passport";
 import { JwtPayload } from "jsonwebtoken";
 import { HydratedDocument } from "mongoose";
 import { User } from "../types/UserTypes.js";
+import path from "path";
 
 const opts = {
   secretOrKey: process.env.SECRET_OR_PRIVATE_KEY as string,
@@ -21,7 +22,11 @@ const jwtStrategy = new JwtStrategy(opts, async function (
       .findById(jwt_payload.sub)
       .populate({ path: "userImage" })
       .populate({ path: "favs", select: ["title"] })
-      .populate({ path: "posts", select: ["title"] });
+      .populate({
+        path: "posts",
+        select: ["title", "image"],
+        populate: { path: "image", select: ["public_id"] },
+      });
     if (user) {
       console.log("User found");
       return done(null, user);
