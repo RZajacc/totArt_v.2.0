@@ -23,12 +23,6 @@ function Content() {
     isLoading: locationsLoading,
   } = useSWR('http://localhost:5000/api/locations/all', getAllLocations);
 
-  // Mutation to trigger on upon button click
-  const { trigger, error: favshandlerError } = useSWRMutation(
-    'http://localhost:5000/api/users/handleFavouriteLocations',
-    locationFavsData,
-  );
-
   const handleFavourites = async (locId: string) => {
     await trigger({ email: user!.email, locactionId: locId });
     mutateUser();
