@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import linkIcon from '../../assets/link-svgrepo-com.svg';
 import binIcon from '../../assets/trash-can.svg';
 import DeleteField from '../ui/DeleteField';
+import useSWRMutation from 'swr/mutation';
+import { DeleteLocation } from '../../fetchers/DeleteLocation';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
   id: string;
@@ -14,9 +17,42 @@ type Props = {
 };
 
 function LocationItem({ title, id, imageId, image_publicId }: Props) {
+  // Display deleteField
   const [showDeleteField, setShowDeleteField] = useState(false);
-  const handleRemovingLocation = (e: React.FormEvent<HTMLFormElement>) => {
+  const [showIncorrectInput, setShowIncorrectInput] = useState(false);
+  const [providedValue, setProvidedValue] = useState('');
+
+  const { mutateUser } = useContext(AuthContext);
+
+  const { trigger: triggerDeletingLocation } = useSWRMutation(
+    'http://localhost:5000/api/locations/deleteLocation',
+    DeleteLocation,
+  );
+
+  // Remove Location
+  const handleRemovingLocation = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
     e.preventDefault();
+    // Collect data from the form
+    const formData = new FormData(e.currentTarget);
+    const inputVal = formData.get('delete-phrase') as string;
+
+    // Verify user input
+    if (inputVal === 'DELETE') {
+      // Hide paragraph
+      setShowIncorrectInput(false);
+      await triggerDeletingLocation({
+        imageId: imageId,
+        locationId: id,
+        impagePublicId: image_publicId,
+      });
+      mutateUser();
+      setShowDeleteField(false);
+    } else {
+      setProvidedValue(inputVal);
+      setShowIncorrectInput(true);
+    }
   };
   return (
     <>
@@ -41,6 +77,8 @@ function LocationItem({ title, id, imageId, image_publicId }: Props) {
       <DeleteField
         showDeleteField={showDeleteField}
         handleRemovingData={handleRemovingLocation}
+        showIncorrectInput={showIncorrectInput}
+        providedVal={providedValue}
       />
     </>
   );

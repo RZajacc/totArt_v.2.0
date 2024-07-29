@@ -20,7 +20,7 @@ function UserLocations() {
   return (
     <>
       <div className="mx-auto w-11/12 rounded-sm bg-slate-200 px-4 py-2">
-        {user!.favs.length > 0 ? header : noFavs}
+        {user!.posts.length > 0 ? header : noFavs}
         <ol className="list-inside list-decimal">
           {user!.posts &&
             user?.posts.map((location) => {

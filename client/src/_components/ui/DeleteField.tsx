@@ -3,9 +3,16 @@ import React from 'react';
 type Props = {
   showDeleteField: boolean;
   handleRemovingData: (e: React.FormEvent<HTMLFormElement>) => void;
+  showIncorrectInput: boolean;
+  providedVal: string;
 };
 
-function DeleteField({ showDeleteField, handleRemovingData }: Props) {
+function DeleteField({
+  showDeleteField,
+  handleRemovingData,
+  showIncorrectInput,
+  providedVal,
+}: Props) {
   return (
     <div className={`${!showDeleteField && 'hidden'}`}>
       <p>
@@ -19,16 +26,23 @@ function DeleteField({ showDeleteField, handleRemovingData }: Props) {
       >
         <input
           type="text"
+          name="delete-phrase"
           placeholder="type: DELETE"
-          className="w-9/12 rounded-l-md px-1 py-1 focus-visible:outline-none"
+          className="w-9/12 rounded-l-md px-2 py-1 focus-visible:outline-none"
         />
         <button
           type="submit"
-          className=" w-3/12 rounded-r-sm border-l-2 border-black bg-red-500 py-1 font-bold text-stone-200 hover:bg-stone-200 hover:text-red-500"
+          className=" w-3/12 rounded-r-sm border-l-2 border-red-500 bg-red-500 py-1 font-bold text-stone-200 hover:bg-stone-200 hover:text-red-500"
         >
           Delete
         </button>
       </form>
+      <p className={`${!showIncorrectInput && 'hidden'} text-center font-bold`}>
+        <small>
+          Provided: <span className=" text-red-500">'{providedVal}'</span>{' '}
+          instead of <span className=" text-red-500">'DELETE'</span>!
+        </small>
+      </p>
     </div>
   );
 }
