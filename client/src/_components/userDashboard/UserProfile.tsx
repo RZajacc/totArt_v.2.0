@@ -7,6 +7,7 @@ import useSWRMutation from 'swr/mutation';
 import { ImageUpload } from '../../fetchers/ImageUpload';
 import { updateUserData } from '../../fetchers/UpdateUserData';
 import { deleteImage } from '../../fetchers/DeleteImage';
+import ProfileActions from './ProfileActions';
 
 function UserProfile() {
   const { user, mutateUser } = useContext(AuthContext);
@@ -111,6 +112,7 @@ function UserProfile() {
         <UserData propName="userBio" textarea />
         <UserData propName="userWebsite" />
       </section>
+      <ProfileActions />
     </>
   );
 }
