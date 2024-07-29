@@ -29,6 +29,8 @@ function UserLocations() {
                   key={location._id}
                   id={location._id}
                   title={location.title}
+                  imageId={location.image._id}
+                  image_publicId={location.image.public_id}
                 />
               );
             })}

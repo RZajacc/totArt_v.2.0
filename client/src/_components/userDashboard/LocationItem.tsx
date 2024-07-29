@@ -8,9 +8,11 @@ import binIcon from '../../assets/trash-can.svg';
 type Props = {
   id: string;
   title: string;
+  imageId: string;
+  image_publicId: string;
 };
 
-function LocationItem({ title, id }: Props) {
+function LocationItem({ title, id, imageId, image_publicId }: Props) {
   const handleRemovingLocation = () => {};
   return (
     <li className="my-2 flex items-center justify-between border-b-2 border-stone-400 py-2">
