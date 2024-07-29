@@ -14,10 +14,9 @@ function PasswordChange({}: Props) {
   };
   return (
     <form
-      className="flex flex-col gap-2 bg-slate-200 p-2"
+      className="my-6 flex flex-col gap-2 bg-slate-200 p-4"
       onSubmit={handlePasswordUpdate}
     >
-      <input type="text" ref={testRef} className="invalid:text-red-500" />
       <PasswordField
         labelName="current-password"
         labelValue="Current password:"

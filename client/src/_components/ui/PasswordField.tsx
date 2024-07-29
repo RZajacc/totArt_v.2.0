@@ -23,7 +23,7 @@ function PasswordField({ labelName, labelValue, isValid }: Props) {
           type={`${showPassword ? 'text' : 'password'}`}
           name={labelName}
           placeholder="current password"
-          className={`w-full rounded-md border ${isValid ? 'border-slate-600 focus:ring-slate-300' : 'border-red-500 text-red-400 focus:ring-red-200'}  p-1 px-2 focus:outline-none focus:ring-2 `}
+          className={`w-full rounded-md border ${isValid ? 'border-slate-600 focus:ring-slate-600' : 'border-red-500 text-red-400 focus:ring-red-500'}  p-1 px-2 focus:outline-none focus:ring-1 `}
         />
         <button
           className="absolute right-2 top-1 w-7"
@@ -37,6 +37,7 @@ function PasswordField({ labelName, labelValue, isValid }: Props) {
           />
         </button>
       </div>
+      {/* -----ERROR MESSEGE AFTER VALIDATION */}
     </>
   );
 }
