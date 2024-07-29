@@ -9,11 +9,10 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Displaying locations created by the user</p>
+<p style="color:orange">Changing password from user dashboard level</p>
 
 **Still on todolist:**
 
-- Changing password from user dashboard level
 - Deleting userProfile
 - Responsiveness - app is built mobile first, currently its not styled for desktop
 - Email confirmation link
