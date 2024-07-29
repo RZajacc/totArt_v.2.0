@@ -68,18 +68,20 @@ function LocationItem({ title, id, imageId, image_publicId }: Props) {
           <button
             onClick={() => {
               setShowDeleteField((prevState) => !prevState);
+              setShowIncorrectInput(false);
             }}
           >
             <Image src={binIcon} alt="link" className="w-5" />
           </button>
         </div>
       </li>
-      <DeleteField
-        showDeleteField={showDeleteField}
-        handleRemovingData={handleRemovingLocation}
-        showIncorrectInput={showIncorrectInput}
-        providedVal={providedValue}
-      />
+      {showDeleteField && (
+        <DeleteField
+          handleRemovingData={handleRemovingLocation}
+          showIncorrectInput={showIncorrectInput}
+          providedVal={providedValue}
+        />
+      )}
     </>
   );
 }

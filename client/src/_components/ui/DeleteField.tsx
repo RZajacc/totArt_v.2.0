@@ -1,20 +1,18 @@
 import React from 'react';
 
 type Props = {
-  showDeleteField: boolean;
   handleRemovingData: (e: React.FormEvent<HTMLFormElement>) => void;
   showIncorrectInput: boolean;
   providedVal: string;
 };
 
 function DeleteField({
-  showDeleteField,
   handleRemovingData,
   showIncorrectInput,
   providedVal,
 }: Props) {
   return (
-    <div className={`${!showDeleteField && 'hidden'}`}>
+    <div>
       <p>
         If you're sure you want to delete this location, type{' '}
         <strong>'DELETE'</strong> below:
