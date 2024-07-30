@@ -52,17 +52,18 @@ function PasswordChange({ setShowPasswordChange }: Props) {
     });
 
     // Check if current password is valid
-    if (!verifyPassword.passwordValid) {
-      setIsCurrentPswValid(false);
-    } else {
+    if (verifyPassword.passwordValid) {
       setIsCurrentPswValid(true);
-      // Check if new password is valid
-      const validNewPsw = validatePassword(newPassword, confirmPassword);
-      // Method returns a list of elements
-      if (validNewPsw.length !== 0) {
-        setIsNewPswValid(false);
-        setNewPswErrorList(validNewPsw);
-      }
+    } else {
+      setIsCurrentPswValid(false);
+    }
+
+    // Check if new password is valid
+    const validNewPsw = validatePassword(newPassword, confirmPassword);
+    // Method returns a list of elements
+    if (validNewPsw.length !== 0) {
+      setIsNewPswValid(false);
+      setNewPswErrorList(validNewPsw);
     }
   };
   return (
