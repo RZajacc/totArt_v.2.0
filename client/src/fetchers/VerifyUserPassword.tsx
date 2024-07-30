@@ -26,6 +26,6 @@ export const VerifyUserPassword = async (
     const error: FetchError = new Error('Something went wrong');
     error.info = result.passwordValid;
     error.status = response.status;
-    return error;
+    throw error;
   }
 };

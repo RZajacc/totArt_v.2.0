@@ -1,19 +1,42 @@
 import React, { useState } from 'react';
 import PasswordField from '../ui/PasswordField';
+import useSWRMutation from 'swr/mutation';
+import { VerifyUserPassword } from '../../fetchers/VerifyUserPassword';
 
 type Props = {};
 
 function PasswordChange({}: Props) {
   // Password validation state variables
-  const [isCurrentPswValid, setIsCurrentPswValid] = useState(false);
-  const [isNewPswValid, setIsNewPswValid] = useState(false);
+  const [isCurrentPswValid, setIsCurrentPswValid] = useState(true);
+  const [isNewPswValid, setIsNewPswValid] = useState(true);
+
+  // Renderable elements
+  const currentPswInvalidParagraph = (
+    <p className="text-red-400">Password is incorrect!</p>
+  );
+  // Methods to validate and update user password
+  const { trigger: triggerPswVerification } = useSWRMutation(
+    'http://localhost:5000/api/users/verifyUserPassword',
+    VerifyUserPassword,
+  );
 
   // Handle password update method
-  const handlePasswordUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const currentPassword = formData.get('current-password') as string;
-    console.log(currentPassword);
+
+    // Verify users current password
+    const verifyPassword = await triggerPswVerification({
+      email: 'rf.zajac@gmail.com',
+      password: currentPassword,
+    });
+
+    if (!verifyPassword.passwordValid) {
+      setIsCurrentPswValid(false);
+    } else {
+      setIsCurrentPswValid(true);
+    }
   };
   return (
     <form
@@ -23,8 +46,10 @@ function PasswordChange({}: Props) {
       <PasswordField
         labelName="current-password"
         labelValue="Current password:"
-        isValid={true}
+        isValid={isCurrentPswValid}
+        setIsValid={setIsCurrentPswValid}
       />
+      {!isCurrentPswValid && currentPswInvalidParagraph}
       <PasswordField
         labelName="new-password"
         labelValue=" New password:"
