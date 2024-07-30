@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PasswordField from '../ui/PasswordField';
 import useSWRMutation from 'swr/mutation';
 import { VerifyUserPassword } from '../../fetchers/VerifyUserPassword';
 import { validatePassword } from '../../utils/ValidatePassword';
 import TimerDisplay from '../ui/TimerDisplay';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
   setShowPasswordChange: (displayState: boolean) => void;
@@ -14,6 +15,9 @@ function PasswordChange({ setShowPasswordChange }: Props) {
   const [isCurrentPswValid, setIsCurrentPswValid] = useState(true);
   const [isNewPswValid, setIsNewPswValid] = useState(true);
   const [newPswErrorList, setNewPswErrorList] = useState<string[]>([]);
+  const [passwordUpdated, setPasswordUpdated] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   // Renderable elements
   const currentPswInvalidParagraph = (
@@ -43,7 +47,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
 
     // Verify users current password
     const verifyPassword = await triggerPswVerification({
-      email: 'rf.zajac@gmail.com',
+      email: user ? user.email : '',
       password: currentPassword,
     });
 
@@ -90,17 +94,21 @@ function PasswordChange({ setShowPasswordChange }: Props) {
       <button className="my-2 rounded-sm bg-black p-2 text-white shadow-md shadow-gray-600">
         Submit
       </button>
-      <div className="text-center">
-        <p className="my-1 font-bold">
-          Update successfull, window will be closed automatically!
-        </p>
-        <TimerDisplay
-          onTimeout={() => {
-            // setShowPasswordChange(false);
-          }}
-          timeout={10000}
-        />
-      </div>
+
+      {passwordUpdated && (
+        <div className="text-center">
+          <p className="my-1 font-bold">
+            Update successfull, window will be closed automatically!
+          </p>
+
+          <TimerDisplay
+            onTimeout={() => {
+              // setShowPasswordChange(false);
+            }}
+            timeout={10000}
+          />
+        </div>
+      )}
     </form>
   );
 }
