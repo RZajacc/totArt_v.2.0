@@ -78,7 +78,9 @@ function LocationItem({ title, id, imageId, image_publicId }: Props) {
       {showDeleteField && (
         <DeleteField
           handleRemovingData={handleRemovingLocation}
+          elementDescription="this location"
           showIncorrectInput={showIncorrectInput}
+          setShowIncorrectInput={setShowIncorrectInput}
           providedVal={providedValue}
         />
       )}
