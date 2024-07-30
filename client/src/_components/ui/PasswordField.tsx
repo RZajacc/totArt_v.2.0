@@ -37,7 +37,6 @@ function PasswordField({ labelName, labelValue, isValid }: Props) {
           />
         </button>
       </div>
-      {/* -----ERROR MESSEGE AFTER VALIDATION */}
     </>
   );
 }

@@ -1,16 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import PasswordField from '../ui/PasswordField';
 
 type Props = {};
 
 function PasswordChange({}: Props) {
-  const testRef = useRef<HTMLInputElement | null>(null);
+  // Password validation state variables
+  const [isCurrentPswValid, setIsCurrentPswValid] = useState(false);
+  const [isNewPswValid, setIsNewPswValid] = useState(false);
+
+  // Handle password update method
   const handlePasswordUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const currentPassword = formData.get('current-password');
-    testRef.current?.validity.valid!;
-    console.log(testRef.current?.setAttribute('isvalid', 'false'));
+    const currentPassword = formData.get('current-password') as string;
+    console.log(currentPassword);
   };
   return (
     <form

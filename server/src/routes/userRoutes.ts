@@ -5,9 +5,8 @@ import {
   getProfle,
   handleFavouriteLocations,
   deleteUser,
-  getAllFavs,
-  getAllUserPosts,
   updateUserData,
+  verifyPassword,
 } from "../controller/userController.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
 
@@ -18,13 +17,12 @@ router.get("/profile", jwtAuth, getProfle);
 
 router.post("/login", login);
 router.post("/register", register);
+router.post("/verifyUserPassword", verifyPassword);
 
 router.patch("/handleFavouriteLocations", handleFavouriteLocations);
 router.patch("/updateUser", updateUserData);
 
 // !To be checked
-router.post("/allUserPosts", getAllUserPosts);
-router.post("/allUserFavs", getAllFavs);
 router.post("/deleteUser", deleteUser);
 
 export default router;

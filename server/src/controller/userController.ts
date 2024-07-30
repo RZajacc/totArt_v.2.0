@@ -235,32 +235,49 @@ const updateUserData: RequestHandler = async (req, res) => {
   }
 };
 
+const verifyPassword: RequestHandler = async (req, res) => {
+  // Define incoming data
+  const inputs: { email: string; password: string } = req.body;
+
+  try {
+    // Check if the user exists in the database
+    const existingUser: HydratedDocument<User> | null = await userModel.findOne(
+      {
+        email: inputs.email,
+      }
+    );
+
+    // If user doesn't exist return a message
+    if (!existingUser) {
+      res.status(404).json({
+        msg: "No user found with provided email!",
+      });
+    }
+
+    // Check if provided password matched the one stored in the DB
+    const checkPassword = await bcrypt_verifyPassword(
+      req.body.password,
+      existingUser ? existingUser.password : ""
+    );
+
+    // If yes return true, if not false
+    if (checkPassword) {
+      res.status(200).json({
+        passwordValid: checkPassword,
+      });
+    } else {
+      res.status(200).json({
+        passwordValid: checkPassword,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: error,
+    });
+  }
+};
+
 // ! Methods from here on needs check and possibly refinement
-const getAllUserPosts: RequestHandler = async (req, res) => {
-  // const userPosts = await userModel
-  //   .findOne({ email: req.body.email })
-  //   .populate({
-  //     path: "posts",
-  //     select: ["title", "description", "location", "imageUrl"],
-  //   })
-  //   .exec();
-  // res.status(200).json({
-  //   msg: "Posts field populated successfully",
-  //   posts: userPosts.posts,
-  // });
-};
-
-const getAllFavs: RequestHandler = async (req, res) => {
-  // const userFavs = await userModel
-  //   .findOne({ email: req.body.email })
-  //   .populate({ path: "favs", select: ["_id", "title"] })
-  //   .exec();
-  // res.status(200).json({
-  //   msg: "Populate worked",
-  //   favs: userFavs.favs,
-  // });
-};
-
 const deleteUser: RequestHandler = async (req, res) => {
   // const userToDelete = await userModel.findById(req.body._id);
   // // console.log(userToDelete);
@@ -280,7 +297,6 @@ export {
   getProfle,
   handleFavouriteLocations,
   updateUserData,
-  getAllUserPosts,
-  getAllFavs,
+  verifyPassword,
   deleteUser,
 };
