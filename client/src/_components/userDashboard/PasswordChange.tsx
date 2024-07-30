@@ -3,10 +3,13 @@ import PasswordField from '../ui/PasswordField';
 import useSWRMutation from 'swr/mutation';
 import { VerifyUserPassword } from '../../fetchers/VerifyUserPassword';
 import { validatePassword } from '../../utils/ValidatePassword';
+import TimerDisplay from '../ui/TimerDisplay';
 
-type Props = {};
+type Props = {
+  setShowPasswordChange: (displayState: boolean) => void;
+};
 
-function PasswordChange({}: Props) {
+function PasswordChange({ setShowPasswordChange }: Props) {
   // Password validation state variables
   const [isCurrentPswValid, setIsCurrentPswValid] = useState(true);
   const [isNewPswValid, setIsNewPswValid] = useState(true);
@@ -83,9 +86,21 @@ function PasswordChange({}: Props) {
         setIsValid={setIsNewPswValid}
       />
       {!isNewPswValid && newPswErrorParagraph}
+
       <button className="my-2 rounded-sm bg-black p-2 text-white shadow-md shadow-gray-600">
         Submit
       </button>
+      <div className="text-center">
+        <p className="my-1 font-bold">
+          Update successfull, window will be closed automatically!
+        </p>
+        <TimerDisplay
+          onTimeout={() => {
+            // setShowPasswordChange(false);
+          }}
+          timeout={10000}
+        />
+      </div>
     </form>
   );
 }

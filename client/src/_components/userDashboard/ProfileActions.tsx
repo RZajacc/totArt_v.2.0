@@ -45,7 +45,9 @@ function ProfileActions({}: Props) {
           Delete account
         </button>
       </div>
-      {showPasswordChange && <PasswordChange />}
+      {showPasswordChange && (
+        <PasswordChange setShowPasswordChange={setShowPasswordChange} />
+      )}
       {/* {showDeleteAccount && <DeleteField />} */}
     </>
   );
