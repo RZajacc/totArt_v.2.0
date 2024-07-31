@@ -105,6 +105,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
           <TimerDisplay
             onTimeout={() => {
               // setShowPasswordChange(false);
+              // setPasswordUpdated(false)
             }}
             timeout={10000}
           />

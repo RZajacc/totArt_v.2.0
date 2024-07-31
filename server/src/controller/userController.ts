@@ -322,5 +322,6 @@ export {
   handleFavouriteLocations,
   updateUserData,
   verifyPassword,
+  updatePassword,
   deleteUser,
 };
