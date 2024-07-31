@@ -10,8 +10,12 @@ export function middleware(request: NextRequest) {
   if (!currentUser && request.nextUrl.pathname.startsWith('/locations/')) {
     return Response.redirect(new URL('/login', request.url));
   }
+
+  if (!currentUser && request.nextUrl.pathname.startsWith('/farewell')) {
+    return Response.redirect(new URL('/', request.url));
+  }
 }
 
 export const config = {
-  matcher: ['/account', '/locations/:path*'],
+  matcher: ['/account', '/locations/:path*', '/farewell'],
 };
