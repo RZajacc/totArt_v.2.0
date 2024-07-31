@@ -6,11 +6,18 @@ import hidePasswordIcon from '../../assets/eye-off-svgrepo-com.svg';
 type Props = {
   labelName: string;
   labelValue: string;
-  isValid: boolean;
-  setIsValid: (setState: boolean) => void;
+  invalidateInput: boolean;
+  setPasswordState: React.Dispatch<
+    React.SetStateAction<{ isValid: boolean; invalidateInput: boolean }>
+  >;
 };
 
-function PasswordField({ labelName, labelValue, isValid, setIsValid }: Props) {
+function PasswordField({
+  labelName,
+  labelValue,
+  invalidateInput,
+  setPasswordState,
+}: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -25,9 +32,11 @@ function PasswordField({ labelName, labelValue, isValid, setIsValid }: Props) {
           name={labelName}
           placeholder="current password"
           onChange={() => {
-            setIsValid(true);
+            setPasswordState((prevState) => {
+              return { ...prevState, invalidateInput: false };
+            });
           }}
-          className={`w-full rounded-md border ${isValid ? 'border-slate-600 focus:ring-slate-600' : 'border-red-500 text-red-400 focus:ring-red-500'}  p-1 px-2 focus:outline-none focus:ring-1 `}
+          className={`w-full rounded-md border ${invalidateInput ? 'border-red-500 text-red-400 focus:ring-red-500' : 'border-slate-600 focus:ring-slate-600'}  p-1 px-2 focus:outline-none focus:ring-1 `}
         />
         <button
           className="absolute right-2 top-1 w-7"

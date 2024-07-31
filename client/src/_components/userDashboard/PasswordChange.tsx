@@ -5,6 +5,7 @@ import { VerifyUserPassword } from '../../fetchers/VerifyUserPassword';
 import { validatePassword } from '../../utils/ValidatePassword';
 import TimerDisplay from '../ui/TimerDisplay';
 import { AuthContext } from '../../context/AuthContext';
+import { UpdateUserPassword } from '../../fetchers/UpdateUserPassword';
 
 type Props = {
   setShowPasswordChange: (displayState: boolean) => void;
@@ -12,12 +13,19 @@ type Props = {
 
 function PasswordChange({ setShowPasswordChange }: Props) {
   // Password validation state variables
-  const [isCurrentPswValid, setIsCurrentPswValid] = useState(true);
-  const [isNewPswValid, setIsNewPswValid] = useState(true);
+  const [currentPasswordState, setCurrentPasswordState] = useState({
+    isValid: false,
+    invalidateInput: false,
+  });
+  const [newPasswordState, setNewPasswordState] = useState({
+    isValid: false,
+    invalidateInput: false,
+  });
+  // const [isCurrentPswValid, setIsCurrentPswValid] = useState(true);
+  // const [isNewPswValid, setIsNewPswValid] = useState(true);
   const [newPswErrorList, setNewPswErrorList] = useState<string[]>([]);
   const [passwordUpdated, setPasswordUpdated] = useState(false);
-
-  const { user } = useContext(AuthContext);
+  const { user, mutateUser } = useContext(AuthContext);
 
   // Renderable elements
   const currentPswInvalidParagraph = (
@@ -37,6 +45,11 @@ function PasswordChange({ setShowPasswordChange }: Props) {
     VerifyUserPassword,
   );
 
+  const { trigger: triggerPswUpdate } = useSWRMutation(
+    'http://localhost:5000/api/users/updateUserPassword',
+    UpdateUserPassword,
+  );
+
   // Handle password update method
   const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,19 +66,30 @@ function PasswordChange({ setShowPasswordChange }: Props) {
 
     // Check if current password is valid
     if (verifyPassword.passwordValid) {
-      setIsCurrentPswValid(true);
+      setCurrentPasswordState({ invalidateInput: false, isValid: true });
     } else {
-      setIsCurrentPswValid(false);
+      setCurrentPasswordState({ invalidateInput: true, isValid: false });
     }
 
     // Check if new password is valid
     const validNewPsw = validatePassword(newPassword, confirmPassword);
     // Method returns a list of elements
     if (validNewPsw.length !== 0) {
-      setIsNewPswValid(false);
+      setNewPasswordState({ invalidateInput: true, isValid: false });
       setNewPswErrorList(validNewPsw);
     }
+
+    // If both conditions are met update user
+    if (verifyPassword.passwordValid && validNewPsw.length !== 0) {
+      await triggerPswUpdate({
+        email: user ? user.email : '',
+        password: newPassword,
+      });
+      mutateUser();
+      setPasswordUpdated(true);
+    }
   };
+
   return (
     <form
       className="my-6 flex flex-col gap-2 bg-slate-200 p-4"
@@ -74,23 +98,23 @@ function PasswordChange({ setShowPasswordChange }: Props) {
       <PasswordField
         labelName="current-password"
         labelValue="Current password:"
-        isValid={isCurrentPswValid}
-        setIsValid={setIsCurrentPswValid}
+        invalidateInput={currentPasswordState.invalidateInput}
+        setPasswordState={setCurrentPasswordState}
       />
-      {!isCurrentPswValid && currentPswInvalidParagraph}
+      {currentPasswordState.invalidateInput && currentPswInvalidParagraph}
       <PasswordField
         labelName="new-password"
         labelValue=" New password:"
-        isValid={isNewPswValid}
-        setIsValid={setIsNewPswValid}
+        invalidateInput={newPasswordState.invalidateInput}
+        setPasswordState={setNewPasswordState}
       />
       <PasswordField
         labelName="confirm-password"
         labelValue="Repeat password:"
-        isValid={isNewPswValid}
-        setIsValid={setIsNewPswValid}
+        invalidateInput={newPasswordState.invalidateInput}
+        setPasswordState={setNewPasswordState}
       />
-      {!isNewPswValid && newPswErrorParagraph}
+      {newPasswordState.invalidateInput && newPswErrorParagraph}
 
       <button className="my-2 rounded-sm bg-black p-2 text-white shadow-md shadow-gray-600">
         Submit
@@ -104,8 +128,8 @@ function PasswordChange({ setShowPasswordChange }: Props) {
 
           <TimerDisplay
             onTimeout={() => {
-              // setShowPasswordChange(false);
-              // setPasswordUpdated(false)
+              setShowPasswordChange(false);
+              setPasswordUpdated(false);
             }}
             timeout={10000}
           />
