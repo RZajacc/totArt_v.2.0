@@ -9,11 +9,10 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Changing password from user dashboard level</p>
+<p style="color:orange">Deleting userProfile</p>
 
 **Still on todolist:**
 
-- Deleting userProfile
 - Responsiveness - app is built mobile first, currently its not styled for desktop
 - Email confirmation link
 - Resetting forgotten password
