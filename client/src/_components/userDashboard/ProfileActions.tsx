@@ -5,9 +5,15 @@ import DeleteField from '../ui/DeleteField';
 type Props = {};
 
 function ProfileActions({}: Props) {
+  // Handle display state of changing password and deleteing account
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [showDeleteAccount, setShowDeleteAccount] = useState(false);
+
+  // States required for DeleteField component to work properly
   const [showIncorrectInput, setShowIncorrectInput] = useState(false);
+  const [deletePhrase, setDeletePhrase] = useState('');
+
+  // Handling displaying state of password change window and delete account
   const actionsHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
@@ -28,7 +34,25 @@ function ProfileActions({}: Props) {
     }
   };
 
-  const deleteUserHandler = async (e: React.FormEvent<HTMLFormElement>) => {};
+  // Deleting user account
+  const deleteUserHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default behaviour
+    e.preventDefault();
+
+    // Create a form data element
+    const formData = new FormData(e.currentTarget);
+
+    // Collect the data from input
+    const typedPhrase = formData.get('delete-phrase') as string;
+
+    // Check if provided phrase match the pattern
+    if (typedPhrase === 'DELETE') {
+      //! Apply logic to delete the user
+    } else {
+      setDeletePhrase(typedPhrase);
+      setShowIncorrectInput(true);
+    }
+  };
 
   return (
     <>
@@ -57,8 +81,8 @@ function ProfileActions({}: Props) {
             handleRemovingData={deleteUserHandler}
             elementDescription="your account"
             showIncorrectInput={showIncorrectInput}
-            setShowIncorrectInput={setShowDeleteAccount}
-            providedVal="asd"
+            setShowIncorrectInput={setShowIncorrectInput}
+            providedVal={deletePhrase}
           />
         </div>
       )}
