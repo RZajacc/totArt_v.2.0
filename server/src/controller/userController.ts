@@ -1,9 +1,14 @@
 import { HydratedDocument, ObjectId, Schema, Types } from "mongoose";
+import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import userModel from "../models/userModel.js";
 import { bcrypt_hash, bcrypt_verifyPassword } from "../utils/bcrypt_config.js";
 import { generateToken } from "../utils/tokenServices.js";
 import { RequestHandler } from "express";
-import { User } from "../types/UserTypes.js";
+import { PopulatedUser, User } from "../types/UserTypes.js";
+import { Image } from "../types/ImageTypes.js";
+import imageModel from "../models/imageModel.js";
+import locationModel from "../models/locationModel.js";
+import commentModel from "../models/commentModel.js";
 
 const register: RequestHandler = async (req, res) => {
   // Define incoming data
@@ -314,18 +319,57 @@ const updateUserPassword: RequestHandler = async (req, res) => {
   }
 };
 
-// ! Methods from here on needs check and possibly refinement
 const deleteUser: RequestHandler = async (req, res) => {
-  // const userToDelete = await userModel.findById(req.body._id);
-  // // console.log(userToDelete);
-  // userToDelete.posts.forEach(async (post) => {
-  //   let postToDelete = await locationModel.findByIdAndDelete(post);
-  // });
-  // userToDelete.comments.forEach(async (comment) => {
-  //   let commentToDelete = await commentModel.findByIdAndDelete(comment);
-  // });
-  // let deleteUser = await userModel.findByIdAndDelete(req.body._id);
-  // res.json({ msg: "user deleted successfully" });
+  // Define incoming inputs
+  const inputs: { _id: string } = req.body;
+
+  // Parse incoming id into id type
+  const userId = new Types.ObjectId(inputs._id);
+
+  // Find user and populate all fields that needs to be cleared including images
+  const userToDelete: HydratedDocument<PopulatedUser> | null = await userModel
+    .findById(userId)
+    .populate({ path: "userImage", select: ["public_id"] })
+    .populate({
+      path: "posts",
+      select: ["image"],
+      populate: { path: "image", select: ["public_id"] },
+    });
+
+  if (userToDelete) {
+    // Delete users image from DB and Cloudinary
+    const dbImage: HydratedDocument<Image> | null =
+      await imageModel.findByIdAndDelete(
+        userToDelete.userImage ? userToDelete.userImage._id : ""
+      );
+    const cloudinaryImage: { result: string } =
+      await cloudinary.uploader.destroy(
+        userToDelete.userImage ? userToDelete.userImage.public_id : ""
+      );
+    // Delete each users location and its images from cloudinary and DB
+    userToDelete.posts.forEach(async (post) => {
+      const dbImage: HydratedDocument<Image> | null =
+        await imageModel.findByIdAndDelete(post.image._id);
+      const cloudinaryImage: { result: string } =
+        await cloudinary.uploader.destroy(post.image.public_id);
+      let postToDelete = await locationModel.findByIdAndDelete(post._id);
+    });
+    // Delete users comments
+    userToDelete.comments.forEach(async (comment) => {
+      let commentToDelete = await commentModel.findByIdAndDelete(comment);
+    });
+    // And finally delete the user
+    let deleteUser: HydratedDocument<PopulatedUser> | null =
+      await userModel.findByIdAndDelete(userId);
+
+    if (deleteUser) {
+      res.status(200).json({ msg: "User deleted successfully" });
+    } else {
+      res.status(400).json({ msg: "Deleting user failed" });
+    }
+  } else {
+    res.status(404).json({ msg: "User not found" });
+  }
 };
 
 export {

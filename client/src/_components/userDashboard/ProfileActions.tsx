@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PasswordChange from './PasswordChange';
 import DeleteField from '../ui/DeleteField';
+import { useRouter } from 'next/navigation';
 
 type Props = {};
 
@@ -12,6 +13,9 @@ function ProfileActions({}: Props) {
   // States required for DeleteField component to work properly
   const [showIncorrectInput, setShowIncorrectInput] = useState(false);
   const [deletePhrase, setDeletePhrase] = useState('');
+
+  // Create instance of a router to redirect user after successfull deletion
+  const router = useRouter();
 
   // Handling displaying state of password change window and delete account
   const actionsHandler = (
@@ -49,6 +53,7 @@ function ProfileActions({}: Props) {
     // Check if provided phrase match the pattern
     if (typedPhrase === 'DELETE') {
       //! Apply logic to delete the user
+      // router.push('/farewell');
     } else {
       setDeletePhrase(typedPhrase);
       setShowIncorrectInput(true);

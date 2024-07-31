@@ -25,6 +25,6 @@ router.patch("/handleFavouriteLocations", handleFavouriteLocations);
 router.patch("/updateUser", updateUserData);
 
 // !To be checked
-router.post("/deleteUser", deleteUser);
+router.delete("/deleteUser", deleteUser);
 
 export default router;
