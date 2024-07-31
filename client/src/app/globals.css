@@ -86,12 +86,12 @@ progress[value]::-webkit-progress-bar {
 
 progress[value]::-webkit-progress-value {
   background-color: aquamarine;
-  background-image: -webkit-linear-gradient(left, #f44, #09c);
+  background-image: -webkit-linear-gradient(left, #f44, #12cc00);
   border-radius: 5px;
 }
 
 progress[value]::-moz-progress-bar {
   background-color: aquamarine;
-  background-image: -webkit-linear-gradient(left, #f44, #09c);
+  background-image: -webkit-linear-gradient(left, #f44, #12cc00);
   border-radius: 5px;
 }

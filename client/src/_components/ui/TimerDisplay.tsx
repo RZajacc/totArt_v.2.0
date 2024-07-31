@@ -17,8 +17,8 @@ function TimerDisplay({ onTimeout, timeout }: Props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemainingTime((prevRemainingTime) => prevRemainingTime - 1000);
-    }, 1000);
+      setRemainingTime((prevRemainingTime) => prevRemainingTime - 50);
+    }, 50);
     return () => {
       clearInterval(interval);
     };
