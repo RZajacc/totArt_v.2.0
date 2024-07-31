@@ -7,16 +7,14 @@ type Props = {
   labelName: string;
   labelValue: string;
   invalidateInput: boolean;
-  setPasswordState: React.Dispatch<
-    React.SetStateAction<{ isValid: boolean; invalidateInput: boolean }>
-  >;
+  setInvalidateInput: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function PasswordField({
   labelName,
   labelValue,
   invalidateInput,
-  setPasswordState,
+  setInvalidateInput,
 }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -32,9 +30,7 @@ function PasswordField({
           name={labelName}
           placeholder="current password"
           onChange={() => {
-            setPasswordState((prevState) => {
-              return { ...prevState, invalidateInput: false };
-            });
+            setInvalidateInput(false);
           }}
           className={`w-full rounded-md border ${invalidateInput ? 'border-red-500 text-red-400 focus:ring-red-500' : 'border-slate-600 focus:ring-slate-600'}  p-1 px-2 focus:outline-none focus:ring-1 `}
         />

@@ -12,19 +12,18 @@ type Props = {
 };
 
 function PasswordChange({ setShowPasswordChange }: Props) {
-  // Password validation state variables
-  const [currentPasswordState, setCurrentPasswordState] = useState({
-    isValid: false,
-    invalidateInput: false,
-  });
-  const [newPasswordState, setNewPasswordState] = useState({
-    isValid: false,
-    invalidateInput: false,
-  });
-  // const [isCurrentPswValid, setIsCurrentPswValid] = useState(true);
-  // const [isNewPswValid, setIsNewPswValid] = useState(true);
+  // Password field state variables
+  const [invalidateCurrentPswInput, setInvalidateCurrentPswInput] =
+    useState(false);
+  const [invalidateNewPswInput, setInvalidateNewPswInput] = useState(false);
+
+  // List of errors coming from password validator function
   const [newPswErrorList, setNewPswErrorList] = useState<string[]>([]);
+
+  // State updating upon successfull update
   const [passwordUpdated, setPasswordUpdated] = useState(false);
+
+  // User context
   const { user, mutateUser } = useContext(AuthContext);
 
   // Renderable elements
@@ -53,12 +52,20 @@ function PasswordChange({ setShowPasswordChange }: Props) {
   // Handle password update method
   const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Create form data object
     const formData = new FormData(e.currentTarget);
+
+    // Collect inputs form the form
     const currentPassword = formData.get('current-password') as string;
     const newPassword = formData.get('new-password') as string;
     const confirmPassword = formData.get('confirm-password') as string;
 
-    // Verify users current password
+    // Set state of an old and new password
+    let currentPasswordIsValid = false;
+    let newPasswordIsValid = false;
+
+    // Verify users current password with DB
     const verifyPassword = await triggerPswVerification({
       email: user ? user.email : '',
       password: currentPassword,
@@ -66,21 +73,26 @@ function PasswordChange({ setShowPasswordChange }: Props) {
 
     // Check if current password is valid
     if (verifyPassword.passwordValid) {
-      setCurrentPasswordState({ invalidateInput: false, isValid: true });
+      currentPasswordIsValid = true;
+      setInvalidateCurrentPswInput(false);
     } else {
-      setCurrentPasswordState({ invalidateInput: true, isValid: false });
+      setInvalidateCurrentPswInput(true);
     }
 
-    // Check if new password is valid
+    // Check if new password is valid with validator function
     const validNewPsw = validatePassword(newPassword, confirmPassword);
+
     // Method returns a list of elements
     if (validNewPsw.length !== 0) {
-      setNewPasswordState({ invalidateInput: true, isValid: false });
+      setInvalidateNewPswInput(true);
       setNewPswErrorList(validNewPsw);
+    } else {
+      newPasswordIsValid = true;
+      setInvalidateNewPswInput(false);
     }
 
-    // If both conditions are met update user
-    if (verifyPassword.passwordValid && validNewPsw.length !== 0) {
+    // If both conditions are met update the user
+    if (currentPasswordIsValid && newPasswordIsValid) {
       await triggerPswUpdate({
         email: user ? user.email : '',
         password: newPassword,
@@ -98,23 +110,23 @@ function PasswordChange({ setShowPasswordChange }: Props) {
       <PasswordField
         labelName="current-password"
         labelValue="Current password:"
-        invalidateInput={currentPasswordState.invalidateInput}
-        setPasswordState={setCurrentPasswordState}
+        invalidateInput={invalidateCurrentPswInput}
+        setInvalidateInput={setInvalidateCurrentPswInput}
       />
-      {currentPasswordState.invalidateInput && currentPswInvalidParagraph}
+      {invalidateCurrentPswInput && currentPswInvalidParagraph}
       <PasswordField
         labelName="new-password"
         labelValue=" New password:"
-        invalidateInput={newPasswordState.invalidateInput}
-        setPasswordState={setNewPasswordState}
+        invalidateInput={invalidateNewPswInput}
+        setInvalidateInput={setInvalidateNewPswInput}
       />
       <PasswordField
         labelName="confirm-password"
         labelValue="Repeat password:"
-        invalidateInput={newPasswordState.invalidateInput}
-        setPasswordState={setNewPasswordState}
+        invalidateInput={invalidateNewPswInput}
+        setInvalidateInput={setInvalidateNewPswInput}
       />
-      {newPasswordState.invalidateInput && newPswErrorParagraph}
+      {invalidateNewPswInput && newPswErrorParagraph}
 
       <button className="my-2 rounded-sm bg-black p-2 text-white shadow-md shadow-gray-600">
         Submit
@@ -131,7 +143,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
               setShowPasswordChange(false);
               setPasswordUpdated(false);
             }}
-            timeout={10000}
+            timeout={5000}
           />
         </div>
       )}

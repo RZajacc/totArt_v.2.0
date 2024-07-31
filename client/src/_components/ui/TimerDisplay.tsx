@@ -9,7 +9,6 @@ function TimerDisplay({ onTimeout, timeout }: Props) {
   const [remainingTime, setRemainingTime] = useState(timeout);
 
   useEffect(() => {
-    console.log('SET NEW TIMER');
     const timer = setTimeout(onTimeout, timeout);
     return () => {
       clearTimeout(timer);
