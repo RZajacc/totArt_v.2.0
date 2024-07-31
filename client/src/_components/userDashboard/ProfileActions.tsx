@@ -25,6 +25,7 @@ function ProfileActions({}: Props) {
         return !prevState;
       });
     } else if (e.currentTarget.value === 'delete-account') {
+      setShowIncorrectInput(false);
       setShowDeleteAccount((prevState) => {
         if (showPasswordChange) {
           setShowPasswordChange(false);
