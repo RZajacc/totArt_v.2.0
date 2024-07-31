@@ -16,6 +16,7 @@ function PasswordField({
   invalidateInput,
   setInvalidateInput,
 }: Props) {
+  // Toggle text or password display on input
   const [showPassword, setShowPassword] = useState(false);
 
   return (
