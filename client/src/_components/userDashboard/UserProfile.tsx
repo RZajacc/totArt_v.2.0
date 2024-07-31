@@ -83,6 +83,7 @@ function UserProfile() {
         <input
           ref={imageInputRef}
           type="file"
+          accept=".jpg, .png"
           onChange={handleImageUpload}
           className="hidden"
         />
