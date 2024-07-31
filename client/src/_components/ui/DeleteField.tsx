@@ -16,7 +16,7 @@ function DeleteField({
   providedVal,
 }: Props) {
   return (
-    <div className="my-2 space-y-2">
+    <div className="my-2 space-y-2 ">
       {/* Message to display */}
       <p>
         If you're sure you want to delete {elementDescription}, type{' '}

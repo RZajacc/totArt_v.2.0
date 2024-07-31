@@ -7,7 +7,7 @@ type Props = {};
 function ProfileActions({}: Props) {
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [showDeleteAccount, setShowDeleteAccount] = useState(false);
-
+  const [showIncorrectInput, setShowIncorrectInput] = useState(false);
   const actionsHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
@@ -27,6 +27,9 @@ function ProfileActions({}: Props) {
       });
     }
   };
+
+  const deleteUserHandler = async (e: React.FormEvent<HTMLFormElement>) => {};
+
   return (
     <>
       <div className="my-2 flex justify-around rounded-sm p-1">
@@ -48,7 +51,17 @@ function ProfileActions({}: Props) {
       {showPasswordChange && (
         <PasswordChange setShowPasswordChange={setShowPasswordChange} />
       )}
-      {/* {showDeleteAccount && <DeleteField />} */}
+      {showDeleteAccount && (
+        <div className="rounded-sm bg-slate-200 p-2 text-center">
+          <DeleteField
+            handleRemovingData={deleteUserHandler}
+            elementDescription="your account"
+            showIncorrectInput={showIncorrectInput}
+            setShowIncorrectInput={setShowDeleteAccount}
+            providedVal="asd"
+          />
+        </div>
+      )}
     </>
   );
 }
