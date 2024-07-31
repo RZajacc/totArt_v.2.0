@@ -277,31 +277,41 @@ const verifyPassword: RequestHandler = async (req, res) => {
   }
 };
 
-// ! Methods from here on needs check and possibly refinement
 const updateUserPassword: RequestHandler = async (req, res) => {
   // Define incoming data
   const inputs: { email: string; password: string } = req.body;
 
-  res.status(200).json({
-    msg: "COOL!",
-  });
-  // try {
-  //   const hashedPassword = await bcrypt_hash(inputs.password);
-  //   if (hashedPassword) {
-  //     const updatedUser: HydratedDocument<User> | null =
-  //       await userModel.findOneAndUpdate(
-  //         { email: inputs.email },
-  //         { password: hashedPassword },
-  //         { new: true }
-  //       );
-  //     // If user exists then return an error
-  //     if (updatedUser) {
-  //       res.status(400).json({
-  //         msg: "Email already exists in the database!",
-  //       });
-  //     }
-  //   }
-  // } catch (error) {}
+  try {
+    const hashedPassword = await bcrypt_hash(inputs.password);
+    // If hashing was succesfull, update the user
+    if (hashedPassword) {
+      const updatedUser: HydratedDocument<User> | null =
+        await userModel.findOneAndUpdate(
+          { email: inputs.email },
+          { password: hashedPassword },
+          { new: true }
+        );
+
+      // Check if updating the user was successfull
+      if (updatedUser) {
+        res.status(200).json({
+          msg: "Password updated successfully!",
+        });
+      } else {
+        res.status(400).json({
+          msg: "Error while updating the user",
+        });
+      }
+    } else {
+      res.status(400).json({
+        msg: "Error while hashing the password",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: error,
+    });
+  }
 };
 
 // ! Methods from here on needs check and possibly refinement
