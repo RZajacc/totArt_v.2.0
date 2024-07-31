@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { UpdateUserPassword } from '../../fetchers/UpdateUserPassword';
 
 type Props = {
-  setShowPasswordChange: (displayState: boolean) => void;
+  setShowPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function PasswordChange({ setShowPasswordChange }: Props) {
@@ -51,6 +51,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
 
   // Handle password update method
   const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default form behaviour
     e.preventDefault();
 
     // Create form data object
@@ -132,6 +133,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
         Submit
       </button>
 
+      {/* Timer to display upon successfull password change */}
       {passwordUpdated && (
         <div className="text-center">
           <p className="my-1 font-bold">
@@ -141,7 +143,6 @@ function PasswordChange({ setShowPasswordChange }: Props) {
           <TimerDisplay
             onTimeout={() => {
               setShowPasswordChange(false);
-              setPasswordUpdated(false);
             }}
             timeout={5000}
           />

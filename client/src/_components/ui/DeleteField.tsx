@@ -4,7 +4,7 @@ type Props = {
   handleRemovingData: (e: React.FormEvent<HTMLFormElement>) => void;
   elementDescription: string;
   showIncorrectInput: boolean;
-  setShowIncorrectInput: (displayState: boolean) => void;
+  setShowIncorrectInput: React.Dispatch<React.SetStateAction<boolean>>;
   providedVal: string;
 };
 
