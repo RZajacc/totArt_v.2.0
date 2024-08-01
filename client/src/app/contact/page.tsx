@@ -2,7 +2,11 @@
 
 function Contact() {
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default behaviour
     e.preventDefault();
+
+    // Reset inputs
+    e.currentTarget.reset();
   };
 
   return (
