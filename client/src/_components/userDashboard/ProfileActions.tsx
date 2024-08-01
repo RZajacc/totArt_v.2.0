@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PasswordChange from './PasswordChange';
 import DeleteField from '../ui/DeleteField';
 import { useRouter } from 'next/navigation';
+import useSWRMutation from 'swr/mutation';
+import { DeleteUserAccount } from '../../fetchers/DeleteUserAccount';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {};
 
@@ -16,6 +19,15 @@ function ProfileActions({}: Props) {
 
   // Create instance of a router to redirect user after successfull deletion
   const router = useRouter();
+
+  // SWR method to trigger deleting a user
+  const { trigger: triggerDeletingUser } = useSWRMutation(
+    'http://localhost:5000/api/users/deleteUser',
+    DeleteUserAccount,
+  );
+
+  // Getting user data from context
+  const { user } = useContext(AuthContext);
 
   // Handling displaying state of password change window and delete account
   const actionsHandler = (
@@ -52,8 +64,8 @@ function ProfileActions({}: Props) {
 
     // Check if provided phrase match the pattern
     if (typedPhrase === 'DELETE') {
-      //! Apply logic to delete the user
-      // router.push('/farewell');
+      await triggerDeletingUser({ _id: user ? user._id : '' });
+      router.push('/farewell');
     } else {
       setDeletePhrase(typedPhrase);
       setShowIncorrectInput(true);
