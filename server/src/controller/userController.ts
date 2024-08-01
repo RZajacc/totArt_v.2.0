@@ -336,8 +336,8 @@ const deleteUser: RequestHandler = async (req, res) => {
       populate: { path: "image", select: ["public_id"] },
     });
 
-  if (userToDelete) {
-    // Delete users image from DB and Cloudinary
+  // If user has own image remove it from cloudinary and DB
+  if (userToDelete && userToDelete.userImage) {
     const dbImage: HydratedDocument<Image> | null =
       await imageModel.findByIdAndDelete(
         userToDelete.userImage ? userToDelete.userImage._id : ""
@@ -346,7 +346,10 @@ const deleteUser: RequestHandler = async (req, res) => {
       await cloudinary.uploader.destroy(
         userToDelete.userImage ? userToDelete.userImage.public_id : ""
       );
-    // Delete each users location and its images from cloudinary and DB
+  }
+
+  // If user added locations then delete their images and location itself
+  if (userToDelete && userToDelete.posts.length > 0) {
     userToDelete.posts.forEach(async (post) => {
       const dbImage: HydratedDocument<Image> | null =
         await imageModel.findByIdAndDelete(post.image._id);
@@ -354,15 +357,21 @@ const deleteUser: RequestHandler = async (req, res) => {
         await cloudinary.uploader.destroy(post.image.public_id);
       let postToDelete = await locationModel.findByIdAndDelete(post._id);
     });
-    // Delete users comments
+  }
+
+  // If user added some comments remove all of them
+  if (userToDelete && userToDelete.comments.length > 0) {
     userToDelete.comments.forEach(async (comment) => {
       let commentToDelete = await commentModel.findByIdAndDelete(comment);
     });
-    // And finally delete the user
-    let deleteUser: HydratedDocument<PopulatedUser> | null =
+  }
+
+  // And finally delete user itself
+  if (userToDelete) {
+    let deletedUser: HydratedDocument<PopulatedUser> | null =
       await userModel.findByIdAndDelete(userId);
 
-    if (deleteUser) {
+    if (deletedUser) {
       res.status(200).json({ msg: "User deleted successfully" });
     } else {
       res.status(400).json({ msg: "Deleting user failed" });
