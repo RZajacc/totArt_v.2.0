@@ -1,25 +1,50 @@
-function Contact() {
-  return (
-    <div className="mx-auto mt-8 max-w-md text-center">
-      <h1 className="font-bold">Contact me</h1>
-      <p>You can reach me by phone, mail or just come to visit!</p>
-      <p>
-        <a href="mailto:rf.zajac@gmail.com" className="contact-link">
-          &#x2709; Contact me
-        </a>
-      </p>
-      <p>&#x2706; +49 123 4567 8912</p>
-      <p>
-        <strong>Adress: </strong>Erich-Weinert-Straße 145, 10409 Berlin
-      </p>
+'use client';
 
-      <iframe
-        className="round my-8 h-48 w-full"
-        id="adress-map"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2426.3895300494523!2d13.440341686008981!3d52.54447854023895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84f446e0c53a1%3A0x27eac7eee50f967e!2sCode%20Academy%20Berlin!5e0!3m2!1spl!2sde!4v1690466346963!5m2!1spl!2sde"
-        loading="lazy"
-      ></iframe>
-    </div>
+function Contact() {
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  return (
+    <>
+      <main>
+        <section className="mx-auto mt-8 max-w-md">
+          <h5>
+            Hello! 🙋🏻‍♂ My name is Rafał and i'm the creator of this page. I hope
+            you find some new food inspiration here (i know the struggle). If
+            you have any comments, do not hesitate to send me a message!
+          </h5>
+          <form
+            onSubmit={sendEmail}
+            className="mt-6 grid rounded-sm border bg-purple-400 p-2"
+          >
+            <label htmlFor="from_name">Name</label>
+            <input
+              type="text"
+              name="from_name"
+              autoComplete="first-name"
+              className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
+              required
+            />
+            <label htmlFor="user_mail">Email</label>
+            <input
+              type="email"
+              name="user_mail"
+              autoComplete="email"
+              required
+            />
+            <label htmlFor="message">Message</label>
+            <textarea name="message" id="message" rows={5} required />
+            <button
+              type="submit"
+              className="my-2 rounded-sm bg-black p-1 text-white"
+            >
+              Send
+            </button>
+          </form>
+        </section>
+      </main>
+    </>
   );
 }
 
