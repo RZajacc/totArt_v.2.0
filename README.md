@@ -9,7 +9,7 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Desktop styling (currently its designed mobile only)</p>
+<p style="color:orange">Contact page</p>
 
 **Still on todolist:**
 
