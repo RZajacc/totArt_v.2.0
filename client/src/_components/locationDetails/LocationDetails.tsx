@@ -132,8 +132,8 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
 
   return (
     <>
-      <div className="grid gap-y-3">
-        <section className="">
+      <div className="my-6 grid justify-center gap-y-3">
+        <section>
           <div className="flex items-center justify-center space-x-3">
             <h1 className=" text-center text-lg font-bold">Title</h1>
             {data?.author._id === user?._id ? (
@@ -243,8 +243,8 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           <Image
             src={data?.image.secure_url}
             alt="user-img"
-            width={500}
-            height={500}
+            width={data.image.width}
+            height={data.image.height}
             className="rounded-sm"
           />
           {isFav ? (

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 function Home() {
   return (
-    <div className="mx-auto mt-3 max-w-xl">
+    <div className="mx-auto mt-3 max-w-xl md:mt-6 ">
       <h1 className="text-center text-2xl font-bold">
         Welcome to Totart page!
       </h1>

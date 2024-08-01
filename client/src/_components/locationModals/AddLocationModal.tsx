@@ -115,10 +115,10 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   return (
     <>
       <div
-        className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-30 h-screen w-screen bg-slate-600/70`}
+        className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-30 h-screen w-screen  bg-slate-600/70`}
       >
         <div
-          className={`relative top-[5%] mx-auto grid w-11/12 gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
+          className={`relative top-[5%] mx-auto grid w-11/12 max-w-md gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
         >
           <section>
             <h1 className="m-1 text-center font-bold">

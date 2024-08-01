@@ -82,7 +82,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
   }
 
   return (
-    <>
+    <div className="mx-auto max-w-xl">
       <LocationDetails
         user={user!}
         data={locationData!}
@@ -91,7 +91,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
       />
 
       {/* Comments section */}
-      <div>
+      <div className="my-6">
         <h4 className="py-2 text-center text-xl font-bold">
           ({locationData?.comments.length}) comments:
         </h4>
@@ -152,7 +152,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
         mutateUser={mutateUser}
         mutateLocation={mutateLocation}
       />
-    </>
+    </div>
   );
 }
 

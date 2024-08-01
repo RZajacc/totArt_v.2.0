@@ -29,7 +29,7 @@ function Content() {
 
   return (
     <>
-      <h1 className="text-center text-xl font-bold">
+      <h1 className="text-center text-xl font-bold md:mt-4">
         Number of locations found:{' '}
         <span className="text-green-500">{locations?.number}</span>
       </h1>
