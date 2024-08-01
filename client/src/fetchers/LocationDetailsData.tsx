@@ -6,7 +6,7 @@ export const locationDetailsData = async (locationID: string) => {
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
   const urlencoded = new URLSearchParams();
-  urlencoded.append('id', locationID);
+  urlencoded.append('_id', locationID);
 
   const response = await fetch('http://localhost:5000/api/locations/details', {
     method: 'POST',

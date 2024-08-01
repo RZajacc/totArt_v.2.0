@@ -22,7 +22,7 @@ function Account() {
 
   return (
     <>
-      <div className="rounded-md bg-green-400 p-2 shadow-md shadow-gray-800">
+      <div className="mx-auto mt-2 max-w-lg rounded-md bg-green-400 p-2 shadow-md shadow-gray-800">
         <ul className="mb-6 mt-2 flex justify-center gap-2">
           <DashboardTab
             tabName="Profile"

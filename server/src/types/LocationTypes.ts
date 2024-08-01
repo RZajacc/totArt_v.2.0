@@ -17,8 +17,8 @@ export interface PopulatedLocation extends Document {
   title: string;
   description: string;
   location: string;
-  image: Image | null;
-  author: User | null;
+  image: Image;
+  author: User;
   favs: Types.ObjectId[];
   comments: Types.ObjectId[];
 }

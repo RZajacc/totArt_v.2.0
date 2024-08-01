@@ -11,6 +11,7 @@ import {
 import { HydratedDocument, Types } from "mongoose";
 import { User } from "../types/UserTypes.js";
 import { Image } from "../types/ImageTypes.js";
+import { error } from "console";
 
 const getAllLocations: RequestHandler = async (req, res) => {
   try {
@@ -31,16 +32,17 @@ const getAllLocations: RequestHandler = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({
-      msg: "Server error",
+      msg: error,
     });
   }
 };
 
 const getLocationDetails: RequestHandler = async (req, res) => {
   // Defining incoming data
-  const inputs: { id: string } = req.body;
+  const inputs: { _id: string } = req.body;
+
   // Defining object ID
-  const locationId = new Types.ObjectId(inputs.id);
+  const locationId = new Types.ObjectId(inputs._id);
 
   try {
     // Check if post exists
@@ -72,7 +74,7 @@ const getLocationDetails: RequestHandler = async (req, res) => {
     }
   } catch {
     res.status(500).json({
-      msg: "Server error",
+      msg: error,
     });
   }
 };

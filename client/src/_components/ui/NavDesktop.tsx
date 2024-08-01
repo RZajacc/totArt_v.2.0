@@ -27,13 +27,13 @@ function NavDesktop({}: Props) {
           Home
         </Link>
         <Link
-          href={'locations'}
+          href={'/locations'}
           className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
         >
           Locations
         </Link>
         <Link
-          href={'contact'}
+          href={'/contact'}
           className={`link ${pathname === '/contact' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
         >
           Contact
@@ -45,7 +45,7 @@ function NavDesktop({}: Props) {
         {user ? (
           <>
             <Link
-              href={'account'}
+              href={'/account'}
               className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               Account
@@ -60,13 +60,13 @@ function NavDesktop({}: Props) {
         ) : (
           <>
             <Link
-              href={'register'}
+              href={'/register'}
               className={`link ${pathname === '/register' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               Register
             </Link>
             <Link
-              href={'login'}
+              href={'/login'}
               className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
             >
               Login
