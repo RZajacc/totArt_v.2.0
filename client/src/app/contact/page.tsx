@@ -6,14 +6,19 @@ import { useState } from 'react';
 import LabeledInput from '../../_components/formElements/LabeledInput';
 import LabeledTextArea from '../../_components/formElements/LabeledTextArea';
 import SubmitButton from '../../_components/formElements/SubmitButton';
+import TimerDisplay from '../../_components/ui/TimerDisplay';
 
 function Contact() {
-  const { trigger: triggerSendingEmail, error: emailError } = useSWRMutation(
+  const {
+    trigger: triggerSendingEmail,
+    error: emailError,
+    data,
+  } = useSWRMutation(
     'http://localhost:5000/api/email/sendEmail',
     sendContactEmail,
   );
 
-  const [emailResponse, setEmailResponse] = useState('');
+  const [showEmailResponse, setShowEmailResponse] = useState(false);
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent default behaviour
@@ -30,14 +35,14 @@ function Contact() {
     const message = formData.get('message') as string;
 
     // Send an email
-    const test = await triggerSendingEmail({
+    await triggerSendingEmail({
       name: fromName,
       email: fromEmail,
       subject: subject,
       message: message,
     });
 
-    setEmailResponse(test.msg);
+    setShowEmailResponse(true);
 
     // Reset inputs
     form.reset();
@@ -72,8 +77,16 @@ function Contact() {
               labelText="Email:"
             />
             <LabeledTextArea labelFor="message" labelText="Message:" rows={3} />
-            {!emailError && (
-              <p className="text-center font-bold">{emailResponse}</p>
+            {!emailError && showEmailResponse && (
+              <>
+                <p className="text-center font-bold">{data?.msg}</p>
+                <TimerDisplay
+                  onTimeout={() => {
+                    setShowEmailResponse(false);
+                  }}
+                  timeout={5000}
+                />
+              </>
             )}
             <SubmitButton>Send email!</SubmitButton>
           </form>
