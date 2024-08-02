@@ -9,6 +9,8 @@ import locationsRoutes from "./routes/locationsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import imageRoutes from "./routes/imageRoutes.js";
+import emailRoutes from "./routes/emailRoutes.js";
+
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
 import passportConfig from "./config/passport.js";
 
@@ -47,6 +49,7 @@ const addRoutes = () => {
   app.use("/api/users", userRoutes);
   app.use("/api/comments", commentRoutes);
   app.use("/api/images", imageRoutes);
+  app.use("/api/email", emailRoutes);
 };
 
 // * 4_START SERVER

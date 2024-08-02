@@ -20,7 +20,7 @@ function Contact() {
           </h5>
           <form
             onSubmit={sendEmail}
-            className="mt-6 grid rounded-sm border bg-purple-400 p-2"
+            className="mt-6 grid gap-1 rounded-sm border bg-purple-400 p-2"
           >
             <label htmlFor="from_name">Name</label>
             <input
