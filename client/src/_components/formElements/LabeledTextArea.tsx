@@ -3,23 +3,23 @@ import React from 'react';
 type Props = {
   labelFor: string;
   labelText: string;
-  inputType: string;
+  rows: number;
 };
 
-function LabeledInput({ labelFor, labelText, inputType }: Props) {
+function LabeledTextArea({ labelFor, labelText, rows }: Props) {
   return (
     <>
       <label htmlFor={labelFor} className="font-bold">
         {labelText}
       </label>
-      <input
-        type={inputType}
+      <textarea
         name={labelFor}
-        className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
+        rows={rows}
         required
+        className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
       />
     </>
   );
 }
 
-export default LabeledInput;
+export default LabeledTextArea;

@@ -4,6 +4,7 @@ import useSWRMutation from 'swr/mutation';
 import { sendContactEmail } from '../../fetchers/SendContactEmail';
 import { useState } from 'react';
 import LabeledInput from '../../_components/formElements/LabeledInput';
+import LabeledTextArea from '../../_components/formElements/LabeledTextArea';
 
 function Contact() {
   const { trigger: triggerSendingEmail, error: emailError } = useSWRMutation(
@@ -69,11 +70,7 @@ function Contact() {
               labelFor="from_email"
               labelText="Email:"
             />
-
-            <label htmlFor="message" className="font-bold">
-              Message
-            </label>
-            <textarea name="message" id="message" rows={3} required />
+            <LabeledTextArea labelFor="message" labelText="Message:" rows={3} />
             <button
               type="submit"
               className="my-2 rounded-sm border border-black bg-black p-1 text-white hover:bg-slate-200 hover:text-black"
