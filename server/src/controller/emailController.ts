@@ -14,7 +14,7 @@ const sendContactEmail: RequestHandler = async (req, res) => {
 
   // Prepare message to be sent
   const msg = {
-    to: "rf.zajac@gmail.coms",
+    to: "rf.zajac@gmail.com",
     from: {
       email: "rf.zajac@tutamail.com",
       name: "totArt",

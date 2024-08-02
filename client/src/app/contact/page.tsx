@@ -1,51 +1,94 @@
 'use client';
 
+import useSWRMutation from 'swr/mutation';
+import { sendContactEmail } from '../../fetchers/SendContactEmail';
+import { useState } from 'react';
+import LabeledInput from '../../_components/formElements/LabeledInput';
+
 function Contact() {
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  const { trigger: triggerSendingEmail, error: emailError } = useSWRMutation(
+    'http://localhost:5000/api/email/sendEmail',
+    sendContactEmail,
+  );
+
+  const [emailResponse, setEmailResponse] = useState('');
+
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent default behaviour
     e.preventDefault();
 
+    // Capture the form reference
+    const form = e.currentTarget;
+
+    // Create a form data object
+    const formData = new FormData(form);
+    const fromName = formData.get('from_name') as string;
+    const subject = formData.get('subject') as string;
+    const fromEmail = formData.get('from_email') as string;
+    const message = formData.get('message') as string;
+
+    // Send an email
+    const test = await triggerSendingEmail({
+      name: fromName,
+      email: fromEmail,
+      subject: subject,
+      message: message,
+    });
+
+    setEmailResponse(test.msg);
+
     // Reset inputs
-    e.currentTarget.reset();
+    form.reset();
   };
 
   return (
     <>
       <main>
-        <section className="mx-auto mt-8 max-w-md">
+        <section className="mx-auto mt-4 max-w-md">
           <h5>
             Hello! 🙋🏻‍♂ My name is Rafał and i'm the creator of this page. I hope
-            you find some new food inspiration here (i know the struggle). If
-            you have any comments, do not hesitate to send me a message!
+            you're enjoying using this page. If you have any comments, do not
+            hesitate to send me a message!
           </h5>
           <form
             onSubmit={sendEmail}
-            className="mt-6 grid gap-1 rounded-sm border bg-purple-400 p-2"
+            className=" mt-6 grid gap-1 rounded-md border bg-gradient-to-br from-green-300 to-green-500 p-2 shadow-md shadow-black"
           >
-            <label htmlFor="from_name">Name</label>
+            <LabeledInput
+              inputType="text"
+              labelFor="from_name"
+              labelText="Name:"
+            />
+            <label htmlFor="subject" className="font-bold">
+              Subject
+            </label>
             <input
               type="text"
-              name="from_name"
-              autoComplete="first-name"
+              name="subject"
               className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
-            <label htmlFor="user_mail">Email</label>
+            <label htmlFor="from_email" className="font-bold">
+              Email
+            </label>
             <input
               type="email"
-              name="user_mail"
+              name="from_email"
               autoComplete="email"
               required
             />
-            <label htmlFor="message">Message</label>
-            <textarea name="message" id="message" rows={5} required />
+            <label htmlFor="message" className="font-bold">
+              Message
+            </label>
+            <textarea name="message" id="message" rows={3} required />
             <button
               type="submit"
-              className="my-2 rounded-sm bg-black p-1 text-white"
+              className="my-2 rounded-sm border border-black bg-black p-1 text-white hover:bg-slate-200 hover:text-black"
             >
               Send
             </button>
           </form>
+          {!emailError && <p>{emailResponse}</p>}
         </section>
       </main>
     </>
