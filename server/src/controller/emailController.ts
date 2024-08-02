@@ -32,7 +32,7 @@ const sendContactEmail: RequestHandler = async (req, res) => {
     .send(msg)
     .then((response) => {
       res.status(response[0].statusCode).json({
-        msg: "Email sent successfully",
+        msg: "Email sent successfully!",
       });
     })
     .catch((error) => {

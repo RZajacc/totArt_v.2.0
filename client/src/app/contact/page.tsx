@@ -5,6 +5,7 @@ import { sendContactEmail } from '../../fetchers/SendContactEmail';
 import { useState } from 'react';
 import LabeledInput from '../../_components/formElements/LabeledInput';
 import LabeledTextArea from '../../_components/formElements/LabeledTextArea';
+import SubmitButton from '../../_components/formElements/SubmitButton';
 
 function Contact() {
   const { trigger: triggerSendingEmail, error: emailError } = useSWRMutation(
@@ -71,14 +72,11 @@ function Contact() {
               labelText="Email:"
             />
             <LabeledTextArea labelFor="message" labelText="Message:" rows={3} />
-            <button
-              type="submit"
-              className="my-2 rounded-sm border border-black bg-black p-1 text-white hover:bg-slate-200 hover:text-black"
-            >
-              Send
-            </button>
+            {!emailError && (
+              <p className="text-center font-bold">{emailResponse}</p>
+            )}
+            <SubmitButton>Send email!</SubmitButton>
           </form>
-          {!emailError && <p>{emailResponse}</p>}
         </section>
       </main>
     </>
