@@ -9,11 +9,10 @@ This is the most recent version of the project built with **MERN** stack. It is 
 
 **Currently working on**:
 
-<p style="color:orange">Contact page</p>
+<p style="color:orange">Email confirmation link</p>
 
 **Still on todolist:**
 
-- Email confirmation link
 - Resetting forgotten password
 
 ### Description:
