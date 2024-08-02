@@ -3,26 +3,43 @@ import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey("");
 
-const sendEmailTest: RequestHandler = async (req, res) => {
+const sendContactEmail: RequestHandler = async (req, res) => {
+  // Gather inputs and types
+  const inputs: {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  } = req.body;
+
+  // Prepare message to be sent
   const msg = {
-    to: "rf.zajac@gmail.com", // Change to your recipient
+    to: "rf.zajac@gmail.coms",
     from: {
       email: "rf.zajac@tutamail.com",
       name: "totArt",
     },
-    subject: "Sending with SendGrid is Fun",
-    html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+    subject: inputs.subject,
+    html: `
+    <p><strong>From:</strong> ${inputs.name}</p>
+    <p><strong>Email:</strong> ${inputs.email}</p>
+    <p>${inputs.message}</p>
+    `,
   };
 
+  // Send an email using sendgrid
   sgMail
     .send(msg)
     .then((response) => {
-      console.log(response[0].statusCode);
-      console.log(response[0].headers);
+      res.status(response[0].statusCode).json({
+        msg: "Email sent successfully",
+      });
     })
     .catch((error) => {
-      console.error(error);
+      res.status(500).json({
+        msg: error,
+      });
     });
 };
 
-export { sendEmailTest };
+export { sendContactEmail };
