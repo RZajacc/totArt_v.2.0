@@ -59,24 +59,17 @@ function Contact() {
               labelFor="from_name"
               labelText="Name:"
             />
-            <label htmlFor="subject" className="font-bold">
-              Subject
-            </label>
-            <input
-              type="text"
-              name="subject"
-              className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
-              required
+            <LabeledInput
+              inputType="text"
+              labelFor="subject"
+              labelText="Subject:"
             />
-            <label htmlFor="from_email" className="font-bold">
-              Email
-            </label>
-            <input
-              type="email"
-              name="from_email"
-              autoComplete="email"
-              required
+            <LabeledInput
+              inputType="email"
+              labelFor="from_email"
+              labelText="Email:"
             />
+
             <label htmlFor="message" className="font-bold">
               Message
             </label>
