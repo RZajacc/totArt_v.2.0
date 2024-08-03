@@ -13,13 +13,14 @@ import emailRoutes from "./routes/emailRoutes.js";
 
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
 import passportConfig from "./config/passport.js";
+import sgMail from "@sendgrid/mail";
 
 dotenv.config();
 
-// * CREATE APP
+// CREATE APP
 const app = express();
 
-// * 1_DB CONNECTION
+// 1_DB CONNECTION
 const DBConnection = async () => {
   try {
     await mongoose.connect(process.env.DB as string);
@@ -29,7 +30,12 @@ const DBConnection = async () => {
   }
 };
 
-// * 2_APP MIDDLEWARES
+// 2_Authorize sendgrid API
+const Sendgrid_API = () => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+};
+
+// 3_APP MIDDLEWARES
 const addMiddlewares = () => {
   app.use(express.json());
   app.use(cors());
@@ -43,7 +49,7 @@ const addMiddlewares = () => {
   passportConfig(passport);
 };
 
-// * 3_ADD ROUTES
+// 4_ADD ROUTES
 const addRoutes = () => {
   app.use("/api/locations", locationsRoutes);
   app.use("/api/users", userRoutes);
@@ -52,7 +58,7 @@ const addRoutes = () => {
   app.use("/api/email", emailRoutes);
 };
 
-// * 4_START SERVER
+// 5_START SERVER
 const startServer = () => {
   const port = process.env.PORT || 5000;
   app.listen(port, () => {
@@ -60,8 +66,10 @@ const startServer = () => {
   });
 };
 
+// 6_INITIATE THE APP
 (async function controller() {
   await DBConnection();
+  Sendgrid_API();
   addMiddlewares();
   addRoutes();
   startServer();
