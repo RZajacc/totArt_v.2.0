@@ -1,8 +1,6 @@
 import { RequestHandler } from "express";
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey("");
-
 const sendContactEmail: RequestHandler = async (req, res) => {
   // Gather inputs and types
   const inputs: {
