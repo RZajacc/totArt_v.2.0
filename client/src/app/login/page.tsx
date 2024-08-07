@@ -45,7 +45,7 @@ function Login({}: Props) {
     if (response.ok) {
       const result: { msg: string; token: string } = await response.json();
       // Set cookie and change user status
-      setCookie('auth_token', result.token);
+      setCookie('auth_token', result.token, { secure: false });
       mutateUser();
       // Go to account
       router.push('/account');
