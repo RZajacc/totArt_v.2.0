@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // Types
 import { User } from '../../types/UserTypes';
-import type { locationData } from '../../types/LocationTypes';
+import type { locationData } from '../../types/locationTypes';
 // Images
 import emptyHeart from '../../assets/heart_empty.svg';
 import fullHeart from '../../assets/heart_full.svg';

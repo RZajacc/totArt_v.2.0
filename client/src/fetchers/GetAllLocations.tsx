@@ -1,5 +1,5 @@
 import { FetchError } from '../types/GeneralTypes';
-import type { locationData } from '../types/LocationTypes';
+import type { locationData } from '../types/locationTypes';
 
 export const getAllLocations = async (url: string) => {
   const response = await fetch(url, {

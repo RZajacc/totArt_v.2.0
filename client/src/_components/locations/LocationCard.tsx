@@ -9,7 +9,7 @@ import { locationFavsData } from '../../fetchers/LocationFavsData';
 
 // Components
 import { ErrorView } from '../ui/ErrorView';
-import { locationData } from '../../types/LocationTypes';
+import { locationData } from '../../types/locationTypes';
 import FavButton from './FavButton';
 
 // Assets

@@ -1,5 +1,5 @@
 import { FetchError } from '../types/GeneralTypes';
-import type { locationData } from '../types/LocationTypes';
+import type { locationData } from '../types/locationTypes';
 
 export const locationDetailsData = async (locationID: string) => {
   const myHeaders = new Headers();

@@ -2,7 +2,7 @@ import React from 'react';
 import useSWRMutation from 'swr/mutation';
 import { editComment } from '../../fetchers/EditComment';
 import { User } from '../../types/UserTypes';
-import type { locationData } from '../../types/LocationTypes';
+import type { locationData } from '../../types/locationTypes';
 
 type Props = {
   showEditCommentModal: boolean;

@@ -6,7 +6,7 @@ import pencil from '../../assets/pencil.svg';
 import trash from '../../assets/trash-can.svg';
 import Image from 'next/image';
 
-import type { comment } from '../../types/LocationTypes';
+import type { comment } from '../../types/locationTypes';
 
 type Props = {
   comment: comment;
