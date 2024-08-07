@@ -14,15 +14,18 @@ function UserProfile() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   const { trigger: triggerImageUpload, isMutating: isMutatingImage } =
-    useSWRMutation('http://localhost:5000/api/images/ImageUpload', ImageUpload);
+    useSWRMutation(
+      `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/ImageUpload`,
+      ImageUpload,
+    );
 
   const { trigger: triggerUserUpdate } = useSWRMutation(
-    'http://localhost:5000/api/users/updateUser',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/updateUser`,
     updateUserData,
   );
 
   const { trigger: triggerImageDelete } = useSWRMutation(
-    'http://localhost:5000/api/images/imageDelete',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/imageDelete`,
     deleteImage,
   );
 

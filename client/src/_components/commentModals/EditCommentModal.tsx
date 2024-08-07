@@ -27,7 +27,7 @@ function EditCommentModal({
 }: Props) {
   // Create a mutation
   const { trigger } = useSWRMutation(
-    'http://localhost:5000/api/comments/editComment',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/editComment`,
     editComment,
   );
   const handleEditComment = async () => {

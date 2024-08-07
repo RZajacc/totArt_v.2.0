@@ -41,7 +41,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   // Prepare mutation to add comment
   const { trigger, error: addCommentError } = useSWRMutation(
-    'http://localhost:5000/api/comments/addComment',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/addComment`,
     addNewComment,
   );
 

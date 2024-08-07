@@ -40,12 +40,12 @@ function PasswordChange({ setShowPasswordChange }: Props) {
 
   // Methods to validate and update user password
   const { trigger: triggerPswVerification } = useSWRMutation(
-    'http://localhost:5000/api/users/verifyUserPassword',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/verifyUserPassword`,
     VerifyUserPassword,
   );
 
   const { trigger: triggerPswUpdate } = useSWRMutation(
-    'http://localhost:5000/api/users/updateUserPassword',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/updateUserPassword`,
     UpdateUserPassword,
   );
 

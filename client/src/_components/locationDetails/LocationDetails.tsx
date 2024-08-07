@@ -38,14 +38,14 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
 
   // Mutation to trigger on upon button click
   const { trigger: triggerHandleFavs, error: handleFavsError } = useSWRMutation(
-    'http://localhost:5000/api/users/handleFavouriteLocations',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/handleFavouriteLocations`,
     locationFavsData,
   );
 
   // Delete location
   const { trigger: triggerDeleteLocation, error: deleteLocationError } =
     useSWRMutation(
-      'http://localhost:5000/api/locations/deleteLocation',
+      `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/deleteLocation`,
       DeleteLocation,
     );
 

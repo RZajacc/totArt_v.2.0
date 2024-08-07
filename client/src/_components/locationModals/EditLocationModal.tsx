@@ -24,7 +24,7 @@ function EditLocationModal({
 }: Props) {
   // Trigger function to update location data
   const { trigger } = useSWRMutation(
-    'http://localhost:5000/api/locations/updateLocation',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/updateLocation`,
     editLocation,
   );
 

@@ -21,7 +21,7 @@ function UserData({ propName, textarea }: Props) {
 
   // SWR method to trigger update
   const { trigger: triggerUpdate } = useSWRMutation(
-    'http://localhost:5000/api/users/updateUser',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/updateUser`,
     updateUserData,
   );
 

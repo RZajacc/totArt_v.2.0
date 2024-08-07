@@ -62,7 +62,7 @@ function Register() {
 
       try {
         const response = await fetch(
-          'http://localhost:5000/api/users/register',
+          `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/register`,
           {
             method: 'POST',
             headers: myHeaders,

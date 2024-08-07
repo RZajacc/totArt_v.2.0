@@ -27,22 +27,22 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     error: imageUploadError,
     reset: resetImageData,
   } = useSWRMutation(
-    'http://localhost:5000/api/images/ImageUpload',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/ImageUpload`,
     ImageUpload,
   );
 
   const { trigger: triggerDeletingImage } = useSWRMutation(
-    'http://localhost:5000/api/images/imageDelete',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/imageDelete`,
     deleteImage,
   );
 
   const { trigger: triggerAddLocation } = useSWRMutation(
-    'http://localhost:5000/api/locations/addNewLocation',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/addNewLocation`,
     addNewLocation,
   );
 
   const { trigger: triggerGetLocations } = useSWRMutation(
-    'http://localhost:5000/api/locations/all',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
     getAllLocations,
   );
 

@@ -20,7 +20,7 @@ function FavItem({ id, title, userEmail }: Props) {
 
   // Mutation to trigger on upon button click
   const { trigger: triggerFavsHandler } = useSWRMutation(
-    'http://localhost:5000/api/users/handleFavouriteLocations',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/handleFavouriteLocations`,
     locationFavsData,
   );
 

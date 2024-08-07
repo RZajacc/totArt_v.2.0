@@ -33,11 +33,14 @@ function Login({}: Props) {
     urlencoded.append('password', password);
 
     // Login user
-    const response = await fetch('http://localhost:5000/api/users/login', {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-    });
+    const response = await fetch(
+      `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/login`,
+      {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+      },
+    );
 
     if (response.ok) {
       const result: { msg: string; token: string } = await response.json();

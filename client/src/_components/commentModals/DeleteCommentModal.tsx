@@ -22,7 +22,7 @@ function DeleteCommentModal({
   selectedCommentId,
 }: Props) {
   const { trigger } = useSWRMutation(
-    'http://localhost:5000/api/comments/deleteComment',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/deleteComment`,
     deleteComment,
   );
 

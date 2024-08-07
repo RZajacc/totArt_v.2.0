@@ -14,7 +14,7 @@ function Contact() {
     error: emailError,
     data,
   } = useSWRMutation(
-    'http://localhost:5000/api/email/sendEmail',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/email/sendEmail`,
     sendContactEmail,
   );
 

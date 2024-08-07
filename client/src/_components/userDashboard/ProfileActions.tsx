@@ -22,7 +22,7 @@ function ProfileActions({}: Props) {
 
   // SWR method to trigger deleting a user
   const { trigger: triggerDeletingUser } = useSWRMutation(
-    'http://localhost:5000/api/users/deleteUser',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/deleteUser`,
     DeleteUserAccount,
   );
 

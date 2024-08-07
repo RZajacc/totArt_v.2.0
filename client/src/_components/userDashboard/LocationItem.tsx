@@ -25,7 +25,7 @@ function LocationItem({ title, id, imageId, image_publicId }: Props) {
   const { mutateUser } = useContext(AuthContext);
 
   const { trigger: triggerDeletingLocation } = useSWRMutation(
-    'http://localhost:5000/api/locations/deleteLocation',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/deleteLocation`,
     DeleteLocation,
   );
 
