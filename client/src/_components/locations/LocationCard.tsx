@@ -56,20 +56,24 @@ function LocationCard({ locationData }: Props) {
   return (
     <div className="rounded-lg border-2 border-black shadow-md shadow-black">
       <section className="relative">
-        {isFav ? (
-          <FavButton
-            imgSrc={fullHeart}
-            onClick={() => {
-              handleFavourites(locationData._id);
-            }}
-          />
+        {user ? (
+          isFav ? (
+            <FavButton
+              imgSrc={fullHeart}
+              onClick={() => {
+                handleFavourites(locationData._id);
+              }}
+            />
+          ) : (
+            <FavButton
+              imgSrc={emptyHeart}
+              onClick={() => {
+                handleFavourites(locationData._id);
+              }}
+            />
+          )
         ) : (
-          <FavButton
-            imgSrc={emptyHeart}
-            onClick={() => {
-              handleFavourites(locationData._id);
-            }}
-          />
+          ''
         )}
 
         <Image
