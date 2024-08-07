@@ -16,7 +16,10 @@ function Content() {
     data: locations,
     error: locationError,
     isLoading: locationsLoading,
-  } = useSWR('http://localhost:5000/api/locations/all', getAllLocations);
+  } = useSWR(
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
+    getAllLocations,
+  );
 
   // Displaying loaders and errors
   if (locationError) {
@@ -27,6 +30,7 @@ function Content() {
     return <LoadingView />;
   }
 
+  console.log(process.env.NODE_ENV);
   return (
     <>
       <h1 className="text-center text-xl font-bold md:mt-4">
