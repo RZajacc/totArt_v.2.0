@@ -46,8 +46,11 @@ function Login({}: Props) {
       const result: { msg: string; token: string } = await response.json();
       // Set cookie and change user status
       setCookie('auth_token', result.token, {
-        secure: true,
-        domain: 'https://tot-art-v-2-0.vercel.app/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== 'development',
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 24, // 1 day
+        path: '/',
       });
       mutateUser();
       // Go to account
