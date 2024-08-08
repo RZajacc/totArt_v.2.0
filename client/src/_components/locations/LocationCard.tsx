@@ -81,8 +81,8 @@ function LocationCard({ locationData }: Props) {
           alt={locationData.title}
           width={locationData.image.width}
           height={locationData.image.height}
-          layout="responsive"
           className="rounded-lg"
+          priority
         />
       </section>
 

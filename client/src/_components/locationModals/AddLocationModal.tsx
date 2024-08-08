@@ -137,13 +137,16 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               <p className="text-center font-bold">
                 {imageIsMutating ? 'Uploading...' : ''}
               </p>
-              <Image
-                src={imageData ? imageData.secure_url : ''}
-                width={imageData ? imageData.width : undefined}
-                height={imageData ? imageData.height : undefined}
-                alt="Uploaded image"
-                className={`${!imageData ? 'hidden' : ''} mx-auto w-1/4 rounded-md`}
-              />
+              {imageData && (
+                <Image
+                  src={imageData.secure_url}
+                  width={imageData.width}
+                  height={imageData.height}
+                  alt="Uploaded image"
+                  className={`mx-auto w-1/4 rounded-md`}
+                />
+              )}
+
               <small className="text-gray-500 ">
                 *Supported formats : .jpg, .jpeg, .png
               </small>
