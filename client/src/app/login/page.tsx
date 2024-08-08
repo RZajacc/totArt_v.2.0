@@ -16,7 +16,6 @@ function Login({}: Props) {
   // Router for redirection after login
   const router = useRouter();
 
-  console.log('DEV OR PROD', process.env.NODE_ENV);
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Collect login data

@@ -40,9 +40,6 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     getUserData,
   );
 
-  // ? Temp for inspection
-  console.log('USER', user);
-
   return (
     <AuthContext.Provider
       value={{

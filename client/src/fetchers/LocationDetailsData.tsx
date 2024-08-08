@@ -8,12 +8,15 @@ export const locationDetailsData = async (locationID: string) => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('_id', locationID);
 
-  const response = await fetch('http://localhost:5000/api/locations/details', {
-    method: 'POST',
-    headers: myHeaders,
-    body: urlencoded,
-    redirect: 'follow',
-  });
+  const response = await fetch(
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/details`,
+    {
+      method: 'POST',
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: 'follow',
+    },
+  );
 
   if (response.ok) {
     const result: locationData = await response.json();
