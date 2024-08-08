@@ -83,6 +83,7 @@ function ContentDetails({ params }: { params: { id: string } }) {
 
   return (
     <div className="mx-auto max-w-xl">
+      <p>Locationid: {locationID}</p>
       <LocationDetails
         user={user!}
         data={locationData!}
