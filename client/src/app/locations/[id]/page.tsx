@@ -14,7 +14,6 @@ import DeleteCommentModal from '../../../_components/commentModals/DeleteComment
 import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
 import { ErrorView } from '../../../_components/ui/ErrorView';
 import LoadingView from '../../../_components/ui/LoadingView';
-import isAuth from '../../../utils/IsAuth';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
@@ -157,4 +156,4 @@ function ContentDetails({ params }: { params: { id: string } }) {
   );
 }
 
-export default isAuth(ContentDetails);
+export default ContentDetails;

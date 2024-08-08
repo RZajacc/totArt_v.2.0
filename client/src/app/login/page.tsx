@@ -2,6 +2,7 @@
 import { FormEvent, useContext, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
+import { setCookie } from 'cookies-next';
 
 type Props = {};
 
@@ -45,8 +46,8 @@ function Login({}: Props) {
     if (response.ok) {
       const result: { msg: string; token: string } = await response.json();
       // Set cookie and change user status
-      // setCookie('auth_token', result.token);
-      localStorage.setItem('auth_token', result.token);
+      setCookie('auth_token', result.token);
+      // localStorage.setItem('auth_token', result.token);
       mutateUser();
       // Go to account
       router.push('/account');

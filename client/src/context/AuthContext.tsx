@@ -4,6 +4,7 @@ import { User } from '../types/UserTypes';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import { getUserData } from '../fetchers/GetUserData';
+import { deleteCookie } from 'cookies-next';
 
 interface AuthContextType {
   user: User | undefined;
@@ -29,8 +30,8 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
 
   // LOGOUT
   const logout = () => {
-    // deleteCookie('auth_token');
-    localStorage.removeItem('auth_token');
+    deleteCookie('auth_token');
+    // localStorage.removeItem('auth_token');
     mutateUser();
     router.push('/login');
   };
