@@ -1,4 +1,3 @@
-import { getCookie } from 'cookies-next';
 import { User } from '../types/UserTypes';
 import { FetchError } from '../types/GeneralTypes';
 

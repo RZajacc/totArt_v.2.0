@@ -1,6 +1,5 @@
 'use client';
 import { FormEvent, useContext, useRef, useState } from 'react';
-import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
 
