@@ -1,10 +1,9 @@
 import { User } from '../types/UserTypes';
 import { FetchError } from '../types/GeneralTypes';
-import { getCookie } from 'cookies-next';
 
 export const getUserData = async (url: string) => {
-  // Get token from cookie
-  const token = getCookie('auth_token');
+  // Get token from local storage
+  const token = localStorage.getItem('auth_token');
 
   // If token exists get user data
   if (token) {
