@@ -36,7 +36,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   };
 
   const { data: user, mutate: mutateUser } = useSWR(
-    'http://localhost:5000/api/users/profile',
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/profile`,
     getUserData,
   );
 
