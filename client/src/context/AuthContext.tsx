@@ -31,7 +31,6 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   // LOGOUT
   const logout = () => {
     deleteCookie('auth_token');
-    // localStorage.removeItem('auth_token');
     mutateUser();
     router.push('/login');
   };

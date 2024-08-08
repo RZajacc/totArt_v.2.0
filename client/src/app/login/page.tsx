@@ -47,7 +47,6 @@ function Login({}: Props) {
       const result: { msg: string; token: string } = await response.json();
       // Set cookie and change user status
       setCookie('auth_token', result.token);
-      // localStorage.setItem('auth_token', result.token);
       mutateUser();
       // Go to account
       router.push('/account');
