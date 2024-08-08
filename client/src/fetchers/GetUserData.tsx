@@ -4,7 +4,8 @@ import { FetchError } from '../types/GeneralTypes';
 
 export const getUserData = async (url: string) => {
   // Get token from cookie
-  const token = getCookie('auth_token');
+  // const token = getCookie('auth_token');
+  const token = localStorage.getItem('auth_token');
 
   // If token exists get user data
   if (token) {
