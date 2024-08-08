@@ -51,6 +51,7 @@ function Login({}: Props) {
         sameSite: 'strict',
         path: '/',
         maxAge: 60 * 60 * 24,
+        domain: 'https://tot-art-v-2-0.vercel.app/',
       });
       mutateUser();
       // Go to account
