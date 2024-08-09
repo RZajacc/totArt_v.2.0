@@ -16,7 +16,6 @@ function LabeledInput({ labelFor, labelText, inputType, ...props }: Props) {
         type={inputType}
         name={labelFor}
         className="rounded-md border border-slate-600 p-1 focus:outline-none focus:ring-1 focus:ring-slate-600 "
-        required
         {...props}
       />
     </>

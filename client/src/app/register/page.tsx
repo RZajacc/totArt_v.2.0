@@ -20,14 +20,11 @@ function Register() {
     msg: '',
     user: { email: '', userName: '' },
   });
-  const [registerErr, setRegisterErr] = useState('');
+  const [registerErrMsg, setRegisterErrMsg] = useState('');
+  const [registerErr, setRegisterErr] = useState(false);
 
   // Password field state variables
   const [invalidatePswInput, setInvalidatePswInput] = useState(false);
-
-  // -------Registration Refs-------
-  const regErrorParagraph = useRef<HTMLDivElement>(null);
-  const regSuccessDiv = useRef<HTMLParagraphElement>(null);
 
   // User registration
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
@@ -74,26 +71,15 @@ function Register() {
         if (response.ok) {
           const result: registerSucc = await response.json();
           setRegisterSucc(result);
-          regSuccessDiv.current?.classList.remove('hidden');
           form.reset();
         } else {
           const result: { msg: string } = await response.json();
-          console.log(result);
-          setRegisterErr(result.msg);
-          regErrorParagraph.current?.classList.remove('hidden');
+          setRegisterErrMsg(result.msg);
+          setRegisterErr(true);
         }
       } catch (error) {
         console.log(error);
       }
-    }
-  };
-
-  const hideFeedbackInfo = () => {
-    if (!regSuccessDiv.current?.classList.contains('hidden')) {
-      regSuccessDiv.current?.classList.add('hidden');
-    }
-    if (!regErrorParagraph.current?.classList.contains('hidden')) {
-      regErrorParagraph.current?.classList.add('hidden');
     }
   };
 
@@ -114,7 +100,9 @@ function Register() {
             inputType="text"
             labelFor="username"
             labelText="Username:"
-            onChange={hideFeedbackInfo}
+            onChange={() => {
+              setRegisterErr(false);
+            }}
             placeholder="i.e John"
             required
           />
@@ -123,7 +111,9 @@ function Register() {
             labelFor="email"
             labelText="Email:"
             placeholder="i.e. JohnDoe@mail.com"
-            onChange={hideFeedbackInfo}
+            onChange={() => {
+              setRegisterErr(false);
+            }}
             required
           />
           <PasswordField
@@ -141,6 +131,7 @@ function Register() {
             setInvalidateInput={setInvalidatePswInput}
           />
 
+          {/* Password validation feedback */}
           {invalidatePswInput && (
             <div className="rounded-xl bg-red-500 px-4 py-2 text-white">
               {pswFeedback &&
@@ -150,27 +141,32 @@ function Register() {
             </div>
           )}
 
-          <p
-            className="hidden rounded-xl bg-red-500 px-4 py-2 text-white"
-            ref={regErrorParagraph}
-          >
-            {registerErr}
-          </p>
-          <div
-            className="hidden rounded-xl bg-green-400 p-2"
-            ref={regSuccessDiv}
-          >
-            <p className="text-center text-lg font-bold">{registerSucc.msg}</p>
-            <p className="text-center">
-              You will receive a confirmation email on{' '}
-              <span className="font-bold">{registerSucc.user.email}</span>{' '}
-              adress.
+          {/* Registration error feedback */}
+          {registerErr && (
+            <p className="rounded-xl bg-red-500 px-4 py-2 text-white">
+              {registerErrMsg}
             </p>
-            <small className="font-bold italic text-red-500">
-              *Functionality to be applied soon! For now just go to login page
-              to continue
-            </small>
-          </div>
+          )}
+
+          {/* Registration success feedback */}
+          {registerSucc.msg !== '' && (
+            <div className="rounded-xl bg-yellow-50 p-2">
+              <p className="text-center text-lg font-bold">
+                {registerSucc.msg}
+              </p>
+              <p className="text-center">
+                You will receive a confirmation email on{' '}
+                <span className="font-bold">{registerSucc.user.email}</span>{' '}
+                adress.
+              </p>
+              <p className="text-center">
+                <small className="font-bold italic text-red-500">
+                  *Functionality to be applied soon! For now just go to login
+                  page to continue
+                </small>
+              </p>
+            </div>
+          )}
 
           <button
             type="submit"

@@ -203,16 +203,19 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 inputType="text"
                 labelFor="title"
                 labelText="Start with giving it a title:"
+                required
               />
               <LabeledTextArea
                 labelFor="description"
                 labelText="Add some description"
                 rows={2}
+                required
               />
               <LabeledTextArea
                 labelFor="location"
                 labelText="Where was it?"
                 rows={2}
+                required
               />
 
               {/* Error if image is missing */}
