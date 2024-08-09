@@ -39,7 +39,7 @@ function Content() {
       </h1>
       {user ? (
         <button
-          className="mx-auto mb-4 mt-1 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
+          className="mx-auto mb-8 mt-3 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
           onClick={() => {
             setShowAddLocation(true);
           }}

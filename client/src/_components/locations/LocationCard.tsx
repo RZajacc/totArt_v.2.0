@@ -54,7 +54,7 @@ function LocationCard({ locationData }: Props) {
   }, [user]);
 
   return (
-    <div className="rounded-lg border-2 border-black shadow-md shadow-black">
+    <div className="grid content-between rounded-lg border-2 border-black bg-slate-200 shadow-md shadow-black">
       <section className="relative">
         {user ? (
           isFav ? (
@@ -81,7 +81,7 @@ function LocationCard({ locationData }: Props) {
           alt={locationData.title}
           width={locationData.image.width}
           height={locationData.image.height}
-          className="rounded-lg"
+          className="mx-auto h-60 w-full rounded-lg"
           priority
         />
       </section>
