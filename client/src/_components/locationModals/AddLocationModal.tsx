@@ -6,6 +6,8 @@ import { addNewLocation } from '../../fetchers/AddNewLocation';
 import { AuthContext } from '../../context/AuthContext';
 import { getAllLocations } from '../../fetchers/GetAllLocations';
 import { deleteImage } from '../../fetchers/DeleteImage';
+import LabeledInput from '../formElements/LabeledInput';
+import LabeledTextArea from '../formElements/LabeledTextArea';
 
 type Props = {
   showAddLocation: boolean;
@@ -137,11 +139,14 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
         <div
           className={`relative top-[5%] mx-auto grid w-11/12 max-w-md gap-y-2 rounded-sm border-2 border-black bg-yellow-200 p-2`}
         >
+          {/* HEADER SECTION */}
           <section>
             <h1 className="m-1 text-center font-bold">
               Share some unique content:
             </h1>
           </section>
+
+          {/* IMAGE UPLOAD SECTION */}
           <section>
             <form onSubmit={handleFileSubmit} className="grid gap-y-1">
               <input
@@ -176,6 +181,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               >
                 Upload image
               </button>
+
               {/* Invalid feedback */}
               <p
                 className={`${!imageUploadError ? 'hidden' : ''} rounded-lg bg-red-500 px-2 py-1 text-center text-white`}
@@ -184,32 +190,27 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               </p>
             </form>
           </section>
+
+          {/* LOCATION DESCRIPTION SECTION */}
           <section>
             <form className="grid gap-y-1" onSubmit={submitNewLocation}>
-              <label htmlFor="title">Start with giving it a title*</label>
-              <input
-                type="text"
-                placeholder="example title"
-                name="title"
-                className="rounded-sm p-1"
-                required
+              <LabeledInput
+                inputType="text"
+                labelFor="title"
+                labelText="Start with giving it a title:"
               />
-              <label htmlFor="description">Add some description*</label>
-              <textarea
+              <LabeledTextArea
+                labelFor="description"
+                labelText="Add some description"
                 rows={2}
-                name="description"
-                placeholder="Describe the image"
-                className="rounded-sm p-1"
-                required
               />
-              <label htmlFor="location">Where was it?*</label>
-              <textarea
+              <LabeledTextArea
+                labelFor="location"
+                labelText="Where was it?"
                 rows={2}
-                name="location"
-                className="rounded-sm p-1"
-                placeholder="Doesnt have to be precise but provide some information"
-                required
               />
+
+              {/* Error if image is missing */}
               {missingImageError && (
                 <p className="my-1 text-center text-red-400">
                   Image is still missing!
@@ -218,7 +219,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               <button
                 ref={submitButtonRef}
                 type="submit"
-                className={`rounded-sm bg-black text-white disabled:animate-pulse disabled:border disabled:border-slate-500 disabled:bg-slate-300 disabled:text-slate-400`}
+                className={`my-1 rounded-sm bg-black py-1 text-white disabled:animate-pulse disabled:border disabled:border-slate-500 disabled:bg-slate-300 disabled:text-slate-400`}
               >
                 Submit
               </button>
