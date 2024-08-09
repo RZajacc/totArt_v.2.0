@@ -16,7 +16,7 @@ function LabeledTextArea({ labelFor, labelText, rows }: Props) {
         name={labelFor}
         rows={rows}
         required
-        className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="rounded-md border border-slate-600 p-1 focus:outline-none focus:ring-1 focus:ring-slate-600 "
       />
     </>
   );
