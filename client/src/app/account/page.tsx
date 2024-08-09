@@ -4,6 +4,7 @@ import UserProfile from '../../_components/userDashboard/UserProfile';
 import UserFavs from '../../_components/userDashboard/UserFavs';
 import UserPosts from '../../_components/userDashboard/UserLocations';
 import DashboardTab from '../../_components/userDashboard/DashboardTab';
+import isAuth from '../../utils/IsAuth';
 
 function Account() {
   const [activeComponent, setActiveComponent] = useState('Profile');
@@ -43,4 +44,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default isAuth(Account);
