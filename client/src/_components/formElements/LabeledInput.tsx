@@ -4,9 +4,9 @@ type Props = {
   labelFor: string;
   labelText: string;
   inputType: string;
-};
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
-function LabeledInput({ labelFor, labelText, inputType }: Props) {
+function LabeledInput({ labelFor, labelText, inputType, ...props }: Props) {
   return (
     <>
       <label htmlFor={labelFor} className="font-bold">
@@ -17,6 +17,7 @@ function LabeledInput({ labelFor, labelText, inputType }: Props) {
         name={labelFor}
         className="rounded-sm p-1 focus:outline-none focus:ring-2 focus:ring-green-400"
         required
+        {...props}
       />
     </>
   );

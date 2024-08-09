@@ -8,13 +8,14 @@ type Props = {
   labelValue: string;
   invalidateInput: boolean;
   setInvalidateInput: React.Dispatch<React.SetStateAction<boolean>>;
-};
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 function PasswordField({
   labelName,
   labelValue,
   invalidateInput,
   setInvalidateInput,
+  ...props
 }: Props) {
   // Toggle text or password display on input
   const [showPassword, setShowPassword] = useState(false);
@@ -29,10 +30,10 @@ function PasswordField({
         <input
           type={`${showPassword ? 'text' : 'password'}`}
           name={labelName}
-          placeholder="current password"
           onChange={() => {
             setInvalidateInput(false);
           }}
+          {...props}
           className={`w-full rounded-md border ${invalidateInput ? 'border-red-500 text-red-400 focus:ring-red-500' : 'border-slate-600 focus:ring-slate-600'}  p-1 px-2 focus:outline-none focus:ring-1 `}
         />
         <button

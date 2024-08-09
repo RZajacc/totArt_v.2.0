@@ -2,6 +2,8 @@
 import { FormEvent, useRef, useState } from 'react';
 import Link from 'next/link';
 import { validatePassword } from '../../utils/ValidatePassword';
+import LabeledInput from '../../_components/formElements/LabeledInput';
+import PasswordField from '../../_components/ui/PasswordField';
 
 type registerSucc = {
   msg: string;
@@ -19,22 +21,20 @@ function Register() {
     user: { email: '', userName: '' },
   });
   const [registerErr, setRegisterErr] = useState('');
+
+  // Password field state variables
+  const [invalidatePswInput, setInvalidatePswInput] = useState(false);
+
   // -------Registration Refs-------
-  const pswErrorDiv = useRef<HTMLDivElement>(null);
   const regErrorParagraph = useRef<HTMLDivElement>(null);
   const regSuccessDiv = useRef<HTMLParagraphElement>(null);
-
-  // -------Input refs-------
-  const usernameInput = useRef<HTMLInputElement>(null);
-  const emailInput = useRef<HTMLInputElement>(null);
-  const passwordInput = useRef<HTMLInputElement>(null);
-  const confirmPasswordInput = useRef<HTMLInputElement>(null);
 
   // User registration
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     // User credentials
     const userName = formData.get('username') as string;
     const email = formData.get('email') as string;
@@ -47,7 +47,7 @@ function Register() {
 
     // If password is not matching requirements show error div
     if (pswValidation.length !== 0) {
-      pswErrorDiv.current?.classList.remove('hidden');
+      setInvalidatePswInput(true);
     }
 
     // If password passed validation create a new user
@@ -75,10 +75,7 @@ function Register() {
           const result: registerSucc = await response.json();
           setRegisterSucc(result);
           regSuccessDiv.current?.classList.remove('hidden');
-          usernameInput.current!.value = '';
-          emailInput.current!.value = '';
-          passwordInput.current!.value = '';
-          confirmPasswordInput.current!.value = '';
+          form.reset();
         } else {
           const result: { msg: string } = await response.json();
           console.log(result);
@@ -98,9 +95,6 @@ function Register() {
     if (!regErrorParagraph.current?.classList.contains('hidden')) {
       regErrorParagraph.current?.classList.add('hidden');
     }
-    if (!pswErrorDiv.current?.classList.contains('hidden')) {
-      pswErrorDiv.current?.classList.add('hidden');
-    }
   };
 
   return (
@@ -116,63 +110,46 @@ function Register() {
           </Link>
         </p>
         <form onSubmit={handleRegister} className="my-4 grid gap-2">
-          <label htmlFor="username">Username:</label>
-          <input
-            ref={usernameInput}
-            type="text"
-            required
-            name="username"
-            placeholder="i.e. John"
+          <LabeledInput
+            inputType="text"
+            labelFor="username"
+            labelText="Username:"
             onChange={hideFeedbackInfo}
-          />
-          <label htmlFor="email">Email:</label>
-          <input
-            ref={emailInput}
-            type="email"
+            placeholder="i.e John"
             required
-            name="email"
-            placeholder="john@doe.com"
+          />
+          <LabeledInput
+            inputType="email"
+            labelFor="email"
+            labelText="Email:"
+            placeholder="i.e. JohnDoe@mail.com"
             onChange={hideFeedbackInfo}
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            ref={passwordInput}
-            type="password"
             required
-            name="password"
+          />
+          <PasswordField
+            labelName="password"
+            labelValue="Password:"
             placeholder="password"
-            minLength={8}
-            onChange={hideFeedbackInfo}
+            invalidateInput={invalidatePswInput}
+            setInvalidateInput={setInvalidatePswInput}
           />
-          <label htmlFor="confirm-password">Confirm password:</label>
-          <input
-            ref={confirmPasswordInput}
-            type="password"
-            required
-            name="confirm-password"
-            placeholder="password"
-            minLength={8}
-            onChange={hideFeedbackInfo}
+          <PasswordField
+            labelName="confirm-password"
+            labelValue="Confirm password:"
+            placeholder="confirm password"
+            invalidateInput={invalidatePswInput}
+            setInvalidateInput={setInvalidatePswInput}
           />
-          <div className="text-sm italic text-slate-500">
-            <p>Password needs to have at least:</p>
-            <ul className="ml-5 list-disc">
-              <li>8 characters.</li>
-              <li>1 lowercase character.</li>
-              <li>1 uppercase character.</li>
-              <li>1 number.</li>
-              <li>1 special character.</li>
-            </ul>
-          </div>
-          <div
-            ref={pswErrorDiv}
-            className="hidden rounded-xl bg-red-500 px-4 py-2 text-white"
-          >
-            {pswFeedback &&
-              pswFeedback.map((error, idx) => {
-                return <p key={idx}>{error}</p>;
-              })}
-          </div>
+
+          {invalidatePswInput && (
+            <div className="rounded-xl bg-red-500 px-4 py-2 text-white">
+              {pswFeedback &&
+                pswFeedback.map((error, idx) => {
+                  return <p key={idx}>{error}</p>;
+                })}
+            </div>
+          )}
+
           <p
             className="hidden rounded-xl bg-red-500 px-4 py-2 text-white"
             ref={regErrorParagraph}
