@@ -83,6 +83,8 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const submitNewLocation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+
+    // Gather inputs data
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const location = formData.get('location') as string;
@@ -109,6 +111,9 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   };
 
   const handleClosingModal = async () => {
+    // Remove missing image error
+    setMissingImageError(false);
+
     // If there is an image then delete it
     if (imageData) {
       triggerDeletingImage({
