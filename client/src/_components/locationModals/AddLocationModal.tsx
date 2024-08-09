@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { ImageUpload } from '../../fetchers/ImageUpload';
 import Image from 'next/image';
@@ -14,8 +14,11 @@ type Props = {
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const { user, mutateUser } = useContext(AuthContext);
+  const [missingImageError, setMissingImageError] = useState(false);
+
   // Input refs
-  const imageInputRef = useRef<HTMLInputElement>(null);
+  const imageUploadButtonRef = useRef<HTMLButtonElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const descriptionTextRef = useRef<HTMLTextAreaElement>(null);
   const locationTextRef = useRef<HTMLTextAreaElement>(null);
@@ -50,8 +53,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Define a form
+    const form = e.currentTarget;
+
     // Get the file from submitted in the form
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(form);
     const imageFile = formData.get('locationImage') as File;
 
     // If there was an image already uploded delete it to allow uploading a new one
@@ -65,8 +71,8 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
       folder: 'postImages',
     });
 
-    // Reset ref
-    imageInputRef.current!.value = '';
+    // reset file input
+    form.reset();
   };
 
   // ------------- SUBMIT A NEW POST -----------------
@@ -76,6 +82,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
     const location = formData.get('location') as string;
+
+    if (!imageData) {
+      setMissingImageError(true);
+      return;
+    }
 
     await triggerAddLocation({
       title,
@@ -112,6 +123,13 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     setShowAddLocation(false);
   };
 
+  // Lock the submit button if image is still loading
+  if (imageIsMutating) {
+    submitButtonRef.current?.setAttribute('disabled', 'true');
+  } else {
+    submitButtonRef.current?.removeAttribute('disabled');
+  }
+
   return (
     <>
       <div
@@ -128,9 +146,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
           <section>
             <form onSubmit={handleFileSubmit} className="grid gap-y-1">
               <input
-                ref={imageInputRef}
                 type="file"
                 name="locationImage"
+                onChange={() => {
+                  imageUploadButtonRef.current?.click();
+                }}
                 required
                 className=" file:rounded-md file:bg-purple-400 file:shadow-md file:shadow-black"
               />
@@ -150,7 +170,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               <small className="text-gray-500 ">
                 *Supported formats : .jpg, .jpeg, .png
               </small>
-              <button type="submit" className="rounded-sm bg-black text-white">
+              <button
+                ref={imageUploadButtonRef}
+                type="submit"
+                className="hidden rounded-sm bg-black text-white"
+              >
                 Upload image
               </button>
               {/* Invalid feedback */}
@@ -163,7 +187,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
           </section>
           <section>
             <form className="grid gap-y-1" onSubmit={submitNewLocation}>
-              <label htmlFor="title">Start with giving it a title</label>
+              <label htmlFor="title">Start with giving it a title*</label>
               <input
                 ref={titleInputRef}
                 type="text"
@@ -172,7 +196,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 className="rounded-sm p-1"
                 required
               />
-              <label htmlFor="description">Add some description</label>
+              <label htmlFor="description">Add some description*</label>
               <textarea
                 ref={descriptionTextRef}
                 rows={2}
@@ -181,7 +205,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 className="rounded-sm p-1"
                 required
               />
-              <label htmlFor="location">Where was it?</label>
+              <label htmlFor="location">Where was it?*</label>
               <textarea
                 ref={locationTextRef}
                 rows={2}
@@ -190,7 +214,16 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
                 placeholder="Doesnt have to be precise but provide some information"
                 required
               />
-              <button type="submit" className="rounded-sm bg-black text-white">
+              {missingImageError && (
+                <p className="my-1 text-center text-red-400">
+                  Image is still missing!
+                </p>
+              )}
+              <button
+                ref={submitButtonRef}
+                type="submit"
+                className={`rounded-sm bg-black text-white disabled:animate-pulse disabled:border disabled:border-slate-500 disabled:bg-slate-300 disabled:text-slate-400`}
+              >
                 Submit
               </button>
             </form>
