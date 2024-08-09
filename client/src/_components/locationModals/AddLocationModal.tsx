@@ -19,9 +19,6 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   // Input refs
   const imageUploadButtonRef = useRef<HTMLButtonElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
-  const titleInputRef = useRef<HTMLInputElement>(null);
-  const descriptionTextRef = useRef<HTMLTextAreaElement>(null);
-  const locationTextRef = useRef<HTMLTextAreaElement>(null);
 
   const {
     data: imageData,
@@ -66,10 +63,15 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     }
 
     // Trigger the mutation
-    await triggerImageUpload({
+    const data = await triggerImageUpload({
       file: imageFile,
       folder: 'postImages',
     });
+
+    // Remove error if image was added
+    if (data) {
+      setMissingImageError(false);
+    }
 
     // reset file input
     form.reset();
@@ -83,6 +85,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     const description = formData.get('description') as string;
     const location = formData.get('location') as string;
 
+    // If no image is uploaded stop execution here and display error
     if (!imageData) {
       setMissingImageError(true);
       return;
@@ -115,10 +118,6 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     // Reset image data
     resetImageData();
 
-    // Reset input refs
-    titleInputRef.current!.value = '';
-    descriptionTextRef.current!.value = '';
-    locationTextRef.current!.value = '';
     // Close the modal
     setShowAddLocation(false);
   };
@@ -189,7 +188,6 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
             <form className="grid gap-y-1" onSubmit={submitNewLocation}>
               <label htmlFor="title">Start with giving it a title*</label>
               <input
-                ref={titleInputRef}
                 type="text"
                 placeholder="example title"
                 name="title"
@@ -198,7 +196,6 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               />
               <label htmlFor="description">Add some description*</label>
               <textarea
-                ref={descriptionTextRef}
                 rows={2}
                 name="description"
                 placeholder="Describe the image"
@@ -207,7 +204,6 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               />
               <label htmlFor="location">Where was it?*</label>
               <textarea
-                ref={locationTextRef}
                 rows={2}
                 name="location"
                 className="rounded-sm p-1"
@@ -226,16 +222,14 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
               >
                 Submit
               </button>
+              <button
+                onClick={handleClosingModal}
+                type="reset"
+                className="my-2 ml-auto block rounded-md border-2 border-black bg-red-500 px-2 py-1 font-bold text-white shadow-md shadow-black"
+              >
+                Close
+              </button>
             </form>
-          </section>
-
-          <section className="py-2">
-            <button
-              onClick={handleClosingModal}
-              className="ml-auto block rounded-md border-2 border-black bg-red-500 px-2 py-1 font-bold text-white shadow-md shadow-black"
-            >
-              Close
-            </button>
           </section>
         </div>
       </div>
