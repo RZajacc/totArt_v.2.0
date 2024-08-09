@@ -1,5 +1,5 @@
 'use client';
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { validatePassword } from '../../utils/ValidatePassword';
 import LabeledInput from '../../_components/formElements/LabeledInput';
@@ -85,7 +85,7 @@ function Register() {
 
   return (
     <>
-      <div className="mx-auto mt-5 max-w-sm rounded-md bg-gradient-to-br from-green-300 to-green-500 p-4">
+      <div className="mx-auto mt-5 max-w-sm rounded-md bg-gradient-to-br from-green-300 to-green-500 p-4 shadow-md shadow-black">
         <h4 className="mb-3 text-center text-xl font-bold">
           Register at TotArt
         </h4>
@@ -122,6 +122,7 @@ function Register() {
             placeholder="password"
             invalidateInput={invalidatePswInput}
             setInvalidateInput={setInvalidatePswInput}
+            required
           />
           <PasswordField
             labelName="confirm-password"
@@ -129,6 +130,7 @@ function Register() {
             placeholder="confirm password"
             invalidateInput={invalidatePswInput}
             setInvalidateInput={setInvalidatePswInput}
+            required
           />
 
           {/* Password validation feedback */}

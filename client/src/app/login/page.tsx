@@ -1,7 +1,9 @@
 'use client';
-import { FormEvent, useContext, useRef, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
+import LabeledInput from '../../_components/formElements/LabeledInput';
+import PasswordField from '../../_components/ui/PasswordField';
 
 type Props = {};
 
@@ -10,10 +12,9 @@ function Login({}: Props) {
   const { mutateUser } = useContext(AuthContext);
   // Login error message
   const [logErrMsg, setLogErrMsg] = useState('');
-  // Ref to paragraph displaying error message
-  const errorParagraph = useRef<HTMLParagraphElement | null>(null);
   // Router for redirection after login
   const router = useRouter();
+  const [invalidatePswInput, setInvalidatePswInput] = useState(false);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,13 +52,15 @@ function Login({}: Props) {
     } else {
       const result: { msg: string } = await response.json();
       setLogErrMsg(result.msg);
-      errorParagraph.current?.classList.remove('hidden');
+      if (result.msg === 'Wrong password, try again!') {
+        setInvalidatePswInput(true);
+      }
     }
   };
 
   return (
     <>
-      <div className="mx-auto mt-5 max-w-sm rounded-md bg-gradient-to-br from-green-300 to-green-500 p-4">
+      <div className="mx-auto mt-5 max-w-sm rounded-md bg-gradient-to-br from-green-300 to-green-500 p-4 shadow-md shadow-black">
         <h4 className="mb-3 text-center text-xl font-bold">
           Welcome to TotArt
         </h4>
@@ -65,36 +68,32 @@ function Login({}: Props) {
           To use all of our functionalities please login to your account:
         </p>
         <form onSubmit={handleLogin} className="grid gap-3">
-          <label htmlFor="email">Email address:</label>
-          <input
+          <LabeledInput
+            inputType="email"
+            labelFor="email"
+            labelText="Email adress:"
+            placeholder="i.e. JohnDoe@mail.com"
             onChange={() => {
               setLogErrMsg('');
-              errorParagraph.current?.classList.add('hidden');
             }}
-            type="email"
-            name="email"
-            placeholder="Enter email"
             required
           />
 
-          <label htmlFor="password">Password:</label>
-          <input
-            onChange={() => {
-              setLogErrMsg('');
-              errorParagraph.current?.classList.add('hidden');
-            }}
-            type="password"
-            name="password"
-            placeholder="Password"
-            autoComplete="user-password"
+          <PasswordField
+            labelName="password"
+            labelValue="Password:"
+            placeholder="password"
+            invalidateInput={invalidatePswInput}
+            setInvalidateInput={setInvalidatePswInput}
             required
           />
-          <p
-            ref={errorParagraph}
-            className="hidden rounded-xl bg-red-500 py-1 text-center text-white"
-          >
-            {logErrMsg}
-          </p>
+
+          {logErrMsg !== '' && (
+            <p className="drounded-xl rounded-md bg-red-500 py-1 text-center text-white">
+              {logErrMsg}
+            </p>
+          )}
+
           <button
             type="submit"
             className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
