@@ -120,12 +120,14 @@ function PasswordChange({ setShowPasswordChange }: Props) {
         labelValue=" New password:"
         invalidateInput={invalidateNewPswInput}
         setInvalidateInput={setInvalidateNewPswInput}
+        showTooltip
       />
       <PasswordField
         labelName="confirm-password"
         labelValue="Repeat password:"
         invalidateInput={invalidateNewPswInput}
         setInvalidateInput={setInvalidateNewPswInput}
+        showTooltip
       />
       {invalidateNewPswInput && newPswErrorParagraph}
 
