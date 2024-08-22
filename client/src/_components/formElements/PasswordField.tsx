@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import showPasswordIcon from '../../assets/eye-password-show-svgrepo-com.svg';
 import hidePasswordIcon from '../../assets/eye-off-svgrepo-com.svg';
-import PasswordTooltip from '../formElements/PasswordTooltip';
+import PasswordTooltip from './PasswordTooltip';
 
 type Props = {
   labelName: string;
@@ -30,6 +30,8 @@ function PasswordField({
         className="flex items-center justify-between font-bold"
       >
         {labelValue}
+
+        {/* Show or hide tooltip */}
         {showTooltip && <PasswordTooltip />}
       </label>
 
@@ -44,6 +46,8 @@ function PasswordField({
           {...props}
           className={`w-full rounded-md border ${invalidateInput ? 'border-red-500 text-red-400 focus:ring-red-500' : 'border-slate-600 focus:ring-slate-600'}  p-1 px-2 focus:outline-none focus:ring-1 `}
         />
+
+        {/* Show or hide password field */}
         <button
           type="button"
           className="absolute right-2 top-1 w-7"

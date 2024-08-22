@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import PasswordField from '../ui/PasswordField';
+import PasswordField from '../formElements/PasswordField';
 import useSWRMutation from 'swr/mutation';
 import { VerifyUserPassword } from '../../fetchers/VerifyUserPassword';
 import { validatePassword } from '../../utils/ValidatePassword';

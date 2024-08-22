@@ -3,7 +3,7 @@ import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { validatePassword } from '../../utils/ValidatePassword';
 import LabeledInput from '../../_components/formElements/LabeledInput';
-import PasswordField from '../../_components/ui/PasswordField';
+import PasswordField from '../../_components/formElements/PasswordField';
 
 type registerSucc = {
   msg: string;

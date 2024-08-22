@@ -3,7 +3,7 @@ import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
 import LabeledInput from '../../_components/formElements/LabeledInput';
-import PasswordField from '../../_components/ui/PasswordField';
+import PasswordField from '../../_components/formElements/PasswordField';
 
 type Props = {};
 
