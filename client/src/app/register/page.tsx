@@ -122,6 +122,7 @@ function Register() {
             placeholder="password"
             invalidateInput={invalidatePswInput}
             setInvalidateInput={setInvalidatePswInput}
+            showTooltip
             required
           />
           <PasswordField
@@ -130,6 +131,7 @@ function Register() {
             placeholder="confirm password"
             invalidateInput={invalidatePswInput}
             setInvalidateInput={setInvalidatePswInput}
+            showTooltip
             required
           />
 

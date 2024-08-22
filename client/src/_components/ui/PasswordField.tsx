@@ -2,12 +2,14 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import showPasswordIcon from '../../assets/eye-password-show-svgrepo-com.svg';
 import hidePasswordIcon from '../../assets/eye-off-svgrepo-com.svg';
+import PasswordTooltip from '../formElements/PasswordTooltip';
 
 type Props = {
   labelName: string;
   labelValue: string;
   invalidateInput: boolean;
   setInvalidateInput: React.Dispatch<React.SetStateAction<boolean>>;
+  showTooltip?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 function PasswordField({
@@ -15,6 +17,7 @@ function PasswordField({
   labelValue,
   invalidateInput,
   setInvalidateInput,
+  showTooltip,
   ...props
 }: Props) {
   // Toggle text or password display on input
@@ -27,6 +30,7 @@ function PasswordField({
         className="flex items-center justify-between font-bold"
       >
         {labelValue}
+        {showTooltip && <PasswordTooltip />}
       </label>
 
       {/* Define input field */}
