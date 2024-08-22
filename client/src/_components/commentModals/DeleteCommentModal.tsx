@@ -6,10 +6,10 @@ import type { locationData } from '../../types/locationTypes';
 
 type Props = {
   showDeleteCommentModal: boolean;
-  setShowDeleteCommentModal: (show: boolean) => void;
+  setShowDeleteCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
   mutateUser: (user?: User) => void;
   mutateLocation: (location?: locationData) => void;
-  setSelectedCommentId: (id: string) => void;
+  setSelectedCommentId: React.Dispatch<React.SetStateAction<string>>;
   selectedCommentId: string | null;
 };
 
