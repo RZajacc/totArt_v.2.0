@@ -22,9 +22,13 @@ function PasswordField({
 
   return (
     <>
-      <label htmlFor={labelName} className="font-bold">
+      <label
+        htmlFor={labelName}
+        className="flex items-center justify-between font-bold"
+      >
         {labelValue}
       </label>
+
       {/* Define input field */}
       <div className="relative flex">
         <input
