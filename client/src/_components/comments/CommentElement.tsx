@@ -10,10 +10,10 @@ import type { comment } from '../../types/locationTypes';
 
 type Props = {
   comment: comment;
-  setShowDeleteCommentModal: (show: boolean) => void;
-  setShowEditCommentModal: (show: boolean) => void;
-  setSelectedCommentId: (id: string) => void;
-  setSelectedCommentContent: (comment: string) => void;
+  setShowDeleteCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowEditCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedCommentId: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCommentContent: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function CommentElement({
