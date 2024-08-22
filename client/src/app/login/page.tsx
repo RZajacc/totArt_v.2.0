@@ -88,7 +88,7 @@ function Login({}: Props) {
             required
           />
 
-          {logErrMsg !== '' && (
+          {invalidatePswInput && (
             <p className="drounded-xl rounded-md bg-red-500 py-1 text-center text-white">
               {logErrMsg}
             </p>

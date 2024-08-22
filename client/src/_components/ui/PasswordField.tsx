@@ -45,6 +45,7 @@ function PasswordField({
           className={`w-full rounded-md border ${invalidateInput ? 'border-red-500 text-red-400 focus:ring-red-500' : 'border-slate-600 focus:ring-slate-600'}  p-1 px-2 focus:outline-none focus:ring-1 `}
         />
         <button
+          type="button"
           className="absolute right-2 top-1 w-7"
           onClick={() => {
             setShowPassword((prevState) => !prevState);
@@ -52,7 +53,7 @@ function PasswordField({
         >
           <Image
             src={showPassword ? hidePasswordIcon : showPasswordIcon}
-            alt="show"
+            alt="show-hide password"
           />
         </button>
       </div>
