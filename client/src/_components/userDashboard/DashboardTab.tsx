@@ -2,7 +2,7 @@ import React from 'react';
 
 type Props = {
   tabName: string;
-  setActiveComponent: (activeComponent: string) => void;
+  setActiveComponent: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function DashboardTab({ tabName, setActiveComponent }: Props) {

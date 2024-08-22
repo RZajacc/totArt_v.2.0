@@ -6,10 +6,10 @@ import type { locationData } from '../../types/locationTypes';
 type Props = {
   locationId: string;
   showEditLocationModal: boolean;
-  setShowEditLocationModal: (show: boolean) => void;
+  setShowEditLocationModal: React.Dispatch<React.SetStateAction<boolean>>;
   selectedProperty: string;
   editLocationData: string;
-  setEditLocationData: (data: string) => void;
+  setEditLocationData: React.Dispatch<React.SetStateAction<string>>;
   mutateLocation: (location?: locationData) => void;
 };
 

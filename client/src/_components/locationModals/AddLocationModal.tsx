@@ -11,7 +11,7 @@ import LabeledTextArea from '../formElements/LabeledTextArea';
 
 type Props = {
   showAddLocation: boolean;
-  setShowAddLocation: (show: boolean) => void;
+  setShowAddLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {

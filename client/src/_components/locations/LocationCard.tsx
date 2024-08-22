@@ -81,7 +81,7 @@ function LocationCard({ locationData }: Props) {
           alt={locationData.title}
           width={locationData.image.width}
           height={locationData.image.height}
-          className="mx-auto h-60 w-full rounded-md"
+          className="rounded-md"
           priority
         />
       </section>
