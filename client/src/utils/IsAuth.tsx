@@ -1,21 +1,20 @@
 'use client';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
-import { AuthContext } from '../context/AuthContext';
 
 export default function isAuth(Component: any) {
   return function IsAuth(props: any) {
     // Get user auth token
-    const { user } = useContext(AuthContext);
+    const auth = localStorage.getItem('auth_token');
 
     // If it is stored in the browser continue but if not redirect to login
     useEffect(() => {
-      if (!user) {
+      if (!auth) {
         return redirect('/login');
       }
     }, []);
 
-    if (!user) {
+    if (!auth) {
       return null;
     }
 
