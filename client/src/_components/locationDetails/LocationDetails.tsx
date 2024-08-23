@@ -190,6 +190,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
             className="mx-auto w-60 rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold  "
             onClick={() => {
               setShowDeleteField((prevState) => !prevState);
+              setDeleteError(false);
             }}
           >
             Delete location
