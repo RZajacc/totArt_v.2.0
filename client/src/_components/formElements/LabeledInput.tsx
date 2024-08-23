@@ -15,7 +15,7 @@ function LabeledInput({ labelFor, labelText, inputType, ...props }: Props) {
       <input
         type={inputType}
         name={labelFor}
-        className="rounded-md border border-slate-600 p-1 focus:outline-none focus:ring-1 focus:ring-slate-600 "
+        className="rounded-md border border-slate-600 p-1 focus:outline-none focus:ring-1 focus:ring-slate-600"
         {...props}
       />
     </>
