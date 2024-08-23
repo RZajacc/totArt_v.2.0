@@ -153,7 +153,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
         className={`${!showAddLocation ? 'hidden' : ''} fixed left-0 top-0 z-30 h-screen w-screen  bg-slate-600/70`}
       >
         <div
-          className={`relative top-[5%] mx-auto grid w-fit gap-y-2 rounded-md border-2 border-black bg-yellow-200 p-2 md:top-[10%] lg:top-[15%]`}
+          className={`relative top-[5%] mx-auto grid w-full max-w-sm gap-y-2 rounded-md border-2 border-black bg-yellow-200 p-2 md:top-[10%] lg:top-[15%]`}
         >
           {/* HEADER SECTION */}
           <section>
@@ -209,7 +209,10 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
 
           {/* LOCATION DESCRIPTION SECTION */}
           <section>
-            <form className="grid gap-y-1" onSubmit={submitNewLocation}>
+            <form
+              className="grid w-11/12 gap-y-1 sm:mx-auto sm:w-full"
+              onSubmit={submitNewLocation}
+            >
               <LabeledInput
                 inputType="text"
                 labelFor="title"
