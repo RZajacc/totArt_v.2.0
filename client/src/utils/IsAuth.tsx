@@ -1,20 +1,25 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
 
 export default function isAuth(Component: any) {
   return function IsAuth(props: any) {
-    // Get user auth token
-    const auth = localStorage.getItem('auth_token');
-
     // If it is stored in the browser continue but if not redirect to login
+    const [auth, setAuth] = useState<string | null>(null);
+
     useEffect(() => {
-      if (!auth) {
-        return redirect('/login');
+      // Get user auth token
+      if (typeof window !== 'undefined') {
+        const token = localStorage.getItem('auth_token');
+        setAuth(token);
+
+        if (!token) {
+          return redirect('/login');
+        }
       }
     }, []);
 
-    if (!auth) {
+    if (auth === null) {
       return null;
     }
 
