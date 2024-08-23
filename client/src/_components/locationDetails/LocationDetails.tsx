@@ -187,7 +187,7 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
 
         {data?.author._id === user?._id && (
           <button
-            className="mx-auto w-1/3 rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold"
+            className="mx-auto w-60 rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold  "
             onClick={() => {
               setShowDeleteField((prevState) => !prevState);
             }}
