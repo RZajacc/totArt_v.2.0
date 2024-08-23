@@ -22,6 +22,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const imageUploadButtonRef = useRef<HTMLButtonElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
+  // SWR Methods necessary for all operations
   const {
     data: imageData,
     trigger: triggerImageUpload,
@@ -83,6 +84,7 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
   const submitNewLocation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Prepare form and its data
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -109,8 +111,10 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     mutateUser();
     triggerGetLocations();
 
+    // Reset the form
     form.reset();
 
+    // Reset image data
     resetImageData();
 
     // Close the modal
