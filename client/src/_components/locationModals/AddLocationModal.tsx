@@ -73,16 +73,18 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     // Remove error if image was added
     if (data) {
       setMissingImageError(false);
-    }
 
-    // reset file input
-    form.reset();
+      // reset file input
+      form.reset();
+    }
   };
 
   // ------------- SUBMIT A NEW POST -----------------
   const submitNewLocation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     // Gather inputs data
     const title = formData.get('title') as string;
@@ -106,6 +108,11 @@ const AddLocationModal = ({ showAddLocation, setShowAddLocation }: Props) => {
     // Refresh data in connected models
     mutateUser();
     triggerGetLocations();
+
+    form.reset();
+
+    resetImageData();
+
     // Close the modal
     setShowAddLocation(false);
   };
