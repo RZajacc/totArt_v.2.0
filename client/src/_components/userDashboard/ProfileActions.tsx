@@ -83,7 +83,7 @@ function ProfileActions({}: Props) {
           Change password
         </button>
         <button
-          className="rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-300 shadow-md shadow-black hover:font-bold"
+          className="rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold"
           value={'delete-account'}
           onClick={actionsHandler}
         >

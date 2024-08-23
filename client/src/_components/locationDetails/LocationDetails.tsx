@@ -15,6 +15,7 @@ import EditLocationModal from '../locationModals/EditLocationModal';
 import { DeleteLocation } from '../../fetchers/DeleteLocation';
 import { useRouter } from 'next/navigation';
 import { ErrorView } from '../ui/ErrorView';
+import DeleteField from '../ui/DeleteField';
 
 type Props = {
   user: User;
@@ -29,9 +30,10 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
   const [isFav, setIsFav] = useState(false);
   const [editLocationData, setEditLocationData] = useState('');
   const [selectedProperty, setSelectedProperty] = useState('');
-  const [deleteField, setDeleteField] = useState(false);
-  const [deleteInput, setDeleteInput] = useState('');
+
+  const [showDeleteField, setShowDeleteField] = useState(false);
   const [deleteError, setDeleteError] = useState(false);
+  const [deleteInput, setDeleteInput] = useState('');
 
   // Set router
   const router = useRouter();
@@ -91,9 +93,9 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
     e.preventDefault();
     // Collect the form data
     const formData = new FormData(e.currentTarget);
-    const deleteInput = formData.get('delete-input') as string;
+    const deleteInput = formData.get('delete-phrase') as string;
 
-    if (deleteInput !== 'delete') {
+    if (deleteInput !== 'DELETE') {
       setDeleteInput(deleteInput);
       setDeleteError(true);
     } else {
@@ -183,61 +185,28 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
-        {data?.author._id === user?._id && !deleteField ? (
-          <section>
-            <button
-              className="mx-auto block rounded-lg border-2 border-red-400 p-1 font-bold text-red-400 hover:bg-red-400 hover:text-white"
-              onClick={() => {
-                setDeleteField(true);
-              }}
-            >
-              Delete location
-            </button>
-          </section>
-        ) : (
-          ''
+        {data?.author._id === user?._id && (
+          <button
+            className="mx-auto w-1/3 rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold"
+            onClick={() => {
+              setShowDeleteField((prevState) => !prevState);
+            }}
+          >
+            Delete location
+          </button>
         )}
 
-        <section className={`text-center ${!deleteField ? 'hidden' : ''}`}>
-          <p className=" mb-2 text-red-500">
-            If you dedide to continue all data will be permanently removed!
-          </p>
-
-          <form
-            onSubmit={deleteLocationHandler}
-            className="inline-block rounded-md border-2 border-gray-500 focus-within:border-red-400"
-          >
-            <input
-              type="text"
-              name="delete-input"
-              className=" rounded-l-md p-1 focus-visible:outline-none"
-              placeholder="type: delete"
-              value={deleteInput}
-              onChange={(e) => {
-                setDeleteInput(e.target.value);
-                setDeleteError(false);
-              }}
+        <div className="mx-auto w-5/6">
+          {showDeleteField && (
+            <DeleteField
+              handleRemovingData={deleteLocationHandler}
+              elementDescription="this location"
+              providedVal={deleteInput}
+              showIncorrectInput={deleteError}
+              setShowIncorrectInput={setDeleteError}
             />
-            <button type="submit" className="bg-red-500 p-1">
-              Delete
-            </button>
-            <button
-              className="rounded-r-sm bg-green-500 p-1"
-              onClick={(e) => {
-                e.preventDefault();
-                setDeleteField(false);
-                setDeleteError(false);
-                setDeleteInput('');
-              }}
-            >
-              Cancel
-            </button>
-          </form>
-          <p className={`font-bold ${!deleteError ? 'hidden' : ''}`}>
-            <span className="text-red-500">delete</span> is required. You typed{' '}
-            <span className="text-red-500">{deleteInput}</span>!
-          </p>
-        </section>
+          )}
+        </div>
 
         <section className="relative">
           <Image
