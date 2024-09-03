@@ -7,6 +7,7 @@ import AddLocationModal from '../../_components/locationModals/AddLocationModal'
 import { ErrorView } from '../../_components/ui/ErrorView';
 import LoadingView from '../../_components/ui/LoadingView';
 import LocationCard from '../../_components/locations/LocationCard';
+import AddLocationModalNew from '../../_components/locationModals/AddLocationModalNew';
 
 function Content() {
   const { user } = useContext(AuthContext);
@@ -30,7 +31,6 @@ function Content() {
     return <LoadingView />;
   }
 
-  console.log(process.env.NODE_ENV);
   return (
     <>
       <h1 className="text-center text-xl font-bold md:mt-4">
@@ -50,7 +50,11 @@ function Content() {
         ''
       )}
 
-      <AddLocationModal
+      {/* <AddLocationModal
+        showAddLocation={showAddLocation}
+        setShowAddLocation={setShowAddLocation}
+      /> */}
+      <AddLocationModalNew
         showAddLocation={showAddLocation}
         setShowAddLocation={setShowAddLocation}
       />
