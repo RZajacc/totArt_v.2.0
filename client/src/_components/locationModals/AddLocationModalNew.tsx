@@ -38,6 +38,51 @@ function AddLocationModalNew({ showModal, setShowModal }: Props) {
           </h1>
         </section>
 
+        {/* IMAGE UPLOAD SECTION */}
+        {/* <section>
+          <form onSubmit={handleFileSubmit} className="grid gap-y-1">
+            <input
+              type="file"
+              name="locationImage"
+              onChange={() => {
+                imageUploadButtonRef.current?.click();
+              }}
+              required
+              className=" file:rounded-md file:bg-purple-400 file:shadow-md file:shadow-black"
+            />
+            <p className="text-center font-bold">
+              {imageIsMutating ? 'Uploading...' : ''}
+            </p>
+            {imageData && (
+              <Image
+                src={imageData.secure_url}
+                width={imageData.width}
+                height={imageData.height}
+                alt="Uploaded image"
+                className={`mx-auto w-1/4 rounded-md`}
+              />
+            )}
+
+            <small className="text-gray-500 ">
+              *Supported formats : .jpg, .jpeg, .png
+            </small>
+            <button
+              ref={imageUploadButtonRef}
+              type="submit"
+              className="hidden rounded-sm bg-black text-white"
+            >
+              Upload image
+            </button> */}
+
+        {/* Invalid feedback */}
+        {/* <p
+              className={`${!imageUploadError ? 'hidden' : ''} rounded-lg bg-red-500 px-2 py-1 text-center text-white`}
+            >
+              {imageUploadError ? imageUploadError.info : ''}
+            </p>
+          </form>
+        </section> */}
+
         {/* LOCATION DESCRIPTION SECTION */}
         <section>
           <form
@@ -86,8 +131,6 @@ function AddLocationModalNew({ showModal, setShowModal }: Props) {
           </form>
         </section>
       </div>
-
-      <button onClick={handleClosingModal}>OK</button>
     </dialog>
   );
 }
