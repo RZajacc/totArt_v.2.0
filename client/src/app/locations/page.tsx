@@ -11,7 +11,7 @@ import AddLocationModalNew from '../../_components/locationModals/AddLocationMod
 
 function Content() {
   const { user } = useContext(AuthContext);
-  const [showAddLocation, setShowAddLocation] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const {
     data: locations,
@@ -41,7 +41,7 @@ function Content() {
         <button
           className="mx-auto mb-8 mt-3 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
           onClick={() => {
-            setShowAddLocation(true);
+            setShowModal(true);
           }}
         >
           Add new location
@@ -54,10 +54,7 @@ function Content() {
         showAddLocation={showAddLocation}
         setShowAddLocation={setShowAddLocation}
       /> */}
-      <AddLocationModalNew
-        showAddLocation={showAddLocation}
-        setShowAddLocation={setShowAddLocation}
-      />
+      <AddLocationModalNew showModal={showModal} setShowModal={setShowModal} />
 
       <div className="mx-auto mt-3 grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&

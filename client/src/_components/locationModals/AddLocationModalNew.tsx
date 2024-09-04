@@ -4,27 +4,31 @@ import LabeledInput from '../formElements/LabeledInput';
 import Image from 'next/image';
 
 type Props = {
-  showAddLocation: boolean;
-  setShowAddLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function AddLocationModalNew({ showAddLocation, setShowAddLocation }: Props) {
+function AddLocationModalNew({ showModal, setShowModal }: Props) {
   // Create a ref
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   //   Manage modal display
-  if (showAddLocation) {
+  if (showModal) {
     dialogRef.current?.showModal();
   } else {
     dialogRef.current?.close();
   }
+
+  // Handle closing the modal
+  const handleClosingModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <dialog
       ref={dialogRef}
-      onCancel={() => {
-        setShowAddLocation(false);
-      }}
-      className="rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+      onCancel={handleClosingModal}
+      className="w-full rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:w-3/5 md:w-5/12 xl:w-4/12"
     >
       <div>
         {/* HEADER SECTION */}
@@ -73,7 +77,7 @@ function AddLocationModalNew({ showAddLocation, setShowAddLocation }: Props) {
               Submit
             </button>
             <button
-              //   onClick={handleClosingModal}
+              onClick={handleClosingModal}
               type="reset"
               className="my-2 ml-auto block rounded-md border-2 border-black bg-red-500 px-2 py-1 font-bold text-white shadow-md shadow-black"
             >
@@ -83,13 +87,7 @@ function AddLocationModalNew({ showAddLocation, setShowAddLocation }: Props) {
         </section>
       </div>
 
-      <button
-        onClick={() => {
-          setShowAddLocation(false);
-        }}
-      >
-        OK
-      </button>
+      <button onClick={handleClosingModal}>OK</button>
     </dialog>
   );
 }
