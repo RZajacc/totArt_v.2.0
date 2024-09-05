@@ -3,15 +3,15 @@ import useSWR from 'swr';
 import { getAllLocations } from '../../fetchers/GetAllLocations';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import AddLocationModal from '../../_components/locationModals/AddLocationModal';
 import { ErrorView } from '../../_components/ui/ErrorView';
 import LoadingView from '../../_components/ui/LoadingView';
 import LocationCard from '../../_components/locations/LocationCard';
 import AddLocationModalNew from '../../_components/locationModals/AddLocationModalNew';
+import AddNewLocation from '../../_components/locations/AddNewLocation';
 
 function Content() {
   const { user } = useContext(AuthContext);
-  const [showModal, setShowModal] = useState(false);
+  const [displayAddNewLocation, setDisplayAddNewLocation] = useState(false);
 
   const {
     data: locations,
@@ -41,7 +41,7 @@ function Content() {
         <button
           className="mx-auto mb-8 mt-3 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
           onClick={() => {
-            setShowModal(true);
+            setDisplayAddNewLocation(true);
           }}
         >
           Add new location
@@ -50,11 +50,13 @@ function Content() {
         ''
       )}
 
-      {/* <AddLocationModal
-        showAddLocation={showAddLocation}
-        setShowAddLocation={setShowAddLocation}
-      /> */}
-      <AddLocationModalNew showModal={showModal} setShowModal={setShowModal} />
+      {/* Display add new location component */}
+      {displayAddNewLocation && (
+        <AddNewLocation
+          displayAddNewLocation={displayAddNewLocation}
+          setDisplayAddNewLocation={setDisplayAddNewLocation}
+        />
+      )}
 
       <div className="mx-auto mt-3 grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&
