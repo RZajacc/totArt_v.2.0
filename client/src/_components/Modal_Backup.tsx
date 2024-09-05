@@ -1,20 +1,19 @@
 import { useRef } from 'react';
-import LabeledTextArea from '../formElements/LabeledTextArea';
-import LabeledInput from '../formElements/LabeledInput';
-import Image from 'next/image';
+import LabeledInput from './formElements/LabeledInput';
+import LabeledTextArea from './formElements/LabeledTextArea';
 
 type Props = {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function AddLocationModalNew({ showModal, setShowModal }: Props) {
+function Modal({ showModal, setShowModal }: Props) {
   // Create a ref
   const dialogRef = useRef<HTMLDialogElement>(null);
-
   //   Manage modal display
   if (showModal) {
     dialogRef.current?.showModal();
+    console.log('IN MODAL', showModal);
   } else {
     dialogRef.current?.close();
   }
@@ -135,4 +134,4 @@ function AddLocationModalNew({ showModal, setShowModal }: Props) {
   );
 }
 
-export default AddLocationModalNew;
+export default Modal;
