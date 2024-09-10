@@ -1,21 +1,22 @@
 'use client';
+// Libraries
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-
 import { useContext, useRef, useState } from 'react';
-import { AuthContext } from '../../../context/AuthContext';
-
-// import LocationDetails from '../../../_components/locationDetails/LocationDetails';
+// Components
 import LocationDetails from '@/_components/locationDetails/LocationDetails';
-import CommentElement from '../../../_components/comments/CommentElement';
-
-import { locationDetailsData } from '../../../fetchers/LocationDetailsData';
-import { addNewComment } from '../../../fetchers/AddNewComment';
-import DeleteCommentModal from '../../../_components/commentModals/DeleteCommentModal';
-import EditCommentModal from '../../../_components/commentModals/EditCommentModal';
-import { ErrorView } from '../../../_components/ui/ErrorView';
-import LoadingView from '../../../_components/ui/LoadingView';
-import isAuth from '../../../utils/IsAuth';
+import CommentElement from '@/_components/comments/CommentElement';
+import DeleteCommentModal from '@/_components/commentModals/DeleteCommentModal';
+import EditCommentModal from '@/_components/commentModals/EditCommentModal';
+import { ErrorView } from '@/_components/ui/ErrorView';
+import LoadingView from '@/_components/ui/LoadingView';
+// Fetching data
+import { locationDetailsData } from '@/fetchers/LocationDetailsData';
+import { addNewComment } from '@/fetchers/AddNewComment';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Other
+import isAuth from '@/utils/IsAuth';
 
 function ContentDetails({ params }: { params: { id: string } }) {
   // Get param from the route path
