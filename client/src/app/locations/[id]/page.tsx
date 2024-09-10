@@ -5,7 +5,8 @@ import useSWRMutation from 'swr/mutation';
 import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 
-import LocationDetails from '../../../_components/locationDetails/LocationDetails';
+// import LocationDetails from '../../../_components/locationDetails/LocationDetails';
+import LocationDetails from '@/_components/locationDetails/LocationDetails';
 import CommentElement from '../../../_components/comments/CommentElement';
 
 import { locationDetailsData } from '../../../fetchers/LocationDetailsData';

@@ -1,12 +1,12 @@
 'use client';
 import useSWR from 'swr';
-import { getAllLocations } from '../../fetchers/GetAllLocations';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { ErrorView } from '../../_components/ui/ErrorView';
-import LoadingView from '../../_components/ui/LoadingView';
-import LocationCard from '../../_components/locations/LocationCard';
-import AddNewLocation from '../../_components/locations/AddNewLocation';
+import { getAllLocations } from '@/fetchers/GetAllLocations';
+import { AuthContext } from '@/context/AuthContext';
+import { ErrorView } from '@/_components/ui/ErrorView';
+import LoadingView from '@/_components/ui/LoadingView';
+import LocationCard from '@/_components/locations/LocationCard';
+import AddNewLocation from '@/_components/locations/AddNewLocation';
 
 function Content() {
   const { user } = useContext(AuthContext);
