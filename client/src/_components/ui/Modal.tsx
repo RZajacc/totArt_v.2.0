@@ -1,4 +1,5 @@
 import { SetStateAction, useEffect, useRef } from 'react';
+
 type Props = {
   displayAddNewLocation: boolean;
   setDisplayAddNewLocation: React.Dispatch<SetStateAction<boolean>>;

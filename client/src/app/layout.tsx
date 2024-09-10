@@ -14,7 +14,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: 'Totart',
-  description: 'Share some cool locations with the otheres',
+  description: 'Share some cool locations with the others',
   creator: 'Rafał Zając',
 };
 
