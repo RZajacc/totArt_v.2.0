@@ -1,19 +1,50 @@
 'use client';
 import isAuth from '@/utils/IsAuth';
-import React, { useRef } from 'react';
+import Image from 'next/image';
+import React, { useRef, useState } from 'react';
 
 type Props = {};
 
 function page({}: Props) {
   const imageUploadButtonRef = useRef<HTMLInputElement | null>(null);
+  const [selectedImage, setSelectedImage] = useState<
+    string | ArrayBuffer | null
+  >(null);
 
-  const handleImageDisplay = () => {};
+  const handleImageDisplay = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : '';
+
+    if (!file) {
+      setSelectedImage(null);
+      return;
+    }
+
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      setSelectedImage(fileReader.result ? fileReader.result : null);
+    };
+
+    fileReader.readAsDataURL(file);
+  };
   return (
-    <>
-      <h1 className="m-1 text-center font-bold">Share some unique content:</h1>
+    <div className="mx-auto mt-5 max-w-lg rounded-md bg-gradient-to-br from-green-300 to-green-500 p-2 shadow-md shadow-black">
+      <h1 className="text-center font-bold">Share some unique content:</h1>
 
       {/* IMAGE UPLOAD SECTION */}
       <section className="text-center">
+        <div className="relative mx-auto mt-3 block h-32 w-32 content-center rounded-sm border-2 border-black bg-gradient-to-b from-amber-100 to-amber-300 text-center text-white">
+          {selectedImage ? (
+            <Image
+              src={selectedImage as string}
+              fill
+              alt="Uploaded image "
+              className="object-cover"
+            />
+          ) : (
+            'Image preview'
+          )}
+        </div>
         <input
           type="file"
           name="locationImage"
@@ -24,28 +55,15 @@ function page({}: Props) {
         />
 
         <button
-          className="rounded-sm bg-purple-400 p-1 shadow-md shadow-black"
+          className=" bg-black p-1 text-white shadow-md shadow-black"
           onClick={() => {
             imageUploadButtonRef.current?.click();
           }}
         >
           Upload image
         </button>
-
-        <div className="mx-auto mt-3 block h-32 w-32 content-center rounded-sm border-2 border-stone-500 bg-stone-400 text-center text-white">
-          Image preview
-        </div>
-        {/* {imageData && (
-            <Image
-              src={imageData.secure_url}
-              width={imageData.width}
-              height={imageData.height}
-              alt="Uploaded image"
-              className={`mx-auto w-1/4 rounded-md`}
-            />
-          )} */}
       </section>
-    </>
+    </div>
   );
 }
 

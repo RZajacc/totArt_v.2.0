@@ -1,7 +1,7 @@
 'use client';
 // Libraries
 import useSWR from 'swr';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 // Components
 import { ErrorView } from '@/_components/ui/ErrorView';
 import LoadingView from '@/_components/ui/LoadingView';
@@ -49,25 +49,9 @@ function Content() {
             Add new location
           </Link>
         ) : (
-          // <button
-          //   className="mx-auto mb-8 mt-3 block rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
-          //   onClick={() => {
-          //     setDisplayAddNewLocation(true);
-          //   }}
-          // >
-          //   Add new location
-          // </button>
           ''
         )}
       </div>
-
-      {/* Display add new location component */}
-      {/* {displayAddNewLocation && (
-        <AddNewLocation
-          displayAddNewLocation={displayAddNewLocation}
-          setDisplayAddNewLocation={setDisplayAddNewLocation}
-        />
-      )} */}
 
       <div className="mx-auto mt-3 grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">
         {locations &&
