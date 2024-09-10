@@ -1,10 +1,14 @@
-import Navbar from '../_components/ui/Navbar';
+// Libraries
+import { Metadata } from 'next';
+// Style
 import { Montserrat } from 'next/font/google';
 import './globals.css';
-import NavSideBar from '../_components/ui/NavSideBar';
-import NavBackdrop from '../_components/ui/NavBackrop';
-import { Metadata } from 'next';
-import Footer from '../_components/ui/Footer';
+// Components
+import Navbar from '@/_components/ui/Navbar';
+import NavSideBar from '@/_components/ui/NavSideBar';
+import NavBackdrop from '@/_components/ui/NavBackrop';
+import Footer from '@/_components/ui/Footer';
+// Context data
 import { AuthContextProvider } from '../context/AuthContext';
 
 const montserrat = Montserrat({

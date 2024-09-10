@@ -1,9 +1,12 @@
 'use client';
+// Libraries
 import { ReactNode, createContext } from 'react';
-import { User } from '../types/UserTypes';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
-import { getUserData } from '../fetchers/GetUserData';
+// Fetching data
+import { getUserData } from '@/fetchers/GetUserData';
+// Types
+import { User } from '@/types/UserTypes';
 
 interface AuthContextType {
   user: User | undefined;

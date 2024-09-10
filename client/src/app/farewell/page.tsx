@@ -1,6 +1,8 @@
+// Libraries
 import Image from 'next/image';
-import cryingFace from '../../assets/crying.png';
 import Link from 'next/link';
+// Assets
+import cryingFace from '@/assets/crying.png';
 
 function Farewell() {
   return (

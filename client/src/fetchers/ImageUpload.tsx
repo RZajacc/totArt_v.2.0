@@ -1,5 +1,6 @@
-import { FetchError } from '../types/GeneralTypes';
-import { ImageType } from '../types/ImageTypes';
+// Types
+import type { FetchError } from '@/types/GeneralTypes';
+import type { ImageType } from '@/types/ImageTypes';
 
 export const ImageUpload = async (
   url: string,

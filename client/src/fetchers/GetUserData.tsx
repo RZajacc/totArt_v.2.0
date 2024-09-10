@@ -1,5 +1,6 @@
-import { User } from '../types/UserTypes';
-import { FetchError } from '../types/GeneralTypes';
+// Types
+import type { User } from '@/types/UserTypes';
+import type { FetchError } from '@/types/GeneralTypes';
 
 export const getUserData = async (url: string) => {
   // Get token from local storage

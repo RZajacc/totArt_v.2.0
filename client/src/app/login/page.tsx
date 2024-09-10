@@ -1,9 +1,12 @@
 'use client';
+// Libraries
 import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthContext } from '../../context/AuthContext';
-import LabeledInput from '../../_components/formElements/LabeledInput';
-import PasswordField from '../../_components/formElements/PasswordField';
+// Components
+import LabeledInput from '@/_components/formElements/LabeledInput';
+import PasswordField from '@/_components/formElements/PasswordField';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
 
 type Props = {};
 

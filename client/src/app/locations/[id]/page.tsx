@@ -15,7 +15,7 @@ import { locationDetailsData } from '@/fetchers/LocationDetailsData';
 import { addNewComment } from '@/fetchers/AddNewComment';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
-// Other
+// Utils
 import isAuth from '@/utils/IsAuth';
 
 function ContentDetails({ params }: { params: { id: string } }) {

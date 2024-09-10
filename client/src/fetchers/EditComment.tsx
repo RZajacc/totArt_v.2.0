@@ -1,4 +1,5 @@
-import { FetchError } from '../types/GeneralTypes';
+// Types
+import type { FetchError } from '@/types/GeneralTypes';
 
 export const editComment = async (
   url: string,

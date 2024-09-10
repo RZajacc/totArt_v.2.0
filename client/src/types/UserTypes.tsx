@@ -1,4 +1,5 @@
-import { ImageType } from './ImageTypes';
+// Types
+import type { ImageType } from './ImageTypes';
 
 export interface User {
   _id: string;

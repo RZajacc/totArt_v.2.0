@@ -1,12 +1,14 @@
 'use client';
-
+// Libraries
 import useSWRMutation from 'swr/mutation';
-import { sendContactEmail } from '../../fetchers/SendContactEmail';
 import { useState } from 'react';
-import LabeledInput from '../../_components/formElements/LabeledInput';
-import LabeledTextArea from '../../_components/formElements/LabeledTextArea';
-import SubmitButton from '../../_components/formElements/SubmitButton';
-import TimerDisplay from '../../_components/ui/TimerDisplay';
+// Components
+import LabeledInput from '@/_components/formElements/LabeledInput';
+import LabeledTextArea from '@/_components/formElements/LabeledTextArea';
+import SubmitButton from '@/_components/formElements/SubmitButton';
+import TimerDisplay from '@/_components/ui/TimerDisplay';
+// Fetching data
+import { sendContactEmail } from '@/fetchers/SendContactEmail';
 
 function Contact() {
   const {

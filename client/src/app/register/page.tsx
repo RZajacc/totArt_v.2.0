@@ -1,9 +1,12 @@
 'use client';
+// Libraries
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
-import { validatePassword } from '../../utils/ValidatePassword';
-import LabeledInput from '../../_components/formElements/LabeledInput';
-import PasswordField from '../../_components/formElements/PasswordField';
+// Components
+import PasswordField from '@/_components/formElements/PasswordField';
+import LabeledInput from '@/_components/formElements/LabeledInput';
+// Utils
+import { validatePassword } from '@/utils/ValidatePassword';
 
 type registerSucc = {
   msg: string;
