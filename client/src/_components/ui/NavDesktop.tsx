@@ -1,9 +1,12 @@
+// Libraries
+import { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext } from 'react';
-import logoNormal from '../../../public/logo_normal.png';
 import { usePathname } from 'next/navigation';
-import { AuthContext } from '../../context/AuthContext';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Assets
+import logoNormal from '../../../public/logo_normal.png';
 
 type Props = {};
 

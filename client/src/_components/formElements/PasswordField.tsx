@@ -1,8 +1,11 @@
+// Libraries
 import Image from 'next/image';
 import React, { useState } from 'react';
-import showPasswordIcon from '../../assets/eye-password-show-svgrepo-com.svg';
-import hidePasswordIcon from '../../assets/eye-off-svgrepo-com.svg';
+// Components
 import PasswordTooltip from './PasswordTooltip';
+// Assets
+import showPasswordIcon from '@/assets/eye-password-show-svgrepo-com.svg';
+import hidePasswordIcon from '@/assets/eye-off-svgrepo-com.svg';
 
 type Props = {
   labelName: string;

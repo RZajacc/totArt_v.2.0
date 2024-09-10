@@ -1,10 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import pencil from '../../assets/pencil.svg';
-import confirm from '../../assets/confirm-svgrepo-com.svg';
+// Libraries
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
-import { updateUserData } from '../../fetchers/UpdateUserData';
-import { AuthContext } from '../../context/AuthContext';
+// Fetching data
+import { updateUserData } from '@/fetchers/UpdateUserData';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Assets
+import pencil from '@/assets/pencil.svg';
+import confirm from '@/assets/confirm-svgrepo-com.svg';
 
 type Props = {
   propName: string;

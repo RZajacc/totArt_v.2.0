@@ -1,6 +1,8 @@
+// Libraries
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+// Assets
 import logoNormal from '../../../public/logo_normal.png';
 
 type Props = {};

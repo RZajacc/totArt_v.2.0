@@ -1,11 +1,16 @@
+// Libraries
 import React, { useContext, useState } from 'react';
-import PasswordField from '../formElements/PasswordField';
 import useSWRMutation from 'swr/mutation';
-import { VerifyUserPassword } from '../../fetchers/VerifyUserPassword';
-import { validatePassword } from '../../utils/ValidatePassword';
+// Components
 import TimerDisplay from '../ui/TimerDisplay';
-import { AuthContext } from '../../context/AuthContext';
-import { UpdateUserPassword } from '../../fetchers/UpdateUserPassword';
+import PasswordField from '../formElements/PasswordField';
+// Fetching data
+import { VerifyUserPassword } from '@/fetchers/VerifyUserPassword';
+import { UpdateUserPassword } from '@/fetchers/UpdateUserPassword';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Utils
+import { validatePassword } from '@/utils/ValidatePassword';
 
 type Props = {
   setShowPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;

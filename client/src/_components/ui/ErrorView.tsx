@@ -1,4 +1,4 @@
-import { FetchError } from '../../types/GeneralTypes';
+import { FetchError } from '@/types/GeneralTypes';
 
 type Props = {
   error: FetchError;

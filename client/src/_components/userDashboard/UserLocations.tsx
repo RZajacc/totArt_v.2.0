@@ -1,6 +1,9 @@
+// Libraries
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+// Components
 import LocationItem from './LocationItem';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
 
 function UserLocations() {
   const { user } = useContext(AuthContext);

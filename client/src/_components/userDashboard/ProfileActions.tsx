@@ -1,10 +1,14 @@
+// Libraries
 import React, { useContext, useState } from 'react';
-import PasswordChange from './PasswordChange';
-import DeleteField from '../ui/DeleteField';
 import { useRouter } from 'next/navigation';
 import useSWRMutation from 'swr/mutation';
-import { DeleteUserAccount } from '../../fetchers/DeleteUserAccount';
-import { AuthContext } from '../../context/AuthContext';
+// Components
+import PasswordChange from './PasswordChange';
+import DeleteField from '../ui/DeleteField';
+// Fetching data
+import { DeleteUserAccount } from '@/fetchers/DeleteUserAccount';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
 
 type Props = {};
 

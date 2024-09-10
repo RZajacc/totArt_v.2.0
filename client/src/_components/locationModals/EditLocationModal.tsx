@@ -1,7 +1,10 @@
+// Libraries
 import React from 'react';
 import useSWRMutation from 'swr/mutation';
-import { editLocation } from '../../fetchers/EditLocation';
-import type { locationData } from '../../types/locationTypes';
+// Fetching data
+import { editLocation } from '@/fetchers/EditLocation';
+// Types
+import type { locationData } from '@/types/locationTypes';
 
 type Props = {
   locationId: string;

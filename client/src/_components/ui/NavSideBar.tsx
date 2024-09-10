@@ -1,13 +1,17 @@
 'use client';
+// Libraries
 import Image from 'next/image';
-import logo from '../../../public/logo_normal.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
+// Assets
+import logo from '../../../public/logo_normal.png';
 
 type Props = {};
 

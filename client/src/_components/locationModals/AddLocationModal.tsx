@@ -1,13 +1,17 @@
+// Libraries
 import { useContext, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
-import { ImageUpload } from '../../fetchers/ImageUpload';
 import Image from 'next/image';
-import { addNewLocation } from '../../fetchers/AddNewLocation';
-import { AuthContext } from '../../context/AuthContext';
-import { getAllLocations } from '../../fetchers/GetAllLocations';
-import { deleteImage } from '../../fetchers/DeleteImage';
+// Components
 import LabeledInput from '../formElements/LabeledInput';
 import LabeledTextArea from '../formElements/LabeledTextArea';
+// Fetching data
+import { ImageUpload } from '@/fetchers/ImageUpload';
+import { addNewLocation } from '@/fetchers/AddNewLocation';
+import { getAllLocations } from '@/fetchers/GetAllLocations';
+import { deleteImage } from '@/fetchers/DeleteImage';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
 
 type Props = {
   showAddLocation: boolean;

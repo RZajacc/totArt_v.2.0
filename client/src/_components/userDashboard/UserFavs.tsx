@@ -1,6 +1,9 @@
+// Libraries
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+// Components
 import FavItem from './FavItem';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
 
 function UserFavs() {
   const { user } = useContext(AuthContext);

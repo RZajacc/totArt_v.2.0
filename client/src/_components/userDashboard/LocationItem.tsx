@@ -1,13 +1,17 @@
+// Libraries
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext, useState } from 'react';
-
-import linkIcon from '../../assets/link-svgrepo-com.svg';
-import binIcon from '../../assets/trash-can.svg';
-import DeleteField from '../ui/DeleteField';
 import useSWRMutation from 'swr/mutation';
-import { DeleteLocation } from '../../fetchers/DeleteLocation';
-import { AuthContext } from '../../context/AuthContext';
+// Components
+import DeleteField from '../ui/DeleteField';
+// Fetching data
+import { DeleteLocation } from '@/fetchers/DeleteLocation';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Assets
+import linkIcon from '@/assets/link-svgrepo-com.svg';
+import binIcon from '@/assets/trash-can.svg';
 
 type Props = {
   id: string;

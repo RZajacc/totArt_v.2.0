@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
-// Types
-import { User } from '../../types/UserTypes';
-import type { locationData } from '../../types/locationTypes';
-// Images
-import emptyHeart from '../../assets/heart_empty.svg';
-import fullHeart from '../../assets/heart_full.svg';
-import pencil from '../../assets/pencil.svg';
-// Dependencies
+// Libraries
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
-// Data
-import { locationFavsData } from '../../fetchers/LocationFavsData';
-import EditLocationModal from '../locationModals/EditLocationModal';
-import { DeleteLocation } from '../../fetchers/DeleteLocation';
 import { useRouter } from 'next/navigation';
+// Components
+import EditLocationModal from '../locationModals/EditLocationModal';
 import { ErrorView } from '../ui/ErrorView';
 import DeleteField from '../ui/DeleteField';
+// Fetching data
+import { locationFavsData } from '@/fetchers/LocationFavsData';
+import { DeleteLocation } from '@/fetchers/DeleteLocation';
+// Assets
+import emptyHeart from '@/assets/heart_empty.svg';
+import fullHeart from '@/assets/heart_full.svg';
+import pencil from '@/assets/pencil.svg';
+// Types
+import type { User } from '@/types/UserTypes';
+import type { locationData } from '@/types/locationTypes';
 
 type Props = {
   user: User;

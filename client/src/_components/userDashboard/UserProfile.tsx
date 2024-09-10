@@ -1,13 +1,18 @@
+// Libraries
 import { useContext, useRef } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import noUser from '../../assets/noUser.png';
 import Image from 'next/image';
-import UserData from './UserData';
 import useSWRMutation from 'swr/mutation';
-import { ImageUpload } from '../../fetchers/ImageUpload';
-import { updateUserData } from '../../fetchers/UpdateUserData';
-import { deleteImage } from '../../fetchers/DeleteImage';
+// Components
+import UserData from './UserData';
 import ProfileActions from './ProfileActions';
+// Fetching data
+import { ImageUpload } from '@/fetchers/ImageUpload';
+import { updateUserData } from '@/fetchers/UpdateUserData';
+import { deleteImage } from '@/fetchers/DeleteImage';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Assets
+import noUser from '@/assets/noUser.png';
 
 function UserProfile() {
   const { user, mutateUser } = useContext(AuthContext);

@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+// Libraries
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-// SWR Fetching functions
 import useSWRMutation from 'swr/mutation';
-import { locationFavsData } from '../../fetchers/LocationFavsData';
-
 // Components
 import { ErrorView } from '../ui/ErrorView';
-import { locationData } from '../../types/locationTypes';
 import FavButton from './FavButton';
-
+// Fetching data
+import { locationFavsData } from '@/fetchers/LocationFavsData';
+// Context data
+import { AuthContext } from '../../context/AuthContext';
 // Assets
-import emptyHeart from '../../assets/heart_empty.svg';
-import fullHeart from '../../assets/heart_full.svg';
+import emptyHeart from '@/assets/heart_empty.svg';
+import fullHeart from '@/assets/heart_full.svg';
+// Types
+import { locationData } from '@/types/locationTypes';
 
 type Props = {
   locationData: locationData;

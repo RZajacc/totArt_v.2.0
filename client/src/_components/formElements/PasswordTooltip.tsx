@@ -1,6 +1,8 @@
+// Libraries
 import Image from 'next/image';
 import React from 'react';
-import infoCircle from '../../assets/info-circle-svgrepo-com.svg';
+// Assets
+import infoCircle from '@/assets/info-circle-svgrepo-com.svg';
 
 type Props = {};
 

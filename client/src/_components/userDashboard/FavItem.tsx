@@ -1,13 +1,15 @@
+// Libraries
+import { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext } from 'react';
-
-import linkIcon from '../../assets/link-svgrepo-com.svg';
-import binIcon from '../../assets/trash-can.svg';
-
 import useSWRMutation from 'swr/mutation';
-import { locationFavsData } from '../../fetchers/LocationFavsData';
-import { AuthContext } from '../../context/AuthContext';
+// Fetching data
+import { locationFavsData } from '@/fetchers/LocationFavsData';
+// Context data
+import { AuthContext } from '@/context/AuthContext';
+// Assets
+import linkIcon from '@/assets/link-svgrepo-com.svg';
+import binIcon from '@/assets/trash-can.svg';
 
 type Props = {
   id: string;
