@@ -1,7 +1,6 @@
 // Libraries
 import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import useSWRMutation from 'swr/mutation';
 // Components
 import { ErrorView } from '../ui/state/ErrorView';
@@ -15,6 +14,7 @@ import emptyHeart from '@/assets/heart_empty.svg';
 import fullHeart from '@/assets/heart_full.svg';
 // Types
 import { locationData } from '@/types/locationTypes';
+import LinkDark from '../ui/links/LinkDark';
 
 type Props = {
   locationData: locationData;
@@ -88,12 +88,7 @@ function LocationCard({ locationData }: Props) {
 
       <section className="mb-4 mt-1 text-center">
         <h3 className="mb-3 text-xl font-bold">{locationData.title}</h3>
-        <Link
-          href={`/locations/${locationData._id}`}
-          className="rounded-md bg-black px-3 py-2 text-white"
-        >
-          See more
-        </Link>
+        <LinkDark href={`/locations/${locationData._id}`}>See more</LinkDark>
       </section>
     </div>
   );

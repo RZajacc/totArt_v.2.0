@@ -10,7 +10,7 @@ import LocationCard from '@/_components/locations/LocationCard';
 import { getAllLocations } from '@/fetchers/GetAllLocations';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
-import Link from 'next/link';
+import LinkGreen from '@/_components/ui/links/LinkGreen';
 
 function Content() {
   const { user } = useContext(AuthContext);
@@ -36,20 +36,13 @@ function Content() {
 
   return (
     <>
-      <h1 className="text-center text-xl font-bold md:mt-4">
-        Number of locations found:{' '}
-        <span className="text-green-500">{locations?.number}</span>
-      </h1>
       <div className="mb-6 mt-3 text-center">
-        {user ? (
-          <Link
-            href={'locations/addNew'}
-            className="mx-auto rounded-md bg-green-400 px-2 py-1 shadow-md shadow-black"
-          >
-            Add new location
-          </Link>
-        ) : (
-          ''
+        <h1 className="mb-4 text-center text-xl font-bold md:mt-4">
+          Number of locations found:{' '}
+          <span className="text-emerald-500">{locations?.number}</span>
+        </h1>
+        {user && (
+          <LinkGreen href="locations/addNew">Add new location</LinkGreen>
         )}
       </div>
 

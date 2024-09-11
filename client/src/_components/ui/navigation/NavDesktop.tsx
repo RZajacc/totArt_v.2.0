@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { AuthContext } from '@/context/AuthContext';
 // Assets
 import logoNormal from '@/assets/logo_normal.png';
+import NavLink from '../links/NavLink';
 
 type Props = {};
 
@@ -17,42 +18,40 @@ function NavDesktop({}: Props) {
   return (
     <div className="hidden items-center justify-between md:flex">
       <section>
-        <Link href={'/'}>
+        <NavLink href="/">
           <Image src={logoNormal} alt="logo" width={30} className="mx-5" />
-        </Link>
+        </NavLink>
       </section>
 
       <section className="space-x-5">
-        <Link
-          href={'/'}
-          className={`link ${pathname === '/' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
-        >
+        <NavLink href="/" currentPath={pathname} pathPattern="/">
           Home
-        </Link>
-        <Link
-          href={'/locations'}
-          className={`link ${pathname === '/locations' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
+        </NavLink>
+        <NavLink
+          href="/locations"
+          currentPath={pathname}
+          pathPattern="/locations"
         >
           Locations
-        </Link>
-        <Link
-          href={'/contact'}
-          className={`link ${pathname === '/contact' ? 'font-bold hover:animate-pulse hover:cursor-default' : 'hover:animate-pulse hover:text-green-500'}`}
-        >
+        </NavLink>
+        <NavLink href="/contact" currentPath={pathname} pathPattern="/contact">
           Contact
-        </Link>
+        </NavLink>
       </section>
 
       {/* User section */}
       <section className="mx-5 flex items-center space-x-5">
         {user ? (
           <>
-            <Link
-              href={'/account'}
-              className={`link ${pathname === '/account' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+            <NavLink
+              href="/account"
+              currentPath={pathname}
+              pathPattern="/account"
             >
               Account
-            </Link>
+            </NavLink>
+
+            {/* !!! To change */}
             <button
               onClick={logout}
               className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600"
@@ -62,18 +61,16 @@ function NavDesktop({}: Props) {
           </>
         ) : (
           <>
-            <Link
-              href={'/register'}
-              className={`link ${pathname === '/register' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
+            <NavLink
+              href="/register"
+              currentPath={pathname}
+              pathPattern="/register"
             >
               Register
-            </Link>
-            <Link
-              href={'/login'}
-              className={`link ${pathname === '/login' ? 'font-bold hover:animate-pulse' : 'hover:animate-pulse hover:text-green-500'}`}
-            >
+            </NavLink>
+            <NavLink href="/login" currentPath={pathname} pathPattern="/login">
               Login
-            </Link>
+            </NavLink>
           </>
         )}
       </section>
