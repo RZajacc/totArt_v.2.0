@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 // Assets
-import logo from '../../../public/logo_normal.png';
+import logo from '@/assets/logo_normal.png';
 
 type Props = {};
 

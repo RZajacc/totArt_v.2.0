@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Assets
-import logoNormal from '../../../public/logo_normal.png';
+import logoNormal from '@/assets/logo_normal.png';
 
 type Props = {};
 
