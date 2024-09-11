@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { useRef } from 'react';
+import ButtonDark from '../formElements/ButtonDark';
 
 type Props = {
   selectedImage: string | ArrayBuffer | null;
@@ -29,7 +30,7 @@ function ImagePicker({ selectedImage, setSelectedImage }: Props) {
   };
 
   return (
-    <section className="flex h-32 space-x-4">
+    <section className="flex h-32 space-x-6">
       <div>
         <input
           type="file"
@@ -39,17 +40,15 @@ function ImagePicker({ selectedImage, setSelectedImage }: Props) {
           className=" hidden"
           required
         />
-
-        <button
-          className=" bg-black p-1 text-white shadow-md shadow-black"
+        <ButtonDark
           onClick={() => {
             imageUploadButtonRef.current?.click();
           }}
         >
           Upload image
-        </button>
+        </ButtonDark>
       </div>
-      <div className="relative  block h-full w-32 content-center rounded-md border-2 border-black bg-gradient-to-b from-slate-200 to-slate-400 text-center text-white">
+      <div className="relative  block h-full w-32 content-center rounded-md border-2 border-black bg-gradient-to-b from-zinc-200 to-zinc-400 text-center text-white">
         {selectedImage ? (
           <Image
             src={selectedImage as string}
