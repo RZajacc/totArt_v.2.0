@@ -3,8 +3,8 @@
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 // Components
-import PasswordField from '@/_components/formElements/PasswordField';
-import LabeledInput from '@/_components/formElements/LabeledInput';
+import PasswordField from '@/_components/ui/inputs/PasswordField';
+import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 // Utils
 import { validatePassword } from '@/utils/ValidatePassword';
 

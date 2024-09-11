@@ -5,8 +5,8 @@ import useSWRMutation from 'swr/mutation';
 import { useRouter } from 'next/navigation';
 // Components
 import EditLocationModal from '../locationModals/EditLocationModal';
-import { ErrorView } from '../ui/ErrorView';
-import DeleteField from '../ui/DeleteField';
+import { ErrorView } from '../ui/state/ErrorView';
+import DeleteField from '../ui/inputs/DeleteField';
 // Fetching data
 import { locationFavsData } from '@/fetchers/LocationFavsData';
 import { DeleteLocation } from '@/fetchers/DeleteLocation';

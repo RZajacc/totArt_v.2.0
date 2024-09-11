@@ -4,9 +4,9 @@ import { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 // Components
-import Navbar from '@/_components/ui/Navbar';
-import NavSideBar from '@/_components/ui/NavSideBar';
-import NavBackdrop from '@/_components/ui/NavBackrop';
+import Navbar from '@/_components/ui/navigation/Navbar';
+import NavSideBar from '@/_components/ui/navigation/NavSideBar';
+import NavBackdrop from '@/_components/ui/navigation/NavBackrop';
 import Footer from '@/_components/ui/Footer';
 // Context data
 import { AuthContextProvider } from '../context/AuthContext';

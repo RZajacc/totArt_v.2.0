@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React, { useRef } from 'react';
-import ButtonDark from '../formElements/ButtonDark';
+import ButtonDark from '../ui/buttons/ButtonDark';
 
 type Props = {
   selectedImage: string | ArrayBuffer | null;

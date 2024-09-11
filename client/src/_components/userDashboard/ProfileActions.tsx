@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import useSWRMutation from 'swr/mutation';
 // Components
 import PasswordChange from './PasswordChange';
-import DeleteField from '../ui/DeleteField';
+import DeleteField from '../ui/inputs/DeleteField';
 // Fetching data
 import { DeleteUserAccount } from '@/fetchers/DeleteUserAccount';
 // Context data

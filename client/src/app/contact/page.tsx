@@ -3,10 +3,10 @@
 import useSWRMutation from 'swr/mutation';
 import { useState } from 'react';
 // Components
-import LabeledInput from '@/_components/formElements/LabeledInput';
-import LabeledTextArea from '@/_components/formElements/LabeledTextArea';
-import SubmitButton from '@/_components/formElements/ButtonDark';
-import TimerDisplay from '@/_components/ui/TimerDisplay';
+import LabeledInput from '@/_components/ui/inputs/LabeledInput';
+import LabeledTextArea from '@/_components/ui/inputs/LabeledTextArea';
+import SubmitButton from '@/_components/ui/buttons/ButtonDark';
+import TimerDisplay from '@/_components/ui/state/TimerDisplay';
 // Fetching data
 import { sendContactEmail } from '@/fetchers/SendContactEmail';
 

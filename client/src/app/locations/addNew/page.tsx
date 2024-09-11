@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 // Components
 import ImagePicker from '@/_components/locations/ImagePicker';
 import isAuth from '@/utils/IsAuth';
-import LabeledInput from '@/_components/formElements/LabeledInput';
-import LabeledTextArea from '@/_components/formElements/LabeledTextArea';
-import ButtonDark from '@/_components/formElements/ButtonDark';
+import LabeledInput from '@/_components/ui/inputs/LabeledInput';
+import LabeledTextArea from '@/_components/ui/inputs/LabeledTextArea';
+import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 // Fetchin data
 import { ImageUpload } from '@/fetchers/ImageUpload';
 import { deleteImage } from '@/fetchers/DeleteImage';

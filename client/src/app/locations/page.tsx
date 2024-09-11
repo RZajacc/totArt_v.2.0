@@ -3,8 +3,8 @@
 import useSWR from 'swr';
 import { useContext } from 'react';
 // Components
-import { ErrorView } from '@/_components/ui/ErrorView';
-import LoadingView from '@/_components/ui/LoadingView';
+import { ErrorView } from '@/_components/ui/state/ErrorView';
+import LoadingView from '@/_components/ui/state/LoadingView';
 import LocationCard from '@/_components/locations/LocationCard';
 // Fetching data
 import { getAllLocations } from '@/fetchers/GetAllLocations';

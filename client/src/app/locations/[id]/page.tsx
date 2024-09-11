@@ -8,8 +8,8 @@ import LocationDetails from '@/_components/locationDetails/LocationDetails';
 import CommentElement from '@/_components/comments/CommentElement';
 import DeleteCommentModal from '@/_components/commentModals/DeleteCommentModal';
 import EditCommentModal from '@/_components/commentModals/EditCommentModal';
-import { ErrorView } from '@/_components/ui/ErrorView';
-import LoadingView from '@/_components/ui/LoadingView';
+import { ErrorView } from '@/_components/ui/state/ErrorView';
+import LoadingView from '@/_components/ui/state/LoadingView';
 // Fetching data
 import { locationDetailsData } from '@/fetchers/LocationDetailsData';
 import { addNewComment } from '@/fetchers/AddNewComment';

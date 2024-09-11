@@ -2,8 +2,8 @@
 import React, { useContext, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 // Components
-import TimerDisplay from '../ui/TimerDisplay';
-import PasswordField from '../formElements/PasswordField';
+import TimerDisplay from '../ui/state/TimerDisplay';
+import PasswordField from '../ui/inputs/PasswordField';
 // Fetching data
 import { VerifyUserPassword } from '@/fetchers/VerifyUserPassword';
 import { UpdateUserPassword } from '@/fetchers/UpdateUserPassword';

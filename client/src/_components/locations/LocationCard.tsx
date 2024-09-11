@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useSWRMutation from 'swr/mutation';
 // Components
-import { ErrorView } from '../ui/ErrorView';
+import { ErrorView } from '../ui/state/ErrorView';
 import FavButton from './FavButton';
 // Fetching data
 import { locationFavsData } from '@/fetchers/LocationFavsData';

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useSWRMutation from 'swr/mutation';
 // Components
-import DeleteField from '../ui/DeleteField';
+import DeleteField from '../ui/inputs/DeleteField';
 // Fetching data
 import { DeleteLocation } from '@/fetchers/DeleteLocation';
 // Context data

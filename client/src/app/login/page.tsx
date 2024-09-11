@@ -3,8 +3,8 @@
 import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // Components
-import LabeledInput from '@/_components/formElements/LabeledInput';
-import PasswordField from '@/_components/formElements/PasswordField';
+import LabeledInput from '@/_components/ui/inputs/LabeledInput';
+import PasswordField from '@/_components/ui/inputs/PasswordField';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 
