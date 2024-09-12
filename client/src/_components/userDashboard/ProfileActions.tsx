@@ -9,6 +9,7 @@ import DeleteField from '../ui/inputs/DeleteField';
 import { DeleteUserAccount } from '@/fetchers/DeleteUserAccount';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
+import ButtonRed from '../ui/buttons/ButtonRed';
 
 type Props = {};
 
@@ -86,13 +87,9 @@ function ProfileActions({}: Props) {
         >
           Change password
         </button>
-        <button
-          className="rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold"
-          value={'delete-account'}
-          onClick={actionsHandler}
-        >
+        <ButtonRed value="delete-account" onClick={actionsHandler}>
           Delete account
-        </button>
+        </ButtonRed>
       </div>
       {showPasswordChange && (
         <PasswordChange setShowPasswordChange={setShowPasswordChange} />

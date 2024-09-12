@@ -7,6 +7,7 @@ import PasswordField from '@/_components/ui/inputs/PasswordField';
 import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 // Utils
 import { validatePassword } from '@/utils/ValidatePassword';
+import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 
 type registerSucc = {
   msg: string;
@@ -174,13 +175,7 @@ function Register() {
               </p>
             </div>
           )}
-
-          <button
-            type="submit"
-            className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
-          >
-            Register
-          </button>
+          <ButtonDark type="submit">Register</ButtonDark>
         </form>
       </div>
     </>

@@ -7,6 +7,7 @@ import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 import PasswordField from '@/_components/ui/inputs/PasswordField';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
+import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 
 type Props = {};
 
@@ -97,12 +98,7 @@ function Login({}: Props) {
             </p>
           )}
 
-          <button
-            type="submit"
-            className="mx-auto my-1 w-full rounded-md bg-black py-1 text-white"
-          >
-            Login
-          </button>
+          <ButtonDark type="submit">Login</ButtonDark>
         </form>
       </div>
     </>

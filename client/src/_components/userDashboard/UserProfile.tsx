@@ -13,6 +13,7 @@ import { deleteImage } from '@/fetchers/DeleteImage';
 import { AuthContext } from '@/context/AuthContext';
 // Assets
 import noUser from '@/assets/noUser.png';
+import ButtonDark from '../ui/buttons/ButtonDark';
 
 function UserProfile() {
   const { user, mutateUser } = useContext(AuthContext);
@@ -70,7 +71,7 @@ function UserProfile() {
   };
   return (
     <>
-      <section className="text-center">
+      <section className="space-y-3 text-center">
         {/* Conditional render of an image depending on data stored by the user */}
         {user?.userImage ? (
           <Image
@@ -105,14 +106,13 @@ function UserProfile() {
         )}
 
         {/* Button managing input via ref */}
-        <button
-          className="hover mt-4 rounded-md border-2 border-black bg-black px-6 py-2 text-white shadow-md shadow-gray-500 hover:bg-white hover:font-bold hover:text-black"
+        <ButtonDark
           onClick={() => {
             imageInputRef.current?.click();
           }}
         >
           Select image
-        </button>
+        </ButtonDark>
       </section>
 
       <section className="mt-10 space-y-4 p-2">
