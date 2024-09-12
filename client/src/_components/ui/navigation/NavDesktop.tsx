@@ -7,6 +7,7 @@ import { AuthContext } from '@/context/AuthContext';
 // Assets
 import logoNormal from '@/assets/logo_normal.png';
 import NavLink from '../links/NavLink';
+import ButtonRed from '../buttons/ButtonRed';
 
 type Props = {};
 
@@ -51,12 +52,10 @@ function NavDesktop({}: Props) {
             </NavLink>
 
             {/* !!! To change */}
-            <button
-              onClick={logout}
-              className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600"
-            >
+            <ButtonRed onClick={logout}>Logout</ButtonRed>
+            {/* <button className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600">
               Logout
-            </button>
+            </button> */}
           </>
         ) : (
           <>
