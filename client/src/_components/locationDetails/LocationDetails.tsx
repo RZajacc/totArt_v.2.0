@@ -17,6 +17,7 @@ import pencil from '@/assets/pencil.svg';
 // Types
 import type { User } from '@/types/UserTypes';
 import type { locationData } from '@/types/locationTypes';
+import ButtonRed from '../ui/buttons/ButtonRed';
 
 type Props = {
   user: User;
@@ -186,17 +187,18 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
-        {data?.author._id === user?._id && (
-          <button
-            className="mx-auto w-60 rounded-lg border-2 border-black bg-red-500 p-1 px-2 text-stone-200 shadow-md shadow-black hover:font-bold  "
-            onClick={() => {
-              setShowDeleteField((prevState) => !prevState);
-              setDeleteError(false);
-            }}
-          >
-            Delete location
-          </button>
-        )}
+        <section className="text-center">
+          {data?.author._id === user?._id && (
+            <ButtonRed
+              onClick={() => {
+                setShowDeleteField((prevState) => !prevState);
+                setDeleteError(false);
+              }}
+            >
+              Delete location
+            </ButtonRed>
+          )}
+        </section>
 
         <div className="mx-auto w-5/6">
           {showDeleteField && (
