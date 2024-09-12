@@ -1,7 +1,6 @@
 // Libraries
 import { useContext } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
@@ -40,7 +39,7 @@ function NavDesktop({}: Props) {
       </section>
 
       {/* User section */}
-      <section className="mx-5 flex items-center space-x-5">
+      <section className="mr-8 flex items-center space-x-2">
         {user ? (
           <>
             <NavLink
@@ -61,15 +60,15 @@ function NavDesktop({}: Props) {
           </>
         ) : (
           <>
+            <NavLink href="/login" currentPath={pathname} pathPattern="/login">
+              Login
+            </NavLink>
             <NavLink
               href="/register"
               currentPath={pathname}
               pathPattern="/register"
             >
               Register
-            </NavLink>
-            <NavLink href="/login" currentPath={pathname} pathPattern="/login">
-              Login
             </NavLink>
           </>
         )}

@@ -12,7 +12,7 @@ function NavLink({ children, currentPath, pathPattern, ...props }: Props) {
   return (
     <Link
       {...props}
-      className={`link ${currentPath === pathPattern ? 'text-lg font-bold text-zinc-800  hover:animate-pulse hover:cursor-pointer' : 'text-lg hover:animate-pulse hover:text-green-700'}`}
+      className={`link ${currentPath === pathPattern && ' font-bold'} rounded-sm px-2 py-1 text-lg text-zinc-800 hover:animate-pulse hover:cursor-pointer hover:border  hover:border-zinc-800 hover:bg-gradient-to-br hover:from-pink-400 hover:to-pink-300 hover:text-zinc-100 hover:shadow-sm hover:shadow-black`}
     >
       {children}
     </Link>
