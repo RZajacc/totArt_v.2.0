@@ -8,6 +8,7 @@ import { AuthContext } from '@/context/AuthContext';
 import logoNormal from '@/assets/logo_normal.png';
 import NavLink from '../links/NavLink';
 import ButtonRed from '../buttons/ButtonRed';
+import Link from 'next/link';
 
 type Props = {};
 
@@ -18,9 +19,9 @@ function NavDesktop({}: Props) {
   return (
     <div className="hidden items-center justify-between md:flex">
       <section>
-        <NavLink href="/">
+        <Link href={'/'}>
           <Image src={logoNormal} alt="logo" width={30} className="mx-5" />
-        </NavLink>
+        </Link>
       </section>
 
       <section className="space-x-5">

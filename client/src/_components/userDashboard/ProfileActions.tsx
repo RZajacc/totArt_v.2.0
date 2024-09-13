@@ -10,6 +10,9 @@ import { DeleteUserAccount } from '@/fetchers/DeleteUserAccount';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import ButtonRed from '../ui/buttons/ButtonRed';
+import ButtonGrey from '../ui/buttons/ButtonGrey';
+
+import { Border, Shadow } from 'enums/StyleEnums';
 
 type Props = {};
 
@@ -80,13 +83,14 @@ function ProfileActions({}: Props) {
   return (
     <>
       <div className="my-2 flex justify-around rounded-sm p-1">
-        <button
-          className="rounded-lg border-2 border-black bg-stone-300 p-1 px-2 shadow-md shadow-black hover:font-bold"
-          value={'password-change'}
+        <ButtonGrey
+          shadowSize={Shadow.medium}
+          border={Border.thin}
+          value="password-change"
           onClick={actionsHandler}
         >
           Change password
-        </button>
+        </ButtonGrey>
         <ButtonRed value="delete-account" onClick={actionsHandler}>
           Delete account
         </ButtonRed>
