@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 // Components
 import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 import PasswordField from '@/_components/ui/inputs/PasswordField';
+import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
-import ButtonDark from '@/_components/ui/buttons/ButtonDark';
+import { Rounded } from 'enums/StyleEnums';
 
 type Props = {};
 
@@ -98,7 +99,9 @@ function Login({}: Props) {
             </p>
           )}
 
-          <ButtonDark type="submit">Login</ButtonDark>
+          <ButtonDark rounded={Rounded.medium} type="submit">
+            Login
+          </ButtonDark>
         </form>
       </div>
     </>

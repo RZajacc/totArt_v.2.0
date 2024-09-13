@@ -5,10 +5,11 @@ import { useState } from 'react';
 // Components
 import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 import LabeledTextArea from '@/_components/ui/inputs/LabeledTextArea';
-import SubmitButton from '@/_components/ui/buttons/ButtonDark';
+import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 import TimerDisplay from '@/_components/ui/state/TimerDisplay';
 // Fetching data
 import { sendContactEmail } from '@/fetchers/SendContactEmail';
+import { Rounded } from 'enums/StyleEnums';
 
 function Contact() {
   const {
@@ -90,7 +91,7 @@ function Contact() {
                 />
               </>
             )}
-            <SubmitButton>Send email!</SubmitButton>
+            <ButtonDark rounded={Rounded.medium}>Send email!</ButtonDark>
           </form>
         </section>
       </main>

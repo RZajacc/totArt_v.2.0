@@ -8,6 +8,7 @@ import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 // Utils
 import { validatePassword } from '@/utils/ValidatePassword';
 import ButtonDark from '@/_components/ui/buttons/ButtonDark';
+import { Rounded } from 'enums/StyleEnums';
 
 type registerSucc = {
   msg: string;
@@ -175,7 +176,9 @@ function Register() {
               </p>
             </div>
           )}
-          <ButtonDark type="submit">Register</ButtonDark>
+          <ButtonDark rounded={Rounded.medium} type="submit">
+            Register
+          </ButtonDark>
         </form>
       </div>
     </>

@@ -9,6 +9,7 @@ import logoNormal from '@/assets/logo_normal.png';
 import NavLink from '../links/NavLink';
 import ButtonRed from '../buttons/ButtonRed';
 import Link from 'next/link';
+import { Rounded } from 'enums/StyleEnums';
 
 type Props = {};
 
@@ -52,11 +53,9 @@ function NavDesktop({}: Props) {
               Account
             </NavLink>
 
-            {/* !!! To change */}
-            <ButtonRed onClick={logout}>Logout</ButtonRed>
-            {/* <button className="rounded-md bg-red-600 px-2 py-1 font-bold text-white hover:border-2 hover:border-black hover:bg-white hover:text-red-600">
+            <ButtonRed rounded={Rounded.large} onClick={logout}>
               Logout
-            </button> */}
+            </ButtonRed>
           </>
         ) : (
           <>

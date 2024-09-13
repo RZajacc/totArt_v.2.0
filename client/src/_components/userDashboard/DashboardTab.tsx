@@ -1,4 +1,6 @@
 import React from 'react';
+import ButtonYellow from '../ui/buttons/ButtonYellow';
+import { Border, Rounded, Shadow } from 'enums/StyleEnums';
 
 type Props = {
   tabName: string;
@@ -8,14 +10,16 @@ type Props = {
 function DashboardTab({ tabName, setActiveComponent }: Props) {
   return (
     <li>
-      <button
-        className=" rounded-md border-2 border-black bg-amber-300 px-2 py-1 shadow-md shadow-black"
+      <ButtonYellow
+        rounded={Rounded.medium}
+        shadowSize={Shadow.medium}
+        border={Border.thick}
         onClick={() => {
           setActiveComponent(tabName);
         }}
       >
         {tabName}
-      </button>
+      </ButtonYellow>
     </li>
   );
 }
