@@ -12,7 +12,7 @@ import { AuthContext } from '@/context/AuthContext';
 import ButtonRed from '../ui/buttons/ButtonRed';
 import ButtonGrey from '../ui/buttons/ButtonGrey';
 
-import { Border, Shadow } from 'enums/StyleEnums';
+import { Border, Rounded, Shadow } from 'enums/StyleEnums';
 
 type Props = {};
 
@@ -86,12 +86,19 @@ function ProfileActions({}: Props) {
         <ButtonGrey
           shadowSize={Shadow.medium}
           border={Border.thin}
+          rounded={Rounded.medium}
           value="password-change"
           onClick={actionsHandler}
         >
           Change password
         </ButtonGrey>
-        <ButtonRed value="delete-account" onClick={actionsHandler}>
+        <ButtonRed
+          shadowSize={Shadow.medium}
+          border={Border.thin}
+          rounded={Rounded.medium}
+          value="delete-account"
+          onClick={actionsHandler}
+        >
           Delete account
         </ButtonRed>
       </div>

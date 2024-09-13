@@ -1,14 +1,18 @@
+import { Border, Rounded, Shadow } from 'enums/StyleEnums';
 import React from 'react';
 
 type Props = {
+  shadowSize?: Shadow;
+  border?: Border;
+  rounded?: Rounded;
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-function ButtonRed({ children, ...props }: Props) {
+function ButtonRed({ shadowSize, border, rounded, children, ...props }: Props) {
   return (
     <button
       {...props}
-      className="rounded-md bg-gradient-to-br from-rose-500 to-rose-900 px-5 py-1 text-zinc-100 shadow-sm shadow-black hover:border-zinc-900 hover:from-zinc-300 hover:to-zinc-100 hover:text-zinc-900"
+      className={`${shadowSize} ${border} ${rounded} border-black bg-gradient-to-br from-rose-500 to-rose-900 px-5 py-1 text-zinc-100 shadow-black hover:border-zinc-900 hover:from-zinc-300 hover:to-zinc-100 hover:text-zinc-900`}
     >
       {children}
     </button>

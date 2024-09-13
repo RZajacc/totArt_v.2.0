@@ -14,6 +14,7 @@ import { AuthContext } from '@/context/AuthContext';
 // Assets
 import noUser from '@/assets/noUser.png';
 import ButtonDark from '../ui/buttons/ButtonDark';
+import { Rounded, Shadow } from 'enums/StyleEnums';
 
 function UserProfile() {
   const { user, mutateUser } = useContext(AuthContext);
@@ -110,6 +111,8 @@ function UserProfile() {
           onClick={() => {
             imageInputRef.current?.click();
           }}
+          rounded={Rounded.small}
+          shadowSize={Shadow.small}
         >
           Select image
         </ButtonDark>
