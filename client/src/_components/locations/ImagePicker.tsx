@@ -30,6 +30,8 @@ function ImagePicker({ selectedImage, setSelectedImage }: Props) {
     fileReader.readAsDataURL(file);
   };
 
+  console.log('PICKER IMAGE', selectedImage);
+
   return (
     <section className="flex h-32 space-x-6">
       <div>

@@ -19,7 +19,6 @@ import type { User } from '@/types/UserTypes';
 import type { locationData } from '@/types/locationTypes';
 import ButtonRed from '../ui/buttons/ButtonRed';
 import { Rounded, Shadow } from 'enums/StyleEnums';
-import LinkYellow from '../ui/links/LinkYellow';
 
 type Props = {
   user: User;
@@ -202,13 +201,6 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
               >
                 Delete location
               </ButtonRed>
-              <LinkYellow
-                href={`/locations/edit/${data._id}`}
-                rounded={Rounded.medium}
-                shadowSize={Shadow.small}
-              >
-                Edit data
-              </LinkYellow>
             </>
           )}
         </section>
