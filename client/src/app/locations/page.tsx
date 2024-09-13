@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 // Libraries
 import useSWR from 'swr';
 import { useContext } from 'react';
@@ -11,38 +11,45 @@ import { getAllLocations } from '@/fetchers/GetAllLocations';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import LinkGreen from '@/_components/ui/links/LinkGreen';
+import { locationData } from '@/types/locationTypes';
 
-function Content() {
-  const { user } = useContext(AuthContext);
+async function Content() {
+  // const { user } = useContext(AuthContext);
 
-  const {
-    data: locations,
-    error: locationError,
-    isLoading: locationsLoading,
-  } = useSWR(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
-    getAllLocations,
-  );
+  // const {
+  //   data: locations,
+  //   error: locationError,
+  //   isLoading: locationsLoading,
+  // } = useSWR(
+  //   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
+  //   getAllLocations,
+  // );
 
   // Displaying loaders and errors
-  if (locationError) {
-    return <ErrorView error={locationError} />;
-  }
+  // if (locationError) {
+  //   return <ErrorView error={locationError} />;
+  // }
 
-  if (locationsLoading) {
-    return <LoadingView />;
-  }
+  // if (locationsLoading) {
+  //   return <LoadingView />;
+  // }
+  const response = await fetch(
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
+  );
+
+  const locations: { number: number; locations: locationData[] } =
+    await response.json();
 
   return (
     <>
       <div className="mb-6 mt-3 text-center">
-        <h1 className="mb-4 text-center text-xl font-bold md:mt-4">
+        {/* <h1 className="mb-4 text-center text-xl font-bold md:mt-4">
           Number of locations found:{' '}
           <span className="text-emerald-500">{locations?.number}</span>
         </h1>
         {user && (
           <LinkGreen href="locations/addNew">Add new location</LinkGreen>
-        )}
+        )} */}
       </div>
 
       <div className="mx-auto mt-3 grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">

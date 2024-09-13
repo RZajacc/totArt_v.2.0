@@ -1,3 +1,4 @@
+'use client';
 // Libraries
 import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -22,7 +23,6 @@ type Props = {
 
 function LocationCard({ locationData }: Props) {
   const { user, mutateUser } = useContext(AuthContext);
-  const [isFav, setIsFav] = useState(false);
 
   // Mutation to trigger on upon button click
   const { trigger: triggerFavsHandler, error: favshandlerError } =
@@ -39,43 +39,33 @@ function LocationCard({ locationData }: Props) {
   // Add or remove favourite from the list
   const handleFavourites = async (locId: string) => {
     await triggerFavsHandler({ email: user!.email, locactionId: locId });
-    setIsFav((prevState) => !prevState);
+    // setIsFav((prevState) => !prevState);
     mutateUser();
   };
-
-  // Check if current location is saved by the user
-  useEffect(() => {
-    const test = user?.favs.filter((fav) => {
-      return fav._id === locationData._id;
-    });
-    if (test?.length !== 0) {
-      setIsFav(true);
-    }
-  }, [user]);
 
   return (
     <div className="grid content-between rounded-lg border-2 border-black bg-slate-100 shadow-md shadow-black">
       <section className="relative">
-        {user ? (
-          isFav ? (
-            <FavButton
-              imgSrc={fullHeart}
-              onClick={() => {
-                handleFavourites(locationData._id);
-              }}
-            />
-          ) : (
-            <FavButton
-              imgSrc={emptyHeart}
-              onClick={() => {
-                handleFavourites(locationData._id);
-              }}
-            />
-          )
+        {/* Display add or remove from favourites button*/}
+        {user?.favs.find(({ _id }) => {
+          return _id === locationData._id;
+        }) ? (
+          <FavButton
+            imgSrc={fullHeart}
+            onClick={() => {
+              handleFavourites(locationData._id);
+            }}
+          />
         ) : (
-          ''
+          <FavButton
+            imgSrc={emptyHeart}
+            onClick={() => {
+              handleFavourites(locationData._id);
+            }}
+          />
         )}
 
+        {/* Card image */}
         <Image
           src={locationData.image.secure_url}
           alt={locationData.title}
@@ -86,6 +76,7 @@ function LocationCard({ locationData }: Props) {
         />
       </section>
 
+      {/* Link to a relevant page */}
       <section className="mb-4 mt-1 text-center">
         <h3 className="mb-3 text-xl font-bold">{locationData.title}</h3>
         <LinkDark href={`/locations/${locationData._id}`}>See more</LinkDark>
