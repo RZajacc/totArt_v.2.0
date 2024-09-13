@@ -14,7 +14,6 @@ import LinkGreen from '@/_components/ui/links/LinkGreen';
 
 function Content() {
   const { user } = useContext(AuthContext);
-  // const [displayAddNewLocation, setDisplayAddNewLocation] = useState(false);
 
   const {
     data: locations,

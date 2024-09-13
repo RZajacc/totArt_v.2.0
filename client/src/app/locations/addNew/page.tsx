@@ -15,6 +15,7 @@ import { deleteImage } from '@/fetchers/DeleteImage';
 import { addNewLocation } from '@/fetchers/AddNewLocation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
+import { Rounded } from 'enums/StyleEnums';
 
 function page() {
   // Getting user data
@@ -129,7 +130,11 @@ function page() {
           {addLocationError ||
             (imageUploadError && 'Submitting the data failed! Try again!')}
         </p>
-        <ButtonDark type="submit" disabled={imageIsMutating || addingLocation}>
+        <ButtonDark
+          rounded={Rounded.medium}
+          type="submit"
+          disabled={imageIsMutating || addingLocation}
+        >
           {imageIsMutating || addingLocation
             ? 'Submitting the form...'
             : 'Submit data'}

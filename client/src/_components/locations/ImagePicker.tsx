@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import ButtonDark from '../ui/buttons/ButtonDark';
+import { Rounded } from 'enums/StyleEnums';
 
 type Props = {
   selectedImage: string | ArrayBuffer | null;
@@ -41,6 +42,7 @@ function ImagePicker({ selectedImage, setSelectedImage }: Props) {
           required
         />
         <ButtonDark
+          rounded={Rounded.medium}
           onClick={() => {
             imageUploadButtonRef.current?.click();
           }}

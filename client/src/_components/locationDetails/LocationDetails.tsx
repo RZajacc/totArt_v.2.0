@@ -18,6 +18,8 @@ import pencil from '@/assets/pencil.svg';
 import type { User } from '@/types/UserTypes';
 import type { locationData } from '@/types/locationTypes';
 import ButtonRed from '../ui/buttons/ButtonRed';
+import { Rounded, Shadow } from 'enums/StyleEnums';
+import LinkYellow from '../ui/links/LinkYellow';
 
 type Props = {
   user: User;
@@ -187,16 +189,27 @@ function LocationDetails({ user, data, mutateUser, mutateLocation }: Props) {
           </div>
         </section>
 
-        <section className="text-center">
+        <section className="space-x-6 text-center">
           {data?.author._id === user?._id && (
-            <ButtonRed
-              onClick={() => {
-                setShowDeleteField((prevState) => !prevState);
-                setDeleteError(false);
-              }}
-            >
-              Delete location
-            </ButtonRed>
+            <>
+              <ButtonRed
+                rounded={Rounded.medium}
+                shadowSize={Shadow.small}
+                onClick={() => {
+                  setShowDeleteField((prevState) => !prevState);
+                  setDeleteError(false);
+                }}
+              >
+                Delete location
+              </ButtonRed>
+              <LinkYellow
+                href={`/locations/edit/${data._id}`}
+                rounded={Rounded.medium}
+                shadowSize={Shadow.small}
+              >
+                Edit data
+              </LinkYellow>
+            </>
           )}
         </section>
 
