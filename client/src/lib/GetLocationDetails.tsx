@@ -2,7 +2,7 @@
 import type { FetchError } from '@/types/GeneralTypes';
 import type { locationData } from '@/types/locationTypes';
 
-export const locationDetailsData = async (locationID: string) => {
+export const GetLocationDetails = async (locationID: string) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 

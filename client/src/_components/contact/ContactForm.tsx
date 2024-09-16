@@ -15,6 +15,7 @@ import { Rounded } from 'enums/StyleEnums';
 type Props = {};
 
 function ContactForm({}: Props) {
+  // Sending email logic
   const {
     trigger: triggerSendingEmail,
     error: emailError,
