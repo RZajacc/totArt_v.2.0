@@ -1,6 +1,6 @@
 'use client';
 // Libraries
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 // Components
