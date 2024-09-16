@@ -16,6 +16,7 @@ import { AuthContext } from '@/context/AuthContext';
 // Utils
 import isAuth from '@/utils/IsAuth';
 import { GetLocationDetails } from 'lib/GetLocationDetails';
+import LocationDataField from '@/_components/locationDetails/LocationDataField';
 // Types
 
 // Generate Pages metadata
@@ -87,7 +88,28 @@ async function ContentDetails({ params }: { params: { id: string } }) {
 
   return (
     <div className="mx-auto max-w-xl">
-      <div className="my-6 grid justify-center gap-y-3"></div>
+      <div className="my-6 grid justify-center gap-y-3">
+        <LocationDataField
+          locationAuthorId={locationData.author._id}
+          fieldName="Title"
+          fieldData={locationData.title}
+        />
+        <LocationDataField
+          locationAuthorId={locationData.author._id}
+          fieldName="Description"
+          fieldData={locationData.description}
+        />
+        <LocationDataField
+          locationAuthorId={locationData.author._id}
+          fieldName="Where to find it"
+          fieldData={locationData.location}
+        />
+        <LocationDataField
+          locationAuthorId={locationData.author._id}
+          fieldName="Posted by:"
+          fieldData={locationData.author.userName}
+        />
+      </div>
       {/* <LocationDetails
         user={user!}
         data={locationData!}
