@@ -1,5 +1,6 @@
 // Types
 import type { FetchError } from '@/types/GeneralTypes';
+import { revalidatePath } from 'next/cache';
 
 export const DeleteLocation = async (
   url: string,
@@ -30,6 +31,7 @@ export const DeleteLocation = async (
       locationTitle: string;
       locationAuthor: string;
     } = await response.json();
+    revalidatePath('/locations', 'layout');
     return result;
   } else {
     const result: { msg: string } = await response.json();

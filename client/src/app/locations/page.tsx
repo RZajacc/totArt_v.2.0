@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'All locations added by users',
 };
 
+export const revalidate = 10;
+
 async function Content() {
   const response = await fetch(
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,

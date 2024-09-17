@@ -16,7 +16,9 @@ import { AuthContext } from '@/context/AuthContext';
 // Utils
 import isAuth from '@/utils/IsAuth';
 import { GetLocationDetails } from 'lib/GetLocationDetails';
-import LocationDataField from '@/_components/locationDetails/LocationDataField';
+import LocationActions from '@/_components/locationDetails/LocationActions';
+import ButtonRed from '@/_components/ui/buttons/ButtonRed';
+import { Rounded, Shadow } from 'enums/StyleEnums';
 // Types
 
 // Generate Pages metadata
@@ -31,9 +33,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 async function ContentDetails({ params }: { params: { id: string } }) {
   // Query data from the database
   const locationData = await GetLocationDetails(params.id);
-
-  // Context data
-  // const { user, mutateUser } = useContext(AuthContext);
 
   // Ref to text area to add comment and clear content after
   // const commentRef = useRef<HTMLTextAreaElement>(null);
@@ -73,42 +72,24 @@ async function ContentDetails({ params }: { params: { id: string } }) {
   //   }
   // };
 
-  // // Display loader and errors
-  // if (locationDetailsError) {
-  //   return <ErrorView error={locationDetailsError} />;
-  // }
-
-  // if (locationDetailsLoading) {
-  //   return <LoadingView />;
-  // }
-
-  // if (addCommentError) {
-  //   return <ErrorView error={addCommentError} />;
-  // }
-
   return (
-    <div className="mx-auto max-w-xl">
-      <div className="my-6 grid justify-center gap-y-3">
-        <LocationDataField
-          locationAuthorId={locationData.author._id}
-          fieldName="Title"
-          fieldData={locationData.title}
-        />
-        <LocationDataField
-          locationAuthorId={locationData.author._id}
-          fieldName="Description"
-          fieldData={locationData.description}
-        />
-        <LocationDataField
-          locationAuthorId={locationData.author._id}
-          fieldName="Where to find it"
-          fieldData={locationData.location}
-        />
-        <LocationDataField
-          locationAuthorId={locationData.author._id}
-          fieldName="Posted by:"
-          fieldData={locationData.author.userName}
-        />
+    <div className="mx-auto max-w-lg">
+      <div className="my-6 grid justify-center gap-y-3 rounded-md border border-black bg-slate-100 shadow-sm shadow-black">
+        {/* Descriptive data */}
+        <section>
+          <h1 className="text-center text-lg font-bold">Title:</h1>
+          <p className="text-center">{locationData.title}</p>
+          <h1 className="text-center text-lg font-bold">Description:</h1>
+          <p className="text-center">{locationData.description}</p>
+          <h1 className="text-center text-lg font-bold">Where to find it:</h1>
+          <p className="text-center">{locationData.location}</p>
+          <h1 className="text-center text-lg font-bold">Posted by:</h1>
+          <p className="text-center">{locationData.author.userName}</p>
+        </section>
+        {/* Location actions */}
+        <section className="mb-3 space-x-3 text-center">
+          <LocationActions locationData={locationData} />
+        </section>
       </div>
       {/* <LocationDetails
         user={user!}
