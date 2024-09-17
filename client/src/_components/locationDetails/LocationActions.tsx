@@ -9,6 +9,8 @@ import DeleteField from '../ui/inputs/DeleteField';
 import { DeleteLocation } from '@/lib/DeleteLocation';
 import { locationData } from '@/types/locationTypes';
 import Modal from '../ui/Modal';
+import LabeledInput from '../ui/inputs/LabeledInput';
+import LabeledTextArea from '../ui/inputs/LabeledTextArea';
 
 type Props = {
   locationData: locationData;
@@ -43,11 +45,11 @@ function LocationActions({ locationData }: Props) {
     }
   };
 
-  console.log(modalDisplay);
   return (
     <>
       {locationData.author._id === user?._id && (
         <>
+          {/* Buttons to delete or edit location */}
           <ButtonRed
             rounded={Rounded.medium}
             shadowSize={Shadow.small}
@@ -67,6 +69,8 @@ function LocationActions({ locationData }: Props) {
           >
             Update data
           </ButtonYellow>
+
+          {/* Field with confirmation of deletion */}
           {showDeleteField && (
             <DeleteField
               handleRemovingData={deleteLocationHandler}
@@ -77,10 +81,34 @@ function LocationActions({ locationData }: Props) {
             />
           )}
 
-          <Modal modalDisplay={modalDisplay} setModalDisplay={setModalDisplay}>
-            <p>test</p>
-            <p>test</p>
-            <p>test</p>
+          {/* Modal for editing location data */}
+          <Modal
+            modalDisplay={modalDisplay}
+            setModalDisplay={setModalDisplay}
+            submitHandler={() => {
+              setModalDisplay(false);
+            }}
+          >
+            <form className="mb-3 grid p-2">
+              <LabeledInput
+                inputType="text"
+                labelFor="title"
+                labelText="Title:"
+                defaultValue={locationData.title}
+              />
+              <LabeledTextArea
+                labelFor="description"
+                labelText="Description"
+                rows={3}
+                defaultValue={locationData.description}
+              />
+              <LabeledTextArea
+                labelFor="location"
+                labelText="Where was it:"
+                rows={3}
+                defaultValue={locationData.location}
+              />
+            </form>
           </Modal>
         </>
       )}

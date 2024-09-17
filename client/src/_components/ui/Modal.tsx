@@ -1,20 +1,29 @@
 import { SetStateAction, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import ButtonRed from './buttons/ButtonRed';
+import { Rounded, Shadow } from 'enums/StyleEnums';
+import ButtonGreen from './buttons/ButtonGreen';
 
 type Props = {
   modalDisplay: boolean;
   setModalDisplay: React.Dispatch<SetStateAction<boolean>>;
+  submitHandler: () => void;
   children: React.ReactNode;
 };
 
-function Modal({ modalDisplay, setModalDisplay, children }: Props) {
+function Modal({
+  modalDisplay,
+  setModalDisplay,
+  submitHandler,
+  children,
+}: Props) {
   // Create a ref
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     // Connecting with dialog object
     const modal = dialogRef.current;
+    // Display or hide modal depending on state
     if (modalDisplay) {
-      console.log('INSIDE', modalDisplay);
       modal?.showModal();
     } else {
       modal?.close();
@@ -34,7 +43,22 @@ function Modal({ modalDisplay, setModalDisplay, children }: Props) {
     >
       <div>
         {children}
-        <button onClick={handleClosingModal}>close</button>
+        <div className="mb-1 flex justify-end space-x-1">
+          <ButtonRed
+            onClick={handleClosingModal}
+            rounded={Rounded.small}
+            shadowSize={Shadow.small}
+          >
+            close
+          </ButtonRed>
+          <ButtonGreen
+            onClick={submitHandler}
+            rounded={Rounded.small}
+            shadowSize={Shadow.small}
+          >
+            Submit
+          </ButtonGreen>
+        </div>
       </div>
     </dialog>,
     document.getElementById('modal')!,
