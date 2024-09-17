@@ -86,6 +86,7 @@ async function ContentDetails({ params }: { params: { id: string } }) {
           <h1 className="text-center text-lg font-bold">Posted by:</h1>
           <p className="text-center">{locationData.author.userName}</p>
         </section>
+
         {/* Location actions */}
         <section className="mb-3 space-x-3 text-center">
           <LocationActions locationData={locationData} />

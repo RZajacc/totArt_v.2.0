@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={(montserrat.className, 'h-full')}>
       <body className="h-full">
+        <div id="modal"></div>
         <AuthContextProvider>
           <Navbar />
           <NavBackdrop />

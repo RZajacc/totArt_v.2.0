@@ -8,6 +8,7 @@ import DeleteField from '../ui/inputs/DeleteField';
 
 import { DeleteLocation } from '@/lib/DeleteLocation';
 import { locationData } from '@/types/locationTypes';
+import Modal from '../ui/Modal';
 
 type Props = {
   locationData: locationData;
@@ -18,6 +19,7 @@ function LocationActions({ locationData }: Props) {
   const [showDeleteField, setShowDeleteField] = useState(false);
   const [deleteError, setDeleteError] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
+  const [modalDisplay, setModalDisplay] = useState(false);
 
   const deleteLocationHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,6 +42,8 @@ function LocationActions({ locationData }: Props) {
       mutateUser();
     }
   };
+
+  console.log(modalDisplay);
   return (
     <>
       {locationData.author._id === user?._id && (
@@ -54,7 +58,13 @@ function LocationActions({ locationData }: Props) {
           >
             Delete location
           </ButtonRed>
-          <ButtonYellow rounded={Rounded.medium} shadowSize={Shadow.small}>
+          <ButtonYellow
+            rounded={Rounded.medium}
+            shadowSize={Shadow.small}
+            onClick={() => {
+              setModalDisplay(true);
+            }}
+          >
             Update data
           </ButtonYellow>
           {showDeleteField && (
@@ -66,6 +76,12 @@ function LocationActions({ locationData }: Props) {
               setShowIncorrectInput={setDeleteError}
             />
           )}
+
+          <Modal modalDisplay={modalDisplay} setModalDisplay={setModalDisplay}>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+          </Modal>
         </>
       )}
     </>
