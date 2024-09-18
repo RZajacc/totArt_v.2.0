@@ -19,6 +19,8 @@ import { GetLocationDetails } from 'lib/GetLocationDetails';
 import LocationActions from '@/_components/locationDetails/LocationActions';
 import ButtonRed from '@/_components/ui/buttons/ButtonRed';
 import { Rounded, Shadow } from 'enums/StyleEnums';
+import Image from 'next/image';
+import CommentsSection from '@/_components/comments/CommentsSection';
 // Types
 
 // Generate Pages metadata
@@ -73,7 +75,7 @@ async function ContentDetails({ params }: { params: { id: string } }) {
   // };
 
   return (
-    <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-xl">
       <div className="my-6 grid justify-center gap-y-3 rounded-md border border-black bg-slate-100 shadow-sm shadow-black">
         {/* Descriptive data */}
         <section>
@@ -91,37 +93,27 @@ async function ContentDetails({ params }: { params: { id: string } }) {
         <section className="mb-3 space-x-3 text-center">
           <LocationActions locationData={locationData} />
         </section>
+        <section>
+          <Image
+            src={locationData.image.secure_url}
+            alt={locationData.title}
+            width={locationData.image.width}
+            height={locationData.image.height}
+            className="mx-auto mb-3 w-4/6 rounded-md border border-black shadow-sm shadow-black"
+          />
+        </section>
       </div>
-      {/* <LocationDetails
-        user={user!}
-        data={locationData!}
-        mutateUser={mutateUser}
-        mutateLocation={mutateLocation}
-      /> */}
 
       {/* Comments section */}
-      {/* <div className="my-6">
-        <h4 className="py-2 text-center text-xl font-bold">
-          ({locationData?.comments.length}) comments:
-        </h4>
-        <section className="grid gap-y-2">
-          {locationData?.comments &&
-            locationData.comments.map((comment) => {
-              return (
-                <CommentElement
-                  key={comment._id}
-                  comment={comment}
-                  setShowDeleteCommentModal={setShowDeleteCommentModal}
-                  setShowEditCommentModal={setShowEditCommentModal}
-                  setSelectedCommentId={setSelectedCommentId}
-                  setSelectedCommentContent={setSelectedCommentContent}
-                />
-              );
-            })}
-        </section> */}
+      <div className="my-6">
+        <CommentsSection locationData={locationData}>
+          <h4 className="py-2 text-center text-xl font-bold">
+            ({locationData?.comments.length}) comments:
+          </h4>
+        </CommentsSection>
 
-      {/* Adding a new comment */}
-      {/* <section className="mt-5 grid">
+        {/* Adding a new comment */}
+        {/* <section className="mt-5 grid">
           <form onSubmit={handleCommentSubmit}>
             <section className="relative h-36 rounded-md border-2 border-gray-400 bg-white focus-within:border-2 focus-within:border-blue-500">
               <textarea
@@ -140,8 +132,8 @@ async function ContentDetails({ params }: { params: { id: string } }) {
               </button>
             </section>
           </form>
-        </section>
-      </div> */}
+        </section> */}
+      </div>
       {/* 
       <DeleteCommentModal
         showDeleteCommentModal={showDeleteCommentModal}
