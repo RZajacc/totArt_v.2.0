@@ -1,27 +1,8 @@
-// Libraries
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
-import { useContext, useRef, useState } from 'react';
-// Components
-import LocationDetails from '@/_components/locationDetails/LocationDetails';
-import CommentElement from '@/_components/comments/CommentElement';
-import DeleteCommentModal from '@/_components/commentModals/DeleteCommentModal';
-import EditCommentModal from '@/_components/commentModals/EditCommentModal';
-import { ErrorView } from '@/_components/ui/state/ErrorView';
-import LoadingView from '@/_components/ui/state/LoadingView';
-// Fetching data
-import { addNewComment } from '@/fetchers/AddNewComment';
-// Context data
-import { AuthContext } from '@/context/AuthContext';
 // Utils
-import isAuth from '@/utils/IsAuth';
 import { GetLocationDetails } from 'lib/GetLocationDetails';
 import LocationActions from '@/_components/locationDetails/LocationActions';
-import ButtonRed from '@/_components/ui/buttons/ButtonRed';
-import { Rounded, Shadow } from 'enums/StyleEnums';
 import Image from 'next/image';
 import CommentsSection from '@/_components/comments/CommentsSection';
-// Types
 
 // Generate Pages metadata
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -78,7 +59,7 @@ async function ContentDetails({ params }: { params: { id: string } }) {
     <div className="mx-auto max-w-xl">
       <div className="my-6 grid justify-center gap-y-3 rounded-md border border-black bg-slate-100 shadow-sm shadow-black">
         {/* Descriptive data */}
-        <section>
+        <section className="mt-2">
           <h1 className="text-center text-lg font-bold">Title:</h1>
           <p className="text-center">{locationData.title}</p>
           <h1 className="text-center text-lg font-bold">Description:</h1>
