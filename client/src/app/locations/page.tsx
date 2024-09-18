@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description: 'All locations added by users',
 };
 
-export const revalidate = 10;
-
 async function Content() {
+  // Fetch locations data
   const response = await fetch(
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
   );
 
+  // If fetching fails display error
   if (!response.ok) {
     return (
       <ErrorView
@@ -31,6 +31,7 @@ async function Content() {
     );
   }
 
+  // If fetch succeeds get the data
   const locations: { number: number; locations: locationData[] } =
     await response.json();
 

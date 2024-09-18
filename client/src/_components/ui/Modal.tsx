@@ -17,8 +17,9 @@ function Modal({
   submitHandler,
   children,
 }: Props) {
-  // Create a ref
+  // Create a ref to manage modal display
   const dialogRef = useRef<HTMLDialogElement>(null);
+  // After rendering the element, connect the ref with element
   useEffect(() => {
     // Connecting with dialog object
     const modal = dialogRef.current;

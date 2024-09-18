@@ -1,17 +1,20 @@
 'use client';
-import { AuthContext } from '@/context/AuthContext';
+// Libraries
 import React, { useContext, useState } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+// Components
 import ButtonRed from '../ui/buttons/ButtonRed';
-import { Rounded, Shadow } from 'enums/StyleEnums';
 import ButtonYellow from '../ui/buttons/ButtonYellow';
 import DeleteField from '../ui/inputs/DeleteField';
-
-import { DeleteLocation } from '@/lib/DeleteLocation';
-import { locationData } from '@/types/locationTypes';
 import Modal from '../ui/Modal';
 import LabeledInput from '../ui/inputs/LabeledInput';
 import LabeledTextArea from '../ui/inputs/LabeledTextArea';
+// Fetching data
+import { DeleteLocation } from '@/lib/DeleteLocation';
 import { editLocation } from '@/lib/EditLocation';
+// Types
+import type { locationData } from '@/types/locationTypes';
+import { Rounded, Shadow } from 'enums/StyleEnums';
 
 type Props = {
   locationData: locationData;
@@ -19,9 +22,11 @@ type Props = {
 
 function LocationActions({ locationData }: Props) {
   const { user, mutateUser } = useContext(AuthContext);
+  // States managing deleting location fields
   const [showDeleteField, setShowDeleteField] = useState(false);
   const [deleteError, setDeleteError] = useState(false);
   const [deleteInput, setDeleteInput] = useState('');
+  // State managing modal display
   const [modalDisplay, setModalDisplay] = useState(false);
 
   const deleteLocationHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,6 +63,8 @@ function LocationActions({ locationData }: Props) {
     await editLocation(locationData._id, title, description, location);
     // Turn off the modal
     setModalDisplay(false);
+    // Refresh user data
+    mutateUser();
   };
 
   return (
