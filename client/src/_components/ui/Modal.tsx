@@ -40,7 +40,7 @@ function Modal({
     <dialog
       ref={dialogRef}
       onCancel={handleClosingModal}
-      className=" w-full rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:w-3/5 md:w-5/12 xl:w-4/12"
+      className=" animate-pop w-full rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:w-3/5 md:w-5/12 xl:w-4/12"
     >
       <form className="grid p-2" onSubmit={submitHandler}>
         {children}
