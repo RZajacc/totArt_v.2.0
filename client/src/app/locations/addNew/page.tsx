@@ -2,7 +2,6 @@
 // Libraries
 import { useContext, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
-import { useRouter } from 'next/navigation';
 // Components
 import ImagePicker from '@/_components/locations/ImagePicker';
 import isAuth from '@/utils/IsAuth';
@@ -12,7 +11,7 @@ import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 // Fetchin data
 import { ImageUpload } from '@/fetchers/ImageUpload';
 import { deleteImage } from '@/fetchers/DeleteImage';
-import { addNewLocation } from '@/fetchers/AddNewLocation';
+import { addNewLocation } from '@/lib/AddNewLocation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import { Rounded } from 'enums/StyleEnums';
@@ -20,14 +19,12 @@ import { Rounded } from 'enums/StyleEnums';
 function page() {
   // Getting user data
   const { user } = useContext(AuthContext);
+  const [submitting, setSubmitting] = useState(false);
 
   // Image picker data
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
-
-  // Router instance to redirect after submission
-  const router = useRouter();
 
   // SWR Methods necessary for all operations
   const {
@@ -43,15 +40,6 @@ function page() {
   const { trigger: triggerDeletingImage } = useSWRMutation(
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/imageDelete`,
     deleteImage,
-  );
-
-  const {
-    trigger: triggerAddLocation,
-    isMutating: addingLocation,
-    error: addLocationError,
-  } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/addNewLocation`,
-    addNewLocation,
   );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,17 +73,15 @@ function page() {
       return;
     }
 
-    // Submit new location
-    await triggerAddLocation({
-      author: user ? user._id : '',
-      title: title,
-      description: description,
-      location: location,
-      imageId: imageResponse._id,
-    });
-
-    // Redirect client side
-    router.push('/locations');
+    setSubmitting(true);
+    await addNewLocation(
+      title,
+      description,
+      location,
+      imageResponse._id,
+      user ? user._id : '',
+    );
+    setSubmitting(false);
   };
 
   return (
@@ -127,15 +113,14 @@ function page() {
           setSelectedImage={setSelectedImage}
         />
         <p className="text-center font-bold text-red-500">
-          {addLocationError ||
-            (imageUploadError && 'Submitting the data failed! Try again!')}
+          {imageUploadError && 'Submitting the data failed! Try again!'}
         </p>
         <ButtonDark
           rounded={Rounded.medium}
           type="submit"
-          disabled={imageIsMutating || addingLocation}
+          disabled={imageIsMutating}
         >
-          {imageIsMutating || addingLocation
+          {imageIsMutating || submitting
             ? 'Submitting the form...'
             : 'Submit data'}
         </ButtonDark>

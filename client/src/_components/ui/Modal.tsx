@@ -46,6 +46,7 @@ function Modal({
         {children}
         <div className="mt-2 flex justify-end space-x-1">
           <ButtonRed
+            type="reset"
             onClick={handleClosingModal}
             rounded={Rounded.small}
             shadowSize={Shadow.small}
