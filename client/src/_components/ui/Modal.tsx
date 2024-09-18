@@ -7,7 +7,7 @@ import ButtonGreen from './buttons/ButtonGreen';
 type Props = {
   modalDisplay: boolean;
   setModalDisplay: React.Dispatch<SetStateAction<boolean>>;
-  submitHandler: () => void;
+  submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
   children: React.ReactNode;
 };
 
@@ -41,9 +41,9 @@ function Modal({
       onCancel={handleClosingModal}
       className=" w-full rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:w-3/5 md:w-5/12 xl:w-4/12"
     >
-      <div>
+      <form className="grid p-2" onSubmit={submitHandler}>
         {children}
-        <div className="mb-1 flex justify-end space-x-1">
+        <div className="mt-2 flex justify-end space-x-1">
           <ButtonRed
             onClick={handleClosingModal}
             rounded={Rounded.small}
@@ -52,14 +52,14 @@ function Modal({
             close
           </ButtonRed>
           <ButtonGreen
-            onClick={submitHandler}
+            type="submit"
             rounded={Rounded.small}
             shadowSize={Shadow.small}
           >
             Submit
           </ButtonGreen>
         </div>
-      </div>
+      </form>
     </dialog>,
     document.getElementById('modal')!,
   );

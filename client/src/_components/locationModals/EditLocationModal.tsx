@@ -34,11 +34,11 @@ function EditLocationModal({
   // Handler for editing
   const handleEditLocation = async () => {
     // Trigger function with relevant data
-    await trigger({
-      locatinId: locationId,
-      propertyName: selectedProperty,
-      updatedValue: editLocationData,
-    });
+    // await trigger({
+    //   locatinId: locationId,
+    //   propertyName: selectedProperty,
+    //   updatedValue: editLocationData,
+    // });
     // Refetch location details data
     mutateLocation();
     // Close the modal

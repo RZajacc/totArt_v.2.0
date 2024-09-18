@@ -11,6 +11,7 @@ import { locationData } from '@/types/locationTypes';
 import Modal from '../ui/Modal';
 import LabeledInput from '../ui/inputs/LabeledInput';
 import LabeledTextArea from '../ui/inputs/LabeledTextArea';
+import { editLocation } from '@/lib/EditLocation';
 
 type Props = {
   locationData: locationData;
@@ -43,6 +44,20 @@ function LocationActions({ locationData }: Props) {
       // Refresh user data
       mutateUser();
     }
+  };
+
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Get form instance
+    const form = new FormData(event.currentTarget);
+    // Collect form data
+    const title = form.get('title') as string;
+    const description = form.get('description') as string;
+    const location = form.get('location') as string;
+    // Trigger update request
+    await editLocation(locationData._id, title, description, location);
+    // Turn off the modal
+    setModalDisplay(false);
   };
 
   return (
@@ -85,30 +100,30 @@ function LocationActions({ locationData }: Props) {
           <Modal
             modalDisplay={modalDisplay}
             setModalDisplay={setModalDisplay}
-            submitHandler={() => {
-              setModalDisplay(false);
-            }}
+            submitHandler={submitHandler}
           >
-            <form className="mb-3 grid p-2">
-              <LabeledInput
-                inputType="text"
-                labelFor="title"
-                labelText="Title:"
-                defaultValue={locationData.title}
-              />
-              <LabeledTextArea
-                labelFor="description"
-                labelText="Description"
-                rows={3}
-                defaultValue={locationData.description}
-              />
-              <LabeledTextArea
-                labelFor="location"
-                labelText="Where was it:"
-                rows={3}
-                defaultValue={locationData.location}
-              />
-            </form>
+            {/* <form className="mb-3 grid p-2" onSubmit={submitHandler}> */}
+            <LabeledInput
+              inputType="text"
+              labelFor="title"
+              labelText="Title:"
+              required
+              defaultValue={locationData.title}
+            />
+            <LabeledTextArea
+              labelFor="description"
+              labelText="Description"
+              rows={3}
+              required
+              defaultValue={locationData.description}
+            />
+            <LabeledTextArea
+              labelFor="location"
+              labelText="Where was it:"
+              rows={3}
+              required
+              defaultValue={locationData.location}
+            />
           </Modal>
         </>
       )}
