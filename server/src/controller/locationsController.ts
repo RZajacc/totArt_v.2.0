@@ -145,8 +145,9 @@ const updateLocation: RequestHandler = async (req, res) => {
   // Define incoming data
   const inputs: {
     locationId: string;
-    propertyName: string;
-    updatedValue: string;
+    title: string;
+    description: string;
+    location: string;
   } = req.body;
 
   // Convert locationId into id type
@@ -158,7 +159,9 @@ const updateLocation: RequestHandler = async (req, res) => {
       await locationModel.findByIdAndUpdate(
         locationId,
         {
-          [`${inputs.propertyName}`]: inputs.updatedValue,
+          title: inputs.title,
+          description: inputs.description,
+          location: inputs.location,
         },
         {
           new: true,
@@ -166,7 +169,7 @@ const updateLocation: RequestHandler = async (req, res) => {
       );
     if (updatedLocation) {
       res.status(200).json({
-        msg: `Locations ${inputs.propertyName} successfully updated`,
+        msg: `Location successfully updated`,
       });
     } else {
       res.status(404).json({
