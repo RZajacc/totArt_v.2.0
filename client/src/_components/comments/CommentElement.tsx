@@ -64,14 +64,6 @@ function CommentElement({ comment }: Props) {
   const handleEditComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Editing');
-    // setDisplayModal(true);
-    // setEditAction(true);
-    // Show edit comment modal
-    // setShowEditCommentModal(true);
-    // Pass up the id of a current comment
-    // setSelectedCommentId(comment._id);
-    // Pass up comments value
-    // setSelectedCommentContent(comment.comment);
   };
 
   const handleEditModal = () => {
