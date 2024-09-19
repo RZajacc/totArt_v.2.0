@@ -106,7 +106,11 @@ function LocationActions({ locationData }: Props) {
           {/* Modal for editing location data */}
           <Modal
             modalDisplay={modalDisplay}
-            setModalDisplay={setModalDisplay}
+            closeHandler={() => {
+              setModalDisplay(false);
+            }}
+            submitButtonText="Submit"
+            cancelButtonText="Cancel"
             submitHandler={submitHandler}
           >
             {/* <form className="mb-3 grid p-2" onSubmit={submitHandler}> */}

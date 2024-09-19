@@ -156,31 +156,33 @@ function CommentElement({ comment }: Props) {
         )}
       </div>
 
-      <Modal
-        modalDisplay={modalData.displayModal}
-        cancelButtonText={modalData.cancelText}
-        submitButtonText={modalData.submitText}
-        closeHandler={closeModalHandler}
-        submitHandler={handleModalAction}
-      >
-        {modalData.seletectedAction === 'edit' && (
-          <LabeledTextArea
-            labelFor="comment"
-            labelText="Change"
-            rows={3}
-            defaultValue={comment.comment}
-          />
-        )}
-        {modalData.seletectedAction === 'delete' && (
-          <>
-            <h1 className="text-center font-bold">Warning!</h1>
-            <p>
-              Are you sure you want to delete your comment? They change is not
-              reversible!
-            </p>
-          </>
-        )}
-      </Modal>
+      {modalData.displayModal && (
+        <Modal
+          modalDisplay={modalData.displayModal}
+          cancelButtonText={modalData.cancelText}
+          submitButtonText={modalData.submitText}
+          closeHandler={closeModalHandler}
+          submitHandler={handleModalAction}
+        >
+          {modalData.seletectedAction === 'edit' && (
+            <LabeledTextArea
+              labelFor="comment"
+              labelText="Change"
+              rows={3}
+              defaultValue={comment.comment}
+            />
+          )}
+          {modalData.seletectedAction === 'delete' && (
+            <>
+              <h1 className="text-center font-bold">Warning!</h1>
+              <p>
+                Are you sure you want to delete your comment? They change is not
+                reversible!
+              </p>
+            </>
+          )}
+        </Modal>
+      )}
     </>
   );
 }
