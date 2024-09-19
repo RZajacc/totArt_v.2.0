@@ -11,6 +11,16 @@ import { Comment, PopulatedComment } from "../types/CommentTypes.js";
 import { User } from "../types/UserTypes.js";
 import { Location } from "../types/LocationTypes.js";
 
+const getComments: RequestHandler = async (req, res) => {
+  const inputs: {
+    locationId: string;
+  } = req.body;
+
+  res.status(200).json({
+    msg: inputs.locationId,
+  });
+};
+
 const addNewComment: RequestHandler = async (req, res) => {
   // Specify req body type
   const input: {
@@ -157,4 +167,4 @@ const editComment: RequestHandler = async (req, res) => {
   }
 };
 
-export { addNewComment, deleteComment, editComment };
+export { getComments, addNewComment, deleteComment, editComment };
