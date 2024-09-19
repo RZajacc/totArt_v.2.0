@@ -16,9 +16,25 @@ const getComments: RequestHandler = async (req, res) => {
     locationId: string;
   } = req.body;
 
-  res.status(200).json({
-    msg: inputs.locationId,
-  });
+  try {
+    const comments: Comment[] = await commentModel
+      .find()
+      .where("relatedPost")
+      .equals(inputs.locationId);
+    if (comments) {
+      res.status(200).json({
+        comments,
+      });
+    } else {
+      res.status(404).json({
+        msg: "No comments found for selected locationId",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: error,
+    });
+  }
 };
 
 const addNewComment: RequestHandler = async (req, res) => {
