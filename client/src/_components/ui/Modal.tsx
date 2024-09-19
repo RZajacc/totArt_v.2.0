@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import ButtonRed from './buttons/ButtonRed';
 import { Rounded, Shadow } from 'enums/StyleEnums';
@@ -6,15 +6,19 @@ import ButtonGreen from './buttons/ButtonGreen';
 
 type Props = {
   modalDisplay: boolean;
-  setModalDisplay: React.Dispatch<SetStateAction<boolean>>;
   submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+  closeHandler: () => void;
+  cancelButtonText: string;
+  submitButtonText: string;
   children: React.ReactNode;
 };
 
 function Modal({
   modalDisplay,
-  setModalDisplay,
   submitHandler,
+  closeHandler,
+  cancelButtonText,
+  submitButtonText,
   children,
 }: Props) {
   // Create a ref to manage modal display
@@ -31,34 +35,29 @@ function Modal({
     }
   }, [modalDisplay]);
 
-  // Handle closing the modal
-  const handleClosingModal = () => {
-    setModalDisplay(false);
-  };
-
   return createPortal(
     <dialog
       ref={dialogRef}
-      onCancel={handleClosingModal}
-      className=" animate-pop w-full rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:w-3/5 md:w-5/12 xl:w-4/12"
+      onCancel={closeHandler}
+      className=" w-full animate-pop rounded-md border-2 border-black bg-yellow-200 p-1 backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:w-3/5 md:w-5/12 xl:w-4/12"
     >
       <form className="grid p-2" onSubmit={submitHandler}>
         {children}
         <div className="mt-2 flex justify-end space-x-1">
           <ButtonRed
             type="reset"
-            onClick={handleClosingModal}
+            onClick={closeHandler}
             rounded={Rounded.small}
             shadowSize={Shadow.small}
           >
-            close
+            {cancelButtonText}
           </ButtonRed>
           <ButtonGreen
             type="submit"
             rounded={Rounded.small}
             shadowSize={Shadow.small}
           >
-            Submit
+            {submitButtonText}
           </ButtonGreen>
         </div>
       </form>

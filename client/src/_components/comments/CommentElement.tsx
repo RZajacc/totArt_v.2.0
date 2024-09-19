@@ -1,5 +1,5 @@
 // Libraries
-import { useContext, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import Image from 'next/image';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
@@ -9,25 +9,33 @@ import pencil from '@/assets/pencil.svg';
 import trash from '@/assets/trash-can.svg';
 // Types
 import type { comment } from '@/types/locationTypes';
+import Modal from '../ui/Modal';
+import LabeledTextArea from '../ui/inputs/LabeledTextArea';
+
+type modalData = {
+  displayModal: boolean;
+  seletectedAction: string;
+  cancelText: string;
+  submitText: string;
+};
 
 type Props = {
   comment: comment;
-  setShowDeleteCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowEditCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedCommentId: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCommentContent: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function CommentElement({
-  comment,
-  setShowDeleteCommentModal,
-  setShowEditCommentModal,
-  setSelectedCommentId,
-  setSelectedCommentContent,
-}: Props) {
+function CommentElement({ comment }: Props) {
+  const modalDefault: modalData = {
+    displayModal: false,
+    seletectedAction: '',
+    cancelText: '',
+    submitText: '',
+  };
+  // Context data
   const { user } = useContext(AuthContext);
-
+  // Verify if user is an author
   const [isAuthor] = useState(comment.author._id === user?._id);
+  // Modal display options
+  const [modalData, setModalData] = useState<modalData>(modalDefault);
 
   // Converting date back from ISO string and formatting it for proper display
   const date = new Date(
@@ -43,22 +51,63 @@ function CommentElement({
 
   // Delete comment
   const handleDeleteComment = async () => {
+    console.log('Deleting');
+    // setDisplayModal(true);
+    // setDeleteAction(true);
     // Show the delete warning modal
-    setShowDeleteCommentModal(true);
+    // setShowDeleteCommentModal(true);
     // Pass up the id of a current comment
-    setSelectedCommentId(comment._id);
+    // setSelectedCommentId(comment._id);
   };
 
   // Handle edit comment
-  const handleEditComment = async () => {
+  const handleEditComment = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('Editing');
+    // setDisplayModal(true);
+    // setEditAction(true);
     // Show edit comment modal
-    setShowEditCommentModal(true);
+    // setShowEditCommentModal(true);
     // Pass up the id of a current comment
-    setSelectedCommentId(comment._id);
+    // setSelectedCommentId(comment._id);
     // Pass up comments value
-    setSelectedCommentContent(comment.comment);
+    // setSelectedCommentContent(comment.comment);
   };
 
+  const handleEditModal = () => {
+    setModalData({
+      displayModal: true,
+      seletectedAction: 'edit',
+      cancelText: 'Cancel',
+      submitText: 'Submit',
+    });
+  };
+
+  const handleDeleteModal = () => {
+    setModalData({
+      displayModal: true,
+      seletectedAction: 'delete',
+      cancelText: 'Cancel!',
+      submitText: 'Yes, Im sure..',
+    });
+  };
+
+  const closeModalHandler = () => {
+    setModalData(modalDefault);
+  };
+
+  const handleModalAction = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (modalData.seletectedAction === 'edit') {
+      handleEditComment(e);
+    }
+    if (modalData.seletectedAction === 'delete') {
+      handleDeleteComment();
+    }
+    setModalData(modalDefault);
+  };
+
+  console.log(modalData);
   return (
     <>
       <div
@@ -94,14 +143,16 @@ function CommentElement({
         {isAuthor ? (
           <>
             <button
-              onClick={handleEditComment}
+              value="edit"
+              onClick={handleEditModal}
               className="comment__edit flex items-center justify-center gap-3 rounded-bl-2xl bg-blue-400 p-1 font-bold text-white"
             >
               <Image src={pencil} alt="pencil" width={15} height={15} />
               Edit
             </button>
             <button
-              onClick={handleDeleteComment}
+              value="delete"
+              onClick={handleDeleteModal}
               className="comment__delete flex items-center justify-center gap-3 rounded-br-2xl bg-red-500 px-2 font-bold text-white hover:bg-slate-300"
             >
               Delete
@@ -112,6 +163,32 @@ function CommentElement({
           ''
         )}
       </div>
+
+      <Modal
+        modalDisplay={modalData.displayModal}
+        cancelButtonText={modalData.cancelText}
+        submitButtonText={modalData.submitText}
+        closeHandler={closeModalHandler}
+        submitHandler={handleModalAction}
+      >
+        {modalData.seletectedAction === 'edit' && (
+          <LabeledTextArea
+            labelFor="comment"
+            labelText="Change"
+            rows={3}
+            defaultValue={comment.comment}
+          />
+        )}
+        {modalData.seletectedAction === 'delete' && (
+          <>
+            <h1 className="text-center font-bold">Warning!</h1>
+            <p>
+              Are you sure you want to delete your comment? They change is not
+              reversible!
+            </p>
+          </>
+        )}
+      </Modal>
     </>
   );
 }

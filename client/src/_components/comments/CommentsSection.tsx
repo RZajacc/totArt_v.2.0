@@ -15,16 +15,7 @@ function CommentsSection({ children, locationData }: Props) {
       <section className="grid gap-y-2">
         {locationData?.comments &&
           locationData.comments.map((comment) => {
-            return (
-              <CommentElement
-                key={comment._id}
-                comment={comment}
-                setShowDeleteCommentModal={() => {}}
-                setShowEditCommentModal={() => {}}
-                setSelectedCommentId={() => {}}
-                setSelectedCommentContent={() => {}}
-              />
-            );
+            return <CommentElement key={comment._id} comment={comment} />;
           })}
       </section>
     </>
