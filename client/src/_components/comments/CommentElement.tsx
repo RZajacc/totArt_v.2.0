@@ -37,8 +37,6 @@ function CommentElement({ comment, mutateComments }: Props) {
   };
   // Context data
   const { user, mutateUser } = useContext(AuthContext);
-  // Verify if user is an author
-  const [isAuthor] = useState(comment.author._id === user?._id);
   // Modal display options
   const [modalData, setModalData] = useState<modalData>(modalDefault);
 
@@ -141,7 +139,7 @@ function CommentElement({ comment, mutateComments }: Props) {
   return (
     <>
       <div
-        className={`${isAuthor ? 'comment__author' : 'comment'} rounded-2xl`}
+        className={`${comment.author._id === user?._id ? 'comment__author' : 'comment'} rounded-2xl`}
       >
         <div className="comment__user-image self-center rounded-tr-2xl">
           {comment.author.userImage ? (
@@ -165,12 +163,12 @@ function CommentElement({ comment, mutateComments }: Props) {
           {comment.comment}
         </p>
         <p
-          className={`${!isAuthor ? 'rounded-b-2xl' : ''} comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black `}
+          className={`${comment.author._id !== user?._id ? 'rounded-b-2xl' : ''} comment__date bg-slate-300 px-2 py-1 text-end text-sm italic text-black `}
         >
           <strong>{comment.isEdited ? 'Edited' : 'Added'}:</strong> {date}
         </p>
 
-        {isAuthor ? (
+        {comment.author._id === user?._id ? (
           <>
             <button
               value="edit"
