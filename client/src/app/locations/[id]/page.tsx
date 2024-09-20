@@ -3,6 +3,7 @@ import { GetLocationDetails } from '@/lib/serverMethods/GetLocationDetails';
 import LocationActions from '@/_components/locationDetails/LocationActions';
 import Image from 'next/image';
 import CommentsSection from '@/_components/comments/CommentsSection';
+import AddCommentSection from '@/_components/comments/AddCommentSection';
 
 // Generate Pages metadata
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -16,44 +17,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 async function ContentDetails({ params }: { params: { id: string } }) {
   // Query data from the database
   const locationData = await GetLocationDetails(params.id);
-
-  // Ref to text area to add comment and clear content after
-  // const commentRef = useRef<HTMLTextAreaElement>(null);
-
-  // Setting a state for modal visibility and id of a selected comment to delete
-  // const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
-  // const [showEditCommentModal, setShowEditCommentModal] = useState(false);
-  // const [selectedCommentId, setSelectedCommentId] = useState('');
-  // const [selectedCommentContent, setSelectedCommentContent] = useState('');
-
-  // Prepare mutation to add comment
-  // const { trigger, error: addCommentError } = useSWRMutation(
-  //   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/addComment`,
-  //   addNewComment,
-  // );
-
-  // Handle adding a new comment
-  // const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.currentTarget);
-  //   const createdAt = new Date().toISOString();
-  //   const commentValue = formData.get('comment') as string;
-
-  //   try {
-  //     await trigger({
-  //       comment: commentValue,
-  //       createdAt: createdAt,
-  //       author: user!._id,
-  //       relatedPost: locationID,
-  //     });
-  //     mutateUser();
-  //     mutateLocation();
-  //     // Reset value of comment text area
-  //     commentRef.current ? (commentRef.current.value = '') : null;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div className="mx-auto max-w-xl">
@@ -88,48 +51,8 @@ async function ContentDetails({ params }: { params: { id: string } }) {
       {/* Comments section */}
       <div className="my-6">
         <CommentsSection locationId={locationData._id} />
-
-        {/* Adding a new comment */}
-        {/* <section className="mt-5 grid">
-          <form onSubmit={handleCommentSubmit}>
-            <section className="relative h-36 rounded-md border-2 border-gray-400 bg-white focus-within:border-2 focus-within:border-blue-500">
-              <textarea
-                ref={commentRef}
-                name="comment"
-                id="comment"
-                placeholder="Leave a comment"
-                rows={3}
-                className="w-full rounded-md p-2 focus-visible:outline-none"
-              />
-              <button
-                className="absolute bottom-2 right-2 rounded-md bg-purple-800 px-2 py-1 text-white"
-                type="submit"
-              >
-                Submit
-              </button>
-            </section>
-          </form>
-        </section> */}
+        <AddCommentSection locationId={locationData._id} />
       </div>
-      {/* 
-      <DeleteCommentModal
-        showDeleteCommentModal={showDeleteCommentModal}
-        setShowDeleteCommentModal={setShowDeleteCommentModal}
-        mutateUser={mutateUser}
-        mutateLocation={mutateLocation}
-        setSelectedCommentId={setSelectedCommentId}
-        selectedCommentId={selectedCommentId}
-      />
-      <EditCommentModal
-        showEditCommentModal={showEditCommentModal}
-        setShowEditCommentModal={setShowEditCommentModal}
-        selectedCommentContent={selectedCommentContent}
-        setSelectedCommentContent={setSelectedCommentContent}
-        selectedCommentId={selectedCommentId}
-        setSelectedCommentId={setSelectedCommentId}
-        mutateUser={mutateUser}
-        mutateLocation={mutateLocation}
-      /> */}
     </div>
   );
 }
