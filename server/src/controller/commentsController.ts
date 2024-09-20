@@ -20,7 +20,13 @@ const getComments: RequestHandler = async (req, res) => {
     const comments: Comment[] = await commentModel
       .find()
       .where("relatedPost")
-      .equals(inputs.locationId);
+      .equals(inputs.locationId)
+      .populate({
+        path: "author",
+        select: ["_id", "userName", "userImage"],
+        populate: { path: "userImage" },
+      });
+
     if (comments) {
       res.status(200).json({
         count: comments.length,

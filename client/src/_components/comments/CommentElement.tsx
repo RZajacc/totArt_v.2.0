@@ -8,7 +8,7 @@ import noUser from '@/assets/noUser.png';
 import pencil from '@/assets/pencil.svg';
 import trash from '@/assets/trash-can.svg';
 // Types
-import type { comment } from '@/types/locationTypes';
+import type { comment } from '@/types/CommentTypes';
 import Modal from '../ui/Modal';
 import LabeledTextArea from '../ui/inputs/LabeledTextArea';
 

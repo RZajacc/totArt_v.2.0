@@ -1,6 +1,6 @@
 // Types
 import type { FetchError } from '@/types/GeneralTypes';
-import type { AddComment } from '@/types/locationTypes';
+import type { AddComment } from '@/types/CommentTypes';
 
 export const addNewComment = async (
   url: string,
