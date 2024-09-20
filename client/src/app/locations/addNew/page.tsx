@@ -11,7 +11,7 @@ import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 // Fetchin data
 import { ImageUpload } from '@/fetchers/ImageUpload';
 import { deleteImage } from '@/fetchers/DeleteImage';
-import { addNewLocation } from '@/lib/AddNewLocation';
+import { addNewLocation } from '@/lib/serverMethods/AddNewLocation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import { Rounded } from 'enums/StyleEnums';

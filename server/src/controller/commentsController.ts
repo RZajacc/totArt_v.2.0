@@ -23,6 +23,7 @@ const getComments: RequestHandler = async (req, res) => {
       .equals(inputs.locationId);
     if (comments) {
       res.status(200).json({
+        count: comments.length,
         comments,
       });
     } else {

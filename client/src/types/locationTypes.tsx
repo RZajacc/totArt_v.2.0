@@ -1,3 +1,4 @@
+import { populatedComment } from './CommentTypes';
 import { ImageType } from './ImageTypes';
 
 export type locationData = {
@@ -7,27 +8,7 @@ export type locationData = {
   location: string;
   image: ImageType;
   author: authorType;
-  comments: [comment];
-};
-
-export type comment = {
-  _id: string;
-  comment: string;
-  createdAt: string;
-  editedAt?: string;
-  isEdited?: boolean;
-  author: authorType;
-  relatedPost: string;
-};
-
-export type AddComment = {
-  msg: string;
-  comment: {
-    comment: string;
-    createdAt: string;
-    author: string;
-    relatedPost: string;
-  };
+  comments: [populatedComment];
 };
 
 export type authorType = {

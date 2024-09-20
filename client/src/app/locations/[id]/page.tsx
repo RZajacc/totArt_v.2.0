@@ -1,5 +1,5 @@
 // Utils
-import { GetLocationDetails } from 'lib/GetLocationDetails';
+import { GetLocationDetails } from '@/lib/serverMethods/GetLocationDetails';
 import LocationActions from '@/_components/locationDetails/LocationActions';
 import Image from 'next/image';
 import CommentsSection from '@/_components/comments/CommentsSection';
