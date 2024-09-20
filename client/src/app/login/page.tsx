@@ -44,6 +44,7 @@ function Login({}: Props) {
         method: 'POST',
         headers: myHeaders,
         body: urlencoded,
+        credentials: 'include',
       },
     );
 
