@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/getComments", getComments);
+router.post("/getComments", getComments);
 router.post("/addComment", addNewComment);
 router.patch("/editComment", editComment);
 router.delete("/deleteComment", deleteComment);

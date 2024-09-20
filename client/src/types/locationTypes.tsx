@@ -1,4 +1,4 @@
-import { populatedComment } from './CommentTypes';
+import { comment } from './CommentTypes';
 import { ImageType } from './ImageTypes';
 
 export type locationData = {
@@ -8,7 +8,7 @@ export type locationData = {
   location: string;
   image: ImageType;
   author: authorType;
-  comments: [populatedComment];
+  comments: [comment];
 };
 
 export type authorType = {

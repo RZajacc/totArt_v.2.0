@@ -1,20 +1,31 @@
 'use client';
-import { locationData } from '@/types/locationTypes';
+
 import React from 'react';
 import CommentElement from './CommentElement';
+import useSWR from 'swr';
+import { getComments } from '@/lib/clientMethods/GetComments';
 
 type Props = {
-  children: React.ReactNode;
-  locationData: locationData;
+  locationId: string;
 };
 
-function CommentsSection({ children, locationData }: Props) {
+function CommentsSection({ locationId }: Props) {
+  const { data: commentData } = useSWR(locationId, getComments);
+
   return (
     <>
-      {children}
+      {commentData && commentData?.count > 0 ? (
+        <h4 className="py-2 text-center text-xl font-bold">
+          ({commentData.count}) comments:
+        </h4>
+      ) : (
+        <h4 className="py-2 text-center text-xl font-bold">
+          No comments yet, be the first one!
+        </h4>
+      )}
       <section className="grid gap-y-2">
-        {locationData?.comments &&
-          locationData.comments.map((comment) => {
+        {commentData &&
+          commentData.comments.map((comment) => {
             return <CommentElement key={comment._id} comment={comment} />;
           })}
       </section>

@@ -1,22 +1,12 @@
 import { authorType } from './locationTypes';
 
-export type populatedComment = {
-  _id: string;
-  comment: string;
-  createdAt: string;
-  editedAt?: string;
-  isEdited?: boolean;
-  author: authorType;
-  relatedPost: string;
-};
-
 export type comment = {
   _id: string;
   comment: string;
   createdAt: string;
   editedAt?: string;
   isEdited?: boolean;
-  author: string;
+  author: authorType;
   relatedPost: string;
 };
 

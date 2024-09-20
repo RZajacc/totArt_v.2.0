@@ -87,17 +87,7 @@ async function ContentDetails({ params }: { params: { id: string } }) {
 
       {/* Comments section */}
       <div className="my-6">
-        <CommentsSection locationData={locationData}>
-          {locationData.comments.length > 0 ? (
-            <h4 className="py-2 text-center text-xl font-bold">
-              ({locationData?.comments.length}) comments:
-            </h4>
-          ) : (
-            <h4 className="py-2 text-center text-xl font-bold">
-              No comments yet, be the first one!
-            </h4>
-          )}
-        </CommentsSection>
+        <CommentsSection locationId={locationData._id} />
 
         {/* Adding a new comment */}
         {/* <section className="mt-5 grid">
