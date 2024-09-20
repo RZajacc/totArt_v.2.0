@@ -10,7 +10,10 @@ type Props = {
 };
 
 function CommentsSection({ locationId }: Props) {
-  const { data: commentData } = useSWR(locationId, getComments);
+  const { data: commentData, mutate: mutateComments } = useSWR(
+    locationId,
+    getComments,
+  );
 
   return (
     <>
@@ -26,7 +29,13 @@ function CommentsSection({ locationId }: Props) {
       <section className="grid gap-y-2">
         {commentData &&
           commentData.comments.map((comment) => {
-            return <CommentElement key={comment._id} comment={comment} />;
+            return (
+              <CommentElement
+                key={comment._id}
+                comment={comment}
+                mutateComments={mutateComments}
+              />
+            );
           })}
       </section>
     </>

@@ -11,6 +11,9 @@ import trash from '@/assets/trash-can.svg';
 import type { comment } from '@/types/CommentTypes';
 import Modal from '../ui/Modal';
 import LabeledTextArea from '../ui/inputs/LabeledTextArea';
+import useSWRMutation from 'swr/mutation';
+import { editComment } from '@/fetchers/EditComment';
+import { KeyedMutator } from 'swr';
 
 type modalData = {
   displayModal: boolean;
@@ -21,9 +24,10 @@ type modalData = {
 
 type Props = {
   comment: comment;
+  mutateComments: KeyedMutator<{ count: number; comments: comment[] }>;
 };
 
-function CommentElement({ comment }: Props) {
+function CommentElement({ comment, mutateComments }: Props) {
   const modalDefault: modalData = {
     displayModal: false,
     seletectedAction: '',
@@ -31,7 +35,7 @@ function CommentElement({ comment }: Props) {
     submitText: '',
   };
   // Context data
-  const { user } = useContext(AuthContext);
+  const { user, mutateUser } = useContext(AuthContext);
   // Verify if user is an author
   const [isAuthor] = useState(comment.author._id === user?._id);
   // Modal display options
@@ -49,6 +53,12 @@ function CommentElement({ comment }: Props) {
     second: 'numeric',
   });
 
+  // Create a mutation
+  const { trigger } = useSWRMutation(
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/editComment`,
+    editComment,
+  );
+
   // Delete comment
   const handleDeleteComment = async () => {
     console.log('Deleting');
@@ -63,9 +73,31 @@ function CommentElement({ comment }: Props) {
   // Handle edit comment
   const handleEditComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Editing');
+
+    // Collect form data
+    const formData = new FormData(e.currentTarget);
+    const updatedComment = formData.get('comment') as string;
+
+    //   Create editedAt date
+    const editedAt = new Date().toISOString();
+    try {
+      // Trigger editing comment
+      await trigger({
+        commentId: comment._id,
+        editedAt: editedAt,
+        updatedComment: updatedComment,
+      });
+      // Mutate user and comments data
+      mutateUser();
+      mutateComments();
+      // Close the modal
+      setModalData(modalDefault);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // Handle modal states
   const handleEditModal = () => {
     setModalData({
       displayModal: true,
@@ -88,6 +120,7 @@ function CommentElement({ comment }: Props) {
     setModalData(modalDefault);
   };
 
+  // Handle Modal actions
   const handleModalAction = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (modalData.seletectedAction === 'edit') {
@@ -99,7 +132,6 @@ function CommentElement({ comment }: Props) {
     setModalData(modalDefault);
   };
 
-  console.log(modalData);
   return (
     <>
       <div
