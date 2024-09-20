@@ -14,6 +14,7 @@ import LabeledTextArea from '../ui/inputs/LabeledTextArea';
 import useSWRMutation from 'swr/mutation';
 import { editComment } from '@/fetchers/EditComment';
 import { KeyedMutator } from 'swr';
+import { deleteComment } from '@/fetchers/DeleteComment';
 
 type modalData = {
   displayModal: boolean;
@@ -53,21 +54,26 @@ function CommentElement({ comment, mutateComments }: Props) {
     second: 'numeric',
   });
 
-  // Create a mutation
-  const { trigger } = useSWRMutation(
+  // Create a mutations
+  const { trigger: triggerCommentEdit } = useSWRMutation(
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/editComment`,
     editComment,
   );
 
+  const { trigger: triggerCommentDelete } = useSWRMutation(
+    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/deleteComment`,
+    deleteComment,
+  );
+
   // Delete comment
   const handleDeleteComment = async () => {
-    console.log('Deleting');
-    // setDisplayModal(true);
-    // setDeleteAction(true);
-    // Show the delete warning modal
-    // setShowDeleteCommentModal(true);
-    // Pass up the id of a current comment
-    // setSelectedCommentId(comment._id);
+    // Trigger deleting a comment
+    await triggerCommentDelete({ commentId: comment._id });
+    // Refetch user and comments
+    mutateUser();
+    mutateComments();
+    // Return to modal default state
+    setModalData(modalDefault);
   };
 
   // Handle edit comment
@@ -82,7 +88,7 @@ function CommentElement({ comment, mutateComments }: Props) {
     const editedAt = new Date().toISOString();
     try {
       // Trigger editing comment
-      await trigger({
+      await triggerCommentEdit({
         commentId: comment._id,
         editedAt: editedAt,
         updatedComment: updatedComment,
@@ -90,7 +96,7 @@ function CommentElement({ comment, mutateComments }: Props) {
       // Mutate user and comments data
       mutateUser();
       mutateComments();
-      // Close the modal
+      // Return to modal default state
       setModalData(modalDefault);
     } catch (error) {
       console.log(error);
