@@ -94,13 +94,15 @@ function LocationActions({ locationData }: Props) {
 
           {/* Field with confirmation of deletion */}
           {showDeleteField && (
-            <DeleteField
-              handleRemovingData={deleteLocationHandler}
-              elementDescription="this location"
-              providedVal={deleteInput}
-              showIncorrectInput={deleteError}
-              setShowIncorrectInput={setDeleteError}
-            />
+            <div className="inline-block w-2/3">
+              <DeleteField
+                handleRemovingData={deleteLocationHandler}
+                elementDescription="this location"
+                providedVal={deleteInput}
+                showIncorrectInput={deleteError}
+                setShowIncorrectInput={setDeleteError}
+              />
+            </div>
           )}
 
           {/* Modal for editing location data */}
