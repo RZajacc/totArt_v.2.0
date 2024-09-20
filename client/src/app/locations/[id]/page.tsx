@@ -4,6 +4,7 @@ import LocationActions from '@/_components/locationDetails/LocationActions';
 import Image from 'next/image';
 import CommentsSection from '@/_components/comments/CommentsSection';
 import AddCommentSection from '@/_components/comments/AddCommentSection';
+import FavSection from '@/_components/locationDetails/FavSection';
 
 // Generate Pages metadata
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -19,7 +20,7 @@ async function ContentDetails({ params }: { params: { id: string } }) {
   const locationData = await GetLocationDetails(params.id);
 
   return (
-    <div className="mx-auto max-w-xl">
+    <div className="relative mx-auto max-w-xl">
       <div className="my-6 grid justify-center gap-y-3 rounded-md border border-black bg-slate-100 shadow-sm shadow-black">
         {/* Descriptive data */}
         <section className="mt-2">
@@ -38,6 +39,7 @@ async function ContentDetails({ params }: { params: { id: string } }) {
           <LocationActions locationData={locationData} />
         </section>
         <section>
+          <FavSection locationId={locationData._id} />
           <Image
             src={locationData.image.secure_url}
             alt={locationData.title}
