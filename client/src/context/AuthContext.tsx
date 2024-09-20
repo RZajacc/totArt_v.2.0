@@ -2,7 +2,7 @@
 // Libraries
 import { ReactNode, createContext } from 'react';
 import { useRouter } from 'next/navigation';
-import useSWR from 'swr';
+import useSWR, { KeyedMutator } from 'swr';
 // Fetching data
 import { getUserData } from '@/fetchers/GetUserData';
 // Types
@@ -10,13 +10,13 @@ import { User } from '@/types/UserTypes';
 
 interface AuthContextType {
   user: User | undefined;
-  mutateUser: (user?: User) => void;
+  mutateUser: KeyedMutator<User | undefined>;
   logout: () => void;
 }
 
 const AuthInitContext: AuthContextType = {
   user: undefined,
-  mutateUser: () => console.log('Mutate user'),
+  mutateUser: async () => undefined,
   logout: () => console.log('Log user out'),
 };
 
