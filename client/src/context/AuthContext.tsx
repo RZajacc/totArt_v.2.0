@@ -1,6 +1,6 @@
 'use client';
 // Libraries
-import { ReactNode, createContext } from 'react';
+import { ReactNode, createContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import useSWR, { KeyedMutator } from 'swr';
 // Fetching data
@@ -42,6 +42,24 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/profile`,
     getUserData,
   );
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const res = await fetch('/api/', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      if (res.ok) {
+        const data: { authenticated: boolean; token: string } =
+          await res.json();
+        console.log(data);
+      } else {
+        const data: { authenticated: boolean } = await res.json();
+        console.log(data);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <AuthContext.Provider
