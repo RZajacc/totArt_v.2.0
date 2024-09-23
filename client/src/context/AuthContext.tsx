@@ -31,10 +31,10 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   const router = useRouter();
 
   // LOGOUT
-  const logout = () => {
+  const logout = async () => {
     // Remove token from local storage
     localStorage.removeItem('auth_token');
-    mutateUser();
+    await mutateUser();
     router.push('/login');
   };
 

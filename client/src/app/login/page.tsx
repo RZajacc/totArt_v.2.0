@@ -52,7 +52,7 @@ function Login({}: Props) {
       const result: { msg: string; token: string } = await response.json();
       // Store auth token in a local storage
       localStorage.setItem('auth_token', result.token);
-      mutateUser();
+      await mutateUser();
       // Go to account
       router.push('/account');
     } else {
