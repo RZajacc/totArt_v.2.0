@@ -112,6 +112,16 @@ const login: RequestHandler = async (req, res) => {
   }
 };
 
+const logout: RequestHandler = async (req, res) => {
+  res.cookie("auth-token", "", {
+    httpOnly: true,
+    expires: new Date(0), // Set expiration to a time in the past to delete the cookie
+    sameSite: "lax", // Ensure same site behavior
+    //  secure: process.env.NODE_ENV === "production", // Only use secure cookies in production
+  });
+  res.status(200).json({ msg: "Logout successfull" });
+};
+
 const getProfle: RequestHandler = async (req, res) => {
   if (req.user) {
     res.status(200).json({
@@ -390,6 +400,7 @@ const deleteUser: RequestHandler = async (req, res) => {
 export {
   register,
   login,
+  logout,
   getProfle,
   handleFavouriteLocations,
   updateUserData,

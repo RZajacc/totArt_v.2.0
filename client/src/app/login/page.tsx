@@ -14,7 +14,7 @@ type Props = {};
 
 function Login({}: Props) {
   // Context data
-  const { mutateUser } = useContext(AuthContext);
+  const { refetchUser } = useContext(AuthContext);
   // Login error message
   const [logErrMsg, setLogErrMsg] = useState('');
   // Router for redirection after login
@@ -49,10 +49,7 @@ function Login({}: Props) {
     );
 
     if (response.ok) {
-      const result: { msg: string; token: string } = await response.json();
-      // Store auth token in a local storage
-      localStorage.setItem('auth_token', result.token);
-      await mutateUser();
+      await refetchUser();
       // Go to account
       router.push('/account');
     } else {

@@ -3,9 +3,10 @@ import type { NextRequest } from 'next/server';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  // request.cookies.delete('auth-token');
+  // Get the token from request
   const token = request.cookies.get('auth-token')?.value;
 
+  // If theres no token available redirect user to login
   if (!token) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
