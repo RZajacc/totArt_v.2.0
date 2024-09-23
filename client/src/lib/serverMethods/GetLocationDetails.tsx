@@ -1,3 +1,4 @@
+'use server';
 // Types
 import type { FetchError } from '@/types/GeneralTypes';
 import type { locationData } from '@/types/locationTypes';

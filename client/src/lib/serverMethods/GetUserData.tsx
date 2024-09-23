@@ -1,3 +1,4 @@
+'use server';
 // Types
 import type { User } from '@/types/UserTypes';
 import type { FetchError } from '@/types/GeneralTypes';
