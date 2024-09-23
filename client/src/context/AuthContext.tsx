@@ -1,6 +1,12 @@
 'use client';
 // Libraries
-import { ReactNode, createContext, useEffect, useState } from 'react';
+import {
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useRouter } from 'next/navigation';
 // Fetching data
 import { getUserData } from '@/lib/serverMethods/GetUserData';
@@ -9,12 +15,14 @@ import { User } from '@/types/UserTypes';
 
 interface AuthContextType {
   user: User | undefined;
+  setUser: React.Dispatch<SetStateAction<User | undefined>>;
   refetchUser: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
 const AuthInitContext: AuthContextType = {
   user: undefined,
+  setUser: async () => undefined,
   refetchUser: async () => undefined,
   logout: async () => undefined,
 };
@@ -78,6 +86,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         refetchUser,
         logout,
       }}
