@@ -1,12 +1,6 @@
 'use client';
 // Libraries
-import {
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // Fetching data
 import { getUserData } from '@/lib/serverMethods/GetUserData';
@@ -16,13 +10,13 @@ import { User } from '@/types/UserTypes';
 interface AuthContextType {
   user: User | undefined;
   refetchUser: () => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthInitContext: AuthContextType = {
-  refetchUser: async () => undefined,
   user: undefined,
-  logout: () => undefined,
+  refetchUser: async () => undefined,
+  logout: async () => undefined,
 };
 
 type AuthContexProviderProps = {
@@ -60,6 +54,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     });
 
     const data: { authenticated: boolean; token?: string } = await res.json();
+    console.log(data);
     if (data.token) {
       const userData = await getUserData(
         `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/profile`,
