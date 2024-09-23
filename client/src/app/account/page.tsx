@@ -47,4 +47,4 @@ function Account() {
   );
 }
 
-export default isAuth(Account);
+export default Account;

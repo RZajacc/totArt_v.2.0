@@ -4,8 +4,8 @@ export async function GET(req: NextRequest) {
   const token = req.cookies.get('auth-token')?.value;
 
   if (token) {
-    return Response.json({ authenticated: true, token }, { status: 200 });
+    return Response.json({ authenticated: true, token });
   } else {
-    return Response.json({ authenticated: false }, { status: 401 });
+    return Response.json({ authenticated: false });
   }
 }
