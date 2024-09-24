@@ -11,7 +11,7 @@ import { revalidator } from '@/lib/serverMethods/Revalidator';
 
 function LoginForm() {
   // Context data
-  const { refetchUser } = useContext(AuthContext);
+  const { revalidateUser } = useContext(AuthContext);
   // Login error message
   const [logErrMsg, setLogErrMsg] = useState('');
   // Router for redirection after login
@@ -47,7 +47,7 @@ function LoginForm() {
     if (response.ok) {
       const data = await response.json();
       console.log(data);
-      await refetchUser();
+      await revalidateUser();
       // Go to account
       revalidator('/account');
       // router.push('/account');

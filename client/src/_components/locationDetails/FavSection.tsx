@@ -12,7 +12,7 @@ type Props = {
 };
 
 function FavSection({ locationId }: Props) {
-  const { user, refetchUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
 
   // Mutation to trigger on upon button click
   const { trigger: triggerFavsHandler } = useSWRMutation(
@@ -24,7 +24,7 @@ function FavSection({ locationId }: Props) {
   const handleFavourites = async (locId: string) => {
     await triggerFavsHandler({ email: user!.email, locactionId: locId });
     // setIsFav((prevState) => !prevState);
-    refetchUser();
+    revalidateUser();
   };
   return (
     <>

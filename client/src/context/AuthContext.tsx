@@ -16,14 +16,14 @@ import { revalidator } from '@/lib/serverMethods/Revalidator';
 interface AuthContextType {
   user: User | undefined;
   setUser: React.Dispatch<SetStateAction<User | undefined>>;
-  refetchUser: () => Promise<void>;
+  revalidateUser: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
 const AuthInitContext: AuthContextType = {
   user: undefined,
   setUser: async () => undefined,
-  refetchUser: async () => undefined,
+  revalidateUser: async () => undefined,
   logout: async () => undefined,
 };
 
@@ -53,13 +53,16 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   };
 
   const checkAuth = async () => {
+    // Check if token is attached to the request object
     const res = await fetch('/api/', {
       method: 'GET',
       credentials: 'include',
     });
 
+    // Read the data from the response
     const data: { authenticated: boolean; token?: string } = await res.json();
-    console.log(data);
+
+    // If token is attached fetch user data and user object
     if (data.token) {
       const userData = await getUserData(
         `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/profile`,
@@ -71,7 +74,8 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
     }
   };
 
-  const refetchUser = async () => {
+  // Revalidate user
+  const revalidateUser = async () => {
     checkAuth();
   };
 
@@ -84,7 +88,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
       value={{
         user,
         setUser,
-        refetchUser,
+        revalidateUser,
         logout,
       }}
     >

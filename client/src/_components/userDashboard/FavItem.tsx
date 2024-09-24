@@ -18,7 +18,7 @@ type Props = {
 };
 
 function FavItem({ id, title, userEmail }: Props) {
-  const { mutateUser } = useContext(AuthContext);
+  const { revalidateUser } = useContext(AuthContext);
 
   // Mutation to trigger on upon button click
   const { trigger: triggerFavsHandler } = useSWRMutation(
@@ -28,7 +28,7 @@ function FavItem({ id, title, userEmail }: Props) {
 
   const handleFavs = async () => {
     await triggerFavsHandler({ email: userEmail, locactionId: id });
-    mutateUser();
+    revalidateUser();
   };
 
   return (
