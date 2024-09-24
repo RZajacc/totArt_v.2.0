@@ -1,3 +1,4 @@
+'use client';
 import { FormEvent, useContext, useState } from 'react';
 // Components
 import LabeledInput from '@/_components/ui/inputs/LabeledInput';

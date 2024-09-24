@@ -1,10 +1,12 @@
-'use client';
-
 import LoginForm from '@/_components/forms/LoginForm';
+import { Metadata } from 'next';
 
-type Props = {};
+export const metadata: Metadata = {
+  title: 'Login',
+  description: 'Login page',
+};
 
-function Login({}: Props) {
+function Login() {
   return (
     <>
       <div className="mx-auto mt-5 max-w-sm rounded-md bg-gradient-to-br from-green-300 to-green-500 p-4 shadow-md shadow-black">
