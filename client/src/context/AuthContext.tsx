@@ -48,7 +48,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
       // Reset user
       setUser(undefined);
       // To effectively protect routes cached paged data needs to be revalidated
-      await revalidator('/login');
+      await revalidator('/');
     }
   };
 

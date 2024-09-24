@@ -12,7 +12,7 @@ type Props = {
 };
 
 function FavSection({ locationId }: Props) {
-  const { user, mutateUser } = useContext(AuthContext);
+  const { user, refetchUser } = useContext(AuthContext);
 
   // Mutation to trigger on upon button click
   const { trigger: triggerFavsHandler } = useSWRMutation(
@@ -24,26 +24,30 @@ function FavSection({ locationId }: Props) {
   const handleFavourites = async (locId: string) => {
     await triggerFavsHandler({ email: user!.email, locactionId: locId });
     // setIsFav((prevState) => !prevState);
-    mutateUser();
+    refetchUser();
   };
   return (
     <>
-      {user?.favs.find(({ _id }) => {
-        return _id === locationId;
-      }) ? (
-        <FavButton
-          imgSrc={fullHeart}
-          onClick={() => {
-            handleFavourites(locationId);
-          }}
-        />
+      {user ? (
+        user?.favs.find(({ _id }) => {
+          return _id === locationId;
+        }) ? (
+          <FavButton
+            imgSrc={fullHeart}
+            onClick={() => {
+              handleFavourites(locationId);
+            }}
+          />
+        ) : (
+          <FavButton
+            imgSrc={emptyHeart}
+            onClick={() => {
+              handleFavourites(locationId);
+            }}
+          />
+        )
       ) : (
-        <FavButton
-          imgSrc={emptyHeart}
-          onClick={() => {
-            handleFavourites(locationId);
-          }}
-        />
+        ''
       )}
     </>
   );
