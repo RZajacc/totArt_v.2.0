@@ -6,7 +6,6 @@ export function middleware(request: NextRequest) {
   // Get the token from request
   const token = request.cookies.get('auth-token')?.value;
 
-  console.log('MIDDLEWARE', token);
   // If theres no token available redirect user to login
   if (!token) {
     return NextResponse.redirect(new URL('/login', request.url));
@@ -17,5 +16,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/locations/:path+', '/account'],
+  matcher: ['/locations/:path+', '/account', '/farewell'],
 };

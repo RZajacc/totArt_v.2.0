@@ -9,8 +9,11 @@ import { redirect } from 'next/navigation';
  * @param {string} path An optional path to redirect to.
  */
 export const revalidator = async (path?: string) => {
+  // Revalidate all protected routes
   revalidatePath('/locations', 'layout');
-  revalidatePath('/account', 'layout');
+  revalidatePath('/account', 'page');
+  revalidatePath('/farewell', 'page');
+  // If path is provided then redirect user
   if (path) {
     redirect(`${path}`);
   }

@@ -10,7 +10,7 @@ function Farewell() {
       <p className="font-bold">
         I'm sorry to see you leaving.. Hope to see you again!
       </p>
-      <Image src={cryingFace} alt="crying-emoji" />
+      <Image src={cryingFace} alt="crying-emoji" className="mx-auto" />
       <p>
         If you want to move to the main page click{' '}
         <Link href={'/'} className="font-bold hover:font-extrabold">
