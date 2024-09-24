@@ -9,6 +9,7 @@ import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import { Rounded } from 'enums/StyleEnums';
+import { revalidator } from '@/lib/serverMethods/Revalidator';
 
 type Props = {};
 
@@ -51,7 +52,8 @@ function Login({}: Props) {
     if (response.ok) {
       await refetchUser();
       // Go to account
-      router.push('/account');
+      revalidator('/account');
+      // router.push('/account');
     } else {
       const result: { msg: string } = await response.json();
       setLogErrMsg(result.msg);
