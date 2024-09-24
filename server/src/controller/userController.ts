@@ -113,9 +113,8 @@ const login: RequestHandler = async (req, res) => {
 };
 
 const logout: RequestHandler = async (req, res) => {
-  res.cookie("auth-token", "", {
+  res.clearCookie("auth-token", {
     httpOnly: true,
-    expires: new Date(0), // Set expiration to a time in the past to delete the cookie
     sameSite: "lax", // Ensure same site behavior
     //  secure: process.env.NODE_ENV === "production", // Only use secure cookies in production
   });

@@ -7,11 +7,11 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useRouter } from 'next/navigation';
 // Fetching data
 import { getUserData } from '@/lib/serverMethods/GetUserData';
 // Types
 import { User } from '@/types/UserTypes';
+import { revalidator } from '@/lib/serverMethods/Revalidator';
 
 interface AuthContextType {
   user: User | undefined;
@@ -35,24 +35,21 @@ export const AuthContext = createContext<AuthContextType>(AuthInitContext);
 
 export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   const [user, setUser] = useState<User | undefined>(undefined);
-  // Handle redirection after logging out
-  const router = useRouter();
 
   // LOGOUT
   const logout = async () => {
     // await mutateUser();
-    fetch('http://localhost:5000/api/users/logout', {
+    const response = await fetch('http://localhost:5000/api/users/logout', {
       method: 'POST',
-      redirect: 'follow',
       credentials: 'include',
-    })
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+    });
 
-    setUser(undefined);
-    // Redirect the user
-    router.push('/login');
+    if (response.ok) {
+      // Reset user
+      setUser(undefined);
+      // To effectively protect routes cached paged data needs to be revalidated
+      await revalidator('/login');
+    }
   };
 
   const checkAuth = async () => {
