@@ -1,6 +1,5 @@
 // Libraries
 import React, { useContext, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import useSWRMutation from 'swr/mutation';
 // Components
 import PasswordChange from './PasswordChange';
@@ -13,10 +12,9 @@ import ButtonRed from '../../ui/buttons/ButtonRed';
 import ButtonGrey from '../../ui/buttons/ButtonGrey';
 
 import { Border, Rounded, Shadow } from 'enums/StyleEnums';
+import { revalidator } from '@/lib/serverMethods/Revalidator';
 
-type Props = {};
-
-function ProfileActions({}: Props) {
+function ProfileActions() {
   // Handle display state of changing password and deleteing account
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [showDeleteAccount, setShowDeleteAccount] = useState(false);
@@ -25,9 +23,6 @@ function ProfileActions({}: Props) {
   const [showIncorrectInput, setShowIncorrectInput] = useState(false);
   const [deletePhrase, setDeletePhrase] = useState('');
 
-  // Create instance of a router to redirect user after successfull deletion
-  const router = useRouter();
-
   // SWR method to trigger deleting a user
   const { trigger: triggerDeletingUser } = useSWRMutation(
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/deleteUser`,
@@ -35,7 +30,7 @@ function ProfileActions({}: Props) {
   );
 
   // Getting user data from context
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   // Handling displaying state of password change window and delete account
   const actionsHandler = (
@@ -73,7 +68,8 @@ function ProfileActions({}: Props) {
     // Check if provided phrase match the pattern
     if (typedPhrase === 'DELETE') {
       await triggerDeletingUser({ _id: user ? user._id : '' });
-      router.push('/farewell');
+      await logout();
+      await revalidator('/farewell');
     } else {
       setDeletePhrase(typedPhrase);
       setShowIncorrectInput(true);

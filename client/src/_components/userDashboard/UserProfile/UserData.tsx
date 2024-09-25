@@ -21,7 +21,7 @@ function UserData({ propName, textarea }: Props) {
   const [fieldName, setFieldName] = useState<string | undefined>(propName);
   const [propValue, setPropValue] = useState<string | undefined>(undefined);
 
-  const { user, mutateUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
 
   // SWR method to trigger update
   const { trigger: triggerUpdate } = useSWRMutation(
@@ -136,7 +136,7 @@ function UserData({ propName, textarea }: Props) {
         elementValue: propValue ? propValue : '',
         email: user!.email,
       });
-      mutateUser();
+      await revalidateUser();
     }
   };
 
