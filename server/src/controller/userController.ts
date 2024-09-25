@@ -89,8 +89,8 @@ const login: RequestHandler = async (req, res) => {
         if (token) {
           res.cookie("auth-token", token, {
             httpOnly: true,
-            // secure: process.env.NODE_ENV !== "development",
-            sameSite: "lax",
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: "none",
             maxAge: 60 * 60 * 24 * 7,
           });
           res.status(201).json({
