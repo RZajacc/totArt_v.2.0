@@ -39,7 +39,6 @@ function AddCommentSection({ locationId }: Props) {
         relatedPost: locationId,
       });
       // Mutate user and comments
-      // mutateUser();
       await revalidateUser();
       mutateComments();
       // Reset form field
