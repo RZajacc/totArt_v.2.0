@@ -2,8 +2,8 @@
 import React, { useContext, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 // Components
-import TimerDisplay from '../ui/state/TimerDisplay';
-import PasswordField from '../ui/inputs/PasswordField';
+import TimerDisplay from '../../ui/state/TimerDisplay';
+import PasswordField from '../../ui/inputs/PasswordField';
 // Fetching data
 import { VerifyUserPassword } from '@/fetchers/VerifyUserPassword';
 import { UpdateUserPassword } from '@/fetchers/UpdateUserPassword';
@@ -11,6 +11,8 @@ import { UpdateUserPassword } from '@/fetchers/UpdateUserPassword';
 import { AuthContext } from '@/context/AuthContext';
 // Utils
 import { validatePassword } from '@/utils/ValidatePassword';
+import { Border, Rounded, Shadow } from 'enums/StyleEnums';
+import ButtonBlack from '@/_components/ui/buttons/ButtonBlack';
 
 type Props = {
   setShowPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +31,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
   const [passwordUpdated, setPasswordUpdated] = useState(false);
 
   // User context
-  const { user, mutateUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
 
   // Renderable elements
   const currentPswInvalidParagraph = (
@@ -103,7 +105,7 @@ function PasswordChange({ setShowPasswordChange }: Props) {
         email: user ? user.email : '',
         password: newPassword,
       });
-      mutateUser();
+      await revalidateUser();
       setPasswordUpdated(true);
     }
   };
@@ -136,9 +138,14 @@ function PasswordChange({ setShowPasswordChange }: Props) {
       />
       {invalidateNewPswInput && newPswErrorParagraph}
 
-      <button className="my-2 rounded-sm bg-black p-2 text-white shadow-md shadow-gray-600">
+      <ButtonBlack
+        type="submit"
+        shadowSize={Shadow.small}
+        border={Border.thin}
+        rounded={Rounded.small}
+      >
         Submit
-      </button>
+      </ButtonBlack>
 
       {/* Timer to display upon successfull password change */}
       {passwordUpdated && (

@@ -26,7 +26,7 @@ function DeleteField({
       {/* Input from the user to confirm deletion */}
       <form
         onSubmit={handleRemovingData}
-        className="rounded-md border-2 border-black text-center focus-within:border-red-500"
+        className="rounded-md border-2 border-black text-center focus-within:border-rose-600"
       >
         <input
           type="text"
@@ -39,7 +39,7 @@ function DeleteField({
         />
         <button
           type="submit"
-          className=" w-3/12 rounded-r-sm border-l-2 border-red-500 bg-red-500 py-1 font-bold text-stone-200 hover:bg-stone-200 hover:text-red-500"
+          className=" w-3/12 rounded-r-sm border-l-2 bg-gradient-to-br from-rose-500 to-rose-900 py-1 text-zinc-100 hover:from-zinc-300 hover:to-zinc-100 hover:text-zinc-900"
         >
           Delete
         </button>

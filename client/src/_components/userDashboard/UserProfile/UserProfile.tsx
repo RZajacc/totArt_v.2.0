@@ -13,11 +13,11 @@ import { deleteImage } from '@/fetchers/DeleteImage';
 import { AuthContext } from '@/context/AuthContext';
 // Assets
 import noUser from '@/assets/noUser.png';
-import ButtonDark from '../ui/buttons/ButtonDark';
+import ButtonDark from '../../ui/buttons/ButtonDark';
 import { Rounded, Shadow } from 'enums/StyleEnums';
 
 function UserProfile() {
-  const { user, mutateUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   const { trigger: triggerImageUpload, isMutating: isMutatingImage } =
@@ -66,8 +66,7 @@ function UserProfile() {
       });
 
       // Refresh user data with newly updated image
-      mutateUser();
-      console.log(data);
+      await revalidateUser();
     }
   };
   return (

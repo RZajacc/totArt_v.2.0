@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-function ButtonDark({
+function ButtonBlack({
   shadowSize,
   border,
   rounded,
@@ -18,11 +18,11 @@ function ButtonDark({
   return (
     <button
       {...props}
-      className={`${shadowSize} ${border} ${rounded} border-zinc-900 bg-gradient-to-br from-zinc-500 to-zinc-900 px-5 py-1 text-zinc-100 shadow-black hover:border-zinc-900 hover:from-zinc-300 hover:to-zinc-100 hover:text-zinc-900`}
+      className={`${shadowSize} ${border} ${rounded} border-zinc-950 bg-gradient-to-br from-zinc-700 to-zinc-950 px-5 py-1 text-zinc-100 shadow-black hover:border-zinc-900 hover:from-zinc-300 hover:to-zinc-100 hover:text-zinc-900`}
     >
       {children}
     </button>
   );
 }
 
-export default ButtonDark;
+export default ButtonBlack;

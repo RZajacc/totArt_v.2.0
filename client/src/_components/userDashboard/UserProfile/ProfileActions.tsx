@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation';
 import useSWRMutation from 'swr/mutation';
 // Components
 import PasswordChange from './PasswordChange';
-import DeleteField from '../ui/inputs/DeleteField';
+import DeleteField from '../../ui/inputs/DeleteField';
 // Fetching data
 import { DeleteUserAccount } from '@/fetchers/DeleteUserAccount';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
-import ButtonRed from '../ui/buttons/ButtonRed';
-import ButtonGrey from '../ui/buttons/ButtonGrey';
+import ButtonRed from '../../ui/buttons/ButtonRed';
+import ButtonGrey from '../../ui/buttons/ButtonGrey';
 
 import { Border, Rounded, Shadow } from 'enums/StyleEnums';
 
