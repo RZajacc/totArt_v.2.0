@@ -25,7 +25,7 @@ function UserFavs() {
       <div className="mx-auto w-11/12 rounded-sm bg-slate-200 px-4 py-2">
         {user!.favs.length > 0 ? header : noFavs}
         <ol className="list-inside list-decimal">
-          {user!.favs &&
+          {user?.favs &&
             user?.favs.map((fav) => {
               return (
                 <FavItem

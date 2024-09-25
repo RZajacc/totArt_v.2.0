@@ -11,7 +11,7 @@ type Props = {
 };
 
 function AddCommentSection({ locationId }: Props) {
-  const { user, refetchUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
 
   // Prepare mutation to add comment
   const { trigger: triggerAddComment } = useSWRMutation(
@@ -40,7 +40,7 @@ function AddCommentSection({ locationId }: Props) {
       });
       // Mutate user and comments
       // mutateUser();
-      refetchUser();
+      await revalidateUser();
       mutateComments();
       // Reset form field
       form.reset();

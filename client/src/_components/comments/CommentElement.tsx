@@ -36,7 +36,7 @@ function CommentElement({ comment, mutateComments }: Props) {
     submitText: '',
   };
   // Context data
-  const { user, mutateUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
   // Modal display options
   const [modalData, setModalData] = useState<modalData>(modalDefault);
 
@@ -68,7 +68,7 @@ function CommentElement({ comment, mutateComments }: Props) {
     // Trigger deleting a comment
     await triggerCommentDelete({ commentId: comment._id });
     // Refetch user and comments
-    mutateUser();
+    await revalidateUser();
     mutateComments();
     // Return to modal default state
     setModalData(modalDefault);
@@ -92,7 +92,7 @@ function CommentElement({ comment, mutateComments }: Props) {
         updatedComment: updatedComment,
       });
       // Mutate user and comments data
-      mutateUser();
+      await revalidateUser();
       mutateComments();
       // Return to modal default state
       setModalData(modalDefault);
