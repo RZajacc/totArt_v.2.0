@@ -12,6 +12,7 @@ import { getUserData } from '@/lib/serverMethods/GetUserData';
 // Types
 import { User } from '@/types/UserTypes';
 import { revalidator } from '@/lib/serverMethods/Revalidator';
+import { deleteCookie } from 'cookies-next';
 
 interface AuthContextType {
   user: User | undefined;
@@ -39,17 +40,18 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   // LOGOUT
   const logout = async () => {
     // await mutateUser();
-    const response = await fetch('http://localhost:5000/api/users/logout', {
-      method: 'POST',
-      credentials: 'include',
-    });
+    // const response = await fetch('http://localhost:5000/api/users/logout', {
+    //   method: 'POST',
+    //   credentials: 'include',
+    // });
 
-    if (response.ok) {
-      // Reset user
-      setUser(undefined);
-      // To effectively protect routes cached paged data needs to be revalidated
-      await revalidator('/');
-    }
+    // if (response.ok) {
+    // Reset user
+    deleteCookie('auth-token');
+    setUser(undefined);
+    // To effectively protect routes cached paged data needs to be revalidated
+    await revalidator('/');
+    // }
   };
 
   const checkAuth = async () => {

@@ -40,7 +40,7 @@ const addMiddlewares = () => {
   app.use(express.json());
   app.use(
     cors({
-      credentials: true,
+      // credentials: true,
       origin: ["http://localhost:3000", "https://tot-art-v-2-0.vercel.app"],
     })
   );

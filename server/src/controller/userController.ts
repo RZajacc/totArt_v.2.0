@@ -87,12 +87,12 @@ const login: RequestHandler = async (req, res) => {
         // GENERATE TOKEN
         const token = generateToken(existingUser.id);
         if (token) {
-          res.cookie("auth-token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== "development",
-            sameSite: "none",
-            maxAge: 60 * 60 * 24 * 7,
-          });
+          // res.cookie("auth-token", token, {
+          //   httpOnly: true,
+          //   secure: process.env.NODE_ENV !== "development",
+          //   sameSite: "none",
+          //   maxAge: 60 * 60 * 24 * 7,
+          // });
           res.status(201).json({
             msg: "Login sucessfull",
             token,

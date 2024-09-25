@@ -8,6 +8,7 @@ import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 import { AuthContext } from '@/context/AuthContext';
 import { Rounded } from 'enums/StyleEnums';
 import { revalidator } from '@/lib/serverMethods/Revalidator';
+import { setCookie } from 'cookies-next';
 
 function LoginForm() {
   // Context data
@@ -40,11 +41,13 @@ function LoginForm() {
         method: 'POST',
         headers: myHeaders,
         body: urlencoded,
-        credentials: 'include',
+        // credentials: 'include',
       },
     );
 
     if (response.ok) {
+      const data: { msg: string; token: string } = await response.json();
+      setCookie('auth-token', data.token);
       await revalidateUser();
       // Go to account
       revalidator('/account');
