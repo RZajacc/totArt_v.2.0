@@ -38,7 +38,12 @@ const Sendgrid_API = () => {
 // 3_APP MIDDLEWARES
 const addMiddlewares = () => {
   app.use(express.json());
-  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+  app.use(
+    cors({
+      credentials: true,
+      origin: ["http://localhost:3000", "https://tot-art-v-2-0.vercel.app"],
+    })
+  );
   app.use(
     express.urlencoded({
       extended: true,
