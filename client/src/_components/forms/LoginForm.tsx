@@ -45,8 +45,6 @@ function LoginForm() {
     );
 
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
       await revalidateUser();
       // Go to account
       revalidator('/account');
