@@ -47,6 +47,7 @@ function LoginForm() {
     if (response.ok) {
       await revalidateUser();
       // Go to account
+      console.log('Logged in');
       revalidator('/account');
       // router.push('/account');
     } else {
