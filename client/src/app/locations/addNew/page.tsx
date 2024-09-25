@@ -4,7 +4,6 @@ import { useContext, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 // Components
 import ImagePicker from '@/_components/locations/ImagePicker';
-import isAuth from '@/utils/IsAuth';
 import LabeledInput from '@/_components/ui/inputs/LabeledInput';
 import LabeledTextArea from '@/_components/ui/inputs/LabeledTextArea';
 import ButtonDark from '@/_components/ui/buttons/ButtonDark';
@@ -18,7 +17,7 @@ import { Rounded } from 'enums/StyleEnums';
 
 function page() {
   // Getting user data
-  const { user } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
   const [submitting, setSubmitting] = useState(false);
 
   // Image picker data
@@ -82,6 +81,7 @@ function page() {
       user ? user._id : '',
     );
     setSubmitting(false);
+    await revalidateUser();
   };
 
   return (
@@ -129,4 +129,4 @@ function page() {
   );
 }
 
-export default isAuth(page);
+export default page;

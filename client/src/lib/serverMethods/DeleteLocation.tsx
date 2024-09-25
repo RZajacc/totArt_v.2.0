@@ -8,6 +8,7 @@ export const DeleteLocation = async (
   imageId: string,
   impagePublicId: string,
   locationId: string,
+  redirectPath?: string,
 ) => {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -30,7 +31,9 @@ export const DeleteLocation = async (
   if (response.ok) {
     // Revalidate locations page
     revalidatePath('/locations', 'page');
-    redirect('/locations');
+    if (redirectPath) {
+      redirect(redirectPath);
+    }
   } else {
     const result: { msg: string } = await response.json();
     const error: FetchError = new Error('Something went wrong');

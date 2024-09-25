@@ -21,7 +21,7 @@ type Props = {
 };
 
 function LocationActions({ locationData }: Props) {
-  const { user, mutateUser } = useContext(AuthContext);
+  const { user, revalidateUser } = useContext(AuthContext);
   // States managing deleting location fields
   const [showDeleteField, setShowDeleteField] = useState(false);
   const [deleteError, setDeleteError] = useState(false);
@@ -44,10 +44,11 @@ function LocationActions({ locationData }: Props) {
         locationData.image._id,
         locationData.image.public_id,
         locationData._id,
+        '/locations',
       );
 
       // Refresh user data
-      mutateUser();
+      await revalidateUser();
     }
   };
 
@@ -64,7 +65,7 @@ function LocationActions({ locationData }: Props) {
     // Turn off the modal
     setModalDisplay(false);
     // Refresh user data
-    mutateUser();
+    await revalidateUser();
   };
 
   return (

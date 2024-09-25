@@ -2,11 +2,10 @@
 import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useSWRMutation from 'swr/mutation';
 // Components
-import DeleteField from '../ui/inputs/DeleteField';
+import DeleteField from '@/_components/ui/inputs/DeleteField';
 // Fetching data
-import { DeleteLocation } from '@/fetchers/DeleteLocation';
+import { DeleteLocation } from '@/lib/serverMethods/DeleteLocation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Assets
@@ -26,12 +25,7 @@ function LocationItem({ title, id, imageId, image_publicId }: Props) {
   const [showIncorrectInput, setShowIncorrectInput] = useState(false);
   const [providedValue, setProvidedValue] = useState('');
 
-  const { mutateUser } = useContext(AuthContext);
-
-  const { trigger: triggerDeletingLocation } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/deleteLocation`,
-    DeleteLocation,
-  );
+  const { revalidateUser } = useContext(AuthContext);
 
   // Remove Location
   const handleRemovingLocation = async (
@@ -46,12 +40,8 @@ function LocationItem({ title, id, imageId, image_publicId }: Props) {
     if (inputVal === 'DELETE') {
       // Hide paragraph
       setShowIncorrectInput(false);
-      await triggerDeletingLocation({
-        imageId: imageId,
-        locationId: id,
-        impagePublicId: image_publicId,
-      });
-      mutateUser();
+      await DeleteLocation(imageId, image_publicId, id);
+      await revalidateUser();
       setShowDeleteField(false);
     } else {
       setProvidedValue(inputVal);

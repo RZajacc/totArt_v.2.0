@@ -2,8 +2,8 @@
 import { useState } from 'react';
 // Components
 import UserProfile from '@/_components/userDashboard/UserProfile/UserProfile';
-import UserFavs from '@/_components/userDashboard/UserFavs';
-import UserLocations from '@/_components/userDashboard/UserLocations';
+import UserFavs from '@/_components/userDashboard/UserFavs/UserFavs';
+import UserLocations from '@/_components/userDashboard/UserLocations/UserLocations';
 import DashboardTab from '@/_components/userDashboard/DashboardNav/DashboardTab';
 
 type Props = {};
