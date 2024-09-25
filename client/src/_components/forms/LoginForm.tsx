@@ -41,17 +41,17 @@ function LoginForm() {
         method: 'POST',
         headers: myHeaders,
         body: urlencoded,
-        // credentials: 'include',
       },
     );
 
     if (response.ok) {
       const data: { msg: string; token: string } = await response.json();
+      // Set authentication cookie
       setCookie('auth-token', data.token);
+      // Revalidate user to query user data
       await revalidateUser();
       // Go to account
       revalidator('/account');
-      // router.push('/account');
     } else {
       const result: { msg: string } = await response.json();
       setLogErrMsg(result.msg);

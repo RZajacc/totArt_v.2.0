@@ -87,12 +87,6 @@ const login: RequestHandler = async (req, res) => {
         // GENERATE TOKEN
         const token = generateToken(existingUser.id);
         if (token) {
-          // res.cookie("auth-token", token, {
-          //   httpOnly: true,
-          //   secure: process.env.NODE_ENV !== "development",
-          //   sameSite: "none",
-          //   maxAge: 60 * 60 * 24 * 7,
-          // });
           res.status(201).json({
             msg: "Login sucessfull",
             token,
@@ -110,15 +104,6 @@ const login: RequestHandler = async (req, res) => {
       msg: "I don't have a clue whats wrong!",
     });
   }
-};
-
-const logout: RequestHandler = async (req, res) => {
-  res.clearCookie("auth-token", {
-    httpOnly: true,
-    sameSite: "lax", // Ensure same site behavior
-    //  secure: process.env.NODE_ENV === "production", // Only use secure cookies in production
-  });
-  res.status(200).json({ msg: "Logout successfull" });
 };
 
 const getProfle: RequestHandler = async (req, res) => {
@@ -399,7 +384,6 @@ const deleteUser: RequestHandler = async (req, res) => {
 export {
   register,
   login,
-  logout,
   getProfle,
   handleFavouriteLocations,
   updateUserData,

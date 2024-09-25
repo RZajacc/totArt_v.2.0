@@ -39,19 +39,12 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
 
   // LOGOUT
   const logout = async () => {
-    // await mutateUser();
-    // const response = await fetch('http://localhost:5000/api/users/logout', {
-    //   method: 'POST',
-    //   credentials: 'include',
-    // });
-
-    // if (response.ok) {
-    // Reset user
+    // Delete auth cookie
     deleteCookie('auth-token');
+    // Reset user data
     setUser(undefined);
     // To effectively protect routes cached paged data needs to be revalidated
     await revalidator('/');
-    // }
   };
 
   const checkAuth = async () => {
