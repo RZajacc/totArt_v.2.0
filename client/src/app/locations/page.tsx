@@ -40,7 +40,9 @@ async function Content() {
       <div className="mb-6 mt-3 text-center">
         <h1 className="mb-4 text-center text-xl font-bold md:mt-4">
           Number of locations found:{' '}
-          <span className="text-emerald-500">{locations?.number}</span>
+          <span data-testid="locations-count" className="text-emerald-500">
+            {locations?.number}
+          </span>
         </h1>
         <AddLocationLink />
       </div>

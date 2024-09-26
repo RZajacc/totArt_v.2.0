@@ -2,13 +2,12 @@
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
-
 import type { Config } from 'jest';
 import nextJest from 'next/jest.js';
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: './src',
+  dir: './src/',
 });
 
 const config: Config = {
@@ -96,7 +95,15 @@ const config: Config = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    '^@/_components/(.*)$': '<rootDir>/src/_components/$1',
+    '^@/context/(.*)$': '<rootDir>/src/context/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
+    '^@/assets/(.*)$': '<rootDir>/src/assets/$1',
+    '^@/fetchers/(.*)$': '<rootDir>/src/fetchers/$1',
+    '^@/types/(.*)$': '<rootDir>/src/types/$1',
+    '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
