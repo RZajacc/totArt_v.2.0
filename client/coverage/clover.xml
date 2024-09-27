@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1727441008918" clover="3.2.0">
-  <project timestamp="1727441008919" name="All files">
-    <metrics statements="421" coveredstatements="258" conditionals="11" coveredconditionals="7" methods="18" coveredmethods="6" elements="450" coveredelements="271" complexity="0" loc="421" ncloc="421" packages="8" files="12" classes="12"/>
+<coverage generated="1727441802524" clover="3.2.0">
+  <project timestamp="1727441802524" name="All files">
+    <metrics statements="421" coveredstatements="258" conditionals="11" coveredconditionals="7" methods="18" coveredmethods="6" elements="450" coveredelements="271" complexity="0" loc="421" ncloc="421" packages="9" files="12" classes="12"/>
     <package name="_components.locationDetails">
       <metrics statements="56" coveredstatements="33" conditionals="3" coveredconditionals="1" methods="4" coveredmethods="1"/>
       <file name="FavSection.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\_components\locationDetails\FavSection.tsx">
@@ -389,9 +389,9 @@
         <line num="93" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="fetchers">
+    <package name="lib.clientMethods.locationMethods">
       <metrics statements="33" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="LocationFavsData.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\fetchers\LocationFavsData.tsx">
+      <file name="LocationFavsData.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\lib\clientMethods\locationMethods\LocationFavsData.tsx">
         <metrics statements="33" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -429,8 +429,34 @@
       </file>
     </package>
     <package name="lib.serverMethods">
-      <metrics statements="46" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="GetUserData.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\lib\serverMethods\GetUserData.tsx">
+      <metrics statements="20" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="Revalidator.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\lib\serverMethods\Revalidator.tsx">
+        <metrics statements="20" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="lib.serverMethods.userMethods">
+      <metrics statements="26" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="GetUserData.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\lib\serverMethods\userMethods\GetUserData.tsx">
         <metrics statements="26" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -458,29 +484,6 @@
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-      </file>
-      <file name="Revalidator.tsx" path="C:\Users\Rafał\WebDevProjects\Portfolio\TotArt\client\src\lib\serverMethods\Revalidator.tsx">
-        <metrics statements="20" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
       </file>
     </package>
   </project>
