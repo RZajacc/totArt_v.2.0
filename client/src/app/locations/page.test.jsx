@@ -54,8 +54,15 @@ global.fetch = jest.fn(() =>
 );
 
 describe('Page', () => {
-  it('renders a heading', async () => {
+  it('renders a span containing the number of locations fetched', async () => {
+    // Render the content page (async server component)
     const content = await Content();
     render(content);
+    // Get the heading element
+    const spanEl = screen.getByTestId('locations-count');
+    // Check if span is being rendered
+    expect(spanEl).toBeInTheDocument();
+    // Mocked data contain only one entry so the number should match
+    expect(spanEl).toHaveTextContent(1);
   });
 });
