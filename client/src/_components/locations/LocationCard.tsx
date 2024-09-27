@@ -11,7 +11,10 @@ type Props = {
 
 function LocationCard({ locationData }: Props) {
   return (
-    <div className="grid content-between rounded-lg border-2 border-black bg-slate-100 shadow-md shadow-black">
+    <div
+      data-testid="locationCard"
+      className="grid content-between rounded-lg border-2 border-black bg-slate-100 shadow-md shadow-black"
+    >
       <section className="relative">
         {/* Display add or remove from favourites button*/}
         <FavSection locationId={locationData._id} />

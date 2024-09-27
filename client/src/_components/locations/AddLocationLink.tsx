@@ -9,7 +9,11 @@ function AddLocationLink({}: Props) {
   const { user } = useContext(AuthContext);
   return (
     <>
-      {user && <LinkGreen href="locations/addNew">Add new location</LinkGreen>}
+      {user && (
+        <LinkGreen data-testid="addLocationLink" href="locations/addNew">
+          Add new location
+        </LinkGreen>
+      )}
     </>
   );
 }

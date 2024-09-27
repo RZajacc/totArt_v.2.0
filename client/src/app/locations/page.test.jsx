@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Content from './page';
+import AddLocationLink from '@/_components/locations/AddLocationLink';
+import { AuthContext } from '@/context/AuthContext';
 
 // Mocking the fetch API globally
 global.fetch = jest.fn(() =>
@@ -12,48 +14,20 @@ global.fetch = jest.fn(() =>
         number: 1,
         locations: [
           {
-            _id: '66ab5f067c84e4874f44c3df',
-            title: 'Piglet',
-            description: 'Simple but touching drawing of a crying piglet',
-            location: 'Cannot tell more than that it is in my building',
+            _id: 'testid',
+            title: 'location_title',
             image: {
-              _id: '66ab5ef37c84e4874f44c3db',
-              asset_id: '15b9ef65e676a4bc65394143add81ddf',
-              public_id: 'postImages/userImage_1722506990550_350346121',
-              version: 1722506994,
-              version_id: '5221f6c00b35c23efdb4998f548a184d',
-              signature: '0ab58d4dd7cf1127eba37bde03e72c31afea0406',
               width: 1024,
               height: 1365,
-              format: 'jpg',
-              resource_type: 'image',
-              created_at: '2024-08-01T10:09:54Z',
-              bytes: 921957,
-              type: 'upload',
-              etag: '2b037b3a3c97fb6ec2514a4c948b0064',
-              placeholder: false,
-              url: 'http://res.cloudinary.com/dqdofxwft/image/upload/v1722506994/postImages/userImage_1722506990550_350346121.jpg',
-              secure_url:
-                'https://res.cloudinary.com/dqdofxwft/image/upload/v1722506994/postImages/userImage_1722506990550_350346121.jpg',
-              folder: 'postImages',
-              original_filename: 'userImage_1722506990550_350346121',
-              __v: 0,
-              related_location: '66ab5f067c84e4874f44c3df',
+              secure_url: 'https://my-image.jpg',
             },
-            author: {
-              _id: '66ab5aaa2e80144ba6d0316c',
-              userName: 'Rafal',
-            },
-            favs: [],
-            comments: ['66c89865739a3d9d9d6ae141', '66f43ed53a081e26b0028a0c'],
-            __v: 0,
           },
         ],
       }),
   }),
 );
 
-describe('Page', () => {
+describe('locations page component', () => {
   it('renders a span containing the number of locations fetched', async () => {
     // Render the content page (async server component)
     const content = await Content();
@@ -64,5 +38,44 @@ describe('Page', () => {
     expect(spanEl).toBeInTheDocument();
     // Mocked data contain only one entry so the number should match
     expect(spanEl).toHaveTextContent(1);
+  });
+
+  it('renders addLocation link if user is logged in', () => {
+    // Mock user data
+    const user = { id: '1', name: 'Rafal' };
+    // Render context around the link
+    render(
+      <AuthContext.Provider value={{ user: user }}>
+        <AddLocationLink />
+      </AuthContext.Provider>,
+    );
+
+    // Check if link is being rendered
+    expect(screen.getByTestId('addLocationLink')).toBeInTheDocument();
+  });
+
+  it('should not render addLocation link if user is not logged in', () => {
+    // Mock user data
+    const user = undefined;
+    // Render context around the link
+    render(
+      <AuthContext.Provider value={{ user: user }}>
+        <AddLocationLink />
+      </AuthContext.Provider>,
+    );
+    // Check if link is being rendered
+    expect(screen.queryByTestId('addLocationLink')).not.toBeInTheDocument();
+  });
+
+  it('should render one location card', async () => {
+    // Render the content page (async server component)
+    const content = await Content();
+    render(content);
+
+    // Get all location cards
+    const locationCards = screen.getAllByTestId('locationCard');
+
+    // Since mock contains only one object, locations card should also contain just one
+    expect(locationCards).toHaveLength(1);
   });
 });
