@@ -10,8 +10,8 @@ import Modal from '../ui/Modal';
 import LabeledInput from '../ui/inputs/LabeledInput';
 import LabeledTextArea from '../ui/inputs/LabeledTextArea';
 // Fetching data
-import { DeleteLocation } from '@/lib/serverMethods/DeleteLocation';
-import { editLocation } from '@/lib/serverMethods/EditLocation';
+import { DeleteLocation } from '@/lib/serverMethods/locationMethods/DeleteLocation';
+import { editLocation } from '@/lib/serverMethods/locationMethods/EditLocation';
 // Types
 import type { locationData } from '@/types/locationTypes';
 import { Rounded, Shadow } from 'enums/StyleEnums';

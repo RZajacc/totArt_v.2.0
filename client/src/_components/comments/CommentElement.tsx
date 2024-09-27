@@ -12,9 +12,9 @@ import type { comment } from '@/types/CommentTypes';
 import Modal from '../ui/Modal';
 import LabeledTextArea from '../ui/inputs/LabeledTextArea';
 import useSWRMutation from 'swr/mutation';
-import { editComment } from '@/fetchers/EditComment';
+import { editComment } from '@/lib/clientMethods/commentMethods/EditComment';
 import { KeyedMutator } from 'swr';
-import { deleteComment } from '@/fetchers/DeleteComment';
+import { deleteComment } from '@/lib/clientMethods/commentMethods/DeleteComment';
 
 type modalData = {
   displayModal: boolean;

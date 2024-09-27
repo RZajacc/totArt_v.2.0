@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import useSWRMutation from 'swr/mutation';
 // Fetching data
-import { updateUserData } from '@/fetchers/UpdateUserData';
+import { updateUserData } from '@/lib/clientMethods/userMethods/UpdateUserData';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Assets

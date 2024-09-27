@@ -1,7 +1,7 @@
 'use client';
 import { AuthContext } from '@/context/AuthContext';
-import { addNewComment } from '@/fetchers/AddNewComment';
-import { getComments } from '@/lib/clientMethods/GetComments';
+import { addNewComment } from '@/lib/clientMethods/commentMethods/AddNewComment';
+import { getComments } from '@/lib/clientMethods/commentMethods/GetComments';
 import React, { useContext } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';

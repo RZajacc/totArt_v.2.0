@@ -6,9 +6,9 @@ import useSWRMutation from 'swr/mutation';
 import UserData from './UserData';
 import ProfileActions from './ProfileActions';
 // Fetching data
-import { ImageUpload } from '@/fetchers/ImageUpload';
-import { updateUserData } from '@/fetchers/UpdateUserData';
-import { deleteImage } from '@/fetchers/DeleteImage';
+import { ImageUpload } from '@/lib/clientMethods/imageMethods/ImageUpload';
+import { updateUserData } from '@/lib/clientMethods/userMethods/UpdateUserData';
+import { deleteImage } from '@/lib/clientMethods/imageMethods/DeleteImage';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Assets

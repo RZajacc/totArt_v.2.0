@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useSWRMutation from 'swr/mutation';
 // Fetching data
-import { locationFavsData } from '@/fetchers/LocationFavsData';
+import { locationFavsData } from '@/lib/clientMethods/locationMethods/LocationFavsData';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Assets

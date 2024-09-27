@@ -3,7 +3,7 @@
 import React from 'react';
 import CommentElement from './CommentElement';
 import useSWR from 'swr';
-import { getComments } from '@/lib/clientMethods/GetComments';
+import { getComments } from '@/lib/clientMethods/commentMethods/GetComments';
 
 type Props = {
   locationId: string;

@@ -5,8 +5,8 @@ import useSWRMutation from 'swr/mutation';
 import TimerDisplay from '../../ui/state/TimerDisplay';
 import PasswordField from '../../ui/inputs/PasswordField';
 // Fetching data
-import { VerifyUserPassword } from '@/fetchers/VerifyUserPassword';
-import { UpdateUserPassword } from '@/fetchers/UpdateUserPassword';
+import { VerifyUserPassword } from '@/lib/clientMethods/userMethods/VerifyUserPassword';
+import { UpdateUserPassword } from '@/lib/clientMethods/userMethods/UpdateUserPassword';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Utils

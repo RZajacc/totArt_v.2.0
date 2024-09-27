@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 // Fetching data
-import { getUserData } from '@/lib/serverMethods/GetUserData';
+import { getUserData } from '@/lib/serverMethods/userMethods/GetUserData';
 // Types
 import { User } from '@/types/UserTypes';
 import { revalidator } from '@/lib/serverMethods/Revalidator';

@@ -5,7 +5,7 @@ import Link from 'next/link';
 // Components
 import DeleteField from '@/_components/ui/inputs/DeleteField';
 // Fetching data
-import { DeleteLocation } from '@/lib/serverMethods/DeleteLocation';
+import { DeleteLocation } from '@/lib/serverMethods/locationMethods/DeleteLocation';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 // Assets

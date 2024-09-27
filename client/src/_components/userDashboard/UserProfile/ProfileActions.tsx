@@ -5,7 +5,7 @@ import useSWRMutation from 'swr/mutation';
 import PasswordChange from './PasswordChange';
 import DeleteField from '../../ui/inputs/DeleteField';
 // Fetching data
-import { DeleteUserAccount } from '@/fetchers/DeleteUserAccount';
+import { DeleteUserAccount } from '@/lib/clientMethods/userMethods/DeleteUserAccount';
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import ButtonRed from '../../ui/buttons/ButtonRed';

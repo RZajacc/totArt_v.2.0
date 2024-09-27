@@ -5,7 +5,7 @@ import FavButton from '../locations/FavButton';
 import emptyHeart from '@/assets/heart_empty.svg';
 import fullHeart from '@/assets/heart_full.svg';
 import useSWRMutation from 'swr/mutation';
-import { locationFavsData } from '@/fetchers/LocationFavsData';
+import { locationFavsData } from '@/lib/clientMethods/locationMethods/LocationFavsData';
 
 type Props = {
   locationId: string;

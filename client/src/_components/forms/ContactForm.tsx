@@ -8,7 +8,7 @@ import LabeledTextArea from '../ui/inputs/LabeledTextArea';
 import TimerDisplay from '../ui/state/TimerDisplay';
 import ButtonDark from '../ui/buttons/ButtonDark';
 // Fetching data
-import { sendContactEmail } from '@/fetchers/SendContactEmail';
+import { sendContactEmail } from '@/lib/clientMethods/SendContactEmail';
 // Types
 import { Rounded } from 'enums/StyleEnums';
 
