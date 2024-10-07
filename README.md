@@ -11,7 +11,7 @@ Project is made for users the users to share some interesting locations around B
 > [!NOTE]
 > Before you start using the application check README files in corresponding sections of the app (client and server).
 
-### Techstack
+### Tech Stack
 
 - **Client** side of the application is built with Next.js (App router), Typescript, and styled with TailwindCSS. For data fetching I'm using SWR library. For routes protection I decided for middleware based authentication. JWT token sent from the backend is stored as a cookie in a browser, and middleware checks users status with each request. Currently Im adding tests to the application using Jest.
 - **Server** side is built with Node.js with Typescript, Express.js and MongoDB. User is authenticated with the use JWT tokens.
