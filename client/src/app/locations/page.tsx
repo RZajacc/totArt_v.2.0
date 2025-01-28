@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 async function Content() {
   // Fetch locations data
   const response = await fetch(
-    `${process.env.NODE_ENV === 'development' ? 'http://totart-server:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
+    `${process.env.NODE_ENV === 'development' ? 'http://backend:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/all`,
   );
 
   // If fetching fails display error
