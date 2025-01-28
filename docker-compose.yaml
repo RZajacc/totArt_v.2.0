@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./server
+    ports:
+      - '5000:5000'
+    volumes:
+      - /app/node_modules
+      - ./server/dist:/app/dist
+    env_file:
+      - ./server/.env
+  frontend:
+    build: ./client
+    ports:
+      - '3000:3000'
+    volumes:
+      - /app/node_modules
+      - ./client/src:/app/src
+    environment:
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - backend

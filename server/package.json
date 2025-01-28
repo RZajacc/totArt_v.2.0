@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "nodemon dist/app.js",
+    "start": "nodemon -L dist/app.js",
     "start:prod": "node dist/app.js"
   },
   "author": "Rafal Zajac",
