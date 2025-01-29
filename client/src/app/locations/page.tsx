@@ -4,6 +4,7 @@ import LocationCard from '@/_components/locations/LocationCard';
 import { ErrorView } from '@/_components/ui/state/ErrorView';
 // Types
 import type { locationData } from '@/types/locationTypes';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,13 +13,8 @@ export const metadata: Metadata = {
 };
 
 async function Content() {
-  // Define if local or remote URL should be used (Remote is necessary for production only)
-  const LOCAL_URL = process.env.NEXT_PUBLIC_API_URL;
-  const REMOTE_URL = process.env.NEXT_PUBLIC_REMOTE_API_URL;
-
-  // Build fetch URL
-  const FETCH_URL =
-    process.env.NODE_ENV === 'development' ? LOCAL_URL : REMOTE_URL;
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
 
   // Fetch locations data
   const response = await fetch(`${FETCH_URL}/api/locations/all`);
