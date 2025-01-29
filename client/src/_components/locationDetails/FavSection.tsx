@@ -6,6 +6,7 @@ import emptyHeart from '@/assets/heart_empty.svg';
 import fullHeart from '@/assets/heart_full.svg';
 import useSWRMutation from 'swr/mutation';
 import { locationFavsData } from '@/lib/clientMethods/locationMethods/LocationFavsData';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 type Props = {
   locationId: string;
@@ -14,9 +15,12 @@ type Props = {
 function FavSection({ locationId }: Props) {
   const { user, revalidateUser } = useContext(AuthContext);
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // Mutation to trigger on upon button click
   const { trigger: triggerFavsHandler } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/handleFavouriteLocations`,
+    `${FETCH_URL}/api/users/handleFavouriteLocations`,
     locationFavsData,
   );
 

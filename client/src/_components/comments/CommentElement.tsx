@@ -15,6 +15,7 @@ import useSWRMutation from 'swr/mutation';
 import { editComment } from '@/lib/clientMethods/commentMethods/EditComment';
 import { KeyedMutator } from 'swr';
 import { deleteComment } from '@/lib/clientMethods/commentMethods/DeleteComment';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 type modalData = {
   displayModal: boolean;
@@ -52,14 +53,17 @@ function CommentElement({ comment, mutateComments }: Props) {
     second: 'numeric',
   });
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // Create a mutations
   const { trigger: triggerCommentEdit } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/editComment`,
+    `${FETCH_URL}/api/comments/editComment`,
     editComment,
   );
 
   const { trigger: triggerCommentDelete } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/deleteComment`,
+    `${FETCH_URL}/api/comments/deleteComment`,
     deleteComment,
   );
 

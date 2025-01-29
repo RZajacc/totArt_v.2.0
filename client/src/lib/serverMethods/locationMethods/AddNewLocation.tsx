@@ -1,6 +1,7 @@
 'use server';
 // Types
 import type { FetchError } from '@/types/GeneralTypes';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -21,15 +22,15 @@ export const addNewLocation = async (
   urlencoded.append('image', imageId);
   urlencoded.append('author', author);
 
-  const response = await fetch(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/addNewLocation`,
-    {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    },
-  );
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
+  const response = await fetch(`${FETCH_URL}/api/locations/addNewLocation`, {
+    method: 'POST',
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: 'follow',
+  });
 
   if (response.ok) {
     revalidatePath('/locations');

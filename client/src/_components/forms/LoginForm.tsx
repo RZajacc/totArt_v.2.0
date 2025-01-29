@@ -9,6 +9,7 @@ import { AuthContext } from '@/context/AuthContext';
 import { Rounded } from 'enums/StyleEnums';
 import { revalidator } from '@/lib/serverMethods/Revalidator';
 import { setCookie } from 'cookies-next';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 function LoginForm() {
   // Context data
@@ -34,15 +35,15 @@ function LoginForm() {
     urlencoded.append('email', email);
     urlencoded.append('password', password);
 
+    // Build Fetch url
+    const FETCH_URL = BuildFetchUrl();
+
     // Login user
-    const response = await fetch(
-      `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/login`,
-      {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
-      },
-    );
+    const response = await fetch(`${FETCH_URL}/api/users/login`, {
+      method: 'POST',
+      headers: myHeaders,
+      body: urlencoded,
+    });
 
     if (response.ok) {
       const data: { msg: string; token: string } = await response.json();

@@ -1,5 +1,6 @@
 import { comment } from '@/types/CommentTypes';
 import { FetchError } from '@/types/GeneralTypes';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 export const getComments = async (locationId: string) => {
   const myHeaders = new Headers();
@@ -8,15 +9,15 @@ export const getComments = async (locationId: string) => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('locationId', locationId);
 
-  const response = await fetch(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/getComments`,
-    {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    },
-  );
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
+  const response = await fetch(`${FETCH_URL}/api/comments/getComments`, {
+    method: 'POST',
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: 'follow',
+  });
 
   if (response.ok) {
     const data: { count: number; comments: comment[] } = await response.json();

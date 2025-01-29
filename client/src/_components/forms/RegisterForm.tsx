@@ -9,6 +9,7 @@ import { validatePassword } from '@/utils/ValidatePassword';
 import ButtonDark from '@/_components/ui/buttons/ButtonDark';
 import { Rounded } from 'enums/StyleEnums';
 import Link from 'next/link';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 type registerSucc = {
   msg: string;
@@ -62,16 +63,15 @@ function RegisterForm() {
       urlencoded.append('email', email);
       urlencoded.append('password', password);
 
+      // Build Fetch url
+      const FETCH_URL = BuildFetchUrl();
       try {
-        const response = await fetch(
-          `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/register`,
-          {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow',
-          },
-        );
+        const response = await fetch(`${FETCH_URL}/api/users/register`, {
+          method: 'POST',
+          headers: myHeaders,
+          body: urlencoded,
+          redirect: 'follow',
+        });
 
         if (response.ok) {
           const result: registerSucc = await response.json();

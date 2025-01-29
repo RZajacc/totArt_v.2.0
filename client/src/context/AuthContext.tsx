@@ -13,6 +13,7 @@ import { getUserData } from '@/lib/serverMethods/userMethods/GetUserData';
 import { User } from '@/types/UserTypes';
 import { revalidator } from '@/lib/serverMethods/Revalidator';
 import { deleteCookie } from 'cookies-next';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 interface AuthContextType {
   user: User | undefined;
@@ -59,8 +60,11 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
 
     // If token is attached fetch user data and user object
     if (data.token) {
+      // Build Fetch url
+      const FETCH_URL = BuildFetchUrl();
+      // Get user data
       const userData = await getUserData(
-        `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/profile`,
+        `${FETCH_URL}/api/users/profile`,
         data.token,
       );
       setUser(userData);

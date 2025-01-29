@@ -15,24 +15,25 @@ import { AuthContext } from '@/context/AuthContext';
 import noUser from '@/assets/noUser.png';
 import ButtonDark from '../../ui/buttons/ButtonDark';
 import { Rounded, Shadow } from 'enums/StyleEnums';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 function UserProfile() {
   const { user, revalidateUser } = useContext(AuthContext);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   const { trigger: triggerImageUpload, isMutating: isMutatingImage } =
-    useSWRMutation(
-      `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/ImageUpload`,
-      ImageUpload,
-    );
+    useSWRMutation(`${FETCH_URL}/api/images/ImageUpload`, ImageUpload);
 
   const { trigger: triggerUserUpdate } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/updateUser`,
+    `${FETCH_URL}/api/users/updateUser`,
     updateUserData,
   );
 
   const { trigger: triggerImageDelete } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/imageDelete`,
+    `${FETCH_URL}/api/images/imageDelete`,
     deleteImage,
   );
 

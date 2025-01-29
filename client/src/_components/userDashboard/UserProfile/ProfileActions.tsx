@@ -13,6 +13,7 @@ import ButtonGrey from '../../ui/buttons/ButtonGrey';
 
 import { Border, Rounded, Shadow } from 'enums/StyleEnums';
 import { revalidator } from '@/lib/serverMethods/Revalidator';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 function ProfileActions() {
   // Handle display state of changing password and deleteing account
@@ -23,9 +24,12 @@ function ProfileActions() {
   const [showIncorrectInput, setShowIncorrectInput] = useState(false);
   const [deletePhrase, setDeletePhrase] = useState('');
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // SWR method to trigger deleting a user
   const { trigger: triggerDeletingUser } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/deleteUser`,
+    `${FETCH_URL}/api/users/deleteUser`,
     DeleteUserAccount,
   );
 

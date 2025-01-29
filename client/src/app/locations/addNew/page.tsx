@@ -14,6 +14,7 @@ import { addNewLocation } from '@/lib/serverMethods/locationMethods/AddNewLocati
 // Context data
 import { AuthContext } from '@/context/AuthContext';
 import { Rounded } from 'enums/StyleEnums';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 function page() {
   // Getting user data
@@ -25,19 +26,19 @@ function page() {
     string | ArrayBuffer | null
   >(null);
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // SWR Methods necessary for all operations
   const {
     data: imageData,
     trigger: triggerImageUpload,
     isMutating: imageIsMutating,
     error: imageUploadError,
-  } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/ImageUpload`,
-    ImageUpload,
-  );
+  } = useSWRMutation(`${FETCH_URL}/api/images/ImageUpload`, ImageUpload);
 
   const { trigger: triggerDeletingImage } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/images/imageDelete`,
+    `${FETCH_URL}/api/images/imageDelete`,
     deleteImage,
   );
 

@@ -2,6 +2,7 @@
 // Types
 import type { FetchError } from '@/types/GeneralTypes';
 import type { locationData } from '@/types/locationTypes';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 export const GetLocationDetails = async (locationID: string) => {
   const myHeaders = new Headers();
@@ -10,15 +11,15 @@ export const GetLocationDetails = async (locationID: string) => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('_id', locationID);
 
-  const response = await fetch(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/locations/details`,
-    {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    },
-  );
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
+  const response = await fetch(`${FETCH_URL}/api/locations/details`, {
+    method: 'POST',
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: 'follow',
+  });
 
   if (response.ok) {
     const result: locationData = await response.json();

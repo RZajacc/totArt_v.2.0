@@ -9,6 +9,7 @@ import { AuthContext } from '@/context/AuthContext';
 // Assets
 import pencil from '@/assets/pencil.svg';
 import confirm from '@/assets/confirm-svgrepo-com.svg';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 type Props = {
   propName: string;
@@ -23,9 +24,12 @@ function UserData({ propName, textarea }: Props) {
 
   const { user, revalidateUser } = useContext(AuthContext);
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // SWR method to trigger update
   const { trigger: triggerUpdate } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/updateUser`,
+    `${FETCH_URL}/api/users/updateUser`,
     updateUserData,
   );
 

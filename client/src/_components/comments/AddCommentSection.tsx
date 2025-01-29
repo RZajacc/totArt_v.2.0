@@ -2,6 +2,7 @@
 import { AuthContext } from '@/context/AuthContext';
 import { addNewComment } from '@/lib/clientMethods/commentMethods/AddNewComment';
 import { getComments } from '@/lib/clientMethods/commentMethods/GetComments';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 import React, { useContext } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
@@ -13,9 +14,12 @@ type Props = {
 function AddCommentSection({ locationId }: Props) {
   const { user, revalidateUser } = useContext(AuthContext);
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // Prepare mutation to add comment
   const { trigger: triggerAddComment } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/comments/addComment`,
+    `${FETCH_URL}/api/comments/addComment`,
     addNewComment,
   );
 

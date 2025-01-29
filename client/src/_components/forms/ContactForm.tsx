@@ -11,19 +11,20 @@ import ButtonDark from '../ui/buttons/ButtonDark';
 import { sendContactEmail } from '@/lib/clientMethods/SendContactEmail';
 // Types
 import { Rounded } from 'enums/StyleEnums';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 type Props = {};
 
 function ContactForm({}: Props) {
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // Sending email logic
   const {
     trigger: triggerSendingEmail,
     error: emailError,
     data,
-  } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/email/sendEmail`,
-    sendContactEmail,
-  );
+  } = useSWRMutation(`${FETCH_URL}/api/email/sendEmail`, sendContactEmail);
 
   const [showEmailResponse, setShowEmailResponse] = useState(false);
 

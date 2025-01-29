@@ -13,6 +13,7 @@ import { AuthContext } from '@/context/AuthContext';
 import { validatePassword } from '@/utils/ValidatePassword';
 import { Border, Rounded, Shadow } from 'enums/StyleEnums';
 import ButtonBlack from '@/_components/ui/buttons/ButtonBlack';
+import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 type Props = {
   setShowPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,14 +46,17 @@ function PasswordChange({ setShowPasswordChange }: Props) {
     </ol>
   );
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   // Methods to validate and update user password
   const { trigger: triggerPswVerification } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/verifyUserPassword`,
+    `${FETCH_URL}/api/users/verifyUserPassword`,
     VerifyUserPassword,
   );
 
   const { trigger: triggerPswUpdate } = useSWRMutation(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://totart-v-2-0.onrender.com'}/api/users/updateUserPassword`,
+    `${FETCH_URL}/api/users/updateUserPassword`,
     UpdateUserPassword,
   );
 
