@@ -1,8 +1,8 @@
-import express from "express";
+import { Router } from "express";
 import {
   register,
   login,
-  getProfle,
+  getProfile,
   handleFavouriteLocations,
   deleteUser,
   updateUserData,
@@ -12,9 +12,9 @@ import {
 import jwtAuth from "../middlewares/jwtAuth.js";
 
 // Set up a express router
-const router = express.Router();
+const router = Router();
 
-router.get("/profile", jwtAuth, getProfle);
+router.get("/profile", jwtAuth, getProfile);
 router.post("/login", login);
 router.post("/register", register);
 router.post("/verifyUserPassword", verifyPassword);

@@ -1,4 +1,4 @@
-import { HydratedDocument, ObjectId, Schema, Types } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import userModel from "../models/userModel.js";
 import { bcrypt_hash, bcrypt_verifyPassword } from "../utils/bcrypt_config.js";
@@ -106,21 +106,22 @@ const login: RequestHandler = async (req, res) => {
   }
 };
 
-const getProfle: RequestHandler = async (req, res) => {
+const getProfile: RequestHandler = async (req, res) => {
   if (req.user) {
+    // Addition casting to make it easier in runtime
+    const user = req.user as User;
     res.status(200).json({
-      _id: req.user.id,
-      userName: req.user.userName,
-      email: req.user.email,
-      userImage: req.user.userImage,
-      userWebsite: req.user.userWebsite,
-      userBio: req.user.userBio,
-      comments: req.user.comments,
-      posts: req.user.posts,
-      favs: req.user.favs,
+      _id: user.id,
+      userName: user.id,
+      email: user.email,
+      userImage: user.userImage,
+      userWebsite: user.userWebsite,
+      userBio: user.userBio,
+      comments: user.comments,
+      posts: user.posts,
+      favs: user.favs,
     });
   }
-
   if (!req.user) {
     res.status(401).json({
       msg: "You need to authorize first!",
@@ -384,7 +385,7 @@ const deleteUser: RequestHandler = async (req, res) => {
 export {
   register,
   login,
-  getProfle,
+  getProfile,
   handleFavouriteLocations,
   updateUserData,
   verifyPassword,

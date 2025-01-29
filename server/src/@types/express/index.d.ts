@@ -1,11 +1,11 @@
 import { Types } from "mongoose";
-import { User } from "../UserTypes";
+import { User } from "../../types/UserTypes";
 
 export {};
 
 declare global {
   namespace Express {
-    export interface User {
+    interface User {
       id: Types.ObjectId;
       userName: string;
       email: string;

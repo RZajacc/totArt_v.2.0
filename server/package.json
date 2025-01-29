@@ -2,12 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "backend for a totart app",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "nodemon -L dist/app.js",
+    "start": "nodemon -L src/app.ts",
     "start:prod": "node dist/app.js"
   },
   "author": "Rafal Zajac",
@@ -37,7 +37,8 @@
     "@types/node": "^20.14.6",
     "@types/passport": "^1.0.16",
     "@types/passport-jwt": "^4.0.1",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
 }
