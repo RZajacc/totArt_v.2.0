@@ -5,7 +5,7 @@ services:
       - '5000:5000'
     volumes:
       - /app/node_modules
-      - ./server/dist:/app/dist
+      - ./server/src:/app/src
     env_file:
       - ./server/.env
   frontend:
