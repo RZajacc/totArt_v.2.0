@@ -40,7 +40,7 @@ const addMiddlewares = () => {
   app.use(express.json());
   app.use(
     cors({
-      origin: ["http://localhost:3000", "https://tot-art-v-2-0.vercel.app"],
+      origin: [process.env.LOCAL_URL!, process.env.REMOTE_URL!],
     })
   );
   app.use(
