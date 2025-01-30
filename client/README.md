@@ -1,8 +1,20 @@
 # Client
 
-Client side of the application doesnt require any specific configuration. All you need is to install all dependencies.
+Next.js application utilizing both SSR, but also CSR depending on the component. 
 
 ### Project requirements:
+
+Create .env.local file and store there 2 variables:
+
+`API_URL_SERVER=http://localhost:5000`
+`NEXT_PUBLIC_API_URL=http://localhost:5000`
+
+To run the application locally it is important that they are both same. 
+If you run it with docker-compose, first value will be overwritten by service name:
+
+`Backend:5000`
+
+While running SSR components in docker you need to allow container to container communication, meaning you need to use network created by docker. However it is not required for local development, therefore here both values should remain same.
 
 To install all dependencies use a command:
 
