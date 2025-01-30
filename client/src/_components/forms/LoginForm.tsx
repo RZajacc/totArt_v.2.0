@@ -48,7 +48,7 @@ function LoginForm() {
     if (response.ok) {
       const data: { msg: string; token: string } = await response.json();
       // Set authentication cookie
-      setCookie('auth-token', data.token);
+      setCookie('auth-token', data.token, { sameSite: true });
       // Revalidate user to query user data
       await revalidateUser();
       // Go to account
