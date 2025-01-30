@@ -14,13 +14,21 @@ Name of the app might also differ depending on your setup
 DB=mongodb+srv://<username>:<password>@totartapp.6svr47p.mongodb.net/TotArt?retryWrites=true&w=majority
 
 Cloudinary
-CLOUD_NAME = <your credentials>
-API_KEY = <your credentials>
-API_SECRET = -<your credentials>
+CLOUD_NAME=<your credentials>
+API_KEY=<your credentials>
+API_SECRET=<your credentials>
 
 TOKEN SERVICES (Value is completely up to you)
-SECRET_OR_PRIVATE_KEY = <your credentials>```
+SECRET_OR_PRIVATE_KEY=<your credentials>
+
+LOCAL_URL=http://localhost:3000
 ````
+
+In cors setup you might notice another environmental variable:
+
+`REMOTE_URL`
+
+This one is for deployment purposes only and thus can be ignored. 
 
 And that should be all! To run the app use command:
 
