@@ -61,6 +61,7 @@ function PasswordField({
           <Image
             src={showPassword ? hidePasswordIcon : showPasswordIcon}
             alt="show-hide password"
+            priority
           />
         </button>
       </div>

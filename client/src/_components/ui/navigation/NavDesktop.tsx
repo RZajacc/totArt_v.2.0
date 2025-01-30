@@ -21,7 +21,13 @@ function NavDesktop({}: Props) {
     <div className="hidden items-center justify-between md:flex">
       <section>
         <Link href={'/'}>
-          <Image src={logoNormal} alt="logo" width={30} className="mx-5" />
+          <Image
+            src={logoNormal}
+            alt="logo"
+            width={30}
+            className="mx-5"
+            priority
+          />
         </Link>
       </section>
 

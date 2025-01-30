@@ -40,7 +40,7 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
   // LOGOUT
   const logout = async () => {
     // Delete auth cookie
-    deleteCookie('auth-token');
+    deleteCookie('auth-token', { sameSite: true });
     // Reset user data
     setUser(undefined);
     // To effectively protect routes cached paged data needs to be revalidated

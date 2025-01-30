@@ -8,7 +8,7 @@ interface Props extends React.ComponentPropsWithoutRef<'button'> {
 function FavButton({ imgSrc, ...props }: Props) {
   return (
     <button className="absolute right-2 top-2" {...props}>
-      <Image src={imgSrc} alt="empty-heart" className="w-12" />
+      <Image src={imgSrc} alt="empty-heart" className="w-12" priority />
     </button>
   );
 }
