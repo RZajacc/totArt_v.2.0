@@ -19,11 +19,6 @@ function LoginForm() {
   // Router for redirection after login
   const [invalidatePswInput, setInvalidatePswInput] = useState(false);
 
-  // Build Fetch url
-  const FETCH_URL = BuildFetchUrl();
-
-  console.log('BUILD_URL_SERVER URL---->', FETCH_URL);
-
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Collect login data

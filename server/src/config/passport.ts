@@ -28,7 +28,6 @@ const jwtStrategy = new JwtStrategy(opts, async function (
         populate: { path: "image", select: ["public_id"] },
       });
     if (user) {
-      console.log("User found");
       return done(null, user);
     } else {
       return done(null, false);
