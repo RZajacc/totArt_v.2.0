@@ -13,8 +13,12 @@ Project is made for users the users to share some interesting locations around B
 
 ### Tech Stack
 
+> [!IMPORTANT]
+> The application is made to run both with docker, and locally. In both cases you need to add .env files to client and server app, so please take a look into corresponding README files inside client and server app. If you have this one ready, then simply run the application with:
+> `docker-compose up`
+
 - **Client** side of the application is built with Next.js (App router), Typescript, and styled with TailwindCSS. For data fetching I'm using SWR library. For routes protection I decided for middleware based authentication. JWT token sent from the backend is stored as a cookie in a browser, and middleware checks users status with each request. Currently Im adding tests to the application using Jest.
-- **Server** side is built with Node.js with Typescript, Express.js and MongoDB. User is authenticated with the use JWT tokens.
+- **Server** side is built with Node.js with Typescript (ts-node as runner), Express.js and MongoDB. User is authenticated with the use JWT tokens.
 
 > [!NOTE]
 > Main goal of the project is to learn, so any tips are welcome!
