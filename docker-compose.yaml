@@ -17,5 +17,6 @@ services:
       - ./client/src:/app/src
     environment:
       - WATCHPACK_POLLING=true
+      - API_URL_SERVER=http://backend:5000
     depends_on:
       - backend
