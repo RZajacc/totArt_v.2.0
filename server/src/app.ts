@@ -38,11 +38,13 @@ const Sendgrid_API = () => {
 // 3_APP MIDDLEWARES
 const addMiddlewares = () => {
   app.use(express.json());
+
   app.use(
     cors({
       origin: [process.env.LOCAL_URL!, process.env.REMOTE_URL!],
     })
   );
+
   app.use(
     express.urlencoded({
       extended: true,

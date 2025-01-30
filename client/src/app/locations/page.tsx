@@ -16,6 +16,8 @@ async function Content() {
   // Build Fetch url
   const FETCH_URL = BuildFetchUrl();
 
+  console.log('BUILD_URL_SERVER URL---->', FETCH_URL);
+
   // Fetch locations data
   const response = await fetch(`${FETCH_URL}/api/locations/all`);
 

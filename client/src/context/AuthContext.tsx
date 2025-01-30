@@ -13,7 +13,6 @@ import { getUserData } from '@/lib/serverMethods/userMethods/GetUserData';
 import { User } from '@/types/UserTypes';
 import { revalidator } from '@/lib/serverMethods/Revalidator';
 import { deleteCookie } from 'cookies-next';
-import { BuildFetchUrl } from '@/utils/BuildFetchUrl';
 
 interface AuthContextType {
   user: User | undefined;
@@ -60,13 +59,8 @@ export const AuthContextProvider = ({ children }: AuthContexProviderProps) => {
 
     // If token is attached fetch user data and user object
     if (data.token) {
-      // Build Fetch url
-      const FETCH_URL = BuildFetchUrl();
       // Get user data
-      const userData = await getUserData(
-        `${FETCH_URL}/api/users/profile`,
-        data.token,
-      );
+      const userData = await getUserData(data.token);
       setUser(userData);
     } else {
       setUser(undefined);
