@@ -36,7 +36,7 @@ function Home() {
           shared! Hope you&apos;ll enjoy it! To start browsing the content just
           click{' '}
           <Link href={'/locations'} className="font-bold hover:animate-pulse">
-            here
+            here!
           </Link>
           😊
         </p>
