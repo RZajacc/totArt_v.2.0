@@ -29,3 +29,5 @@ Todo.txt
 .next
 next-env.d.ts
 secret-key-pair.pem
+Dockerfile.prod
+docker-compose.prod.yaml
