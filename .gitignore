@@ -28,3 +28,4 @@ notes.md
 Todo.txt
 .next
 next-env.d.ts
+secret-key-pair.pem
