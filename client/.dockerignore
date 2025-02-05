@@ -2,4 +2,4 @@ node_modules
 Dockerfile
 dist
 .git
-.env
+.env*

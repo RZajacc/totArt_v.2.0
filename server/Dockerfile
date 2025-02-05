@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY package.json .
 
+# For linux users
+RUN apt-get update && apt-get install -y libvips
+
 RUN npm install
 
 COPY . .

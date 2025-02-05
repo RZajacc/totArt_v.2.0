@@ -18,5 +18,7 @@ services:
     environment:
       - WATCHPACK_POLLING=true
       - API_URL_SERVER=http://backend:5000
+    env_file:
+      - ./client/.env.local
     depends_on:
       - backend
