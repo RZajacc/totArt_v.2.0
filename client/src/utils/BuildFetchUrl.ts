@@ -3,6 +3,5 @@ export const BuildFetchUrl = () => {
   const FETCH_URL =
     process.env.API_URL_SERVER || process.env.NEXT_PUBLIC_API_URL;
 
-  console.log('FETCH URL IN BUILD', FETCH_URL);
   return FETCH_URL;
 };
