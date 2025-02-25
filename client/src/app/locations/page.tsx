@@ -19,7 +19,9 @@ async function Content() {
 
   try {
     // Fetch locations data
-    const response = await fetch(`${FETCH_URL}/api/locations/all`);
+    const response = await fetch(`${FETCH_URL}/api/locations/all`, {
+      cache: 'no-store',
+    });
 
     if (!response.ok) {
       throw new FetchError('Something went wrong', response.status);
