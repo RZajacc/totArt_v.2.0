@@ -41,7 +41,7 @@ const addMiddlewares = () => {
 
   app.use(
     cors({
-      origin: [process.env.LOCAL_URL!, process.env.REMOTE_URL!],
+      origin: [process.env.LOCAL_URL!, process.env.SERVICE_NAME!],
     })
   );
 
