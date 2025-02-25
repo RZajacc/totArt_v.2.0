@@ -15,10 +15,10 @@ services:
     volumes:
       - /app/node_modules
       - ./client/src:/app/src
+    env_file:
+      - ./client/.env.local
     environment:
       - WATCHPACK_POLLING=true
       - API_URL_SERVER=http://backend:5000
-    env_file:
-      - ./client/.env.local
     depends_on:
       - backend
