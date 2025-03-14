@@ -43,7 +43,7 @@ async function Content() {
           <AddLocationLink />
         </div>
 
-        <div className="mx-auto mt-3 grid max-w-4xl gap-3 sm:grid-cols-2 md:grid-cols-3">
+        <div className="mx-auto mt-3 grid max-w-5xl gap-3 sm:grid-cols-2 md:grid-cols-3">
           {locations &&
             locations.locations.map((location) => {
               return (

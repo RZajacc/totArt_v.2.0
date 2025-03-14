@@ -15,15 +15,14 @@ function LocationCard({ locationData }: Props) {
       data-testid="locationCard"
       className="grid content-between rounded-lg border-2 border-black bg-slate-100 shadow-md shadow-black"
     >
-      <section className="relative">
+      <section className="relative h-80">
         {/* Display add or remove from favourites button*/}
         <FavSection locationId={locationData._id} />
         {/* Card image */}
         <Image
           src={locationData.image.secure_url}
           alt={locationData.title}
-          width={locationData.image.width}
-          height={locationData.image.height}
+          fill
           className="rounded-md"
           priority
         />
