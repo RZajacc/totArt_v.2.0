@@ -1,11 +1,24 @@
 services:
-  backend:
-    build: ./server
+  # ***SERVER SERVICES***
+  backend-dev:
+    build: 
+      context: ./server
+      target: dev
     ports:
       - '5000:5000'
     volumes:
       - /app/node_modules
       - ./server/src:/app/src
+    env_file:
+      - ./server/.env
+  backend-prod:
+    build: 
+      context: ./server
+      target: prod
+      args:
+        - NODE_VERSION=22-alpine
+    ports:
+      - '5000:5000'
     env_file:
       - ./server/.env
   # ***CLIENT SERVICES***
@@ -28,9 +41,9 @@ services:
       - ./client/.env.local
     environment:
       - WATCHPACK_POLLING=true
-      - API_URL_SERVER=http://backend:5000
+      - API_URL_SERVER=http://backend-dev:5000
     depends_on:
-      - backend
+      - backend-dev
       - frontend-test
   frontend-prod:
     build: 
@@ -42,9 +55,9 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - API_URL_SERVER=http://backend:5000
+      - API_URL_SERVER=http://backend-prod:5000
     env_file:
       - ./client/.env.local
     depends_on:
-      - backend
+      - backend-prod
       - frontend-test
