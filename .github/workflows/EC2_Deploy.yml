@@ -38,9 +38,8 @@ jobs:
           target: prod
           build-args: |
             NODE_VERSION=22-alpine
-            NEXTAUTH_URL=${{secrets.NEXTAUTH_URL}}
             NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
-          tags: ${{ secrets.DOCKER_USERNAME }}/codask-client
+          tags: ${{ secrets.DOCKER_USERNAME }}/totart-client
 
       #  SERVER APP
       - name: Build and push server
@@ -51,9 +50,8 @@ jobs:
           push: true
           target: prod
           build-args: NODE_VERSION=22-alpine
-          tags: ${{ secrets.DOCKER_USERNAME }}/codask-server
+          tags: ${{ secrets.DOCKER_USERNAME }}/totart-server
 
-      #  Deploy to EC-2
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.1
         with:
@@ -61,12 +59,12 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd codask
-            docker stop codask-frontend || true
-            docker stop codask-backend || true
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/codask-client || true
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/codask-server || true
-            docker pull ${{ secrets.DOCKER_USERNAME }}/codask-client
-            docker pull ${{ secrets.DOCKER_USERNAME }}/codask-server
-            docker run --rm -d --name codask-frontend --network codask_net -p 3001:3000 --env-file .env.local ${{ secrets.DOCKER_USERNAME }}/codask-client
-            docker run --rm -d --name codask-backend --network codask_net -p 5008:5008 --env-file .env ${{ secrets.DOCKER_USERNAME }}/codask-server
+            cd totart
+            docker stop totart-frontend || true
+            docker stop totart-backend || true
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/totart-client || true
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/totart-server || true
+            docker pull ${{ secrets.DOCKER_USERNAME }}/totart-client
+            docker pull ${{ secrets.DOCKER_USERNAME }}/totart-server
+            docker run --rm -d --name totart-frontend --network totart-net -p 3000:3000 --env-file .env.local ${{ secrets.DOCKER_USERNAME }}/totart-client
+            docker run --rm -d --name totart-backend --network totart-net -p 5000:5000 --env-file .env ${{ secrets.DOCKER_USERNAME }}/totart-server
