@@ -1,0 +1,72 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # CLIENT APP
+      - name: Build and test client
+        uses: docker/build-push-action@v6
+        with:
+          context: ./client
+          target: test
+          load: true
+
+      - name: Build and push client
+        uses: docker/build-push-action@v6
+        with:
+          context: ./client
+          platforms: linux/amd64,linux/arm64
+          push: true
+          target: prod
+          build-args: |
+            NODE_VERSION=22-alpine
+            NEXTAUTH_URL=${{secrets.NEXTAUTH_URL}}
+            NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
+          tags: ${{ secrets.DOCKER_USERNAME }}/codask-client
+
+      #  SERVER APP
+      - name: Build and push server
+        uses: docker/build-push-action@v6
+        with:
+          context: ./server
+          platforms: linux/amd64,linux/arm64
+          push: true
+          target: prod
+          build-args: NODE_VERSION=22-alpine
+          tags: ${{ secrets.DOCKER_USERNAME }}/codask-server
+
+      #  Deploy to EC-2
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd codask
+            docker stop codask-frontend || true
+            docker stop codask-backend || true
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/codask-client || true
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/codask-server || true
+            docker pull ${{ secrets.DOCKER_USERNAME }}/codask-client
+            docker pull ${{ secrets.DOCKER_USERNAME }}/codask-server
+            docker run --rm -d --name codask-frontend --network codask_net -p 3001:3000 --env-file .env.local ${{ secrets.DOCKER_USERNAME }}/codask-client
+            docker run --rm -d --name codask-backend --network codask_net -p 5008:5008 --env-file .env ${{ secrets.DOCKER_USERNAME }}/codask-server
