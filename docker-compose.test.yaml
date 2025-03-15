@@ -1,4 +1,0 @@
-services:
-  frontend-test:
-    build: ./client
-    command: ["npm", "test"]
