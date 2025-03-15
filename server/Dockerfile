@@ -1,16 +1,37 @@
-FROM node
+ARG NODE_VERSION=22
+
+FROM node:${NODE_VERSION} as base
 
 WORKDIR /app
 
-COPY package.json .
+EXPOSE 5000
 
-# For linux users
-RUN apt-get update && apt-get install -y libvips
+# Dev stage
+FROM base as dev
+
+COPY package.json .
 
 RUN npm install
 
 COPY . .
 
-EXPOSE 5000
+CMD [ "npm", "start" ]
 
-CMD ["npm", "start"]
+# Prod stage
+FROM base as prod
+
+COPY package.json .
+
+# For linux users
+RUN apk add --no-cache \
+    build-base \
+    python3 \
+    vips-dev
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+CMD ["npm", "run", "start:prod"]
