@@ -22,7 +22,6 @@ FROM base as prod
 
 COPY package.json .
 
-# For linux users
 RUN apk add --no-cache \
     build-base \
     python3 \
