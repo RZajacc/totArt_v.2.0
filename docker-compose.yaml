@@ -8,8 +8,17 @@ services:
       - ./server/src:/app/src
     env_file:
       - ./server/.env
-  frontend:
-    build: ./client
+  # ***CLIENT SERVICES***
+  frontend-test:
+    build: 
+      context: ./client
+      target: test
+    environment:
+      - NODE_ENV=test
+  frontend-dev:
+    build: 
+      context: ./client
+      target: dev
     ports:
       - '3000:3000'
     volumes:
@@ -22,3 +31,20 @@ services:
       - API_URL_SERVER=http://backend:5000
     depends_on:
       - backend
+      - frontend-test
+  frontend-prod:
+    build: 
+      context: ./client
+      target: prod
+      args:
+        - NODE_VERSION=22-alpine
+        - NEXT_PUBLIC_API_URL=http://localhost:5000
+    ports:
+      - '3000:3000'
+    environment:
+      - API_URL_SERVER=http://backend:5000
+    env_file:
+      - ./client/.env.local
+    depends_on:
+      - backend
+      - frontend-test
