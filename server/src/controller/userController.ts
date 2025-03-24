@@ -112,7 +112,7 @@ const getProfile: RequestHandler = async (req, res) => {
     const user = req.user as User;
     res.status(200).json({
       _id: user.id,
-      userName: user.id,
+      userName: user.userName,
       email: user.email,
       userImage: user.userImage,
       userWebsite: user.userWebsite,
