@@ -57,11 +57,16 @@ function page() {
 
     // If previous submission failed, but image was uploaded delete it
     if (imageData) {
-      await triggerDeletingImage({
-        imageId: imageData._id,
-        publicId: imageData.public_id,
-      });
+      try {
+        await triggerDeletingImage({
+          imageId: imageData._id,
+          publicId: imageData.public_id,
+        });
+      } catch (error) {
+        console.log('Error deleting previous image', error);
+      }
     }
+
     // Upload an image to cloudinary
     const imageResponse = await triggerImageUpload({
       file: imageFile,
@@ -73,16 +78,22 @@ function page() {
       return;
     }
 
-    setSubmitting(true);
-    await addNewLocation(
-      title,
-      description,
-      location,
-      imageResponse._id,
-      user ? user._id : '',
-    );
-    setSubmitting(false);
+    // Try creating a new location
+    try {
+      setSubmitting(true);
+      await addNewLocation(
+        title,
+        description,
+        location,
+        imageResponse._id,
+        user ? user._id : '',
+      );
+    } catch (error) {
+      console.log('Error uploading an image', error);
+    }
+
     await revalidateUser();
+    setSubmitting(false);
   };
 
   return (
